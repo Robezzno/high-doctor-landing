@@ -1,0 +1,8 @@
+192.168.2.171 - - [10/Jun/2026 00:09:34] "GET / HTTP/1.1" 200 -
+192.168.2.171 - - [10/Jun/2026 00:09:34] "GET /style.css HTTP/1.1" 200 -
+192.168.2.171 - - [10/Jun/2026 00:09:34] "GET /assets/logo-text.png HTTP/1.1" 200 -
+192.168.2.171 - - [10/Jun/2026 00:09:34] "GET /assets/logo-character.png HTTP/1.1" 200 -
+192.168.2.171 - - [10/Jun/2026 00:09:41] "GET /script.js HTTP/1.1" 200 -
+192.168.2.171 - - [10/Jun/2026 00:09:41] "GET /assets/hero-bg.png HTTP/1.1" 200 -
+192.168.2.171 - - [10/Jun/2026 00:09:43] code 404, message File not found
+192.168.2.171 - - [10/Jun/2026 00:09:43] "GET /favicon.ico HTTP/1.1" 404 -
