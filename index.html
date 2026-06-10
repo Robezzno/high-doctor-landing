@@ -185,12 +185,13 @@
                 <h2 class="section-title" data-i18n="form_title">Join High Doctor Foundation</h2>
                 <p class="mb-2" data-i18n="form_subtitle">Register to collaborate, participate in projects, or offer your professional expertise. Let's build the future together.</p>
             </div>
-            <form id="lead-form" class="lead-form" action="https://formsubmit.co/highdoctorcsc@gmail.com" method="POST">
-                <!-- Formsubmit.co config -->
-                <input type="hidden" name="_subject" value="New Lead - High Doctor Foundation">
-                <input type="hidden" name="_next" value="https://highdoctor.foundation">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
+            <form id="lead-form" class="lead-form" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms config -->
+                <input type="hidden" name="access_key" value="4abe23f2-0d49-48b0-83b5-fd372e6d6094">
+                <input type="hidden" name="subject" value="Nuevo Lead - High Doctor Foundation">
+                <input type="hidden" name="from_name" value="High Doctor Foundation">
+                <input type="hidden" name="redirect" value="https://highdoctor.foundation">
+                <input type="checkbox" name="botcheck" id="botcheck" style="display:none;">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name" data-i18n="form_lbl_name">Full Name *</label>
