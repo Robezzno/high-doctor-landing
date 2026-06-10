@@ -185,7 +185,12 @@
                 <h2 class="section-title" data-i18n="form_title">Join High Doctor Foundation</h2>
                 <p class="mb-2" data-i18n="form_subtitle">Register to collaborate, participate in projects, or offer your professional expertise. Let's build the future together.</p>
             </div>
-            <form id="lead-form" class="lead-form">
+            <form id="lead-form" class="lead-form" action="https://formsubmit.co/highdoctorcsc@gmail.com" method="POST">
+                <!-- Formsubmit.co config -->
+                <input type="hidden" name="_subject" value="New Lead - High Doctor Foundation">
+                <input type="hidden" name="_next" value="https://highdoctor.foundation">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name" data-i18n="form_lbl_name">Full Name *</label>
@@ -238,9 +243,6 @@
                     <label for="updates" data-i18n="form_lbl_check">I would like to receive updates about research projects, events and collaboration opportunities.</label>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block" data-i18n="form_btn">Submit Application</button>
-                <div class="form-success hidden" id="form-success" data-i18n="form_success">
-                    Thank you! Your application has been received. We will contact you soon.
-                </div>
             </form>
         </div>
     </section>
