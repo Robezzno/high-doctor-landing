@@ -52,8 +52,8 @@ export class GitHubModelsProvider implements LLMProvider {
       headers: {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
-        Accept: 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
+        Accept: 'application/json',
+        'User-Agent': 'highdoctor-news-bot',
       },
       body: JSON.stringify({
         model: this.model,
@@ -66,15 +66,28 @@ export class GitHubModelsProvider implements LLMProvider {
       signal: AbortSignal.timeout(this.timeoutMs),
     });
 
-    const payload = (await response.json().catch(() => ({}))) as OpenAICompatibleResponse;
+    const raw = await response.text().catch(() => '');
+    let payload: OpenAICompatibleResponse = {};
+    try {
+      payload = JSON.parse(raw) as OpenAICompatibleResponse;
+    } catch {
+      // Cuerpo no JSON (HTML, vacío…): se reporta abajo con el fragmento.
+    }
     if (!response.ok) {
       throw new Error(
-        `GitHub Models ${response.status}: ${payload.error?.message ?? response.statusText}`,
+        `GitHub Models ${response.status}: ${payload.error?.message ?? raw.slice(0, 300) ?? response.statusText}`,
       );
     }
 
     const content = payload.choices?.[0]?.message?.content;
-    if (!content) throw new Error('GitHub Models devolvió una respuesta vacía');
+    if (!content) {
+      // Diagnóstico: forma de la respuesta para ver qué devolvió el modelo.
+      const shape =
+        Object.keys(payload).length > 0
+          ? JSON.stringify(payload).slice(0, 400)
+          : raw.slice(0, 400) || '(cuerpo vacío)';
+      throw new Error(`GitHub Models devolvió una respuesta vacía. Cuerpo: ${shape}`);
+    }
     return content;
   }
 }
