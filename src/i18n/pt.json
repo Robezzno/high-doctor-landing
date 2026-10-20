@@ -93,5 +93,9 @@
   "ft_about_desc": "Uma organização independente para educação e cultura.",
   "ft_focus": "Foco",
   "ft_focus_desc": "Programas educacionais, campanhas de saúde, cooperação internacional.",
-  "ft_motto": "Comunidade • Cultura • Futuro"
+  "ft_motto": "Comunidade • Cultura • Futuro",
+  "nav_news": "Notícias",
+  "home_news_title": "Últimas notícias",
+  "home_news_cta": "Todas as notícias",
+  "home_news_note": "As notícias são publicadas em inglês"
 }

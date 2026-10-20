@@ -1,0 +1,20 @@
+---
+import NewsList from '../../../layouts/NewsList.astro';
+import { getListing } from '../../../lib/news';
+
+/**
+ * Paginación del listado ES: `/noticias/pagina/2/`, `/noticias/pagina/3/`…
+ * La página 1 es `/noticias/`, así que aquí empieza en 2.
+ */
+export async function getStaticPaths() {
+  const { totalPages } = await getListing('es');
+
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => ({
+    params: { page: String(index + 2) },
+  }));
+}
+
+const { page } = Astro.params;
+---
+
+<NewsList lang="es" page={Number(page)} />

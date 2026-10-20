@@ -93,5 +93,9 @@
   "ft_about_desc": "Niezależna organizacja non-profit zajmująca się edukacją, kulturą i rozwojem społeczności.",
   "ft_focus": "Nasze Główne Cele",
   "ft_focus_desc": "Programy Edukacyjne, Kampanie Zdrowotne, Współpraca Międzynarodowa, Integracja Społeczna.",
-  "ft_motto": "Społeczność • Kultura • Przyszłość"
+  "ft_motto": "Społeczność • Kultura • Przyszłość",
+  "nav_news": "Aktualności",
+  "home_news_title": "Najnowsze wiadomości",
+  "home_news_cta": "Wszystkie wiadomości",
+  "home_news_note": "Nasze wiadomości są publikowane po angielsku"
 }

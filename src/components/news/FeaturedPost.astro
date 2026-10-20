@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+
+import { blogT } from '../../i18n/blog';
+import {
+  categoryLabel,
+  categoryUrl,
+  formatDate,
+  isoDate,
+  postUrl,
+  slugOf,
+  socialCardPath,
+  type NewsEntry,
+  type NewsLang,
+} from '../../lib/news';
+
+interface Props {
+  entry: NewsEntry;
+  lang: NewsLang;
+}
+
+const { entry, lang } = Astro.props;
+const strings = blogT(lang);
+const slug = slugOf(entry);
+const href = postUrl(lang, slug);
+
+// Si el post no trae portada propia, la portada es la tarjeta generada en el build.
+const coverAlt = entry.data.coverAlt ?? entry.data.title;
+---
+
+<article class="featured">
+  <a class="featured__media" href={href} aria-hidden="true" tabindex="-1">
+    {
+      entry.data.cover ? (
+        <Image
+          src={entry.data.cover}
+          alt={coverAlt}
+          widths={[480, 720, 1080]}
+          sizes="(max-width: 900px) 100vw, 520px"
+          loading="eager"
+          transition:name={`post-cover-${slug}`}
+        />
+      ) : (
+        <img
+          src={socialCardPath(lang, slug)}
+          alt={coverAlt}
+          width="1080"
+          height="1350"
+          loading="eager"
+          fetchpriority="high"
+          transition:name={`post-cover-${slug}`}
+        />
+      )
+    }
+  </a>
+  <div>
+    <span class="featured__label">{strings.featuredLabel}</span>
+    <h2 class="featured__title">
+      <a href={href} transition:name={`post-title-${slug}`}>{entry.data.title}</a>
+    </h2>
+    <p class="featured__summary">{entry.data.summary}</p>
+    <div class="featured__meta">
+      <time datetime={isoDate(entry.data.date)}>{formatDate(entry.data.date, lang)}</time>
+      <a class="specimen" href={categoryUrl(lang, entry.data.category)}>
+        {categoryLabel(lang, entry.data.category)}
+      </a>
+    </div>
+  </div>
+</article>

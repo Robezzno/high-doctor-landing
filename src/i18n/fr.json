@@ -93,5 +93,9 @@
   "ft_about_desc": "Une organisation indépendante à but non lucratif dédiée à l'éducation, la culture et le développement communautaire.",
   "ft_focus": "Concentration",
   "ft_focus_desc": "Programmes éducatifs, campagnes de santé, coopération internationale.",
-  "ft_motto": "Communauté • Culture • Avenir"
+  "ft_motto": "Communauté • Culture • Avenir",
+  "nav_news": "Actualités",
+  "home_news_title": "Dernières actualités",
+  "home_news_cta": "Toutes les actualités",
+  "home_news_note": "Nos actualités sont publiées en anglais"
 }

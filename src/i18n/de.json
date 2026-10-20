@@ -93,5 +93,9 @@
   "ft_about_desc": "Eine unabhängige gemeinnützige Organisation, die sich Bildung, Kultur, Gemeindeentwicklung und sozialem Bewusstsein widmet.",
   "ft_focus": "Fokus",
   "ft_focus_desc": "Bildungsprogramme, Gesundheitskampagnen, Internationale Kooperation, Soziale Inklusion.",
-  "ft_motto": "Gemeinschaft • Kultur • Zukunft"
+  "ft_motto": "Gemeinschaft • Kultur • Zukunft",
+  "nav_news": "Nachrichten",
+  "home_news_title": "Neueste Nachrichten",
+  "home_news_cta": "Alle Nachrichten",
+  "home_news_note": "Unsere Nachrichten erscheinen auf Englisch"
 }

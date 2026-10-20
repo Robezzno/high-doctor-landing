@@ -1,28 +1,74 @@
 ---
 import '../styles/global.css';
+import '../styles/blog.css';
 import { languages, langPath, type Lang } from '../i18n';
+
+interface Alternate {
+  lang: string;
+  href: string;
+}
 
 interface Props {
   /** Idioma de la página. */
   lang: Lang;
   /** Sólo en `/`: redirige una vez según el idioma del navegador. */
   redirectBrowserLang?: boolean;
+  /** Título de la pestaña y `og:title`. Por defecto, el de la home. */
+  title?: string;
+  /** `meta description` y `og:description`. */
+  description?: string;
+  /** Imagen social (ruta del sitio o URL absoluta). */
+  image?: string;
+  /** `og:type`. */
+  type?: 'website' | 'article';
+  /** `hreflang` a medida. El blog sólo existe en ES y EN. */
+  alternates?: Alternate[];
+  /** Feed RSS del idioma, para el autodescubrimiento. */
+  rss?: string;
+  /** `article:published_time` (ISO) en los posts. */
+  publishedTime?: string;
 }
 
-const { lang, redirectBrowserLang = false } = Astro.props;
+const {
+  lang,
+  redirectBrowserLang = false,
+  title: customTitle,
+  description: customDescription,
+  image,
+  type = 'website',
+  alternates: customAlternates,
+  rss,
+  publishedTime,
+} = Astro.props;
 
 // Mismo <title> y misma descripción que la web antigua (los textos SEO
 // por idioma llegan en el prompt 09).
-const title = 'High Doctor Foundation | Advancing Cannabis Knowledge';
+const siteName = 'High Doctor Foundation';
+const defaultTitle = `${siteName} | Advancing Cannabis Knowledge`;
+// En el blog el título del post manda y el nombre del sitio se añade al final,
+// sin duplicarlo cuando el título del post ya lo incluye.
+const title = customTitle
+  ? customTitle.includes(siteName)
+    ? customTitle
+    : `${customTitle} | ${siteName}`
+  : defaultTitle;
+const ogTitle = customTitle ?? defaultTitle;
 const description =
+  customDescription ??
   'High Doctor Foundation is an independent non-profit organization dedicated to education, culture, community development and social awareness regarding cannabis and cannabinoids.';
 
 const site = Astro.site ?? new URL('https://highdoctor.foundation');
 const canonical = new URL(Astro.url.pathname, site);
-const alternates = languages.map((language) => ({
-  lang: language,
-  href: new URL(langPath(language), site).href,
-}));
+const absolute = (path: string) => new URL(path, site).href;
+
+const alternates: Alternate[] =
+  customAlternates ??
+  languages.map((language) => ({
+    lang: language,
+    href: absolute(langPath(language)),
+  }));
+
+const imageUrl = image ? absolute(image) : undefined;
 ---
 
 <!doctype html>
@@ -38,13 +84,34 @@ const alternates = languages.map((language) => ({
         <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
       ))
     }
-    <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+    {
+      // En el blog el x-default apunta a la versión EN, no a la portada.
+      !alternates.some((alternate) => alternate.lang === 'x-default') && (
+        <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+      )
+    }
+    {rss && <link rel="alternate" type="application/rss+xml" title={title} href={absolute(rss)} />}
+
+    <!-- Open Graph y Twitter: la imagen la genera el build (Satori + resvg + sharp). -->
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:locale" content={lang} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    {imageUrl && <meta property="og:image:alt" content={ogTitle} />}
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
 
     <!-- Tipografías: igual que la web antigua, mismas familias y pesos. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 

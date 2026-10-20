@@ -1,0 +1,65 @@
+---
+import { t, type Lang } from '../../i18n';
+import {
+  blogHrefForSiteLang,
+  categoryLabel,
+  formatShortDate,
+  getPosts,
+  isoDate,
+  postUrl,
+  slugOf,
+} from '../../lib/news';
+
+interface Props {
+  /** Idioma de la página de la web (8 idiomas). */
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+/**
+ * Decisión del bloque "Últimas noticias" (documentada en `docs/CONTENIDO.md`):
+ * - EN y ES muestran las noticias de su idioma.
+ * - Los otros seis idiomas muestran las noticias en EN y enlazan al blog EN,
+ *   porque el blog sólo existe en ES y EN (`docs/PLAN.md`).
+ */
+const newsLang = lang === 'es' ? 'es' : 'en';
+const posts = (await getPosts(newsLang)).slice(0, 3);
+const blogHref = blogHrefForSiteLang(lang);
+const showLanguageNote = lang !== 'es' && lang !== 'en';
+---
+
+{
+  posts.length > 0 && (
+    <section class="latest-news" id="news" aria-labelledby="latest-news-title">
+      <div class="container">
+        <div class="latest-news__head">
+          <h2 class="latest-news__title" id="latest-news-title">
+            {t(lang, 'home_news_title')}
+          </h2>
+          <a class="latest-news__cta" href={blogHref}>
+            {t(lang, 'home_news_cta')} →
+          </a>
+        </div>
+        {showLanguageNote && <p class="latest-news__note">{t(lang, 'home_news_note')}</p>}
+        <div class="latest-news__list">
+          {posts.map((post) => {
+            const slug = slugOf(post);
+            return (
+              <article class="latest-card">
+                <time class="latest-card__date" datetime={isoDate(post.data.date)}>
+                  {formatShortDate(post.data.date)}
+                </time>
+                <span class="specimen">{categoryLabel(newsLang, post.data.category)}</span>
+                <h3 class="latest-card__title">
+                  <a href={postUrl(newsLang, slug)}>{post.data.title}</a>
+                </h3>
+                <p class="latest-card__summary">{post.data.summary}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}

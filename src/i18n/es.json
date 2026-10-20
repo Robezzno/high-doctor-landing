@@ -93,5 +93,9 @@
   "ft_about_desc": "Organización independiente sin fines de lucro dedicada a la educación, la cultura, el desarrollo comunitario y la conciencia social. Fundada en los valores de responsabilidad, educación, cultura e innovación.",
   "ft_focus": "Enfoque",
   "ft_focus_desc": "Programas Educativos, Campañas de Salud, Cooperación Internacional, Inclusión Social, Apoyo a la Investigación.",
-  "ft_motto": "Comunidad • Cultura • Futuro"
+  "ft_motto": "Comunidad • Cultura • Futuro",
+  "nav_news": "Noticias",
+  "home_news_title": "Últimas noticias",
+  "home_news_cta": "Ver todas las noticias",
+  "home_news_note": "Las noticias se publican en inglés"
 }

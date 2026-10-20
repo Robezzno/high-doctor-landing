@@ -93,5 +93,9 @@
   "ft_about_desc": "Een onafhankelijke non-profitorganisatie gericht op educatie, cultuur en gemeenschapsontwikkeling.",
   "ft_focus": "Focus",
   "ft_focus_desc": "Educatieve Programma's, Gezondheidscampagnes, Internationale Samenwerking.",
-  "ft_motto": "Gemeenschap • Cultuur • Toekomst"
+  "ft_motto": "Gemeenschap • Cultuur • Toekomst",
+  "nav_news": "Nieuws",
+  "home_news_title": "Laatste nieuws",
+  "home_news_cta": "Al het nieuws",
+  "home_news_note": "Ons nieuws wordt in het Engels gepubliceerd"
 }
