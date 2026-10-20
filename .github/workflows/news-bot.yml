@@ -25,9 +25,14 @@ name: Bot de noticias
 # cuando el post se vea bien en local.
 
 on:
-  schedule:
-    - cron: '30 6 * * 1,3,5' # 08:30 Madrid en verano (CEST)
-    - cron: '30 7 * * 1,3,5' # 08:30 Madrid en invierno (CET)
+  # Planificación automática DESACTIVADA (decisión de Saf, 2026-10-20):
+  # GitHub Models fue retirado por GitHub el 30/07/2026, así que el bot no
+  # puede redactar por sí solo. Fase futura: generar las noticias en lote
+  # con el asistente y dejarlas programadas; entonces se reactiva el cron
+  # (30 6 y 30 7 * * 1,3,5) con LLM_PROVIDER apuntando al proveedor elegido.
+  # schedule:
+  #   - cron: '30 6 * * 1,3,5' # 08:30 Madrid en verano (CEST)
+  #   - cron: '30 7 * * 1,3,5' # 08:30 Madrid en invierno (CET)
   workflow_dispatch:
     inputs:
       dry_run:
