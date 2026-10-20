@@ -9,15 +9,16 @@
 - 2026-10-20: prompt 08 — flujo de Instagram completo montado y probado con fixtures (97 tests del bot en verde): publicación automática tras cada deploy con la tarjeta generada, caption con hashtags de lista blanca, refresco mensual del token y botón de pausa (IG_ENABLED). **Bloqueado por Saf**: falta la cuenta Profesional, la app de Meta y el token (guía en docs/INSTAGRAM-SETUP.md). No se activa hasta pasar credenciales.
 
 ## En curso
-- Prompt 03 (animaciones) y prompt 04 (contenido/legal, necesita datos de Saf).
+- **PARADO por Saf (2026-10-20)** con los prompts 00/01/02/05/06/07/08 hechos y desplegados. Quedan 03 (wip), 04 y 09. Todo el detalle en `docs/CONTINUAR.md`.
 
 ## Hecho (además)
 - 2026-10-20: prompt 01 — web migrada a Astro 7 (TS strict): 8 rutas estáticas por idioma con hreflang/canonical, i18n extraído por script (95 claves × 8 idiomas, el build falla si falta una), imágenes optimizadas AVIF/WebP, formulario Web3Forms conservado, workflow deploy.yml con withastro/action. Web antigua en `legacy/`. Pages pasa a modo workflow. Capturas comparativas en `docs/capturas/01-migracion-astro/`.
 
 ## Cómo retomarlo
-1. Lee `docs/PLAN.md` y `docs/prompts/README.md`.
-2. Ejecuta el primer prompt que no esté en "Hecho", en orden.
-3. Al terminar cada prompt, muévelo aquí a "Hecho" con fecha y haz commit.
+1. Lee `docs/CONTINUAR.md` (estado exacto, rama wip de animaciones y pendientes de Saf).
+2. Lee `docs/PLAN.md`, `docs/prompts/README.md` y `docs/TAREAS.md`.
+3. Ejecuta el primer prompt pendiente en orden (03 → 04 → 09), con los avisos de CONTINUAR.md.
+4. Al terminar cada prompt, actualiza este fichero, haz commit y push.
 
 ## Pendiente de Saf
 - Logo original en vector o PNG con transparencia real (prompt 02).
