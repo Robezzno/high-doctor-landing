@@ -1,0 +1,118 @@
+# Fuentes del bot de noticias — High Doctor Foundation
+#
+# Todas las fuentes RSS de esta lista se comprobaron una a una con curl el
+# 2026-10-20 (código HTTP 200 + XML con <item>). Las que no respondieron se
+# descartaron (EUDA/EMCDDA y MDPI devuelven 403 de Cloudflare,
+# jcannabisresearch.biomedcentral.com ya no sirve RSS, la revista
+# "Cannabis and Cannabinoid Research" tiene el feed congelado en 2015 y
+# Energy Control devuelve un challenge de Cloudflare).
+#
+# Campos:
+#   id         identificador corto y estable (se usa en logs y en state/seen.json)
+#   name       nombre público de la fuente (va en el post como `source.name`)
+#   url        feed RSS o, para PubMed, endpoint de E-utilities
+#   type       rss | pubmed
+#   weight     peso editorial (1 = contexto, 2 = medio especializado, 3 = ciencia/institucional)
+#   category   categoría por defecto del contrato de contenido (docs/CONTENIDO.md)
+#   lang       idioma original del contenido (el post se publica siempre ES + EN)
+#
+# `weight` no sustituye al filtro: sólo desempata entre noticias parecidas.
+
+sources:
+  # --- Ciencia e investigación ------------------------------------------------
+  # PubMed ya no sirve RSS para búsquedas arbitrarias (requiere una búsqueda
+  # guardada en MyNCBI), así que se usa su API pública E-utilities, gratis y sin
+  # clave. Se piden los artículos más recientes de cannabinoides.
+  - id: pubmed
+    name: PubMed
+    type: pubmed
+    url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils
+    query: cannabinoid OR cannabidiol
+    retmax: 20
+    weight: 3
+    category: investigacion
+    lang: en
+
+  # Revista revisada por pares de acceso abierto (Frontiers). Es un feed general
+  # de farmacología: el filtro de palabras clave descarta lo que no toca cannabis.
+  - id: frontiers-pharmacology
+    name: Frontiers in Pharmacology
+    type: rss
+    url: https://www.frontiersin.org/journals/pharmacology/rss
+    weight: 2
+    category: investigacion
+    lang: en
+
+  # --- Política, legislación y medios especializados --------------------------
+  - id: business-of-cannabis
+    name: Business of Cannabis
+    type: rss
+    url: https://businessofcannabis.com/feed/
+    weight: 2
+    category: legislacion
+    lang: en
+
+  - id: cannabis-health-news
+    name: Cannabis Health News
+    type: rss
+    url: https://cannabishealthnews.co.uk/feed/
+    weight: 2
+    category: salud
+    lang: en
+
+  - id: cannabis-industry-journal
+    name: Cannabis Industry Journal
+    type: rss
+    url: https://cannabisindustryjournal.com/feed/
+    weight: 1
+    category: legislacion
+    lang: en
+
+  - id: marijuana-moment
+    name: Marijuana Moment
+    type: rss
+    url: https://www.marijuanamoment.net/feed/
+    weight: 1
+    category: legislacion
+    lang: en
+
+  - id: canamo
+    name: Cáñamo
+    type: rss
+    url: https://canamo.net/feed
+    weight: 2
+    category: cultura
+    lang: es
+
+  - id: hanfjournal
+    name: Hanfjournal
+    type: rss
+    url: https://hanfjournal.de/feed/
+    weight: 2
+    category: legislacion
+    lang: de
+
+  - id: hanfverband
+    name: Deutscher Hanfverband
+    type: rss
+    url: https://hanfverband.de/feed
+    weight: 2
+    category: legislacion
+    lang: de
+
+  # --- Cultura, derechos y reducción de riesgos -------------------------------
+  - id: el-planteo
+    name: El Planteo
+    type: rss
+    url: https://elplanteo.com/feed/
+    weight: 1
+    category: cultura
+    lang: es
+
+  - id: norml
+    name: NORML
+    type: rss
+    url: https://norml.org/feed/
+    weight: 1
+    category: cultura
+    lang: en

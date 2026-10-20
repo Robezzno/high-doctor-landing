@@ -1,1 +1,10 @@
 server*.log
+
+# Dependencias del bot de noticias (bot/)
+node_modules/
+bot/node_modules/
+npm-debug.log*
+
+# Secretos locales: nunca deben llegar al repo (es público)
+.env
+.env.*

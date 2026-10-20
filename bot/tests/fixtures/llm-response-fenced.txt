@@ -1,0 +1,21 @@
+Aquí tienes el JSON que pediste:
+
+```json
+{
+  "es": {
+    "title": "Alemania revisa los límites de THC al volante",
+    "summary": "El gobierno alemán estudia un nuevo límite de THC para conductores, según Hanfjournal.",
+    "body": "## Qué ha pasado\n\nEl gobierno alemán ha abierto el debate sobre el límite de THC al volante después de la entrada en vigor de la ley de cannabis. El medio Hanfjournal recoge las posiciones del ministerio de transporte.\n\n## Por qué importa\n\nLa norma afecta a pacientes y a cualquier conductor, y define cómo se mide el consumo reciente frente al uso terapéutico.\n\n## Contexto\n\nAlemania aprobó la legalización parcial en 2024 y desde entonces revisa los criterios de seguridad vial.\n\n## Qué no sabemos todavía\n\nNo hay fecha ni texto definitivo, y no está claro qué umbral se aplicará.",
+    "instagramHook": "Alemania revisa el límite de THC al volante",
+    "tags": ["alemania", "legalizacion", "seguridad vial"]
+  },
+  "en": {
+    "title": "Germany reviews its THC driving limit",
+    "summary": "The German government is studying a new THC limit for drivers, according to Hanfjournal.",
+    "body": "## What happened\n\nThe German government has opened a debate on the THC limit for drivers after its cannabis law came into force. Hanfjournal reports the positions of the transport ministry.\n\n## Why it matters\n\nThe rule affects patients and any driver, and defines how recent use is measured against therapeutic use.\n\n## Context\n\nGermany approved partial legalisation in 2024 and has been reviewing road-safety criteria since then.\n\n## What we do not know yet\n\nThere is no date or final text, and it is not clear which threshold will apply.",
+    "instagramHook": "Germany reviews its THC driving limit",
+    "tags": ["germany", "legalisation", "road safety"]
+  },
+  "category": "legislacion"
+}
+```
