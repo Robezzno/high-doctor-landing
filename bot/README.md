@@ -59,7 +59,7 @@ Variables de entorno:
 |---|---|---|
 | `BOT_MODE` | `review` | `review` (PR) o `publish` (commit a main). |
 | `DRY_RUN` | `0` | `1` imprime el post y no escribe ni commitea. |
-| `LLM_PROVIDER` | `github-models` | `github-models` (gratis) o `anthropic` (de pago). |
+| `LLM_PROVIDER` | `github-models` | ⚠️ **SIN USO ACTUALMENTE**: GitHub Models fue retirado por GitHub el 30/07/2026 y el cron del bot está desactivado (decisión de Saf: fase futura con noticias generadas en lote y programadas). Queda documentado por si se reactiva con otro proveedor. |
 | `LLM_MODEL` | `openai/gpt-4o-mini` | Modelo del proveedor elegido. |
 | `GITHUB_TOKEN` | — | Lo pone Actions (`models: read`). También sirve en local. |
 | `GH_TOKEN` | — | Para `gh pr create`, etiquetas y `gh workflow run`. |
@@ -68,7 +68,7 @@ Variables de entorno:
 
 ### Proveedores de LLM
 
-- **`github-models`** (por defecto): gratis con el `GITHUB_TOKEN` del workflow y
+- **`github-models`** (por defecto, RETIRADO): GitHub eliminó el servicio el 30/07/2026. El endpoint responde 200 con un cuerpo vacío, así que el bot aborta sin publicar. El cron está comentado en `.github/workflows/news-bot.yml`.
   límite diario de sobra para 1–3 noticias al día. Endpoint
   `https://models.github.ai/inference/chat/completions`.
 - **`anthropic`**: implementado en `src/llm.ts` pero **sin configurar**. Es de
