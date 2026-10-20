@@ -1,0 +1,30 @@
+{
+  "name": "highdoctor-news-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bot de noticias de High Doctor Foundation: RSS → filtro → LLM → post ES/EN",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "run": "tsx src/index.ts",
+    "dry-run": "DRY_RUN=1 tsx src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "jsdom": "^27.0.0",
+    "rss-parser": "^3.13.0",
+    "yaml": "^2.8.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^24.7.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

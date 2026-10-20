@@ -175,3 +175,41 @@ artículo.
 No incluyen cifras ni datos no comprobables: son textos de presentación y método de
 la fundación. Las fechas son las de publicación del blog y se pueden ajustar cuando
 Saf confirme el calendario real.
+
+## Lo que devuelve el bot
+
+El bot pide al LLM exactamente este JSON (validado con Zod en
+`bot/src/write.ts`; si no valida, reintenta una vez y, si vuelve a fallar, no
+publica):
+
+```json
+{
+  "es": {
+    "title": "≤ 90 caracteres",
+    "summary": "≤ 200 caracteres",
+    "body": "markdown de 300-500 palabras, sin H1",
+    "instagramHook": "≤ 80 caracteres",
+    "tags": ["2 a 6 etiquetas", "en minúsculas"]
+  },
+  "en": {
+    "title": "≤ 90 caracteres",
+    "summary": "≤ 200 caracteres",
+    "body": "markdown de 300-500 palabras, sin H1",
+    "instagramHook": "≤ 80 caracteres",
+    "tags": ["2 a 6 etiquetas", "en minúsculas"]
+  },
+  "category": "investigacion | salud | legislacion | cultura | fundacion | eventos"
+}
+```
+
+Con ese JSON, `bot/src/publish.ts` genera el frontmatter que has visto arriba:
+mismo `translationKey` en ES y EN, `author: 'bot'`, `source` relleno con la
+fuente de la noticia e `instagram: 'pending'`. El estado del bot se guarda en
+`bot/state/seen.json` y se commitea junto con el post, así que relanzar el bot no
+duplica noticias.
+
+## Verificación rápida
+
+- Un post con `author: bot` y sin `source` **falla** el schema (hay test en
+  `src/content.config` del prompt 05).
+- Los tests del bot comprueban la forma del JSON: `cd bot && npm test`.

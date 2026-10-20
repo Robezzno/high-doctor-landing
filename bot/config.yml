@@ -1,0 +1,127 @@
+# Configuración del bot de noticias — High Doctor Foundation
+#
+# Los secretos y los interruptores de entorno NO van aquí: se leen de variables
+# de entorno (`BOT_MODE`, `LLM_PROVIDER`, `LLM_MODEL`, `DRY_RUN`, `GITHUB_TOKEN`,
+# `ANTHROPIC_API_KEY`). Ver bot/README.md.
+
+# Modo de publicación: `review` abre un PR con la etiqueta `noticia-bot`;
+# `publish` hace commit directo a main (dispara el deploy).
+# Las dos primeras semanas va en `review` (docs/TAREAS.md). Se puede forzar con
+# BOT_MODE=<modo>.
+mode: review
+
+# --- Filtro ------------------------------------------------------------------
+# Sólo noticias de <= 72 h.
+max_age_hours: 72
+# Similitud de título por trigramas (coeficiente de Dice) para deduplicar.
+title_similarity_threshold: 0.6
+# Una sola noticia por ejecución. Es preferible no publicar a publicar relleno.
+max_per_run: 1
+# Puntuación mínima para publicar (relevancia + peso de la fuente).
+min_score: 3
+
+# Puntuación: cada patrón encontrado en título + resumen suma su peso.
+# Se compara en minúsculas y sin acentos.
+keywords:
+  investigacion:
+    - { pattern: "estudio", weight: 2 }
+    - { pattern: "investigaci", weight: 2 }
+    - { pattern: "ensayo cl", weight: 3 }
+    - { pattern: "ensayo aleatorizado", weight: 3 }
+    - { pattern: "revisi", weight: 1 }
+    - { pattern: "cannabidiol", weight: 2 }
+    - { pattern: "cbd", weight: 2 }
+    - { pattern: "thc", weight: 1 }
+    - { pattern: "cannabinoide", weight: 2 }
+    - { pattern: "terpen", weight: 1 }
+    - { pattern: "precl", weight: 1 }
+    - { pattern: "farmacolog", weight: 1 }
+  salud:
+    - { pattern: "paciente", weight: 2 }
+    - { pattern: "dolor", weight: 1 }
+    - { pattern: "epilep", weight: 2 }
+    - { pattern: "esclerosis", weight: 2 }
+    - { pattern: "salud p", weight: 2 }
+    - { pattern: "sanitari", weight: 1 }
+  legislacion:
+    - { pattern: "ley", weight: 2 }
+    - { pattern: "legaliza", weight: 2 }
+    - { pattern: "regulaci", weight: 2 }
+    - { pattern: "prohibici", weight: 1 }
+    - { pattern: "parlamento", weight: 2 }
+    - { pattern: "gobierno", weight: 2 }
+    - { pattern: "ministerio", weight: 2 }
+    - { pattern: "union europea", weight: 2 }
+    - { pattern: "europa", weight: 2 }
+    - { pattern: "alemania", weight: 2 }
+    - { pattern: "españ", weight: 2 }
+    - { pattern: "portugal", weight: 2 }
+    - { pattern: "suiza", weight: 2 }
+    - { pattern: "reino unido", weight: 2 }
+    - { pattern: "tribunal", weight: 1 }
+    - { pattern: "cannabis social club", weight: 2 }
+  cultura:
+    - { pattern: "reducci", weight: 2 }
+    - { pattern: "riesgo", weight: 1 }
+    - { pattern: "educaci", weight: 1 }
+    - { pattern: "prevenci", weight: 2 }
+    - { pattern: "investigadores", weight: 1 }
+    - { pattern: "historia", weight: 1 }
+
+# Temas vetados: si un patrón aparece en título o resumen, la noticia se
+# descarta. Son temas comerciales, de consumo o sensacionalistas que no encajan
+# con la voz de la fundación.
+vetos:
+  - id: venta
+    label: "venta y comercio"
+    patterns: ["en venta", "a la venta", "comprar", "buy now", "shop", "tienda", "dispensar", "dispensario", "menú", "sorteo", "descuento", "oferta", "oferta de la semana"]
+  - id: precios
+    label: "precios y ofertas"
+    patterns: ["precio", "precios", "price", "prices", "euros por gramo", "por gramo", "cupón", "rebaja", "black friday", "cost per gram"]
+  - id: cepas
+    label: "cepas y variedades como producto"
+    patterns: ["cepa", "cepas", "strain", "strains", "variedad de cannabis", "semilla", "semillas", "genética de cannabis", "gorila glue", "og kush", "amnesia haze"]
+  - id: recetas
+    label: "recetas de consumo"
+    patterns: ["receta", "recetas", "cómo hacer", "how to make", "brownie", "brownies", "tintura casera", "cocina cannábica", "infusión"]
+  - id: sensacionalismo
+    label: "sensacionalismo"
+    patterns: ["escándalo", "policía encuentra", "detenido", "detenidos", "mafia", "narcotráfico", "sobredosis", "casi muere", "shocking", "you won't believe", "bust", "raid", "seized"]
+  - id: consumo
+    label: "promoción del consumo"
+    patterns: ["cómo fumar", "how to smoke", "colocón", "colocarte", "recomendamos probar", "mejores cepas para", "how to get high"]
+
+# --- Anti-copia ---------------------------------------------------------------
+# Si el texto generado comparte más del 15 % de sus 8-gramas con el original,
+# se reescribe una vez; si vuelve a fallar, se descarta la noticia.
+copy_check:
+  ngram: 8
+  max_overlap: 0.15
+
+# --- Redacción ----------------------------------------------------------------
+llm:
+  # github-models (gratis) | anthropic (de pago, requiere ANTHROPIC_API_KEY)
+  provider: github-models
+  model: openai/gpt-4o-mini
+  temperature: 0.4
+  # Longitud del cuerpo en cada idioma.
+  min_words: 300
+  max_words: 500
+  timeout_ms: 120000
+  # Reintentos si el JSON no valida con Zod (además del de anti-copia).
+  max_validation_retries: 1
+
+# --- Salida -------------------------------------------------------------------
+output:
+  # Mismo contrato que los posts manuales (docs/CONTENIDO.md).
+  content_dir: src/content/news
+  state_file: bot/state/seen.json
+  instagram: pending
+  author: bot
+  # Etiqueta del PR en modo review.
+  pr_label: noticia-bot
+  pr_branch_prefix: noticia-bot/
+  # Autoría de los commits: persona, nunca una IA.
+  commit_author:
+    name: Robezzno
+    email: robezzno@gmail.com

@@ -1,0 +1,126 @@
+name: Bot de noticias
+
+# Busca noticias de cannabis, escribe un post original en ES + EN y lo publica
+# (modo publish) o abre un PR para revisarlo (modo review).
+#
+# Horario: lunes, miércoles y viernes a las 08:30 de Europe/Madrid.
+# El cron de GitHub Actions siempre va en UTC y Madrid cambia de hora, así que
+# hay dos disparadores y un guardia que deja pasar sólo el que cae a las 08:xx:
+#   - 08:30 CEST (horario de verano, UTC+2) -> 06:30 UTC  -> cron '30 6'
+#   - 08:30 CET  (horario de invierno, UTC+1) -> 07:30 UTC -> cron '30 7'
+# El cambio de hora es el último domingo de marzo y el último domingo de
+# octubre. En verano el cron de las 07:30 UTC cae a las 09:30 locales y en
+# invierno el de las 06:30 UTC cae a las 07:30 locales: el paso "Comprobar hora
+# de Madrid" descarta el que no toca (también absorbe retrasos de la cola de
+# Actions hasta :44).
+#
+# OJO con GITHUB_TOKEN: un push hecho con el token del workflow NO dispara
+# otros workflows. Por eso, tras publicar en main, el propio bot llama a
+# `gh workflow run deploy.yml` (ver bot/src/publish.ts). Es la opción más
+# simple: no hace falta PAT ni GitHub App. En modo review no hace falta nada:
+# el merge lo hace una persona y ese push sí dispara el deploy.
+# El mismo motivo afecta al build del PR: los workflows de `pull_request`
+# lanzados por GITHUB_TOKEN no se ejecutan solos. Si el PR necesita checks,
+# se relanzan a mano (`gh workflow run <workflow> --ref <rama>`) o se mergea
+# cuando el post se vea bien en local.
+
+on:
+  schedule:
+    - cron: '30 6 * * 1,3,5' # 08:30 Madrid en verano (CEST)
+    - cron: '30 7 * * 1,3,5' # 08:30 Madrid en invierno (CET)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Generar el post y mostrarlo en el resumen, sin commit'
+        type: boolean
+        default: false
+      mode:
+        description: 'review abre un PR con la etiqueta noticia-bot; publish hace commit a main'
+        type: choice
+        options:
+          - review
+          - publish
+        default: review
+
+permissions:
+  contents: write # commit del post + state/seen.json
+  pull-requests: write # abrir el PR en modo review
+  issues: write # crear la etiqueta noticia-bot
+  models: read # GitHub Models (LLM gratis)
+
+# Nunca dos ejecuciones a la vez: el estado (state/seen.json) se pisaría.
+concurrency:
+  group: news-bot
+  cancel-in-progress: false
+
+jobs:
+  noticia:
+    name: Buscar, escribir y publicar
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Comprobar hora de Madrid
+        id: cuando
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "Ejecución manual: se salta el control de horario."
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          hora=$(TZ=Europe/Madrid date +%H)
+          minuto=$(TZ=Europe/Madrid date +%M)
+          echo "Hora de Madrid: ${hora}:${minuto}"
+          if [ "$hora" = "08" ] && [ "$minuto" -lt 45 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Este disparador no corresponde a las 08:30 de Madrid: se omite."
+          fi
+
+      - name: Descargar el repo
+        if: steps.cuando.outputs.run == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Autoría de los commits: una persona, nunca una IA.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Preparar Node 22
+        if: steps.cuando.outputs.run == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: bot/package-lock.json
+
+      - name: Instalar dependencias del bot
+        if: steps.cuando.outputs.run == 'true'
+        working-directory: bot
+        run: npm ci --no-audit --no-fund
+
+      - name: Ejecutar el bot
+        if: steps.cuando.outputs.run == 'true'
+        working-directory: bot
+        env:
+          # GitHub Models se autentica con el propio GITHUB_TOKEN.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # gh (PR, etiquetas y `gh workflow run`) usa GH_TOKEN.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_PROVIDER: github-models
+          LLM_MODEL: openai/gpt-4o-mini
+          BOT_MODE: ${{ inputs.mode || 'review' }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: npm run run
+
+      - name: Resumen de la ejecución
+        if: always() && steps.cuando.outputs.run == 'true'
+        run: |
+          {
+            echo ""
+            echo "---"
+            echo "Modo: \`${{ inputs.mode || 'review' }}\` · dry run: \`${{ inputs.dry_run || false }}\`"
+            echo "Últimos commits:"
+            echo '```'
+            git log --oneline -3
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
