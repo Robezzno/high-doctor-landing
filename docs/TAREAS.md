@@ -8,8 +8,11 @@
 
 - 2026-10-20: prompt 08 — flujo de Instagram completo montado y probado con fixtures (97 tests del bot en verde): publicación automática tras cada deploy con la tarjeta generada, caption con hashtags de lista blanca, refresco mensual del token y botón de pausa (IG_ENABLED). **Bloqueado por Saf**: falta la cuenta Profesional, la app de Meta y el token (guía en docs/INSTAGRAM-SETUP.md). No se activa hasta pasar credenciales.
 
+- 2026-10-20: prompt 03 — animaciones con GSAP/ScrollTrigger/SplitText/DrawSVG + Lenis y View Transitions (rama `wip/prompt-03-animaciones`, pendiente de merge y publicación). Hero por líneas con subrayado a rotulador, molécula que se dibuja y respira, hilo de progreso `§`, checklist del protocolo, sección pinneada «Cómo trabajamos», microinteracciones y sello APPROVED. Verificado en local: build sin errores, 111 tests en verde, 59,6 KB gzip de JS de animación, reduced-motion y sin JS legibles, CLS 0 y sin long tasks > 100 ms. Capturas en `docs/capturas/03/`.
+
 ## En curso
-- **PARADO por Saf (2026-10-20)** con los prompts 00/01/02/05/06/07/08 hechos y desplegados. Quedan 03 (wip), 04 y 09. Todo el detalle en `docs/CONTINUAR.md`.
+- Prompt 04 (contenido/legal) — trabajo completo en la rama `feat/contenido` (137 tests), pendiente de merge y de los datos reales de Saf. Detalle en `docs/CONTINUAR.md`.
+- Prompt 09 (SEO/QA) — pre-trabajo en la rama `feat/seo-qa`.
 
 ## Hecho (además)
 - 2026-10-20: prompt 01 — web migrada a Astro 7 (TS strict): 8 rutas estáticas por idioma con hreflang/canonical, i18n extraído por script (95 claves × 8 idiomas, el build falla si falta una), imágenes optimizadas AVIF/WebP, formulario Web3Forms conservado, workflow deploy.yml con withastro/action. Web antigua en `legacy/`. Pages pasa a modo workflow. Capturas comparativas en `docs/capturas/01-migracion-astro/`.

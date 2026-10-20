@@ -28,7 +28,7 @@ const values: { label: TranslationKey; text: TranslationKey }[] = [
 const stripColon = (value: string) => value.replace(/\s*:\s*$/, '');
 ---
 
-<section id="mission" class="mission section section--paper grain reveal">
+<section id="mission" class="mission section section--paper grain reveal" data-folio="02">
   <div class="container">
     <header class="section__head">
       <span class="tag">SPEC-02 / {t(lang, 'nav_mission')}</span>
@@ -69,12 +69,23 @@ const stripColon = (value: string) => value.replace(/\s*:\s*$/, '');
             <h3 class="mono protocol__title">{t(lang, 'mission_protocol')}</h3>
             <span class="mono protocol__range" aria-hidden="true">01 — 06</span>
           </div>
+          <!-- La marca manuscrita se clona desde aquí al hacer scroll
+               (src/scripts/motion/protocol.ts). Sin JS, la lista se lee igual. -->
+          <template data-protocol-check>
+            <svg viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+              <path d="M3.6 14.2c2.7 1.5 4.8 3.5 6.4 6.3C13 12.7 17.4 7.3 22.4 3.2"></path>
+            </svg>
+          </template>
+
           <ol class="protocol__list">
             {
               missionItems.map((key, index) => (
-                <li class="protocol__item">
-                  <span class="mono protocol__num">{String(index + 1).padStart(2, '0')}</span>
+                <li class="protocol__item" data-protocol-item>
+                  <span class="mono protocol__num" data-protocol-num>
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                   <span class="protocol__text">{t(lang, key)}</span>
+                  <span class="protocol__check" data-protocol-slot aria-hidden="true" />
                 </li>
               ))
             }
@@ -195,7 +206,7 @@ const stripColon = (value: string) => value.replace(/\s*:\s*$/, '');
 
   .protocol__item {
     display: grid;
-    grid-template-columns: 3.25rem 1fr;
+    grid-template-columns: 3.25rem 1fr 1.75rem;
     gap: var(--sp-2xs);
     align-items: baseline;
     padding-block: clamp(0.7rem, 1.4vw, 1rem);
@@ -212,10 +223,51 @@ const stripColon = (value: string) => value.replace(/\s*:\s*$/, '');
     color: var(--c-ink);
   }
 
-  .protocol__item:hover .protocol__num {
+  .protocol__item:hover .protocol__num,
+  .protocol__num.is-done {
     background-color: var(--c-marker);
     color: var(--c-ink);
     padding-inline: 0.2rem;
+  }
+
+  /* Marca de verificación dibujada a mano. */
+  .protocol__check {
+    justify-self: end;
+    align-self: center;
+    width: 1.6rem;
+    color: var(--c-green-deep);
+  }
+
+  .protocol__check :global(svg) {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .protocol__check :global(path) {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ------------------------------------------------- Modo ligero (móvil) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html[data-motion='lite']) .protocol__check :global(path) {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+    }
+
+    :global(html[data-motion='lite']) .protocol__item.is-done .protocol__check :global(path) {
+      animation: lite-check 460ms var(--ease-out) forwards;
+    }
+
+    @keyframes lite-check {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
   }
 
   @media (max-width: 68rem) {

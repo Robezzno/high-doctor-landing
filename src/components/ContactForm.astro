@@ -188,7 +188,7 @@ const fieldNumbers = {
     >
     </div>
 
-    <!-- El personaje sólo aparece cuando el envío ha funcionado. -->
+    <!-- El personaje y el sello sólo aparecen cuando el envío ha funcionado. -->
     <div class="success-mascot" aria-hidden="true">
       <Picture
         src={character}
@@ -200,9 +200,13 @@ const fieldNumbers = {
         loading="lazy"
         decoding="async"
       />
+      <span class="success-stamp" data-stamp>
+        <span class="success-stamp__box">APPROVED</span>
+      </span>
     </div>
   </form>
 </div>
+
 
 <style>
   .sheet {
@@ -261,15 +265,58 @@ const fieldNumbers = {
   }
 
   .field label {
+    position: relative;
     display: flex;
     align-items: baseline;
     gap: 0.45em;
+    width: fit-content;
     margin-bottom: 0.4rem;
     font-family: var(--font-mono);
     font-size: var(--fs-mono);
     letter-spacing: var(--tracking-mono);
     text-transform: uppercase;
     color: var(--c-ink-soft);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  /* La etiqueta "sube" al enfocar el campo y deja un trazo de rotulador
+     debajo: la ficha se rellena como un formulario de laboratorio. */
+  .field label::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.3rem;
+    height: 2px;
+    background-color: var(--c-marker);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .field:focus-within label {
+    transform: translateY(-3px);
+    color: var(--c-ink);
+  }
+
+  .field:focus-within label::after {
+    transform: scaleX(1);
+  }
+
+  /* Con movimiento reducido la etiqueta no sube ni se desplaza: cambia de
+     color y el trazo aparece ya dibujado. */
+  @media (prefers-reduced-motion: reduce) {
+    .field label {
+      transition: none;
+    }
+
+    .field label::after {
+      transition: none;
+    }
+
+    .field:focus-within label {
+      transform: none;
+    }
   }
 
   .field__num {
@@ -391,6 +438,52 @@ const fieldNumbers = {
   .success-mascot img {
     width: 6rem;
     height: auto;
+  }
+
+  /* Estampado del sello: el mismo gesto que en escritorio, con CSS. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html[data-motion='lite']) .form-status--success + .success-mascot {
+      animation: lite-pop 620ms var(--ease-out) both;
+    }
+
+    :global(html[data-motion='lite']) .form-status--success + .success-mascot .success-stamp {
+      animation: stamp-in 460ms var(--ease-out) 240ms both;
+    }
+
+    @keyframes stamp-in {
+      from {
+        opacity: 0;
+        transform: scale(2.1) rotate(-26deg);
+      }
+      to {
+        opacity: 1;
+        /* La inclinación final la pone la propiedad `rotate` del CSS: aquí el
+           `transform` vuelve a 0 para no sumar otro giro. */
+        transform: scale(1) rotate(0deg);
+      }
+    }
+  }
+
+  /* Sello estampado: caja torcida, tinta verde y trazo discontinuo. */
+  .success-stamp {
+    display: inline-block;
+    rotate: -11deg;
+    color: var(--c-green-deep);
+  }
+
+  .success-stamp__box {
+    display: inline-block;
+    padding: 0.35rem 0.6rem 0.3rem;
+    border: 2px solid currentColor;
+    border-radius: var(--r-1);
+    outline: 1px solid currentColor;
+    outline-offset: 2px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.85;
   }
 
   @media (max-width: 34rem) {

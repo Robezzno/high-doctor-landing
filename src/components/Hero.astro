@@ -43,7 +43,7 @@ function splitHighlight(text: string, word: string) {
 const { before, hl, after } = splitHighlight(title, t(lang, 'hero_title_hl'));
 ---
 
-<header class="hero section--paper grain" id="top">
+<header class="hero section--paper grain" id="top" data-hero data-folio="01">
   <div class="container hero__grid grid">
     <div class="hero__text">
       <div class="hero__meta">
@@ -51,19 +51,34 @@ const { before, hl, after } = splitHighlight(title, t(lang, 'hero_title_hl'));
         <span class="mono hero__folio">§ 01</span>
       </div>
 
-      <h1 class="hero__title">{before}<span class="hl">{hl}</span>{after}</h1>
+      <h1 class="hero__title" data-hero-title>
+        {before}<span class="hl-wrap"
+          ><span class="hl" data-hero-highlight>{hl}</span>
+          <svg
+            class="hl-stroke"
+            viewBox="0 0 220 18"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              data-hero-stroke
+              d="M3 13.4c32-5.2 62 1.4 99-2.2 31-3 63 3.6 115-2.2"></path>
+          </svg>
+        </span>{after}
+      </h1>
 
-      <p class="hero__lead">{t(lang, 'hero_subtitle')}</p>
+      <p class="hero__lead" data-hero-lead>{t(lang, 'hero_subtitle')}</p>
 
-      <div class="hero__actions">
+      <div class="hero__actions" data-hero-actions>
         <a class="btn" href="#contact">{t(lang, 'hero_btn_1')}</a>
         <a class="btn btn--ghost" href="#join">{t(lang, 'hero_btn_2')}</a>
       </div>
     </div>
 
-    <div class="hero__figure">
-      <Molecule name="thc" class="hero__mol" />
-      <div class="hero__portrait">
+    <div class="hero__figure" data-hero-figure>
+      <Molecule name="thc" class="hero__mol" data-hero-molecule />
+      <div class="hero__portrait" data-hero-portrait>
         <span class="tape hero__tape" aria-hidden="true"></span>
         <Picture
           src={character}
@@ -117,6 +132,108 @@ const { before, hl, after } = splitHighlight(title, t(lang, 'hero_title_hl'));
     hyphens: auto;
     overflow-wrap: break-word;
     margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  /* ------------------------------------------------- Subrayado a rotulador */
+  /* Sin JS se ve la banda de `.hl` (global.css). Con JS, Hero.ts la sustituye
+     por este trazo, que se dibuja con DrawSVG. */
+  .hl-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hl-stroke {
+    position: absolute;
+    /* Con `left` + `right` el ancho saldría de la relación de aspecto del
+       viewBox y el trazo se quedaría corto: se fija a mano el 100 % del texto. */
+    left: -0.05em;
+    bottom: 0.04em;
+    width: calc(100% + 0.1em);
+    height: 0.3em;
+    overflow: visible;
+    pointer-events: none;
+    color: var(--c-marker);
+  }
+
+  .hl-stroke path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ------------------------------------------------- Modo ligero (móvil) */
+  /* Mismos gestos que en escritorio, resueltos con animaciones de CSS: nada de
+     SplitText ni de DrawSVG, y ni un byte de GSAP. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html[data-motion='lite']) .hero__title {
+      animation: lite-rise 620ms var(--ease-out) 40ms both;
+    }
+
+    :global(html[data-motion='lite']) .hero__lead {
+      animation: lite-rise 560ms var(--ease-out) 180ms both;
+    }
+
+    :global(html[data-motion='lite']) .hero__actions {
+      animation: lite-rise 560ms var(--ease-out) 260ms both;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure {
+      animation: lite-pop 700ms var(--ease-out) 120ms both;
+    }
+
+    /* El subrayado se dibuja igual que en escritorio: trazo de `stroke-
+       dashoffset` a cero, con la banda de rotulador sustituida por el SVG. */
+    :global(html[data-motion='lite']) .hero__highlight-band,
+    :global(html[data-motion='lite']) .hl {
+      background-image: none;
+    }
+
+    :global(html[data-motion='lite']) .hl-stroke path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: lite-draw 780ms var(--ease-out) 520ms forwards;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol) {
+      animation: lite-breathe 4.2s ease-in-out 1.6s infinite alternate;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol path) {
+      stroke-dasharray: 620;
+      stroke-dashoffset: 620;
+      animation: lite-draw 620ms linear forwards;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol path:nth-child(2)) {
+      animation-delay: 60ms;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol path:nth-child(3)) {
+      animation-delay: 120ms;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol path:nth-child(4)) {
+      animation-delay: 180ms;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol path:nth-child(n + 5)) {
+      animation-delay: 240ms;
+    }
+
+    :global(html[data-motion='lite']) .hero__figure :global(.hero__mol text) {
+      animation: lite-rise 380ms ease-out 700ms both;
+    }
+  }
+
+  /* Estado inicial del hero: lo fija el script inline de Base.astro sólo si
+     hay JS y no se ha pedido menos movimiento. El estado final es el normal. */
+  :global(html[data-motion='armed']) .hero__title,
+  :global(html[data-motion='armed']) .hero__lead,
+  :global(html[data-motion='armed']) .hero__actions,
+  :global(html[data-motion='armed']) .hero__figure {
+    opacity: 0;
   }
 
   .hero__lead {

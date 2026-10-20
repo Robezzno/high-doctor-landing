@@ -21,9 +21,11 @@ export type MoleculeName = 'thc' | 'cbd' | 'cbg' | 'cb1';
 interface Props {
   name: MoleculeName;
   class?: string;
+  /** Atributos extra (`data-…`) que necesita el motor de animaciones. */
+  [key: `data-${string}`]: string | undefined;
 }
 
-const { name, class: className } = Astro.props;
+const { name, class: className, ...rest } = Astro.props;
 
 // Posiciones verificadas con trigonometría: hexágonos de 24 px de radio,
 // separados 41,6 px para compartir la arista vertical.
@@ -34,6 +36,7 @@ const { name, class: className } = Astro.props;
   viewBox={name === 'cb1' ? '0 0 200 140' : '0 40 180 140'}
   role="img"
   aria-label={name === 'cb1' ? 'CB1 receptor' : name.toUpperCase()}
+  {...rest}
 >
   {
     name === 'thc' && (

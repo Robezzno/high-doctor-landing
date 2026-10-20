@@ -31,8 +31,18 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
 
 {
   posts.length > 0 && (
-    <section class="latest-news" id="news" aria-labelledby="latest-news-title">
+    <section
+      class="latest-news"
+      id="news"
+      aria-labelledby="latest-news-title"
+      data-folio="05"
+      data-news-section
+    >
       <div class="container">
+        <div class="latest-news__tagline">
+          <span class="tag">SPEC-05 / {t(lang, 'nav_news')}</span>
+          <span class="mono latest-news__folio">§ 05</span>
+        </div>
         <div class="latest-news__head">
           <h2 class="latest-news__title" id="latest-news-title">
             {t(lang, 'home_news_title')}
@@ -52,7 +62,11 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
                 </time>
                 <span class="specimen">{categoryLabel(newsLang, post.data.category)}</span>
                 <h3 class="latest-card__title">
-                  <a href={postUrl(newsLang, slug)}>{post.data.title}</a>
+                  <!-- Mismo `transition:name` que el título del post: la tarjeta
+                       viaja de la portada a la noticia con View Transitions. -->
+                  <a href={postUrl(newsLang, slug)} transition:name={`post-title-${slug}`}>
+                    {post.data.title}
+                  </a>
                 </h3>
                 <p class="latest-card__summary">{post.data.summary}</p>
               </article>

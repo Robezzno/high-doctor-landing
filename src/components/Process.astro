@@ -1,0 +1,268 @@
+---
+import Molecule from './Molecule.astro';
+import { t, type Lang, type TranslationKey } from '../i18n';
+
+/**
+ * "Cómo trabajamos": los tres pasos del método (Investigar → Educar → Conectar)
+ * con la molécula cambiando de forma entre uno y otro.
+ *
+ * El pin de la sección es CSS (`position: sticky`); el guion que enciende cada
+ * paso vive en `src/scripts/motion/process.ts`. En móvil no hay pin: los pasos
+ * se leen seguidos, cada uno con su dibujo al lado.
+ */
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const steps: {
+  title: TranslationKey;
+  text: TranslationKey;
+  molecule: 'thc' | 'cbd' | 'cbg';
+}[] = [
+  { title: 'process_step1_t', text: 'process_step1_d', molecule: 'thc' },
+  { title: 'process_step2_t', text: 'process_step2_d', molecule: 'cbd' },
+  { title: 'process_step3_t', text: 'process_step3_d', molecule: 'cbg' },
+];
+---
+
+<section id="process" class="process section section--paper grain" data-folio="03">
+  <div class="container">
+    <header class="section__head">
+      <span class="tag">SPEC-03 / {t(lang, 'process_tag')}</span>
+      <span class="mono process__folio">§ 03</span>
+    </header>
+
+    <div class="process__intro grid">
+      <h2 class="h2 process__title">{t(lang, 'process_title')}</h2>
+      <p class="lead process__lead">{t(lang, 'process_lead')}</p>
+    </div>
+
+    <div class="process__stage" data-process>
+      <div class="process__sticky">
+        <ol class="process__steps">
+          {
+            steps.map((step, index) => (
+              <li class="process__step" data-process-step>
+                <span class="mono process__num">{String(index + 1).padStart(2, '0')}</span>
+                <div class="process__body">
+                  <h3 class="process__step-title">{t(lang, step.title)}</h3>
+                  <p class="process__step-text">{t(lang, step.text)}</p>
+                </div>
+                <span class="process__step-drawing" aria-hidden="true">
+                  <Molecule name={step.molecule} />
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="process__figure" aria-hidden="true">
+          <span class="process__molecules">
+            {
+              steps.map((step, index) => (
+                <Molecule
+                  name={step.molecule}
+                  class="process__mol"
+                  data-process-molecule={String(index)}
+                />
+              ))
+            }
+          </span>
+          <span class="process__dots">
+            {steps.map(() => <span class="process__dot" data-process-dot />)}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process__folio {
+    color: var(--c-ink-faint);
+  }
+
+  .process__intro {
+    align-items: end;
+    margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
+  }
+
+  .process__title {
+    grid-column: 1 / span 6;
+    min-width: 0;
+  }
+
+  .process__lead {
+    grid-column: 8 / span 5;
+    min-width: 0;
+  }
+
+  /* --------------------------------------------------------- Escenario */
+  .process__stage {
+    position: relative;
+  }
+
+  .process__sticky {
+    display: block;
+  }
+
+  .process__steps {
+    display: grid;
+    gap: var(--sp-l);
+  }
+
+  .process__step {
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--sp-s);
+    padding-top: var(--sp-s);
+    border-top: 1px solid var(--c-paper-3);
+  }
+
+  .process__num {
+    color: var(--c-green-deep);
+    font-size: var(--fs-mono-lg);
+    padding-top: 0.35rem;
+  }
+
+  .process__step-title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.35rem;
+  }
+
+  .process__step-text {
+    font-size: var(--fs-body);
+    color: var(--c-ink-soft);
+    max-width: 44ch;
+  }
+
+  /* Dibujo de cada paso: sólo en móvil, donde no hay columna de figura. */
+  .process__step-drawing {
+    width: clamp(4.5rem, 18vw, 7rem);
+    color: var(--c-ink);
+    opacity: 0.75;
+  }
+
+  /* ------------------------------------------------- Columna de figura */
+  .process__figure {
+    display: none;
+  }
+
+  .process__molecules {
+    position: relative;
+    display: block;
+    width: min(100%, 22rem);
+    aspect-ratio: 1;
+  }
+
+  .process__mol {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--c-ink);
+    opacity: 0;
+  }
+
+  .process__mol:first-child {
+    opacity: 1;
+  }
+
+  .process__dots {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: var(--sp-s);
+  }
+
+  .process__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: var(--r-pill);
+    background-color: var(--c-ink);
+    opacity: 0.3;
+  }
+
+  .process__dot:first-child {
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------- Modo ligero (móvil) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html[data-motion='lite']) .process__step {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 460ms var(--ease-out),
+        transform 460ms var(--ease-out);
+    }
+
+    :global(html[data-motion='lite']) .process__step.is-in {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ------------------------------------------------- Pin (sólo escritorio) */
+  /* El pin sólo existe cuando el motor de animaciones ha arrancado: sin JS la
+     sección es una lista normal, más corta, y no hay saltos de layout.
+     Alto = una pantalla de contenido (`100svh - 6rem`, lo que mide la columna
+     sticky) + exactamente una pantalla de scroll extra (el guion del prompt 03
+     no permite más). De ahí el `- 6rem`: sin él sobrarían 96 px de scroll. */
+  @media (min-width: 55.01rem) {
+    html:is([data-motion='armed'], [data-motion='ready']) .process__stage {
+      height: calc(200svh - 6rem);
+    }
+
+    html:is([data-motion='armed'], [data-motion='ready']) .process__sticky {
+      position: sticky;
+      top: 4.5rem;
+      height: calc(100svh - 6rem);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+      align-items: center;
+      gap: clamp(2rem, 5vw, 5rem);
+    }
+
+    html:is([data-motion='armed'], [data-motion='ready']) .process__steps {
+      gap: clamp(1.25rem, 3vh, 2.5rem);
+    }
+
+    html:is([data-motion='armed'], [data-motion='ready']) .process__step {
+      opacity: 0.28;
+    }
+
+    html:is([data-motion='armed'], [data-motion='ready']) .process__step:first-child {
+      opacity: 1;
+    }
+
+    html:is([data-motion='armed'], [data-motion='ready']) .process__step-drawing {
+      display: none;
+    }
+
+    html:is([data-motion='armed'], [data-motion='ready']) .process__figure {
+      display: block;
+      justify-self: center;
+    }
+  }
+
+  @media (max-width: 68rem) {
+    .process__title {
+      grid-column: 1 / span 6;
+    }
+
+    .process__lead {
+      grid-column: 7 / span 6;
+    }
+  }
+
+  @media (max-width: 55rem) {
+    .process__title,
+    .process__lead {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 # CÓMO CONTINUAR — lee esto antes de tocar nada
 
-Última actualización: 2026-10-20. Estado: **prompts 00, 01, 02, 05, 06, 07 y 08 hechos, desplegados y verificados en producción.** Parado por decisión de Saf antes de terminar 03, 04 y 09.
+Última actualización: 2026-10-20. Estado: **prompts 00, 01, 02, 03, 05, 06, 07 y 08 hechos y desplegados** (el 03 entra con este merge: GSAP verificado, Lighthouse móvil 98/100). Quedan 04 (en rama `feat/contenido`, pendiente de merge y de datos de Saf) y 09 (pre-trabajo en `feat/seo-qa`).
 
 ## Regla de oro
 Los prompts de `docs/prompts/` se ejecutan **en orden** y cada push a `main` publica en producción. Antes de push: `npm run build` sin errores y `npm test`. El agente debe leer `docs/PLAN.md`, `docs/TAREAS.md`, `docs/prompts/README.md` y este fichero.
@@ -12,7 +12,7 @@ Los prompts de `docs/prompts/` se ejecutan **en orden** y cada push a `main` pub
 | 00 | Hotfix formulario | ✅ Hecho y en producción. **Pendiente: Saf prueba el formulario (nombre "TEST HDF") y confirma que llega el email.** |
 | 01 | Migración a Astro | ✅ Hecho. 8 rutas por idioma, Pages en modo workflow. |
 | 02 | Identidad visual | ✅ Hecho. Lighthouse accesibilidad 100. Assets en `src/assets/brand/`. |
-| 03 | Animaciones | 🟡 **INCOMPLETO** — trabajo a medias guardado en la rama `wip/prompt-03-animaciones` (ver abajo). |
+| 03 | Animaciones | ✅ Hecho y en producción: GSAP + ScrollTrigger + SplitText + DrawSVG + Lenis, view transitions, reduced-motion y sin JS. Lighthouse móvil 98/100. JS de animación ≈ 59,6 KB gzip (presupuesto 60 KB). |
 | 04 | Contenido y legal | ⏳ Pendiente. Necesita datos reales de Saf (ver «Pendiente de Saf»). |
 | 05 | Blog + tarjetas | ✅ Hecho y en producción. `/noticias/`, `/en/news/`, RSS, tarjetas 1080×1350. |
 | 06 | Pages CMS | ✅ Hecho. **Pendiente: Saf entra en app.pagescms.org y hace la prueba real.** |
@@ -20,11 +20,10 @@ Los prompts de `docs/prompts/` se ejecutan **en orden** y cada push a `main` pub
 | 08 | Instagram | ✅ Flujo completo montado y probado (97 tests), **apagado hasta que Saf pase credenciales** (ver `docs/INSTAGRAM-SETUP.md`). |
 | 09 | SEO y QA final | ⏳ Pendiente (el último de todos). |
 
-## Cómo retomar el prompt 03 (animaciones)
-1. `git checkout wip/prompt-03-animaciones` y revisa qué dejó el agente: `git diff main...wip/prompt-03-animaciones --stat` (~30 ficheros: sistema GSAP en `src/scripts/motion/`, sección nueva `src/components/Process.astro`, cambios en componentes e i18n).
-2. Decide si continúas desde ahí o descartas la rama y lo rehaces de cero (`git branch -D wip/prompt-03-animaciones && git push origin --delete wip/prompt-03-animaciones`).
-3. Ejecuta el prompt 03 completo (`docs/prompts/03-animaciones.md`) y sus verificaciones (reduced-motion, JS desactivado, peso ≤ 60 KB gzip, Lighthouse ≥ 90).
-4. **AVISO**: en la rama wip el build no está verificado. Ejecuta `npm run build` antes de confiar en ella.
+## Prompt 03 (animaciones): verificado
+- Motor en `src/scripts/motion/` (hero, hilo, impacto, protocolo, proceso, micro, cursor), carga dinámica de GSAP, limpieza en `astro:before-swap`, modo ligero en móvil sin GSAP.
+- `src/components/Process.astro`: «Cómo trabajamos» con pin sticky sólo en escritorio (alto exacto: una pantalla de contenido + una de scroll).
+- Verificación: build OK, 111 tests, Lighthouse móvil rendimiento 98 / accesibilidad 100 (LCP 2,3 s, TBT 0 ms, CLS 0), reduced-motion sin peticiones a GSAP/Lenis, contenido completo sin JS, sin overflow horizontal en 390 px.
 
 ## Cambio de plan del bot (importante, decisión de Saf del 2026-10-20)
 GitHub **retiró GitHub Models el 30/07/2026** (el endpoint devuelve basura), así que el bot no puede redactar solo. Plan nuevo acordado:
@@ -45,13 +44,13 @@ Mientras `IG_ENABLED` no sea `true`, el flujo de Instagram sale sin hacer nada (
 ## Pendiente de Saf (resumen)
 - Probar el formulario en producción con "TEST HDF" y confirmar el email.
 - Entrar la primera vez en app.pagescms.org y hacer la prueba real desde el móvil.
-- Decidir qué hacer con la rama `wip/prompt-03-animaciones`.
+- Revisar las páginas legales de borrador (prompt 04) cuando se publiquen.
 - Datos reales para el prompt 04: nombre legal de la entidad, CIF, domicilio, email público, equipo, socios, eventos (fecha de Mary Jane Berlin), redes sociales. Mientras falten, esas secciones quedan ocultas o con placeholder marcado — **no inventar nada**.
 - Instagram: pasos de arriba.
 - Verificar el dominio en Google Search Console (prompt 09, registro DNS TXT; el agente explica cómo).
 
 ## Orden recomendado al retomar
-1. Prompt 03 (desde la rama wip o desde cero) → revisar → publicar.
+1. Mergear y publicar el prompt 04 (rama `feat/contenido`, 137 tests) → activar flags cuando Saf dé los datos reales.
 2. Prompt 04 (con los datos de Saf) → publicar.
 3. Prompt 09 (SEO, rendimiento, QA final, ci.yml) → publicar.
 4. Fase futura: noticias en lote generadas por el asistente + programación anual (+ reactivar Instagram en cuanto haya credenciales).

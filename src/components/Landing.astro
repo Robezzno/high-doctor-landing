@@ -2,6 +2,7 @@
 import Nav from './Nav.astro';
 import Hero from './Hero.astro';
 import Mission from './Mission.astro';
+import Process from './Process.astro';
 import Impact from './Impact.astro';
 import LatestNews from './news/LatestNews.astro';
 import Join from './Join.astro';
@@ -17,12 +18,75 @@ const { lang } = Astro.props;
 ---
 
 <Nav lang={lang} />
+
+<!-- Hilo de progreso del margen: lo rellena `src/scripts/motion/thread.ts`.
+     Sin JavaScript no se muestra (es decorativo) y no ocupa espacio. -->
+<aside class="thread" aria-hidden="true" data-thread>
+  <span class="thread__rail"></span>
+  <span class="thread__fill" data-thread-fill></span>
+  <span class="thread__folio mono" data-thread-folio>&sect; 01</span>
+</aside>
+
 <main id="main">
   <Hero lang={lang} />
   <Mission lang={lang} />
+  <Process lang={lang} />
   <Impact lang={lang} />
   <LatestNews lang={lang} />
   <Join lang={lang} />
   <Event lang={lang} />
 </main>
 <Footer lang={lang} />
+
+<style>
+  /* Hilo vertical del margen: progreso de lectura + número de sección. */
+  .thread {
+    display: none;
+    position: fixed;
+    left: clamp(0.75rem, calc((100vw - 78rem) / 2 - 4.25rem), 3rem);
+    top: 50%;
+    translate: 0 -50%;
+    z-index: var(--z-sticky);
+    pointer-events: none;
+  }
+
+  html:is([data-motion='armed'], [data-motion='ready']) .thread {
+    display: block;
+  }
+
+  /* Sólo hay sitio real para el hilo cuando la ventana es ancha. */
+  @media (max-width: 89.99rem) {
+    html:is([data-motion='armed'], [data-motion='ready']) .thread {
+      display: none;
+    }
+  }
+
+  .thread__rail {
+    position: relative;
+    display: block;
+    width: 2px;
+    height: min(34svh, 17rem);
+    background-color: var(--c-paper-3);
+    border-radius: var(--r-pill);
+  }
+
+  .thread__fill {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background-color: var(--c-green-deep);
+    border-radius: var(--r-pill);
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+  }
+
+  .thread__folio {
+    position: absolute;
+    bottom: calc(100% + 0.85rem);
+    left: 50%;
+    translate: -50% 0;
+    writing-mode: vertical-rl;
+    color: var(--c-ink-faint);
+    white-space: nowrap;
+  }
+</style>

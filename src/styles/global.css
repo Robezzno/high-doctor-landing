@@ -158,6 +158,26 @@ strong {
   mix-blend-mode: screen;
 }
 
+/* Textura viva: la capa de grano se recoloca 8 veces por segundo (8 fps, el
+   mismo ritmo que un dibujo animado a mano). El coste es un `background-
+   position` de una capa ya existente; con movimiento reducido no se anima. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes grain-shift {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -21px -13px;
+    }
+  }
+
+  @media (min-width: 55.01rem) {
+    .grain::after {
+      animation: grain-shift 1s steps(8) infinite;
+    }
+  }
+}
+
 /* ---------------------------------------------------------------- Layout */
 .container {
   width: 100%;
@@ -241,6 +261,9 @@ strong {
 
 /* ---------------------------------------------------------------- Botones */
 .btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -267,6 +290,35 @@ strong {
 .btn:hover {
   transform: translate(-1px, -1px);
   box-shadow: 4px 4px 0 var(--c-green-deep);
+}
+
+/* Relleno de rotulador: lo crea `micro.ts` y entra por el lado del cursor.
+   Va en `z-index: -1` dentro de un contexto aislado, así que queda detrás del
+   texto pero delante del fondo del botón: no hay que tocar el marcado. */
+.btn__fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--c-marker);
+  transform: translate3d(0, -101%, 0);
+}
+
+.btn__fill[data-tone='green'] {
+  background-color: var(--c-green);
+}
+
+.btn.is-filled {
+  color: var(--c-ink);
+}
+
+/* La flecha se desplaza en el sentido de la lectura. */
+.btn svg {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover svg,
+.btn:focus-visible svg {
+  transform: translateX(3px);
 }
 
 .btn:active {
@@ -302,6 +354,45 @@ strong {
   cursor: not-allowed;
   opacity: 0.7;
   transform: none;
+}
+
+/* ------------------------------------------------- Subrayado que se dibuja */
+/* Sólo `transform`: el trazo entra de izquierda a derecha al pasar por encima. */
+.link-draw {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-draw::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.1em;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.link-draw:hover::after,
+.link-draw:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Movimiento reducido: los subrayados y la flecha cambian de estado sin
+   desplazarse. No queda ni una animación de `transform` en la página. */
+@media (prefers-reduced-motion: reduce) {
+  .link-draw::after,
+  .btn svg {
+    transition: none;
+  }
+
+  .btn:hover svg,
+  .btn:focus-visible svg {
+    transform: none;
+  }
 }
 
 /* ------------------------------------------------------- Titulares comunes */
@@ -372,23 +463,63 @@ strong {
   color: var(--c-green-deep);
 }
 
-/* ------------------------------------------------------- Aparición suave */
-/* Sólo se aplica si hay JavaScript (la clase .js la pone Base.astro) y si el
-   usuario no ha pedido menos movimiento: sin JS, todo el contenido es visible. */
+/* ------------------------------------- Modo ligero (móvil, sin GSAP) */
+/* `lite.ts` pone `data-motion="lite"` y va añadiendo `is-in` con un
+   IntersectionObserver. Todo son transiciones de opacidad y transform. */
 @media (prefers-reduced-motion: no-preference) {
-  html.js .reveal {
+  html[data-motion='lite'] .reveal,
+  html[data-motion='lite'] [data-news-section] {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(16px);
     transition:
-      opacity var(--dur-slow) var(--ease-out),
-      transform var(--dur-slow) var(--ease-out);
+      opacity 460ms var(--ease-out),
+      transform 460ms var(--ease-out);
   }
 
-  html.js .reveal.is-visible {
+  html[data-motion='lite'] .reveal.is-in,
+  html[data-motion='lite'] [data-news-section].is-in {
     opacity: 1;
     transform: none;
   }
+
+  /* Ritmo del rótulo: el mismo gesto que la entrada por líneas del escritorio,
+     sin partir el titular. Sólo `transform`: el texto está pintado desde el
+     primer frame, así que no se retrasa el LCP del móvil. */
+  @keyframes lite-rise {
+    from {
+      transform: translateY(18px);
+    }
+  }
+
+  @keyframes lite-pop {
+    from {
+      transform: translateY(20px) scale(0.96);
+    }
+  }
+
+  @keyframes lite-draw {
+    from {
+      stroke-dashoffset: 620;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes lite-breathe {
+    from {
+      transform: translateY(0) rotate(0deg);
+    }
+    to {
+      transform: translateY(-2.5px) rotate(0.7deg);
+    }
+  }
 }
+
+/* ------------------------------------------------------- Aparición suave */
+/* El estado inicial (opacidad 0 y 14 px abajo) ya NO vive aquí: lo aplica
+   `src/scripts/motion/sections.ts` justo antes de animar. Así, sin JavaScript
+   o si el paquete de animación no llega, el contenido se lee siempre. */
 
 /* ------------------------------------------------------------------ Saltos */
 .skip-link {
@@ -427,4 +558,53 @@ strong {
    que contar (no se toca esa lógica: sólo se estiliza). */
 .hidden {
   display: none !important;
+}
+
+/* ------------------------------- Scroll suave (Lenis, sólo con ratón) */
+/* Mínimo imprescindible: Lenis mueve el scroll del documento, así que el
+   `scroll-behavior: smooth` nativo debe cederle el paso para no pelearse. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ------------------------------------- Cursor acompañante (sólo escritorio) */
+/* No sustituye al cursor del sistema: suma un aro que crece sobre lo
+   interactivo. Lo crea `cursor.ts`; sin JS no existe. */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 1.5px solid var(--c-ink);
+  border-radius: var(--r-pill);
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  transition: opacity var(--dur-base) linear;
+}
+
+.cursor-ring.is-visible {
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring {
+    display: none;
+  }
 }
