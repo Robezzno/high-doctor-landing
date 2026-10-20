@@ -3,6 +3,7 @@
   "nav_impact": "Impacto",
   "nav_join": "Por Qué Unirse",
   "nav_maryjane": "Mary Jane Berlín",
+  "nav_news": "Noticias",
   "nav_cta": "Unirse a la Red",
   "hero_badge": "Fundación de Investigación Independiente",
   "hero_title": "Avanzando el Conocimiento del Cannabis para un Futuro Mejor",
@@ -115,5 +116,8 @@
   "ft_rights": "Todos los derechos reservados.",
   "nf_title": "Página no encontrada",
   "nf_desc": "Esta página se ha movido o nunca existió. El laboratorio sigue abierto.",
-  "nf_btn": "Volver a la portada"
+  "nf_btn": "Volver a la portada",
+  "home_news_title": "Últimas noticias",
+  "home_news_cta": "Ver todas las noticias",
+  "home_news_note": "Las noticias se publican en inglés"
 }

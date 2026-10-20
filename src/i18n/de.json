@@ -3,6 +3,7 @@
   "nav_impact": "Einfluss",
   "nav_join": "Warum Beitreten",
   "nav_maryjane": "Mary Jane Berlin",
+  "nav_news": "Nachrichten",
   "nav_cta": "Netzwerk beitreten",
   "hero_badge": "Unabhängige Forschungsstiftung",
   "hero_title": "Förderung von Cannabis-Wissen für eine bessere Zukunft",
@@ -115,5 +116,8 @@
   "ft_rights": "Alle Rechte vorbehalten.",
   "nf_title": "Seite nicht gefunden",
   "nf_desc": "Diese Seite wurde verschoben oder hat nie existiert. Das Labor ist trotzdem offen.",
-  "nf_btn": "Zurück zur Startseite"
+  "nf_btn": "Zurück zur Startseite",
+  "home_news_title": "Neueste Nachrichten",
+  "home_news_cta": "Alle Nachrichten",
+  "home_news_note": "Unsere Nachrichten erscheinen auf Englisch"
 }

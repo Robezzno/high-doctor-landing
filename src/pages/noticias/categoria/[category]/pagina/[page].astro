@@ -1,0 +1,22 @@
+---
+import NewsList from '../../../../../layouts/NewsList.astro';
+import { NEWS_CATEGORIES, getListing, type NewsCategory } from '../../../../../lib/news';
+
+/** Paginación dentro de una categoría: `/noticias/categoria/<cat>/pagina/2/`. */
+export async function getStaticPaths() {
+  const paths: { params: { category: NewsCategory; page: string } }[] = [];
+
+  for (const category of NEWS_CATEGORIES) {
+    const { totalPages } = await getListing('es', { category });
+    for (let page = 2; page <= totalPages; page += 1) {
+      paths.push({ params: { category, page: String(page) } });
+    }
+  }
+
+  return paths;
+}
+
+const { category, page } = Astro.params as { category: NewsCategory; page: string };
+---
+
+<NewsList lang="es" category={category} page={Number(page)} />

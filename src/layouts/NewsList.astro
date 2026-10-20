@@ -1,0 +1,126 @@
+---
+import Base from './Base.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import CategoryFilter from '../components/news/CategoryFilter.astro';
+import FeaturedPost from '../components/news/FeaturedPost.astro';
+import Pagination from '../components/news/Pagination.astro';
+import PostCard from '../components/news/PostCard.astro';
+import { blogT } from '../i18n/blog';
+import {
+  blogBase,
+  categoryUrl,
+  getListing,
+  ogImagePath,
+  pageUrl,
+  rssUrl,
+  slugOf,
+  type NewsCategory,
+  type NewsLang,
+} from '../lib/news';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: NewsLang;
+  category?: NewsCategory;
+  page?: number;
+}
+
+const { lang, category, page = 1 } = Astro.props;
+const strings = blogT(lang);
+
+const { posts, totalPages, page: currentPage } = await getListing(lang, { category, page });
+
+// El post destacado sólo aparece en el listado principal y en la primera página.
+const showFeatured = !category && currentPage === 1 && posts.length > 0;
+const featured = showFeatured ? posts[0] : undefined;
+const rest = showFeatured ? posts.slice(1) : posts;
+
+/* hreflang: el blog sólo existe en ES y EN; el resto de idiomas apuntan a EN. */
+const equivalent = (target: NewsLang) => {
+  if (!category) return currentPage === 1 ? blogBase(target) : pageUrl(target, currentPage);
+  return currentPage === 1 ? categoryUrl(target, category) : pageUrl(target, currentPage, category);
+};
+
+const alternates = [
+  { lang: 'es', href: new URL(equivalent('es'), Astro.site).href },
+  { lang: 'en', href: new URL(equivalent('en'), Astro.site).href },
+  { lang: 'x-default', href: new URL(equivalent('en'), Astro.site).href },
+];
+
+const langHrefs = {
+  es: blogBase('es'),
+  en: blogBase('en'),
+  de: blogBase('en'),
+  fr: blogBase('en'),
+  it: blogBase('en'),
+  pt: blogBase('en'),
+  nl: blogBase('en'),
+  pl: blogBase('en'),
+} as Record<Lang, string>;
+
+const title =
+  currentPage > 1
+    ? `${strings.newsTitle} · ${currentPage}/${totalPages}`
+    : strings.newsTitle;
+---
+
+<Base
+  lang={lang}
+  title={title}
+  description={strings.newsLead}
+  image={featured ? ogImagePath(lang, slugOf(featured)) : undefined}
+  alternates={alternates}
+  rss={rssUrl(lang)}
+>
+  <Nav
+    lang={lang}
+    solid
+    current="news"
+    sectionBase={lang === 'es' ? '/es/' : '/'}
+    langHrefs={langHrefs}
+  />
+
+  <main class="blog">
+    <div class="blog-wrap">
+      <header class="blog-header">
+        <p class="blog-eyebrow">
+          High Doctor Foundation
+          {currentPage > 1 && <span>· {currentPage}/{totalPages}</span>}
+        </p>
+        <h1 class="blog-title">
+          {category ? strings.categories[category] : strings.newsTitle}
+        </h1>
+        <p class="blog-lead">{strings.newsLead}</p>
+      </header>
+
+      <CategoryFilter lang={lang} category={category} />
+
+      {featured && <FeaturedPost entry={featured} lang={lang} />}
+
+      {
+        rest.length > 0 ? (
+          <div class="post-list">
+            {rest.map((entry) => (
+              <PostCard entry={entry} lang={lang} />
+            ))}
+          </div>
+        ) : (
+          !featured && (
+            <p class="blog-empty">{category ? strings.emptyCategory : strings.emptyList}</p>
+          )
+        )
+      }
+
+      <Pagination lang={lang} page={currentPage} totalPages={totalPages} category={category} />
+
+      <p class="pagination">
+        <a class="pagination__link" href={rssUrl(lang)}>
+          {strings.rssLabel}
+        </a>
+      </p>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</Base>

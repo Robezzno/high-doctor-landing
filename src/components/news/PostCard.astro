@@ -1,0 +1,42 @@
+---
+import { blogT } from '../../i18n/blog';
+import {
+  categoryLabel,
+  categoryUrl,
+  formatShortDate,
+  isoDate,
+  postUrl,
+  slugOf,
+  type NewsEntry,
+  type NewsLang,
+} from '../../lib/news';
+
+interface Props {
+  entry: NewsEntry;
+  lang: NewsLang;
+}
+
+const { entry, lang } = Astro.props;
+const strings = blogT(lang);
+const slug = slugOf(entry);
+const href = postUrl(lang, slug);
+---
+
+<article class="post-row">
+  <div class="post-row__meta">
+    <time class="post-row__date" datetime={isoDate(entry.data.date)}>
+      {formatShortDate(entry.data.date)}
+    </time>
+    <a class="specimen" href={categoryUrl(lang, entry.data.category)}>
+      {categoryLabel(lang, entry.data.category)}
+    </a>
+  </div>
+  <div>
+    <h2 class="post-row__title">
+      <!-- Mismo `transition:name` que el título del post: View Transition listado → post. -->
+      <a href={href} transition:name={`post-title-${slug}`}>{entry.data.title}</a>
+    </h2>
+    <p class="post-row__summary">{entry.data.summary}</p>
+    <a class="post-row__more" href={href}>{strings.readPost} →</a>
+  </div>
+</article>

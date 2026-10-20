@@ -1,0 +1,42 @@
+---
+import { blogT } from '../../i18n/blog';
+import {
+  NEWS_CATEGORIES,
+  blogBase,
+  categoryLabel,
+  categoryUrl,
+  type NewsCategory,
+  type NewsLang,
+} from '../../lib/news';
+
+interface Props {
+  lang: NewsLang;
+  /** Categoría activa; `undefined` = todas. */
+  category?: NewsCategory;
+}
+
+const { lang, category } = Astro.props;
+const strings = blogT(lang);
+---
+
+<nav class="filters" aria-label={strings.filterLabel}>
+  <span class="filters__label">{strings.filterLabel}</span>
+  <a
+    class="chip"
+    href={blogBase(lang)}
+    aria-current={category ? undefined : 'page'}
+  >
+    {strings.allCategories}
+  </a>
+  {
+    NEWS_CATEGORIES.map((item) => (
+      <a
+        class="chip"
+        href={categoryUrl(lang, item)}
+        aria-current={item === category ? 'page' : undefined}
+      >
+        {categoryLabel(lang, item)}
+      </a>
+    ))
+  }
+</nav>

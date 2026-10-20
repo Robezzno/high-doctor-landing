@@ -4,9 +4,20 @@ import { languages, langPath, t, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
+  /**
+   * Prefijo de los enlaces a secciones de la portada. En la home se queda vacío
+   * (scroll en la misma página); en el blog apunta a la portada del idioma.
+   */
+  sectionBase?: string;
+  /** Enlaces del selector de idioma a medida (para enlazar el mismo post traducido). */
+  langHrefs?: Partial<Record<Lang, string>>;
+  /** Sección activa, para `aria-current`. */
+  current?: 'home' | 'news';
+  /** Sombra dura fija: obligatorio fuera de la portada, donde no hay hero. */
+  solid?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, sectionBase = '', langHrefs, current = 'home', solid = false } = Astro.props;
 
 /** Nombre de cada idioma en su propia lengua (para el desplegable). */
 const langNames: Record<Lang, string> = {
@@ -20,15 +31,19 @@ const langNames: Record<Lang, string> = {
   pl: 'Polski',
 };
 
+/** El blog sólo existe en ES (`/noticias/`) y EN (`/en/news/`). */
+const newsHref = lang === 'es' ? '/noticias/' : '/en/news/';
+const section = (id: string) => `${sectionBase}#${id}`;
+
 const navItems = [
-  { href: '#mission', label: t(lang, 'nav_mission'), num: '01' },
-  { href: '#impact', label: t(lang, 'nav_impact'), num: '02' },
-  { href: '#join', label: t(lang, 'nav_join'), num: '03' },
-  { href: '#mary-jane', label: t(lang, 'nav_maryjane'), num: '04' },
+  { href: section('mission'), label: t(lang, 'nav_mission'), num: '01' },
+  { href: section('impact'), label: t(lang, 'nav_impact'), num: '02' },
+  { href: section('join'), label: t(lang, 'nav_join'), num: '03' },
+  { href: section('mary-jane'), label: t(lang, 'nav_maryjane'), num: '04' },
 ];
 ---
 
-<header class="nav" data-nav>
+<header class:list={['nav', { 'nav--stuck': solid }]} data-nav>
   <div class="container nav__inner">
     <a class="nav__brand" href={langPath(lang)} aria-label="High Doctor Foundation">
       <img
@@ -67,8 +82,18 @@ const navItems = [
             </li>
           ))
         }
+        <li>
+          <a
+            class="nav__link"
+            href={newsHref}
+            aria-current={current === 'news' ? 'page' : undefined}
+          >
+            <span class="nav__num mono" aria-hidden="true">05</span>
+            {t(lang, 'nav_news')}
+          </a>
+        </li>
         <li class="nav__cta">
-          <a class="btn nav__btn" href="#contact">{t(lang, 'nav_cta')}</a>
+          <a class="btn nav__btn" href={`${sectionBase}#contact`}>{t(lang, 'nav_cta')}</a>
         </li>
       </ul>
 
@@ -84,7 +109,7 @@ const navItems = [
               <li>
                 <a
                   class="langs__option"
-                  href={langPath(language)}
+                  href={langHrefs?.[language] ?? langPath(language)}
                   hreflang={language}
                   lang={language}
                   aria-current={language === lang ? 'true' : undefined}

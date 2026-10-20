@@ -3,6 +3,7 @@
   "nav_impact": "Impact",
   "nav_join": "Pourquoi Rejoindre",
   "nav_maryjane": "Mary Jane Berlin",
+  "nav_news": "Actualités",
   "nav_cta": "Rejoindre le Réseau",
   "hero_badge": "Fondation de Recherche Indépendante",
   "hero_title": "Faire progresser les connaissances sur le cannabis",
@@ -115,5 +116,8 @@
   "ft_rights": "Tous droits réservés.",
   "nf_title": "Page introuvable",
   "nf_desc": "Cette page a été déplacée ou n’a jamais existé. Le laboratoire reste ouvert.",
-  "nf_btn": "Retour à l’accueil"
+  "nf_btn": "Retour à l’accueil",
+  "home_news_title": "Dernières actualités",
+  "home_news_cta": "Toutes les actualités",
+  "home_news_note": "Nos actualités sont publiées en anglais"
 }

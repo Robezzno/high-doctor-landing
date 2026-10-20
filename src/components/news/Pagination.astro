@@ -1,0 +1,58 @@
+---
+import { blogT } from '../../i18n/blog';
+import { blogBase, categoryUrl, pageUrl, type NewsCategory, type NewsLang } from '../../lib/news';
+
+interface Props {
+  lang: NewsLang;
+  page: number;
+  totalPages: number;
+  category?: NewsCategory;
+}
+
+const { lang, page, totalPages, category } = Astro.props;
+const strings = blogT(lang);
+
+/** URL de una página: la 1 es el listado base (sin `/pagina/1/`). */
+const hrefFor = (target: number) =>
+  target === 1
+    ? category
+      ? categoryUrl(lang, category)
+      : blogBase(lang)
+    : pageUrl(lang, target, category);
+
+/** Números visibles: primera, última y vecinas de la actual. */
+const visible = Array.from({ length: totalPages }, (_, index) => index + 1).filter(
+  (item) => item === 1 || item === totalPages || Math.abs(item - page) <= 1,
+);
+---
+
+{
+  totalPages > 1 && (
+    <nav class="pagination" aria-label="Pagination">
+      {page > 1 && (
+        <a class="pagination__link" rel="prev" href={hrefFor(page - 1)}>
+          ← {strings.paginationPrev}
+        </a>
+      )}
+      {visible.map((item, index) => (
+        <>
+          {index > 0 && item - visible[index - 1] > 1 && <span class="pagination__spacer">…</span>}
+          {item === page ? (
+            <span class="pagination__current" aria-current="page">
+              {item}
+            </span>
+          ) : (
+            <a class="pagination__link" href={hrefFor(item)}>
+              {item}
+            </a>
+          )}
+        </>
+      ))}
+      {page < totalPages && (
+        <a class="pagination__link" rel="next" href={hrefFor(page + 1)}>
+          {strings.paginationNext} →
+        </a>
+      )}
+    </nav>
+  )
+}

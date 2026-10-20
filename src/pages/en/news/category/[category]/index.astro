@@ -1,0 +1,13 @@
+---
+import NewsList from '../../../../../layouts/NewsList.astro';
+import { NEWS_CATEGORIES, type NewsCategory } from '../../../../../lib/news';
+
+/** Filtro por categoría sin JS: `/en/news/category/<cat>/`. */
+export function getStaticPaths() {
+  return NEWS_CATEGORIES.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params as { category: NewsCategory };
+---
+
+<NewsList lang="en" category={category} />

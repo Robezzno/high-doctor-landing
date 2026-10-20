@@ -3,6 +3,7 @@
   "nav_impact": "Wpływ",
   "nav_join": "Dlaczego Warto",
   "nav_maryjane": "Mary Jane Berlin",
+  "nav_news": "Aktualności",
   "nav_cta": "Dołącz do Sieci",
   "hero_badge": "Niezależna Fundacja Badawcza",
   "hero_title": "Rozwijanie Wiedzy o Konopiach dla Lepszej Przyszłości",
@@ -115,5 +116,8 @@
   "ft_rights": "Wszelkie prawa zastrzeżone.",
   "nf_title": "Nie znaleziono strony",
   "nf_desc": "Ta strona została przeniesiona lub nigdy nie istniała. Laboratorium nadal działa.",
-  "nf_btn": "Wróć do strony głównej"
+  "nf_btn": "Wróć do strony głównej",
+  "home_news_title": "Najnowsze wiadomości",
+  "home_news_cta": "Wszystkie wiadomości",
+  "home_news_note": "Nasze wiadomości są publikowane po angielsku"
 }

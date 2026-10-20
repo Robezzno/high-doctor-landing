@@ -3,6 +3,7 @@
   "nav_impact": "Impatto",
   "nav_join": "Unisciti",
   "nav_maryjane": "Mary Jane Berlin",
+  "nav_news": "Notizie",
   "nav_cta": "Unisciti al Network",
   "hero_badge": "Fondazione di Ricerca Indipendente",
   "hero_title": "Avanzare la Conoscenza della Cannabis",
@@ -115,5 +116,8 @@
   "ft_rights": "Tutti i diritti riservati.",
   "nf_title": "Pagina non trovata",
   "nf_desc": "Questa pagina è stata spostata o non è mai esistita. Il laboratorio resta aperto.",
-  "nf_btn": "Torna alla home"
+  "nf_btn": "Torna alla home",
+  "home_news_title": "Ultime notizie",
+  "home_news_cta": "Tutte le notizie",
+  "home_news_note": "Le notizie sono pubblicate in inglese"
 }

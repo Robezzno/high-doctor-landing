@@ -1,0 +1,22 @@
+---
+import NewsPost from '../../layouts/NewsPost.astro';
+import { getPosts, slugOf, type NewsEntry } from '../../lib/news';
+
+/** Un HTML estático por noticia: `/noticias/<slug>/`. */
+export async function getStaticPaths() {
+  const posts = await getPosts('es');
+
+  return posts.map((entry) => ({
+    params: { slug: slugOf(entry) },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: NewsEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<NewsPost entry={entry} />

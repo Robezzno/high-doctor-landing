@@ -3,6 +3,7 @@
   "nav_impact": "Impact",
   "nav_join": "Meedoen",
   "nav_maryjane": "Mary Jane Berlin",
+  "nav_news": "Nieuws",
   "nav_cta": "Word lid",
   "hero_badge": "Onafhankelijke Onderzoeksstichting",
   "hero_title": "Cannabiskennis bevorderen voor een betere toekomst",
@@ -115,5 +116,8 @@
   "ft_rights": "Alle rechten voorbehouden.",
   "nf_title": "Pagina niet gevonden",
   "nf_desc": "Deze pagina is verplaatst of heeft nooit bestaan. Het lab is nog open.",
-  "nf_btn": "Terug naar de startpagina"
+  "nf_btn": "Terug naar de startpagina",
+  "home_news_title": "Laatste nieuws",
+  "home_news_cta": "Al het nieuws",
+  "home_news_note": "Ons nieuws wordt in het Engels gepubliceerd"
 }

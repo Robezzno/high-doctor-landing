@@ -10,17 +10,26 @@
     "build": "npm run i18n:check && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "vitest run",
     "i18n:extract": "node scripts/extract-i18n.mjs",
     "i18n:check": "node scripts/check-i18n.mjs"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.19",
     "@fontsource-variable/fraunces": "^5.3.0",
     "@fontsource-variable/inter-tight": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
-    "astro": "^7.4.1"
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^7.4.1",
+    "satori": "^0.63.1",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.11",
-    "typescript": "^6.0.3"
+    "@types/node": "^26.6.5",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
   }
 }

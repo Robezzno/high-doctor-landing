@@ -3,6 +3,7 @@
   "nav_impact": "Impact",
   "nav_join": "Why Join",
   "nav_maryjane": "Mary Jane Berlin",
+  "nav_news": "News",
   "nav_cta": "Join Network",
   "hero_badge": "Independent Research Foundation",
   "hero_title": "Advancing Cannabis Knowledge for a Better Future",
@@ -115,5 +116,8 @@
   "ft_rights": "All rights reserved.",
   "nf_title": "Page not found",
   "nf_desc": "This page has moved or never existed. The lab is still open, though.",
-  "nf_btn": "Back to the homepage"
+  "nf_btn": "Back to the homepage",
+  "home_news_title": "Latest news",
+  "home_news_cta": "Read all news",
+  "home_news_note": "Our news is published in English"
 }
