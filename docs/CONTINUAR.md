@@ -18,7 +18,7 @@ Los prompts de `docs/prompts/` se ejecutan **en orden** y cada push a `main` pub
 | 06 | Pages CMS | ✅ Hecho. **Pendiente: Saf entra en app.pagescms.org y hace la prueba real.** |
 | 07 | Bot de noticias | ✅ Infra hecha, **cron desactivado** (ver «Cambio de plan del bot»). |
 | 08 | Instagram | ✅ Flujo completo montado y probado (97 tests), **apagado hasta que Saf pase credenciales** (ver `docs/INSTAGRAM-SETUP.md`). |
-| 09 | SEO y QA final | ⏳ Pendiente (el último de todos). |
+| 09 | SEO y QA final | 🟡 Pre-trabajo hecho en `feat/seo-qa`: sitemap i18n, robots.txt, JSON-LD NGO, 404 en 8 idiomas, e2e (Playwright + axe), crawler de enlaces, `ci.yml` y README. Falta: Lighthouse final y Search Console. |
 
 ## Prompt 03 (animaciones): verificado
 - Motor en `src/scripts/motion/` (hero, hilo, impacto, protocolo, proceso, micro, cursor), carga dinámica de GSAP, limpieza en `astro:before-swap`, modo ligero en móvil sin GSAP.

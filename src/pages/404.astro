@@ -36,7 +36,7 @@ const i18n404 = Object.fromEntries(
 );
 ---
 
-<Base lang={lang}>
+<Base lang={lang} title={`404 — ${t(lang, 'nf_title')} | High Doctor Foundation`} description={t(lang, 'nf_desc')}>
   <main id="main" class="nf section--paper grain">
     <div class="container nf__grid grid">
       <div class="nf__text">
@@ -45,7 +45,7 @@ const i18n404 = Object.fromEntries(
         <p class="lead" data-404="desc">{t(lang, 'nf_desc')}</p>
         <div class="nf__links">
           <a class="btn nf__cta" href="/" data-404="cta">{t(lang, 'nf_btn')}</a>
-          <a class="nf__news" href="/en/news/" data-404="news" data-404-href="news">{t(lang, 'nav_news')}</a>
+          <a class="nf__news" href="/en/news/" data-404="news">{t(lang, 'nav_news')}</a>
         </div>
       </div>
       <div class="nf__figure">

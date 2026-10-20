@@ -2,20 +2,19 @@
 import Base from '../layouts/Base.astro';
 import Landing from '../components/Landing.astro';
 import { t } from '../i18n';
+import { socialLinks } from '../config/site';
 
 const lang = 'en' as const;
 
-// Datos estructurados de la organización (schema.org). Los textos legales y las
-// redes sociales reales llegan con el prompt 04: mientras tanto, `sameAs` y
-// `address` quedan vacíos a propósito (Google los ignora si vienen sin datos).
+// Datos estructurados de la organización (schema.org). Las redes vienen de la
+// config del prompt 04 (vacía hasta que Saf pase las URLs); el domicilio no
+// existe aún, así que no se envía (Google ignora campos vacíos o falsos).
 const organization: Record<string, unknown> = {
   name: 'High Doctor Foundation',
   url: 'https://highdoctor.foundation/',
   logo: 'https://highdoctor.foundation/icon-512.png',
   description: t(lang, 'mission_desc'),
-  // TODO (prompt 04): rellenar sameAs con las URLs reales de redes sociales
-  // y address con el domicilio legal (ahora mismo no existen datos verificados).
-  sameAs: [],
+  sameAs: socialLinks.map((social) => social.url),
 };
 // Claves con `@` asignadas aparte: el compilador de Astro rechaza
 // `'@context':` como clave de objeto en el frontmatter.

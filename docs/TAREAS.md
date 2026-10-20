@@ -12,7 +12,7 @@
 
 ## En curso
 - Prompt 04 (contenido/legal) — trabajo completo en la rama `feat/contenido` (137 tests), pendiente de merge y de los datos reales de Saf. Detalle en `docs/CONTINUAR.md`.
-- Prompt 09 (SEO/QA) — pre-trabajo en la rama `feat/seo-qa`.
+- Prompt 09 (SEO/QA) — pre-trabajo completo en la rama `feat/seo-qa` (sitemap i18n + robots, JSON-LD NGO, 404 en 8 idiomas, e2e Playwright 41/41, crawler de enlaces, ci.yml, README). Pendiente: Lighthouse final en producción y envío del sitemap a Search Console.
 
 - 2026-10-20: prompt 04 (rama `feat/contenido`, **sin commit**) — contenido y confianza a falta de los datos de Saf:
   - Textos reescritos en los 8 idiomas: hero con titular < 10 palabras ("Cannabis explicado con ciencia, para quien quiere datos") y fuera las frases vacías ("for a better future", "let's build the future together").

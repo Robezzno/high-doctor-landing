@@ -85,7 +85,12 @@ async function openPage(
   ).toEqual([]);
 
   expect(failedResponses, `respuestas >= 400: ${failedResponses.join(' | ')}`).toEqual([]);
-  expect(consoleErrors, `errores de consola: ${consoleErrors.join(' | ')}`).toEqual([]);
+  // Con allowNav404, el navegador registra por su cuenta el aviso de consola
+  // del 404 del documento: es esperado. Los subrecursos rotos ya fallan arriba.
+  const relevantErrors = opts.allowNav404
+    ? consoleErrors.filter((e) => !/Failed to load resource.*404/.test(e))
+    : consoleErrors;
+  expect(relevantErrors, `errores de consola: ${relevantErrors.join(' | ')}`).toEqual([]);
 }
 
 async function capture(page: Page, name: string): Promise<void> {

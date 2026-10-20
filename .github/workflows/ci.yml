@@ -1,0 +1,42 @@
+# QA en cada PR (prompt 09): comprobación de tipos, tests, build y crawler
+# de enlaces internos. La publicación sigue en deploy.yml (sólo push a main).
+name: QA de PR
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Astro check (tipos)
+        run: npm run check
+
+      - name: Tests unitarios (vitest, incl. bot/)
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Crawler de enlaces internos sobre dist/
+        run: npm run qa:links

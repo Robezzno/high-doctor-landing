@@ -61,7 +61,7 @@ function targetFile(href, fromFile) {
 function extractUrls(html) {
   const urls = new Set();
   const patterns = [
-    /\bhref="([^"]*)"/gi,
+    /\shref="([^"]*)"/gi,
     /\bsrc="([^"]*)"/gi,
     /\bsrcset="([^"]*)"/gi,
     /\bcontent="(https:\/\/highdoctor\.foundation\/[^"]*)"/gi, // og:image, twitter:image

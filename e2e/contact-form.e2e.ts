@@ -49,9 +49,10 @@ test.describe('formulario de contacto (Web3Forms simulado)', () => {
     await expect(status).toBeVisible();
     await expect(status).toContainText(/thank you/i);
 
-    // El payload salió con la clave de acceso y los datos escritos.
-    expect(payload).toContain('access_key=');
-    expect(payload).toContain(encodeURIComponent('Test HDF'));
+    // El payload salió en multipart (FormData) con la clave de acceso y los
+    // datos escritos.
+    expect(payload).toContain('name="access_key"');
+    expect(payload).toContain('Test HDF');
 
     // El formulario se resetea tras el éxito.
     await expect(page.locator('#name')).toHaveValue('');
