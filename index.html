@@ -243,7 +243,12 @@
                     <input type="checkbox" id="updates" name="updates" checked>
                     <label for="updates" data-i18n="form_lbl_check">I would like to receive updates about research projects, events and collaboration opportunities.</label>
                 </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="privacy-consent" name="privacy_consent" value="accepted" required>
+                    <label for="privacy-consent" data-i18n-html="form_lbl_consent">I have read and accept the <a href="#privacy">privacy policy</a>. *</label>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block" data-i18n="form_btn">Submit Application</button>
+                <div id="form-status" class="form-status hidden" role="status" aria-live="polite" aria-atomic="true"></div>
             </form>
         </div>
     </section>

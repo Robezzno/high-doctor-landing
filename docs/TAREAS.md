@@ -5,7 +5,10 @@
 - 2026-10-20: prompts de ejecución en `docs/prompts/` (00 → 09) y `_config.yml` para que Jekyll no publique `docs/` en la web.
 
 ## En curso
-- Nada. Siguiente paso: ejecutar `docs/prompts/00-arreglar-formulario.md`. **Es urgente: el formulario actual no envía los leads.**
+- Prompt 01: migración a Astro.
+
+## Hecho (además)
+- 2026-10-20: prompt 00 — formulario arreglado: POST real a Web3Forms, checkbox RGPD en 8 idiomas, mensajes de estado accesibles (éxito/error/envío). Pendiente: verificar en vivo el email de prueba (Cloudflare bloquea la IP de este equipo; probar en navegador normal). Nuevo original del logo en `assets/letraslogohigh.jpg` (recortar "CSC" en el prompt 02).
 
 ## Cómo retomarlo
 1. Lee `docs/PLAN.md` y `docs/prompts/README.md`.

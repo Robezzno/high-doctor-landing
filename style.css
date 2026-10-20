@@ -530,11 +530,51 @@ ul {
     color: #666;
 }
 
+.checkbox-group label a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.checkbox-group label a:hover {
+    color: #0e7a6f;
+}
+
 .btn-block {
     width: 100%;
     font-size: 1.1rem;
     padding: 15px;
     margin-top: 10px;
+}
+
+.btn-block:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.form-status {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.form-status--pending {
+    background-color: rgba(23, 195, 178, 0.08);
+    color: #0e7a6f;
+    border-color: rgba(23, 195, 178, 0.25);
+}
+
+.form-status--success {
+    background-color: rgba(23, 195, 178, 0.1);
+    color: #0e7a6f;
+    border-color: rgba(23, 195, 178, 0.3);
+}
+
+.form-status--error {
+    background-color: rgba(179, 38, 30, 0.08);
+    color: #a3372e;
+    border-color: rgba(179, 38, 30, 0.3);
 }
 
 .form-success {

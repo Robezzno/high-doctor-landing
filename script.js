@@ -36,6 +36,8 @@ const translations = {
         form_opt_7: "Media / Press", form_opt_8: "Other", form_lbl_li: "LinkedIn Profile (optional)", form_lbl_msg: "Message / How would you like to collaborate?",
         form_lbl_check: "I would like to receive updates about research projects, events and collaboration opportunities.", form_btn: "Submit Application",
         form_success: "Thank you! Your application has been received. We will contact you soon.",
+        form_lbl_consent: 'I have read and accept the <a href="#privacy">privacy policy</a>. *',
+        form_sending: "Sending…", form_error: "Something went wrong and your application was not sent. Please try again or write to highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Building Community, Culture and Awareness Across Europe",
         ft_loc: "Spain → Europe → Global", ft_about: "About Us", ft_about_desc: "An independent non-profit organization dedicated to education, culture, community development and social awareness. Founded on the values of responsibility, education, culture and innovation.",
         ft_focus: "Focus", ft_focus_desc: "Educational Programs, Health Campaigns, International Cooperation, Social Inclusion, Research Support.", ft_motto: "Community • Culture • Future"
@@ -76,6 +78,8 @@ const translations = {
         form_opt_7: "Medios / Prensa", form_opt_8: "Otro", form_lbl_li: "Perfil de LinkedIn (opcional)", form_lbl_msg: "Mensaje / ¿Cómo te gustaría colaborar?",
         form_lbl_check: "Me gustaría recibir actualizaciones sobre proyectos de investigación, eventos y oportunidades de colaboración.", form_btn: "Enviar Solicitud",
         form_success: "¡Gracias! Tu solicitud ha sido recibida. Nos pondremos en contacto contigo pronto.",
+        form_lbl_consent: 'He leído y acepto la <a href="#privacy">política de privacidad</a>. *',
+        form_sending: "Enviando…", form_error: "No se pudo enviar tu solicitud. Inténtalo de nuevo o escríbenos a highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Construyendo Comunidad, Cultura y Conciencia en toda Europa",
         ft_loc: "España → Europa → Global", ft_about: "Sobre Nosotros", ft_about_desc: "Organización independiente sin fines de lucro dedicada a la educación, la cultura, el desarrollo comunitario y la conciencia social. Fundada en los valores de responsabilidad, educación, cultura e innovación.",
         ft_focus: "Enfoque", ft_focus_desc: "Programas Educativos, Campañas de Salud, Cooperación Internacional, Inclusión Social, Apoyo a la Investigación.", ft_motto: "Comunidad • Cultura • Futuro"
@@ -116,6 +120,8 @@ const translations = {
         form_opt_7: "Media / Prasa", form_opt_8: "Inne", form_lbl_li: "Profil LinkedIn (opcjonalnie)", form_lbl_msg: "Wiadomość / Jak chciałbyś współpracować?",
         form_lbl_check: "Chcę otrzymywać aktualizacje o projektach badawczych, wydarzeniach i możliwościach współpracy.", form_btn: "Wyślij Zgłoszenie",
         form_success: "Dziękujemy! Twoje zgłoszenie zostało otrzymane.",
+        form_lbl_consent: 'Przeczytałem/am <a href="#privacy">politykę prywatności</a> i akceptuję ją. *',
+        form_sending: "Wysyłanie…", form_error: "Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz do nas: highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Budowanie Społeczności, Kultury i Świadomości w Europie",
         ft_loc: "Hiszpania → Europa → Globalnie", ft_about: "O Nas", ft_about_desc: "Niezależna organizacja non-profit zajmująca się edukacją, kulturą i rozwojem społeczności.",
         ft_focus: "Nasze Główne Cele", ft_focus_desc: "Programy Edukacyjne, Kampanie Zdrowotne, Współpraca Międzynarodowa, Integracja Społeczna.", ft_motto: "Społeczność • Kultura • Przyszłość"
@@ -156,6 +162,8 @@ const translations = {
         form_opt_7: "Medien / Presse", form_opt_8: "Sonstiges", form_lbl_li: "LinkedIn-Profil (optional)", form_lbl_msg: "Nachricht / Wie möchten Sie zusammenarbeiten?",
         form_lbl_check: "Ich möchte über Forschungsprojekte, Veranstaltungen und Möglichkeiten der Zusammenarbeit informiert werden.", form_btn: "Bewerbung absenden",
         form_success: "Danke! Ihre Bewerbung ist eingegangen. Wir werden uns in Kürze bei Ihnen melden.",
+        form_lbl_consent: 'Ich habe die <a href="#privacy">Datenschutzerklärung</a> gelesen und akzeptiere sie. *',
+        form_sending: "Wird gesendet…", form_error: "Das Senden ist fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie an highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Aufbau von Gemeinschaft, Kultur und Bewusstsein in ganz Europa",
         ft_loc: "Spanien → Europa → Global", ft_about: "Über uns", ft_about_desc: "Eine unabhängige gemeinnützige Organisation, die sich Bildung, Kultur, Gemeindeentwicklung und sozialem Bewusstsein widmet.",
         ft_focus: "Fokus", ft_focus_desc: "Bildungsprogramme, Gesundheitskampagnen, Internationale Kooperation, Soziale Inklusion.", ft_motto: "Gemeinschaft • Kultur • Zukunft"
@@ -196,6 +204,8 @@ const translations = {
         form_opt_7: "Médias / Presse", form_opt_8: "Autre", form_lbl_li: "Profil LinkedIn (facultatif)", form_lbl_msg: "Message / Comment aimeriez-vous collaborer?",
         form_lbl_check: "J'aimerais recevoir des mises à jour sur les projets de recherche, les événements et les opportunités.", form_btn: "Soumettre",
         form_success: "Merci ! Votre candidature a bien été reçue. Nous vous contacterons bientôt.",
+        form_lbl_consent: 'J\'ai lu et j\'accepte la <a href="#privacy">politique de confidentialité</a>. *',
+        form_sending: "Envoi en cours…", form_error: "L'envoi a échoué. Réessayez ou écrivez-nous à highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Construire la communauté, la culture et la sensibilisation en Europe",
         ft_loc: "Espagne → Europe → Mondial", ft_about: "À Propos", ft_about_desc: "Une organisation indépendante à but non lucratif dédiée à l'éducation, la culture et le développement communautaire.",
         ft_focus: "Concentration", ft_focus_desc: "Programmes éducatifs, campagnes de santé, coopération internationale.", ft_motto: "Communauté • Culture • Avenir"
@@ -236,6 +246,8 @@ const translations = {
         form_opt_7: "Media / Stampa", form_opt_8: "Altro", form_lbl_li: "Profilo LinkedIn (opzionale)", form_lbl_msg: "Messaggio / Come vorresti collaborare?",
         form_lbl_check: "Voglio ricevere aggiornamenti su progetti ed eventi.", form_btn: "Invia Candidatura",
         form_success: "Grazie! La tua candidatura è stata ricevuta.",
+        form_lbl_consent: 'Ho letto e accetto l\'<a href="#privacy">informativa sulla privacy</a>. *',
+        form_sending: "Invio in corso…", form_error: "Invio non riuscito. Riprova o scrivici a highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Costruire Comunità e Cultura",
         ft_loc: "Spagna → Europa → Globale", ft_about: "Chi Siamo", ft_about_desc: "Un'organizzazione indipendente per l'educazione e la cultura.",
         ft_focus: "Focus", ft_focus_desc: "Programmi educativi, campagne sanitarie, cooperazione internazionale.", ft_motto: "Comunità • Cultura • Futuro"
@@ -276,6 +288,8 @@ const translations = {
         form_opt_7: "Mídia / Imprensa", form_opt_8: "Outro", form_lbl_li: "Perfil do LinkedIn (opcional)", form_lbl_msg: "Mensagem / Como você gostaria de colaborar?",
         form_lbl_check: "Gostaria de receber atualizações sobre projetos e eventos.", form_btn: "Enviar Inscrição",
         form_success: "Obrigado! Sua inscrição foi recebida.",
+        form_lbl_consent: 'Li e aceito a <a href="#privacy">política de privacidade</a>. *',
+        form_sending: "A enviar…", form_error: "Não foi possível enviar a inscrição. Tente novamente ou escreva para highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Construindo Comunidade e Cultura",
         ft_loc: "Espanha → Europa → Global", ft_about: "Sobre Nós", ft_about_desc: "Uma organização independente para educação e cultura.",
         ft_focus: "Foco", ft_focus_desc: "Programas educacionais, campanhas de saúde, cooperação internacional.", ft_motto: "Comunidade • Cultura • Futuro"
@@ -316,6 +330,8 @@ const translations = {
         form_opt_7: "Media / Pers", form_opt_8: "Anders", form_lbl_li: "LinkedIn-profiel (optioneel)", form_lbl_msg: "Bericht / Hoe wil je samenwerken?",
         form_lbl_check: "Ik wil updates ontvangen over onderzoeksprojecten, evenementen en mogelijkheden.", form_btn: "Aanvraag Indienen",
         form_success: "Bedankt! Jouw aanvraag is ontvangen. We nemen spoedig contact op.",
+        form_lbl_consent: 'Ik heb het <a href="#privacy">privacybeleid</a> gelezen en ga ermee akkoord. *',
+        form_sending: "Versturen…", form_error: "Versturen is mislukt. Probeer het opnieuw of mail ons op highdoctorcsc@gmail.com.",
         ft_brand: "HIGH DOCTOR FOUNDATION", ft_tagline: "Gemeenschap, Cultuur en Bewustzijn in heel Europa Opbouwen",
         ft_loc: "Spanje → Europa → Wereldwijd", ft_about: "Over Ons", ft_about_desc: "Een onafhankelijke non-profitorganisatie gericht op educatie, cultuur en gemeenschapsontwikkeling.",
         ft_focus: "Focus", ft_focus_desc: "Educatieve Programma's, Gezondheidscampagnes, Internationale Samenwerking.", ft_motto: "Gemeenschap • Cultuur • Toekomst"
@@ -486,19 +502,61 @@ document.addEventListener('DOMContentLoaded', () => {
         revealOnScroll.observe(el);
     });
 
-    // Form Submission
+    // Form Submission (Web3Forms)
     const form = document.getElementById('lead-form');
-    const successMsg = document.getElementById('form-success');
+
+    function translate(key) {
+        const lang = document.documentElement.lang;
+        return (translations[lang] && translations[lang][key]) || translations.en[key] || '';
+    }
 
     if (form) {
-        form.addEventListener('submit', (e) => {
+        const statusEl = document.getElementById('form-status');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        function setStatus(key, state) {
+            if (!statusEl) return;
+            statusEl.className = 'form-status' + (state ? ' form-status--' + state : '') + (key ? '' : ' hidden');
+            statusEl.textContent = key ? translate(key) : '';
+        }
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            console.log('Form submitted');
-            form.reset();
-            successMsg.classList.remove('hidden');
-            setTimeout(() => {
-                successMsg.classList.add('hidden');
-            }, 5000);
+            // Evita envíos duplicados mientras la petición está en curso.
+            if (form.dataset.submitting === 'true') return;
+            form.dataset.submitting = 'true';
+
+            const defaultBtnLabel = submitBtn ? submitBtn.textContent : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = translate('form_sending');
+            }
+            setStatus('form_sending', 'pending');
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' }
+                });
+                const json = await response.json();
+
+                if (response.ok && json.success) {
+                    form.reset();
+                    setStatus('form_success', 'success');
+                } else {
+                    // No se borra lo escrito: el usuario puede reintentar sin volver a teclearlo.
+                    setStatus('form_error', 'error');
+                }
+            } catch (error) {
+                setStatus('form_error', 'error');
+            } finally {
+                form.dataset.submitting = 'false';
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = submitBtn.hasAttribute('data-i18n') ? translate('form_btn') : defaultBtnLabel;
+                }
+            }
         });
     }
 
@@ -508,16 +566,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function setLanguage(lang) {
         if (!translations[lang]) return;
         
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (translations[lang][key]) {
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                    if (el.placeholder) {
-                        el.placeholder = translations[lang][key];
-                    }
-                } else {
-                    el.textContent = translations[lang][key];
+        document.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(el => {
+            const htmlKey = el.getAttribute('data-i18n-html');
+            const key = htmlKey || el.getAttribute('data-i18n');
+            const value = translations[lang][key];
+            if (!value) return;
+
+            if (htmlKey) {
+                // Textos con enlace (p. ej. la política de privacidad).
+                el.innerHTML = value;
+            } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                if (el.placeholder) {
+                    el.placeholder = value;
                 }
+            } else {
+                el.textContent = value;
             }
         });
 
