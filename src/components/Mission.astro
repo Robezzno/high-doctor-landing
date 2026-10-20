@@ -1,0 +1,66 @@
+---
+import { t, type Lang, type TranslationKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const missionItems: TranslationKey[] = [
+  'mission_li_1',
+  'mission_li_2',
+  'mission_li_3',
+  'mission_li_4',
+  'mission_li_5',
+  'mission_li_6',
+];
+
+const values: { label: TranslationKey; text: TranslationKey }[] = [
+  { label: 'val_comm', text: 'val_comm_desc' },
+  { label: 'val_cult', text: 'val_cult_desc' },
+  { label: 'val_edu', text: 'val_edu_desc' },
+  { label: 'val_resp', text: 'val_resp_desc' },
+  { label: 'val_inno', text: 'val_inno_desc' },
+];
+---
+
+<section id="mission" class="mission section reveal">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="mission-content">
+        <h2 class="section-title">{t(lang, 'mission_title')}</h2>
+        <p class="lead-text">{t(lang, 'mission_lead')}</p>
+        <p>{t(lang, 'mission_desc')}</p>
+        <ul class="mission-list">
+          {
+            missionItems.map((key) => (
+              <li>
+                <span>✔</span> <span>{t(lang, key)}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="mission-vision">
+        <div class="vision-card">
+          <h3>{t(lang, 'vision_title')}</h3>
+          <p>{t(lang, 'vision_desc')}</p>
+        </div>
+        <div class="values-card mt-2">
+          <h3>{t(lang, 'values_title')}</h3>
+          <p>
+            {
+              values.map((value, index) => (
+                <>
+                  <strong>{t(lang, value.label)}</strong> <span>{t(lang, value.text)}</span>
+                  {index < values.length - 1 && <br />}
+                </>
+              ))
+            }
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

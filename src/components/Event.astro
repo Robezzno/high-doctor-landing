@@ -1,0 +1,17 @@
+---
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="mary-jane" class="mary-jane section highlight-section reveal">
+  <div class="container text-center">
+    <h2>{t(lang, 'mj_title')}</h2>
+    <p class="lead-text mt-1">{t(lang, 'mj_desc')}</p>
+    <a href="#contact" class="btn btn-primary mt-2">{t(lang, 'mj_btn')}</a>
+  </div>
+</section>

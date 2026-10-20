@@ -1,0 +1,48 @@
+---
+import { Picture } from 'astro:assets';
+import logoCharacter from '../assets/logo-character.png';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="text-center mb-2">
+      <Picture
+        src={logoCharacter}
+        alt="High Doctor Foundation Logo"
+        class="footer-logo-img"
+        formats={['avif', 'webp']}
+        fallbackFormat="png"
+        widths={[120, 240]}
+        sizes="120px"
+        loading="lazy"
+      />
+    </div>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>{t(lang, 'ft_brand')}</h3>
+        <p class="tagline">{t(lang, 'ft_tagline')}</p>
+        <p class="locations">{t(lang, 'ft_loc')}</p>
+      </div>
+      <div class="footer-links">
+        <h4>{t(lang, 'ft_about')}</h4>
+        <p>{t(lang, 'ft_about_desc')}</p>
+      </div>
+      <div class="footer-links">
+        <h4>{t(lang, 'ft_focus')}</h4>
+        <p>{t(lang, 'ft_focus_desc')}</p>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="motto">{t(lang, 'ft_motto')}</p>
+      <p>&copy; 2026 High Doctor Foundation. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

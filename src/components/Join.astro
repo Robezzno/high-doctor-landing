@@ -1,0 +1,38 @@
+---
+import { t, type Lang, type TranslationKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const benefits: { title: TranslationKey; text: TranslationKey }[] = [
+  { title: 'join_b1_t', text: 'join_b1_d' },
+  { title: 'join_b2_t', text: 'join_b2_d' },
+  { title: 'join_b3_t', text: 'join_b3_d' },
+  { title: 'join_b4_t', text: 'join_b4_d' },
+  { title: 'join_b5_t', text: 'join_b5_d' },
+  { title: 'join_b6_t', text: 'join_b6_d' },
+];
+---
+
+<section id="join" class="join section reveal">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">{t(lang, 'join_title')}</h2>
+      <p class="section-subtitle">{t(lang, 'join_subtitle')}</p>
+    </div>
+    <div class="grid benefits">
+      {
+        benefits.map((benefit) => (
+          <div class="benefit-item">
+            <div class="icon">✓</div>
+            <h4>{t(lang, benefit.title)}</h4>
+            <p>{t(lang, benefit.text)}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

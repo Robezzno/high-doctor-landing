@@ -1,1 +1,15 @@
+# Dependencias y artefactos de Astro
+node_modules/
+dist/
+.astro/
+
+# Logs y ficheros del sistema
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
 server*.log
+
+# Entorno local
+.env
+.env.*

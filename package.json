@@ -1,0 +1,23 @@
+{
+  "name": "high-doctor-foundation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Web de High Doctor Foundation — Astro, 8 idiomas, GitHub Pages",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "npm run i18n:check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "i18n:extract": "node scripts/extract-i18n.mjs",
+    "i18n:check": "node scripts/check-i18n.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.4.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.11",
+    "typescript": "^6.0.3"
+  }
+}

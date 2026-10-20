@@ -1,0 +1,67 @@
+---
+import { Picture } from 'astro:assets';
+import logoText from '../assets/logo-text.png';
+import { languages, langPath, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const langLabels: Record<Lang, string> = {
+  en: 'EN',
+  es: 'ES',
+  de: 'DE',
+  fr: 'FR',
+  it: 'IT',
+  pt: 'PT',
+  nl: 'NL',
+  pl: 'PL',
+};
+---
+
+<nav class="navbar">
+  <div class="container nav-container">
+    <div class="logo">
+      <a href={`${langPath(lang)}#top`} aria-label="High Doctor Foundation">
+        <Picture
+          src={logoText}
+          alt="High Doctor Foundation"
+          class="logo-img"
+          formats={['avif', 'webp']}
+          fallbackFormat="png"
+          widths={[96, 192]}
+          sizes="192px"
+          loading="eager"
+        />
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#mission">{t(lang, 'nav_mission')}</a></li>
+      <li><a href="#impact">{t(lang, 'nav_impact')}</a></li>
+      <li><a href="#join">{t(lang, 'nav_join')}</a></li>
+      <li><a href="#mary-jane">{t(lang, 'nav_maryjane')}</a></li>
+      <li><a href="#contact" class="btn-nav">{t(lang, 'nav_cta')}</a></li>
+      <li>
+        <nav class="lang-switcher" aria-label="Language">
+          {
+            languages.map((language) => (
+              <a
+                href={langPath(language)}
+                hreflang={language}
+                lang={language}
+                aria-current={language === lang ? 'true' : undefined}
+              >
+                {langLabels[language]}
+              </a>
+            ))
+          }
+        </nav>
+      </li>
+    </ul>
+    <div class="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>

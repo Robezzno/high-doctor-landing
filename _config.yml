@@ -1,4 +1,0 @@
-# Evita que GitHub Pages (Jekyll) publique la documentación interna como páginas web.
-exclude:
-  - docs
-  - README.md

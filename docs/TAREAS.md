@@ -8,7 +8,7 @@
 - Prompt 01: migración a Astro.
 
 ## Hecho (además)
-- 2026-10-20: prompt 00 — formulario arreglado: POST real a Web3Forms, checkbox RGPD en 8 idiomas, mensajes de estado accesibles (éxito/error/envío). Pendiente: verificar en vivo el email de prueba (Cloudflare bloquea la IP de este equipo; probar en navegador normal). Nuevo original del logo en `assets/letraslogohigh.jpg` (recortar "CSC" en el prompt 02).
+- 2026-10-20: prompt 01 — web migrada a Astro 7 (TS strict): 8 rutas estáticas por idioma con hreflang/canonical, i18n extraído por script (95 claves × 8 idiomas, el build falla si falta una), imágenes optimizadas AVIF/WebP, formulario Web3Forms conservado, workflow deploy.yml con withastro/action. Web antigua en `legacy/`. Pages pasa a modo workflow. Capturas comparativas en `docs/capturas/01-migracion-astro/`.
 
 ## Cómo retomarlo
 1. Lee `docs/PLAN.md` y `docs/prompts/README.md`.

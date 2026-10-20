@@ -1,0 +1,144 @@
+---
+import { t, tHtml, type Lang, type TranslationKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const interestOptions: TranslationKey[] = [
+  'form_opt_2',
+  'form_opt_3',
+  'form_opt_4',
+  'form_opt_5',
+  'form_opt_6',
+  'form_opt_7',
+  'form_opt_8',
+];
+
+// Los `value` no se traducen: son los que llegan por email a Web3Forms.
+const interestValues = [
+  'research',
+  'medical',
+  'education',
+  'collaboration',
+  'volunteering',
+  'media',
+  'other',
+];
+---
+
+<section id="contact" class="contact section reveal">
+  <div class="container form-container glass-panel">
+    <div class="text-center">
+      <h2 class="section-title">{t(lang, 'form_title')}</h2>
+      <p class="mb-2">{t(lang, 'form_subtitle')}</p>
+    </div>
+    <form
+      id="lead-form"
+      class="lead-form"
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      data-msg-sending={t(lang, 'form_sending')}
+      data-msg-success={t(lang, 'form_success')}
+      data-msg-error={t(lang, 'form_error')}
+      data-btn-label={t(lang, 'form_btn')}
+    >
+      <!-- Web3Forms config -->
+      <input type="hidden" name="access_key" value="4abe23f2-0d49-48b0-83b5-fd372e6d6094" />
+      <input type="hidden" name="subject" value="Nuevo Lead - High Doctor Foundation" />
+      <input type="hidden" name="from_name" value="High Doctor Foundation" />
+      <input type="hidden" name="redirect" value="https://highdoctor.foundation" />
+      <input type="checkbox" name="botcheck" id="botcheck" style="display:none;" />
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">{t(lang, 'form_lbl_name')}</label>
+          <input type="text" id="name" name="name" required placeholder="Dr. Jane Doe" />
+        </div>
+        <div class="form-group">
+          <label for="email">{t(lang, 'form_lbl_email')}</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="jane.doe@example.com"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="country">{t(lang, 'form_lbl_country')}</label>
+          <input type="text" id="country" name="country" required placeholder="e.g. Germany" />
+        </div>
+        <div class="form-group">
+          <label for="organization">{t(lang, 'form_lbl_org')}</label>
+          <input
+            type="text"
+            id="organization"
+            name="organization"
+            placeholder="University, Clinic, Company..."
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="profession">{t(lang, 'form_lbl_prof')}</label>
+          <input
+            type="text"
+            id="profession"
+            name="profession"
+            required
+            placeholder="e.g. Researcher, Doctor..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="interest">{t(lang, 'form_lbl_int')}</label>
+          <select id="interest" name="interest" required>
+            <option value="" disabled selected>{t(lang, 'form_opt_1')}</option>
+            {
+              interestOptions.map((key, index) => (
+                <option value={interestValues[index]}>{t(lang, key)}</option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="linkedin">{t(lang, 'form_lbl_li')}</label>
+        <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." />
+      </div>
+      <div class="form-group">
+        <label for="message">{t(lang, 'form_lbl_msg')}</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="4"
+          placeholder="Briefly describe your background or proposal..."></textarea>
+      </div>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="updates" name="updates" checked />
+        <label for="updates">{t(lang, 'form_lbl_check')}</label>
+      </div>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="privacy-consent" name="privacy_consent" value="accepted" required />
+        <!-- Texto con enlace a la política de privacidad (llega como HTML del diccionario) -->
+        <label for="privacy-consent" set:html={tHtml(lang, 'form_lbl_consent')}></label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">{t(lang, 'form_btn')}</button>
+      <div
+        id="form-status"
+        class="form-status hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  import '../scripts/contact-form.ts';
+</script>

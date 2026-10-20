@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Landing from '../../components/Landing.astro';
+import { defaultLang, languages, type Lang } from '../../i18n';
+
+export function getStaticPaths() {
+  // EN vive en `/`: aquí sólo se generan los otros siete idiomas.
+  return languages
+    .filter((lang) => lang !== defaultLang)
+    .map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<Base lang={lang}>
+  <Landing lang={lang} />
+</Base>

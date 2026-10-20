@@ -1,0 +1,38 @@
+---
+import { t, type Lang, type TranslationKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const cards: { icon: string; title: TranslationKey; text: TranslationKey }[] = [
+  { icon: '🔬', title: 'impact_c1_t', text: 'impact_c1_d' },
+  { icon: '📚', title: 'impact_c2_t', text: 'impact_c2_d' },
+  { icon: '🩺', title: 'impact_c3_t', text: 'impact_c3_d' },
+  { icon: '🛡️', title: 'impact_c4_t', text: 'impact_c4_d' },
+  { icon: '🌍', title: 'impact_c5_t', text: 'impact_c5_d' },
+  { icon: '🤝', title: 'impact_c6_t', text: 'impact_c6_d' },
+];
+---
+
+<section id="impact" class="impact section dark-section reveal">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">{t(lang, 'impact_title')}</h2>
+      <p class="section-subtitle">{t(lang, 'impact_subtitle')}</p>
+    </div>
+    <div class="grid cards">
+      {
+        cards.map((card) => (
+          <div class="card hover-glow">
+            <div class="card-icon">{card.icon}</div>
+            <h3>{t(lang, card.title)}</h3>
+            <p>{t(lang, card.text)}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

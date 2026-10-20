@@ -1,0 +1,35 @@
+---
+import { Picture } from 'astro:assets';
+import heroBg from '../assets/hero-bg.png';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<header class="hero" id="top">
+  <Picture
+    src={heroBg}
+    alt=""
+    class="hero-bg"
+    formats={['avif', 'webp']}
+    fallbackFormat="webp"
+    widths={[640, 1024]}
+    sizes="100vw"
+    loading="eager"
+  />
+  <div class="hero-overlay"></div>
+  <canvas id="network-canvas" class="network-canvas"></canvas>
+  <div class="container hero-content fade-in-up">
+    <span class="badge">{t(lang, 'hero_badge')}</span>
+    <h1>{t(lang, 'hero_title')}</h1>
+    <p>{t(lang, 'hero_subtitle')}</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn btn-primary">{t(lang, 'hero_btn_1')}</a>
+      <a href="#contact" class="btn btn-secondary">{t(lang, 'hero_btn_2')}</a>
+    </div>
+  </div>
+</header>

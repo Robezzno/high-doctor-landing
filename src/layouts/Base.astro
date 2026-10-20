@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import { languages, langPath, type Lang } from '../i18n';
+
+interface Props {
+  /** Idioma de la página. */
+  lang: Lang;
+  /** Sólo en `/`: redirige una vez según el idioma del navegador. */
+  redirectBrowserLang?: boolean;
+}
+
+const { lang, redirectBrowserLang = false } = Astro.props;
+
+// Mismo <title> y misma descripción que la web antigua (los textos SEO
+// por idioma llegan en el prompt 09).
+const title = 'High Doctor Foundation | Advancing Cannabis Knowledge';
+const description =
+  'High Doctor Foundation is an independent non-profit organization dedicated to education, culture, community development and social awareness regarding cannabis and cannabinoids.';
+
+const site = Astro.site ?? new URL('https://highdoctor.foundation');
+const canonical = new URL(Astro.url.pathname, site);
+const alternates = languages.map((language) => ({
+  lang: language,
+  href: new URL(langPath(language), site).href,
+}));
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    {
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+
+    <!-- Tipografías: igual que la web antigua, mismas familias y pesos. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    {
+      redirectBrowserLang && (
+        <script is:inline>
+          // Primera visita a `/`: si el navegador está en otro idioma soportado,
+          // se redirige una sola vez y se guarda la preferencia. Nunca bloquea la carga.
+          (function () {
+            try {
+              if (localStorage.getItem('preferredLang')) return;
+              var supported = ['es', 'de', 'fr', 'it', 'pt', 'nl', 'pl'];
+              var lang = (navigator.language || '').slice(0, 2).toLowerCase();
+              if (supported.indexOf(lang) === -1) {
+                localStorage.setItem('preferredLang', 'en');
+                return;
+              }
+              localStorage.setItem('preferredLang', lang);
+              window.location.replace('/' + lang + '/');
+            } catch (e) {
+              /* Sin localStorage (modo privado, cookies bloqueadas): se queda en EN. */
+            }
+          })();
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <slot />
+
+    <!-- vanilla-tilt sigue viniendo del CDN, como en la web antigua. -->
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
+    ></script>
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>
