@@ -1,0 +1,98 @@
+name: Refrescar el token de Instagram
+
+# El token de la API de Instagram caduca a los 60 días. Este workflow lo
+# refresca una vez al mes y guarda el nuevo en el secreto IG_ACCESS_TOKEN.
+#
+# Necesita un PAT fine-grained de GitHub (`GH_PAT_SECRETS`) con permiso
+# *Secrets: read & write* SÓLO en este repositorio: es lo que permite
+# `gh secret set` sin darle al workflow más permisos de la cuenta.
+#
+# Si el refresco falla, el job se pone en rojo para que GitHub mande un email.
+# Nunca se imprime el token: ni el viejo ni el nuevo (::add-mask::).
+
+on:
+  schedule:
+    # El día 1 de cada mes a las 06:00 UTC. El token dura 60 días: sobra margen.
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: instagram-token
+  cancel-in-progress: false
+
+jobs:
+  refrescar:
+    name: Refrescar y guardar el token
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Comprobar que están los secretos
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GH_PAT_SECRETS: ${{ secrets.GH_PAT_SECRETS }}
+        run: |
+          set -euo pipefail
+          # Enmascarar antes de cualquier otra cosa.
+          [ -n "${IG_ACCESS_TOKEN:-}" ] && echo "::add-mask::$IG_ACCESS_TOKEN"
+          [ -n "${GH_PAT_SECRETS:-}" ] && echo "::add-mask::$GH_PAT_SECRETS"
+          if [ -z "${IG_ACCESS_TOKEN:-}" ]; then
+            echo "::error::Falta el secreto IG_ACCESS_TOKEN. Pasos en docs/INSTAGRAM-SETUP.md."
+            exit 1
+          fi
+          if [ -z "${GH_PAT_SECRETS:-}" ]; then
+            echo "::error::Falta el secreto GH_PAT_SECRETS (PAT fine-grained con Secrets: read & write)."
+            exit 1
+          fi
+          echo "Secretos presentes."
+
+      - name: Refrescar el token con graph.instagram.com
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GH_PAT_SECRETS: ${{ secrets.GH_PAT_SECRETS }}
+        run: |
+          set -euo pipefail
+          echo "::add-mask::$IG_ACCESS_TOKEN"
+          echo "::add-mask::$GH_PAT_SECRETS"
+
+          # GET /refresh_access_token?grant_type=ig_refresh_token&access_token=...
+          # Documentación de Meta: docs/INSTAGRAM-SETUP.md (consulta 2026-10-20).
+          respuesta=$(curl -sS --fail-with-body --retry 3 --retry-delay 5 --max-time 30 \
+            "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${IG_ACCESS_TOKEN}") || {
+              echo "::error::Meta rechazó el refresco del token (401/400). Hay que generar uno nuevo a mano: docs/INSTAGRAM-SETUP.md"
+              exit 1
+            }
+
+          nuevo=$(printf '%s' "$respuesta" | jq -r '.access_token // empty')
+          segundos=$(printf '%s' "$respuesta" | jq -r '.expires_in // 0')
+
+          if [ -z "$nuevo" ]; then
+            echo "::error::La respuesta de Meta no trae access_token."
+            # Sólo el mensaje de error: el cuerpo puede contener datos del token.
+            printf '%s' "$respuesta" | jq -r '.error.message // "sin detalle de error"' || true
+            exit 1
+          fi
+
+          echo "::add-mask::$nuevo"
+
+          # Guardar el token nuevo en el secreto del repo. La salida de `gh` no
+          # incluye el valor; el token va por entrada estándar, nunca por la
+          # línea de comandos.
+          export GH_TOKEN="$GH_PAT_SECRETS"
+          printf '%s' "$nuevo" | gh secret set IG_ACCESS_TOKEN --repo "$GITHUB_REPOSITORY"
+
+          dias=$(( segundos / 86400 ))
+          echo "Token refrescado y guardado. Caduca en ${dias} días."
+
+      - name: Resumen
+        if: always()
+        run: |
+          {
+            echo ""
+            echo "---"
+            echo "Refresco del token de Instagram: \`${{ job.status }}\`"
+            echo "Si aparece en rojo, el token NO se ha guardado: genera uno nuevo a mano (docs/INSTAGRAM-SETUP.md)."
+            echo "La web y el bot de noticias no dependen de este workflow."
+          } >> "$GITHUB_STEP_SUMMARY"

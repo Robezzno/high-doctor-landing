@@ -141,3 +141,81 @@ cd bot && npm test
   control anti-copia de 8-gramas.
 - `tests/publish.test.ts`: contrato del frontmatter (`author: bot`, `source`,
   `instagram: pending`, mismo `translationKey`) y `state/seen.json`.
+
+---
+
+# Reclamo en Instagram
+
+Cuando una noticia tiene `instagram: 'pending'` en el frontmatter, este flujo la
+publica sola en la cuenta de Instagram: la tarjeta 1080×1350 que genera el build
+(`/social/<lang>/<slug>.jpg`) más un caption que invita a leerla en la web. Lo
+escribe quien lo escriba el post (Saf, Pages CMS o el bot): sólo mira el
+frontmatter.
+
+```
+deploy.yml OK ──► instagram.yml ──► instagram.ts ──► graph.instagram.com
+                                    selección        media → media_publish
+                                    caption          commit: instagram: publicado
+```
+
+1. **`src/instagram.ts`** elige los posts con `instagram: 'pending'`,
+   `draft: false` y fecha ≤ ahora. Si un post tiene ES y EN (mismo
+   `translationKey`), publica **una sola vez**, en el idioma de `IG_LANG`.
+2. Espera a que la tarjeta esté en línea (HEAD con reintentos y backoff, hasta 5
+   minutos): el CDN de Pages tarda.
+3. Consulta `content_publishing_limit`, crea el contenedor
+   (`POST /<IG_USER_ID>/media` con `image_url` + `caption`), espera a que el
+   `status_code` sea `FINISHED` y publica (`POST .../media_publish`).
+4. Escribe `instagram: 'published'` + `instagramId` en **todas** las versiones de
+   idioma y commitea (`instagram: publicado "<título>"`, autor
+   `Robezzno <robezzno@gmail.com>`).
+5. Si falla, el post sigue en `pending` y el motivo va al resumen. Tras **3
+   fallos seguidos** del mismo post (`state/instagram.json`) pasa a
+   `instagram: 'off'` para no entrar en bucle.
+
+**`src/caption.ts`** arma el pie de foto: gancho (`instagramHook` o título),
+2–3 frases del `summary`, "Léela completa en highdoctor.foundation (enlace en la
+bio)", "Fuente: <nombre>" si el post es del bot, y 5–8 hashtags de
+`bot/hashtags.yml` (lista blanca por categoría, sólo educativos o científicos).
+Máximo 2200 caracteres.
+
+| Variable | Por defecto | Para qué |
+|---|---|---|
+| `IG_ENABLED` | — | `false` apaga el flujo entero (variable de repo, no secreto). |
+| `IG_ACCESS_TOKEN` | — | Token de la API de Instagram (secreto). Caduca a los 60 días. |
+| `IG_USER_ID` | — | Instagram User ID de la cuenta (secreto). |
+| `IG_LANG` | `es` | Idioma del caption y de la tarjeta: `es` o `en`. |
+| `IG_API_VERSION` | `v26.0` | Versión de la API de Meta. |
+| `IG_MAX_PER_RUN` | `1` | Posts publicados por ejecución (el resto queda en cola). |
+| `DRY_RUN` | `0` | `1` imprime caption y URL sin publicar ni escribir nada. |
+
+Puesta en marcha (cuenta profesional, app de Meta, token y PAT del refresco):
+`docs/INSTAGRAM-SETUP.md`. Pausar Instagram en un clic: `docs/COMO-PUBLICAR.md`.
+
+Tokens y límites (verificado el 2026-10-20 en la documentación de Meta):
+
+- El token de usuario de Instagram dura **60 días**;
+  `instagram-token-refresh.yml` lo renueva cada mes con
+  `GET /refresh_access_token?grant_type=ig_refresh_token` y lo guarda con
+  `gh secret set` usando el PAT `GH_PAT_SECRETS`. Si el refresco falla, el job se
+  pone en rojo. Ningún log imprime el token (`::add-mask::`).
+- Instagram admite **100 publicaciones por API cada 24 h** y sólo JPG.
+- El flujo **no** usa `instagrapi`: Instagram detecta el acceso no oficial y
+  bloquea la cuenta.
+
+## Tests del reclamo de Instagram
+
+- `tests/caption.test.ts`: longitud (≤ 2200), 5–8 hashtags de la lista blanca,
+  formato (gancho, CTA, fuente sólo si es del bot) y rechazo de hashtags vetados.
+- `tests/instagram.test.ts`: selección (dedupe ES/EN, borradores, fechas
+  futuras, `off`/`published`), reescritura del frontmatter en todas las
+  versiones, commit esperado, dry run, cupo agotado y contador de 3 fallos.
+  Todo con una API falsa: **ningún test llama a Meta**.
+- Fixtures: `tests/fixtures/instagram/{es,en}/`.
+
+Prueba manual sin publicar:
+
+```bash
+cd bot
+npm run instagram:dry-run          # imprime caption y URL de la imagen
+```

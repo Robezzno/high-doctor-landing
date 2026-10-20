@@ -10,6 +10,8 @@
   "scripts": {
     "run": "tsx src/index.ts",
     "dry-run": "DRY_RUN=1 tsx src/index.ts",
+    "instagram": "tsx src/instagram.ts",
+    "instagram:dry-run": "DRY_RUN=1 tsx src/instagram.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
