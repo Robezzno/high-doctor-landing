@@ -1,0 +1,109 @@
+name: Reclamo en Instagram
+
+# Publica en Instagram la tarjeta (1080×1350) y el caption de los posts que
+# tengan `instagram: pending`, en cuanto el deploy a Pages termina bien y la
+# tarjeta está en línea.
+#
+# - Se dispara solo tras un deploy correcto (workflow_run de deploy.yml) y a
+#   mano con `workflow_dispatch` (dry_run activado por defecto).
+# - Interruptor: la variable de repositorio IG_ENABLED. Si no vale `true`, el
+#   workflow sale sin hacer nada (botón del pánico, docs/COMO-PUBLICAR.md).
+# - Nunca dos ejecuciones a la vez: el commit del estado y del frontmatter se
+#   pisaría (concurrency: instagram).
+# - El commit lo hace GITHUB_TOKEN, así que NO dispara otro deploy. No hace
+#   falta: `instagram: published` e `instagramId` no se pintan en la web.
+#
+# Secretos necesarios: IG_ACCESS_TOKEN e IG_USER_ID (docs/INSTAGRAM-SETUP.md).
+
+on:
+  workflow_run:
+    workflows: ['Deploy a GitHub Pages']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Imprime el caption y la URL de la imagen sin publicar nada'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write # commit del frontmatter + bot/state/instagram.json
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    name: Publicar el reclamo
+    # Sólo si el deploy ha ido bien; el disparo manual siempre pasa.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Comprobar el interruptor IG_ENABLED
+        id: interruptor
+        run: |
+          if [ "${{ vars.IG_ENABLED }}" = "true" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Instagram está apagado (IG_ENABLED no vale 'true'): no se hace nada."
+            echo "Para activarlo: gh variable set IG_ENABLED --body true"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Enmascarar el token en los logs
+        if: steps.interruptor.outputs.run == 'true'
+        run: echo "::add-mask::${{ secrets.IG_ACCESS_TOKEN }}"
+
+      - name: Descargar el repo
+        if: steps.interruptor.outputs.run == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Autoría de los commits: una persona, nunca una IA.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Preparar Node 22
+        if: steps.interruptor.outputs.run == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: bot/package-lock.json
+
+      - name: Instalar dependencias del bot
+        if: steps.interruptor.outputs.run == 'true'
+        working-directory: bot
+        run: npm ci --no-audit --no-fund
+
+      - name: Publicar en Instagram
+        if: steps.interruptor.outputs.run == 'true'
+        working-directory: bot
+        env:
+          IG_ENABLED: 'true'
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          # Idioma del caption y de la tarjeta: es (por defecto) o en.
+          IG_LANG: ${{ vars.IG_LANG || 'es' }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION || 'v26.0' }}
+          IG_MAX_PER_RUN: ${{ vars.IG_MAX_PER_RUN || '1' }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '0' }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run instagram
+
+      - name: Resumen de la ejecución
+        if: always() && steps.interruptor.outputs.run == 'true'
+        run: |
+          {
+            echo ""
+            echo "---"
+            echo "Dry run: \`${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}\` · idioma: \`${{ vars.IG_LANG || 'es' }}\`"
+            echo "Últimos commits:"
+            echo '```'
+            git log --oneline -3
+            echo '```'
+            echo "Si el token ha caducado, el job de refresco es \`instagram-token-refresh.yml\`."
+          } >> "$GITHUB_STEP_SUMMARY"

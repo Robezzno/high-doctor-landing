@@ -1,0 +1,82 @@
+# Lista blanca de hashtags del reclamo de Instagram
+# =================================================
+#
+# REGLA: aquí sólo entran hashtags educativos o científicos.
+# Nada de venta, consumo, productos, precios, cepas ni "estilo de vida".
+# Antes de añadir uno, comprobarlo a mano en la app de Instagram: si la
+# búsqueda del hashtag sale vacía o con aviso, está restringido y NO se usa.
+#
+# Motivo: las políticas de Meta sobre cannabis limitan o eliminan el contenido
+# que promueve la venta o el consumo (docs/PLAN.md, riesgos). Un hashtag
+# vetado puede hacer que Instagram limite la cuenta entera, no sólo el post.
+#
+# Formato: minúsculas, empieza por #, sin espacios ni acentos.
+# Lo valida `bot/src/caption.ts` (HASHTAG_PATTERN) y lo comprueban los tests:
+# 5–8 hashtags por caption.
+#
+# `default` rellena los huecos si una categoría tiene menos de `min` hashtags
+# o si llega una categoría que no está en la lista.
+
+# Cuántos hashtags lleva el caption: mínimo y máximo.
+min: 5
+max: 8
+
+# Comodín: se usan al final, y sólo si hacen falta para llegar al mínimo.
+default:
+  - '#cannabisresearch'
+  - '#cannabinoids'
+  - '#sciencecommunication'
+  - '#publichealth'
+  - '#harmreduction'
+
+# Un juego por categoría del contrato de contenido (docs/CONTENIDO.md).
+by_category:
+  investigacion:
+    - '#cannabisresearch'
+    - '#cannabinoids'
+    - '#clinicalresearch'
+    - '#phytocannabinoids'
+    - '#sciencecommunication'
+    - '#openaccess'
+    - '#evidencebased'
+    - '#publichealth'
+  salud:
+    - '#medicalcannabis'
+    - '#cannabinoids'
+    - '#patientsafety'
+    - '#clinicalresearch'
+    - '#evidencebased'
+    - '#harmreduction'
+    - '#healthliteracy'
+    - '#publichealth'
+  legislacion:
+    - '#drugpolicy'
+    - '#evidencebasedpolicy'
+    - '#harmreduction'
+    - '#healthpolicy'
+    - '#regulation'
+    - '#publichealth'
+    - '#cannabisresearch'
+    - '#sciencecommunication'
+  cultura:
+    - '#sciencecommunication'
+    - '#healthliteracy'
+    - '#harmreduction'
+    - '#cannabisresearch'
+    - '#publichealth'
+    - '#education'
+  fundacion:
+    - '#cannabisresearch'
+    - '#sciencecommunication'
+    - '#publichealth'
+    - '#healthliteracy'
+    - '#nonprofit'
+    - '#researchfunding'
+    - '#education'
+  eventos:
+    - '#cannabisresearch'
+    - '#sciencecommunication'
+    - '#publichealth'
+    - '#healthliteracy'
+    - '#outreach'
+    - '#education'
