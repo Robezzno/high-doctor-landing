@@ -1,0 +1,278 @@
+---
+/**
+ * Plantilla de las páginas legales (`/legal/*` y `/[lang]/legal/*`).
+ *
+ * El texto vive en `src/data/legal.ts` y los datos de la entidad en
+ * `src/config/site.ts`. Mientras Saf no confirme el nombre legal, el CIF, el
+ * domicilio y el registro, la página se pinta con marcadores entre corchetes y
+ * un aviso de borrador visible: nunca se rellena con datos inventados.
+ */
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import { entity, sections } from '../config/site';
+import {
+  LEGAL_DOCS,
+  LEGAL_UPDATED,
+  legalAlternates,
+  legalContent,
+  legalLang,
+  legalLangNoticeNeeded,
+  legalPath,
+  renderLegalText,
+  type LegalDoc,
+} from '../data/legal';
+import { langPath, t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  doc: LegalDoc;
+}
+
+const { lang, doc } = Astro.props;
+
+const textLang = legalLang(lang);
+const page = legalContent[textLang][doc];
+const render = (text: string) => renderLegalText(text, entity);
+
+const site = Astro.site ?? new URL('https://highdoctor.foundation');
+const alternates: { lang: string; href: string }[] = legalAlternates(doc).map((alternate) => ({
+  lang: alternate.lang,
+  href: new URL(alternate.href, site).href,
+}));
+alternates.push({ lang: 'x-default', href: new URL(legalPath('en', doc), site).href });
+
+const updatedLabel = new Intl.DateTimeFormat(lang, {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${LEGAL_UPDATED}T12:00:00Z`));
+
+const showLangNotice = legalLangNoticeNeeded(lang);
+const showDraftNotice = !sections.entityLegalData;
+
+const docsNav = LEGAL_DOCS.map((item) => ({
+  href: legalPath(lang, item),
+  label: legalContent[textLang][item].title,
+  current: item === doc,
+}));
+---
+
+<Base
+  lang={lang}
+  title={page.title}
+  description={page.intro}
+  alternates={alternates}
+  type="website"
+>
+  <Nav lang={lang} sectionBase={langPath(lang)} solid />
+
+  <main id="main" class="legal section--paper grain">
+    <div class="container legal__inner">
+      <header class="legal__head">
+        <span class="tag">LEGAL / {page.title}</span>
+        <h1 class="legal__title">{page.title}</h1>
+        <p class="lead legal__intro">{page.intro}</p>
+        <p class="mono legal__meta">
+          {t(lang, 'legal_updated')}: {updatedLabel}
+        </p>
+      </header>
+
+      {
+        showDraftNotice && (
+          <p class="legal__notice" data-kind="draft">
+            {t(lang, 'legal_draft_notice')}
+          </p>
+        )
+      }
+
+      {
+        showLangNotice && (
+          <p class="legal__notice" data-kind="lang">
+            <span class="mono legal__notice-tag">{textLang.toUpperCase()}</span>
+            {t(lang, 'legal_lang_notice')}
+          </p>
+        )
+      }
+
+      <nav class="legal__toc" aria-label={t(lang, 'ft_legal')}>
+        <ul>
+          {
+            docsNav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={item.current ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="legal__body">
+        {
+          page.sections.map((section) => (
+            <section class="legal__section">
+              <h2 class="legal__h2">{render(section.heading)}</h2>
+              {section.body.map((paragraph) => (
+                <p>{render(paragraph)}</p>
+              ))}
+            </section>
+          ))
+        }
+      </div>
+
+      <footer class="legal__foot">
+        <p class="legal__notice" data-kind="review">{t(lang, 'legal_review_notice')}</p>
+        <a class="btn btn--ghost" href={langPath(lang)}>{t(lang, 'legal_back_home')}</a>
+      </footer>
+    </div>
+  </main>
+
+  <Footer lang={lang} sectionBase={langPath(lang)} />
+</Base>
+
+<style>
+  .legal {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    border-top: 1px solid var(--c-paper-3);
+  }
+
+  .legal__inner {
+    max-width: 48rem;
+  }
+
+  .legal__head {
+    padding-bottom: var(--sp-m);
+    border-bottom: 2px solid var(--c-ink);
+  }
+
+  .legal__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.4rem + 2.6vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-display);
+    margin-block: 0.6rem var(--sp-xs);
+    /* El alemán y el polaco son largos: que partan antes de desbordar. */
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .legal__intro {
+    max-width: 46ch;
+  }
+
+  .legal__meta {
+    margin-top: var(--sp-s);
+    color: var(--c-ink-faint);
+  }
+
+  /* ------------------------------------------------------------ Avisos */
+  .legal__notice {
+    margin-top: var(--sp-m);
+    padding: 0.9rem 1.1rem;
+    border: 1.5px solid var(--c-ink);
+    border-left-width: 6px;
+    border-radius: var(--r-1);
+    background-color: var(--c-paper-2);
+    color: var(--c-ink);
+    font-size: var(--fs-small);
+    line-height: 1.5;
+  }
+
+  .legal__notice[data-kind='draft'] {
+    background-color: var(--c-marker);
+    border-left-color: var(--c-danger, #b3261e);
+  }
+
+  .legal__notice[data-kind='lang'] {
+    background-color: var(--c-paper-3);
+  }
+
+  .legal__notice[data-kind='review'] {
+    background-color: transparent;
+    border-style: dashed;
+  }
+
+  .legal__notice-tag {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+    border-radius: var(--r-1);
+    font-size: 0.66rem;
+  }
+
+  /* --------------------------------------------------------- Índice legal */
+  .legal__toc {
+    margin-top: var(--sp-m);
+  }
+
+  .legal__toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+  }
+
+  .legal__toc a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    letter-spacing: var(--tracking-mono);
+    text-transform: uppercase;
+    color: var(--c-ink-soft);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .legal__toc a:hover {
+    color: var(--c-ink);
+    border-bottom-color: var(--c-marker);
+  }
+
+  .legal__toc a[aria-current='page'] {
+    color: var(--c-ink);
+    border-bottom-color: var(--c-green-deep);
+  }
+
+  /* ------------------------------------------------------------- Cuerpo */
+  .legal__body {
+    margin-top: var(--sp-l);
+    display: grid;
+    gap: var(--sp-m);
+  }
+
+  .legal__body p {
+    max-width: 68ch;
+    color: var(--c-ink-soft);
+    overflow-wrap: break-word;
+  }
+
+  .legal__body p + p {
+    margin-top: 0.6rem;
+  }
+
+  .legal__h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    overflow-wrap: break-word;
+  }
+
+  .legal__foot {
+    margin-top: var(--sp-l);
+    display: grid;
+    gap: var(--sp-s);
+    justify-items: start;
+  }
+
+  .legal__foot .legal__notice {
+    margin-top: 0;
+    width: 100%;
+  }
+</style>

@@ -4,9 +4,13 @@ import Hero from './Hero.astro';
 import Mission from './Mission.astro';
 import Process from './Process.astro';
 import Impact from './Impact.astro';
+import Stats from './Stats.astro';
 import LatestNews from './news/LatestNews.astro';
 import Join from './Join.astro';
 import Event from './Event.astro';
+import Events from './Events.astro';
+import Team from './Team.astro';
+import Partners from './Partners.astro';
 import Footer from './Footer.astro';
 import type { Lang } from '../i18n';
 
@@ -32,9 +36,15 @@ const { lang } = Astro.props;
   <Mission lang={lang} />
   <Process lang={lang} />
   <Impact lang={lang} />
+  <!-- Secciones de confianza: cada una se oculta sola si falta el dato real
+       (flags en src/config/site.ts). No dejan huecos ni datos inventados. -->
+  <Stats lang={lang} />
   <LatestNews lang={lang} />
   <Join lang={lang} />
   <Event lang={lang} />
+  <Events lang={lang} />
+  <Team lang={lang} />
+  <Partners lang={lang} />
 </main>
 <Footer lang={lang} />
 

@@ -1,0 +1,103 @@
+---
+/**
+ * Socios y colaboradores (prompt 04, paso 3).
+ *
+ * Sólo se pinta con `sections.partners` en `true` y logos reales con permiso de
+ * uso. Los logos van en monocromo. Hoy no hay ninguno: no se inventan socios.
+ */
+import { partners, showSection } from '../config/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const visible = showSection('partners');
+---
+
+{
+  visible && (
+    <section id="colaboradores" class="partners section--paper">
+      <div class="container">
+        <header class="section__head">
+          <span class="tag">SPEC-07 / {t(lang, 'partners_title')}</span>
+        </header>
+
+        <h2 class="h2 partners__title">{t(lang, 'partners_title')}</h2>
+        <p class="lead partners__lead">{t(lang, 'partners_lead')}</p>
+
+        <ul class="partners__list">
+          {partners.map((partner) => (
+            <li class="partners__item">
+              {partner.logo ? (
+                partner.url ? (
+                  <a href={partner.url} rel="noopener">
+                    <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
+                  </a>
+                ) : (
+                  <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
+                )
+              ) : (
+                <span class="mono partners__name">{partner.name}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .partners {
+    padding-block: var(--sp-2xl);
+  }
+
+  .partners__title {
+    margin-bottom: var(--sp-xs);
+  }
+
+  .partners__lead {
+    max-width: 48ch;
+    margin-bottom: var(--sp-l);
+  }
+
+  .partners__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: var(--sp-m);
+    align-items: center;
+  }
+
+  .partners__item {
+    display: grid;
+    place-items: center;
+    min-height: 6rem;
+    padding: var(--sp-s);
+    border: 1px solid var(--c-paper-3);
+    border-radius: var(--r-1);
+    background-color: var(--c-paper-2);
+  }
+
+  /* Monocromo: gris al 85 % y color completo al pasar el ratón. */
+  .partners__item img {
+    max-width: 100%;
+    height: auto;
+    max-height: 4rem;
+    filter: grayscale(1) contrast(1.05);
+    opacity: 0.85;
+    transition: filter var(--dur-fast) linear, opacity var(--dur-fast) linear;
+  }
+
+  .partners__item:hover img,
+  .partners__item:focus-within img {
+    filter: none;
+    opacity: 1;
+  }
+
+  .partners__name {
+    color: var(--c-ink-soft);
+    text-align: center;
+  }
+</style>

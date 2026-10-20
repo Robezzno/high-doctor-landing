@@ -1,0 +1,25 @@
+---
+import LegalPage from '../../../components/LegalPage.astro';
+import { LEGAL_DOCS, legalLang, legalSlug, type LegalDoc } from '../../../data/legal';
+import { defaultLang, languages, type Lang } from '../../../i18n';
+
+/**
+ * Páginas legales de los siete idiomas con prefijo: `/es/legal/privacidad`,
+ * `/de/legal/privacy`… El texto es ES o EN según el idioma; los que no tienen
+ * texto propio muestran el aviso de `legal_lang_notice`.
+ */
+export function getStaticPaths() {
+  return languages
+    .filter((lang) => lang !== defaultLang)
+    .flatMap((lang) =>
+      LEGAL_DOCS.map((doc) => ({
+        params: { lang, doc: legalSlug(legalLang(lang), doc) },
+        props: { lang, doc },
+      })),
+    );
+}
+
+const { lang, doc } = Astro.props as { lang: Lang; doc: LegalDoc };
+---
+
+<LegalPage lang={lang} doc={doc} />
