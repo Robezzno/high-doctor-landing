@@ -1,7 +1,8 @@
 ---
 import { Picture } from 'astro:assets';
 import character from '../assets/brand/logo-character.png';
-import { t, tHtml, type Lang, type TranslationKey } from '../i18n';
+import { t, type Lang, type TranslationKey } from '../i18n';
+import { legalPath } from '../data/legal';
 
 interface Props {
   lang: Lang;
@@ -172,8 +173,12 @@ const fieldNumbers = {
           value="accepted"
           required
         />
-        <!-- Texto con enlace a la política de privacidad (llega como HTML del diccionario) -->
-        <span set:html={tHtml(lang, 'form_lbl_consent')}></span>
+        <!-- El enlace va a la política de privacidad real del idioma de la página. -->
+        <span>
+          {t(lang, 'form_consent_pre')}<a href={legalPath(lang, 'privacy')}
+            >{t(lang, 'form_consent_link')}</a
+          >{t(lang, 'form_consent_post')}
+        </span>
       </label>
     </div>
 

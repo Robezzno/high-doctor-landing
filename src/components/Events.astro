@@ -1,0 +1,173 @@
+---
+/**
+ * Eventos de la colección `events` (prompt 04, paso 3).
+ *
+ * Fuente: `src/content/events/*.md`. El archivado pasado/futuro es automático en
+ * cada build (`src/lib/events/archive.ts`), así que no hay que tocar nada a mano
+ * cuando pasa un evento. Los borradores (`draft: true`) nunca se publican y un
+ * evento sin fecha sale como "por confirmar".
+ *
+ * Hoy la sección está oculta (`sections.events` en `false`, ver
+ * `src/config/site.ts`) porque el único fichero es el ejemplo de prueba.
+ */
+import { getCollection } from 'astro:content';
+import { showSection } from '../config/site';
+import { archiveEvents, todayInUTC } from '../lib/events/archive';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const enabled = showSection('events');
+const entries = enabled ? await getCollection('events') : [];
+
+const events = entries.map((entry) => ({
+  title: entry.data.title,
+  date: entry.data.date,
+  city: entry.data.city,
+  url: entry.data.url,
+  stand: entry.data.stand ?? null,
+  draft: entry.data.draft,
+}));
+
+const { upcoming, past } = archiveEvents(events, todayInUTC());
+const visible = enabled && upcoming.length + past.length > 0;
+
+const formatDate = (date: string | null): string =>
+  date
+    ? new Intl.DateTimeFormat(lang, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'UTC',
+      }).format(new Date(`${date}T12:00:00Z`))
+    : t(lang, 'ev_tba');
+
+const groups = [
+  { key: 'upcoming' as const, label: t(lang, 'ev_upcoming'), items: upcoming },
+  { key: 'past' as const, label: t(lang, 'ev_past'), items: past },
+].filter((group) => group.items.length > 0);
+---
+
+{
+  visible && (
+    <section id="eventos" class="events section--ink grain">
+      <div class="container">
+        <header class="section__head">
+          <span class="tag tag--dark">SPEC-09 / {t(lang, 'events_title')}</span>
+        </header>
+
+        <h2 class="h2 events__title">{t(lang, 'events_title')}</h2>
+        <p class="lead events__lead">{t(lang, 'events_lead')}</p>
+
+        {groups.map((group) => (
+          <div class="events__group" data-group={group.key}>
+            <h3 class="mono events__group-title">{group.label}</h3>
+            <ul class="events__list">
+              {group.items.map((item) => (
+                <li class="events__item">
+                  <div class="events__meta">
+                    <span class="mono events__date">{formatDate(item.date)}</span>
+                    <span class="mono events__city">{item.city}</span>
+                    {item.stand && <span class="mono events__stand">{item.stand}</span>}
+                  </div>
+                  <h4 class="events__name">
+                    {item.url ? (
+                      <a href={item.url} rel="noopener">
+                        {item.title}
+                      </a>
+                    ) : (
+                      item.title
+                    )}
+                  </h4>
+                  {item.url && (
+                    <a class="mono events__link" href={item.url} rel="noopener">
+                      {t(lang, 'ev_link')}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .events {
+    padding-block: var(--sp-2xl);
+  }
+
+  .events__title {
+    margin-bottom: var(--sp-xs);
+  }
+
+  .events__lead {
+    max-width: 46ch;
+    margin-bottom: var(--sp-l);
+  }
+
+  .events__group + .events__group {
+    margin-top: var(--sp-l);
+  }
+
+  .events__group-title {
+    color: var(--c-paper-muted);
+    padding-bottom: 0.5rem;
+    margin-bottom: var(--sp-s);
+    border-bottom: 1px solid rgb(244 239 228 / 22%);
+  }
+
+  .events__list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .events__item {
+    padding: var(--sp-s);
+    background-color: var(--c-lab-2);
+    border: 1px solid rgb(244 239 228 / 18%);
+    border-radius: var(--r-1);
+    min-width: 0;
+  }
+
+  .events__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    color: var(--c-green);
+    margin-bottom: 0.35rem;
+  }
+
+  .events__city,
+  .events__stand {
+    color: var(--c-paper-muted);
+  }
+
+  .events__name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+  }
+
+  .events__name a {
+    color: var(--c-paper-on-dark);
+    text-decoration-color: var(--c-green);
+  }
+
+  .events__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 0.35rem;
+    color: var(--c-paper-muted);
+    text-decoration: underline;
+    text-decoration-color: var(--c-green);
+  }
+</style>

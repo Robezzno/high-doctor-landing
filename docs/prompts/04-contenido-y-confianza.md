@@ -38,3 +38,25 @@ Si algo no llega, **no inventes nada**: deja la sección oculta con un flag en `
 - Revisa con el navegador las 8 rutas sin textos desbordados y enlaces legales funcionando en todos los idiomas.
 - Script que comprueba que ningún JSON de i18n tiene claves vacías o en otro idioma (heurística: igual que EN y más de 3 palabras → aviso).
 - Commit `feat: contenido real, secciones de confianza y páginas legales` y push.
+
+---
+
+## Estado de ejecución (2026-10-20, rama `feat/contenido`, sin commit)
+
+Hecho **sin inventar ningún dato**:
+
+- **Paso 1 (datos de Saf)**: sigue pendiente. Todo lo que necesita datos reales está detrás de un flag en `src/config/site.ts` y hoy sale oculto.
+- **Paso 2 (textos, 8 idiomas)**: hero reescrito con titular < 10 palabras que dice qué es y para quién ("Cannabis explicado con ciencia, para quien quiere datos"), subtítulo con el beneficio concreto, y fuera las frases vacías ("Advancing… for a better future", "Let's build the future together"). También `mission_lead`, `mission_desc`, `impact_subtitle`, `join_subtitle`, `mj_desc`, `form_subtitle` y `ft_tagline`. Tono cercano y sin promesas médicas.
+- **Paso 3 (confianza)**: componentes nuevos `Team`, `Partners`, `Stats` y `Events`, más redes en la cabecera móvil y en el footer. Todos se auto-ocultan: `showSection()` exige flag encendido **y** datos reales. `Stats` no usa GSAP (no es dependencia del proyecto; el prompt 03 sigue en su rama wip): contador con `IntersectionObserver` + `requestAnimationFrame`, respeta `prefers-reduced-motion` y el número real va en el HTML.
+- **Eventos**: colección `events` en `src/content.config.ts` (fecha ISO o `null` = por confirmar, `draft`), archivado automático pasado/futuro en cada build (`src/lib/events/archive.ts`, con tests). Sólo queda el fichero de ejemplo en `draft: true`. Mary Jane Berlin sigue en `src/data/event.ts` con fecha pendiente ("por confirmar").
+- **Paso 4 (legal)**: `/legal/legal-notice`, `/legal/privacy`, `/legal/cookies` en la raíz (EN) y en los otros siete idiomas (`/es/legal/aviso-legal`, `/de/legal/privacy`…). Texto ES y EN completo en `src/data/legal.ts`: Web3Forms y GitHub como encargados, finalidad, base legal (consentimiento), conservación, derechos ARCO-POL con email y AEPD. Los idiomas sin texto propio ven el aviso de que la versión aplicable es la EN. Aviso de borrador visible mientras `sections.entityLegalData` sea `false` y aviso de "plantilla orientativa, que la revise un profesional".
+- **Cookies**: comprobado que la web no usa cookies ni analítica (sólo `localStorage.preferredLang`), así que no hay banner y la política de cookies lo explica.
+- **Formulario**: la casilla de consentimiento enlaza a la política de privacidad real del idioma (`form_consent_pre` + `form_consent_link` + `form_consent_post`).
+- **Verificación i18n**: `src/i18n/translations.test.ts` comprueba claves, valores vacíos, textos copiados del inglés (> 3 palabras) y el límite de palabras del titular del hero. `src/config/site.test.ts` impide activar una sección sin datos o rellenar los datos legales sin confirmar.
+- **Logo**: sin cambios (se mantienen `assets/logo-text.png` sin "CSC" y `assets/logo-character.png` con fondo limpio).
+
+Pendiente de Saf (una sola lista): nombre legal, CIF, domicilio, registro, email público, equipo (nombre, rol, foto y permiso), socios con logo y permiso, cifras demostrables, fecha y stand de Mary Jane Berlin y URLs de las redes. Al llegar cada dato: rellenar `src/config/site.ts` y poner su flag en `true`. La fecha del evento va en `src/data/event.ts`.
+
+Recordatorio para Saf: **el texto legal es una plantilla orientativa y debe revisarla un abogado o un asesor de protección de datos** antes de darlo por definitivo.
+
+Verificación ejecutada: `npm run build` (53 páginas) y `npm test` en verde. Queda pendiente la revisión visual en navegador de las 8 rutas.

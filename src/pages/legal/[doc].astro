@@ -1,0 +1,20 @@
+---
+import LegalPage from '../../components/LegalPage.astro';
+import { LEGAL_DOCS, legalSlug, type LegalDoc } from '../../data/legal';
+
+/**
+ * Páginas legales en inglés, en la raíz del sitio: `/legal/legal-notice`,
+ * `/legal/privacy` y `/legal/cookies`. El resto de idiomas vive en
+ * `src/pages/[lang]/legal/[doc].astro`.
+ */
+export function getStaticPaths() {
+  return LEGAL_DOCS.map((doc) => ({
+    params: { doc: legalSlug('en', doc) },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props as { doc: LegalDoc };
+---
+
+<LegalPage lang="en" doc={doc} />

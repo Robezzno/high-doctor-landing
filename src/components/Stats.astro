@@ -1,0 +1,141 @@
+---
+/**
+ * Cifras reales (prompt 04, paso 3).
+ *
+ * Sólo se pinta con `sections.stats` en `true` y cifras que se puedan demostrar.
+ * Cero estimaciones. El contador arranca al entrar en pantalla y, sin JavaScript
+ * o con movimiento reducido, se ve directamente la cifra final: el número real
+ * está en el HTML, no se calcula en el cliente.
+ *
+ * Nota: el prompt 03 (animaciones con GSAP) está sin terminar; cuando entre, este
+ * contador puede pasar a GSAP sin cambiar el marcado.
+ */
+import { showSection, stats } from '../config/site';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const visible = showSection('stats');
+---
+
+{
+  visible && (
+    <section id="cifras" class="stats section--ink grain">
+      <div class="container">
+        <header class="section__head">
+          <span class="tag tag--dark">SPEC-08 / {t(lang, 'stats_title')}</span>
+        </header>
+
+        <h2 class="h2 stats__title">{t(lang, 'stats_title')}</h2>
+        <p class="lead stats__lead">{t(lang, 'stats_lead')}</p>
+
+        <dl class="stats__list">
+          {stats.map((stat) => (
+            <div class="stats__item">
+              <dt class="mono stats__label">{t(lang, stat.labelKey)}</dt>
+              <dd class="stats__value" data-count={stat.value} data-suffix={stat.suffix}>
+                {stat.value.toLocaleString(lang)}
+                {stat.suffix}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  // Contador sin dependencias: 0 → cifra real al entrar en pantalla, una vez.
+  // Con `prefers-reduced-motion` no se anima nada: el HTML ya trae el número.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+
+  if (!reduced && counters.length > 0) {
+    const format = (value: number, lang: string) => value.toLocaleString(lang);
+
+    const run = (node: HTMLElement) => {
+      const target = Number(node.dataset.count ?? '0');
+      const suffix = node.dataset.suffix ?? '';
+      const lang = document.documentElement.lang || 'en';
+      if (!Number.isFinite(target)) return;
+
+      const duration = 900;
+      const start = performance.now();
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        // Curva de salida suave, sin rebote: no es un anuncio.
+        const eased = 1 - (1 - progress) ** 3;
+        node.textContent = `${format(Math.round(target * eased), lang)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(tick);
+        else node.textContent = `${format(target, lang)}${suffix}`;
+      };
+
+      node.textContent = `${format(0, lang)}${suffix}`;
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          run(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.4 },
+    );
+
+    counters.forEach((counter) => observer.observe(counter));
+  }
+</script>
+
+<style>
+  .stats {
+    padding-block: var(--sp-2xl);
+  }
+
+  .stats__title {
+    margin-bottom: var(--sp-xs);
+  }
+
+  .stats__lead {
+    max-width: 46ch;
+    margin-bottom: var(--sp-l);
+  }
+
+  .stats__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--sp-m);
+    border-top: 1px solid rgb(244 239 228 / 22%);
+    padding-top: var(--sp-m);
+  }
+
+  .stats__item {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .stats__label {
+    color: var(--c-paper-muted);
+    order: 2;
+  }
+
+  .stats__value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 1.4rem + 4vw, 4.4rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: var(--tracking-display);
+    color: var(--c-marker);
+    /* El polaco y el alemán alargan las etiquetas: nunca desbordan. */
+    font-variant-numeric: tabular-nums;
+  }
+</style>

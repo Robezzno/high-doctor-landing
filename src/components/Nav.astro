@@ -1,5 +1,6 @@
 ---
 import logoText from '../assets/brand/logo-text.svg';
+import { showSection, socialLinks } from '../config/site';
 import { languages, langPath, t, type Lang } from '../i18n';
 
 interface Props {
@@ -18,6 +19,9 @@ interface Props {
 }
 
 const { lang, sectionBase = '', langHrefs, current = 'home', solid = false } = Astro.props;
+
+/** Redes sociales: sólo con `sections.social` en true y enlaces reales de Saf. */
+const showSocial = showSection('social');
 
 /** Nombre de cada idioma en su propia lengua (para el desplegable). */
 const langNames: Record<Lang, string> = {
@@ -122,6 +126,29 @@ const navItems = [
           }
         </ul>
       </details>
+
+      {
+        /* Redes sociales en la cabecera móvil; en escritorio viven en el footer. */
+        showSocial && (
+          <div class="nav__social">
+            <span class="mono nav__social-title">{t(lang, 'social_follow')}</span>
+            <ul class="nav__social-list">
+              {socialLinks.map((link) => (
+                <li>
+                  <a
+                    class="nav__social-link mono"
+                    href={link.url}
+                    rel="me noopener"
+                    target="_blank"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
     </div>
   </div>
 </header>
@@ -281,6 +308,40 @@ const navItems = [
     color: var(--c-ink-faint);
   }
 
+  /* -------------------------------------------------- Redes (móvil) */
+  /* En escritorio los enlaces sociales viven en el footer; aquí sólo se ven
+     cuando el panel del menú está desplegado en móvil. */
+  .nav__social {
+    display: none;
+  }
+
+  .nav__social-title {
+    color: var(--c-ink-faint);
+    border-bottom: 1px solid var(--c-paper-3);
+    padding-bottom: 0.45rem;
+  }
+
+  .nav__social-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+    padding-top: 0.45rem;
+  }
+
+  .nav__social-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--c-ink-soft);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav__social-link:hover {
+    color: var(--c-ink);
+    border-bottom-color: var(--c-marker);
+  }
+
   /* ------------------------------------------------------ Botón móvil */
   .nav__toggle {
     display: none;
@@ -384,6 +445,12 @@ const navItems = [
       position: static;
       margin-top: 0.35rem;
       box-shadow: none;
+    }
+
+    .nav__social {
+      display: grid;
+      gap: 0.25rem;
+      padding-top: var(--sp-xs);
     }
   }
 </style>

@@ -13,7 +13,7 @@ Los prompts de `docs/prompts/` se ejecutan **en orden** y cada push a `main` pub
 | 01 | Migración a Astro | ✅ Hecho. 8 rutas por idioma, Pages en modo workflow. |
 | 02 | Identidad visual | ✅ Hecho. Lighthouse accesibilidad 100. Assets en `src/assets/brand/`. |
 | 03 | Animaciones | 🟡 **INCOMPLETO** — trabajo a medias guardado en la rama `wip/prompt-03-animaciones` (ver abajo). |
-| 04 | Contenido y legal | ⏳ Pendiente. Necesita datos reales de Saf (ver «Pendiente de Saf»). |
+| 04 | Contenido y legal | 🟡 **Casi hecho en la rama `feat/contenido` (sin commit)**: textos reescritos en 8 idiomas, páginas legales en 8 rutas y secciones de confianza listas pero **ocultas** por flags. Falta que Saf pase los datos reales (ver «Pendiente de Saf») y la revisión visual en navegador. |
 | 05 | Blog + tarjetas | ✅ Hecho y en producción. `/noticias/`, `/en/news/`, RSS, tarjetas 1080×1350. |
 | 06 | Pages CMS | ✅ Hecho. **Pendiente: Saf entra en app.pagescms.org y hace la prueba real.** |
 | 07 | Bot de noticias | ✅ Infra hecha, **cron desactivado** (ver «Cambio de plan del bot»). |
@@ -46,13 +46,22 @@ Mientras `IG_ENABLED` no sea `true`, el flujo de Instagram sale sin hacer nada (
 - Probar el formulario en producción con "TEST HDF" y confirmar el email.
 - Entrar la primera vez en app.pagescms.org y hacer la prueba real desde el móvil.
 - Decidir qué hacer con la rama `wip/prompt-03-animaciones`.
-- Datos reales para el prompt 04: nombre legal de la entidad, CIF, domicilio, email público, equipo, socios, eventos (fecha de Mary Jane Berlin), redes sociales. Mientras falten, esas secciones quedan ocultas o con placeholder marcado — **no inventar nada**.
+- Datos reales para el prompt 04: nombre legal de la entidad, CIF, domicilio, **registro**, email público, equipo (nombre, rol, foto y permiso), socios (logo y permiso), cifras demostrables, evento Mary Jane Berlin (fecha y stand) y redes sociales. Mientras falten, esas secciones quedan ocultas por flags en `src/config/site.ts` — **no inventar nada**.
 - Instagram: pasos de arriba.
 - Verificar el dominio en Google Search Console (prompt 09, registro DNS TXT; el agente explica cómo).
 
+## Prompt 04: qué queda para publicar (rama `feat/contenido`)
+
+Ya está escrito todo el contenido y el código; **falta rellenar datos y revisar en navegador**. Al llegar cada dato, se rellena `src/config/site.ts` y se pone su flag en `true` (`team`, `partners`, `stats`, `events`, `social`, `entityLegalData`). La fecha de Mary Jane Berlin va en `src/data/event.ts` (`null` = "por confirmar").
+
+- Páginas legales nuevas: `/legal/legal-notice`, `/legal/privacy`, `/legal/cookies` (EN) y sus equivalentes en los otros siete idiomas.
+- El texto legal es una **plantilla orientativa**: debe revisarla un abogado o un asesor de protección de datos.
+- Mientras `entityLegalData` sea `false`, las páginas legales muestran un aviso de borrador y los datos de la entidad entre corchetes.
+- Verificación hecha: `npm run build` y `npm test`. Pendiente: revisión visual de las 8 rutas (textos largos, sobre todo alemán y polaco) y comprobar los enlaces legales en todos los idiomas.
+
 ## Orden recomendado al retomar
 1. Prompt 03 (desde la rama wip o desde cero) → revisar → publicar.
-2. Prompt 04 (con los datos de Saf) → publicar.
+2. Prompt 04 (con los datos de Saf) → revisar `feat/contenido` en navegador → publicar.
 3. Prompt 09 (SEO, rendimiento, QA final, ci.yml) → publicar.
 4. Fase futura: noticias en lote generadas por el asistente + programación anual (+ reactivar Instagram en cuanto haya credenciales).
 
