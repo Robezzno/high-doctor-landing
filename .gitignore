@@ -14,3 +14,4 @@ server*.log
 # Secretos locales: nunca deben llegar al repo (es público)
 .env
 .env.*
+e2e/.artifacts/

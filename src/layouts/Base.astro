@@ -41,6 +41,8 @@ interface Props {
   rss?: string;
   /** `article:published_time` (ISO) en los posts. */
   publishedTime?: string;
+  /** Datos estructurados JSON-LD de la página (p. ej. la NGO en la portada). */
+  structuredData?: Record<string, unknown>[];
 }
 
 const {
@@ -53,6 +55,7 @@ const {
   alternates: customAlternates,
   rss,
   publishedTime,
+  structuredData,
 } = Astro.props;
 
 // Sólo el polaco necesita el subset latino-extendido en la primera pantalla
@@ -110,6 +113,15 @@ const imageUrl = image ? absolute(image) : undefined;
       )
     }
     {rss && <link rel="alternate" type="application/rss+xml" title={ogTitle} href={absolute(rss)} />}
+
+    {
+      // JSON-LD por página (la portada pasa aquí la NGO/Organization).
+      // JSON.stringify no puede inyectar `</script>`: set:html con el JSON
+      // serializado es seguro y el validador de schema.org lo lee igual.
+      structuredData?.map((data) => (
+        <script type="application/ld+json" set:html={JSON.stringify(data).replaceAll('<', '\\u003c')} />
+      ))
+    }
 
     <!-- Open Graph y Twitter: la imagen la genera el build (Satori + resvg + sharp). -->
     <meta property="og:site_name" content={siteName} />

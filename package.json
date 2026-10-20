@@ -11,11 +11,15 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",
+    "test:e2e": "playwright test --config e2e/playwright.config.ts",
+    "qa:links": "node tests/crawl-links.mjs",
+    "qa": "npm run build && npm run test:e2e && npm run qa:links",
     "i18n:extract": "node scripts/extract-i18n.mjs",
     "i18n:check": "node scripts/check-i18n.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "3.7.4",
     "@fontsource-variable/fraunces": "^5.3.0",
     "@fontsource-variable/inter-tight": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
@@ -30,6 +34,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.11",
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
     "@types/node": "^26.6.5",
     "typescript": "^6.0.3",
     "vitest": "^5.0.5"

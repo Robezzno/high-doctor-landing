@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Landing from '../../components/Landing.astro';
-import { defaultLang, languages, type Lang } from '../../i18n';
+import { defaultLang, languages, t, type Lang } from '../../i18n';
 
 export function getStaticPaths() {
   // EN vive en `/`: aquí sólo se generan los otros siete idiomas.
@@ -11,8 +11,24 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: Lang };
+
+// Datos estructurados de la organización (schema.org), con la descripción en el
+// idioma de la página. sameAs/address quedan vacíos hasta el prompt 04.
+const organization: Record<string, unknown> = {
+  name: 'High Doctor Foundation',
+  url: `https://highdoctor.foundation/${lang}/`,
+  logo: 'https://highdoctor.foundation/icon-512.png',
+  description: t(lang, 'mission_desc'),
+  // TODO (prompt 04): rellenar sameAs con las URLs reales de redes sociales
+  // y address con el domicilio legal (ahora mismo no existen datos verificados).
+  sameAs: [],
+};
+// Claves con `@` asignadas aparte: el compilador de Astro rechaza
+// `'@context':` como clave de objeto en el frontmatter.
+organization['@context'] = 'https://schema.org';
+organization['@type'] = 'NGO';
 ---
 
-<Base lang={lang}>
+<Base lang={lang} structuredData={[organization]}>
   <Landing lang={lang} />
 </Base>

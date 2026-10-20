@@ -1,0 +1,6 @@
+# Rastreo libre: la web es totalmente pública y estática.
+User-agent: *
+Allow: /
+
+# Sitemap con las 8 alternativas de idioma (generado por @astrojs/sitemap).
+Sitemap: https://highdoctor.foundation/sitemap-index.xml

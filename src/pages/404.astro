@@ -2,11 +2,38 @@
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import character from '../assets/brand/logo-character.png';
-import { t } from '../i18n';
+import { languages, t, langPath, type Lang } from '../i18n';
 
 // Página 404 estática (GitHub Pages la sirve para cualquier ruta inexistente).
-// Va en inglés: es la única página sin idioma en la URL.
+// Va en inglés por defecto, pero incluye las 8 traducciones embebidas: un
+// script mínimo reescribe los textos y los enlaces según el idioma del
+// navegador (mismo espíritu que la redirección de la home, sin bloquear nada).
 const lang = 'en' as const;
+
+// Ruta del listado de noticias por idioma (el blog sólo existe en ES y EN).
+const newsPath: Record<Lang, string> = {
+  en: '/en/news/',
+  es: '/noticias/',
+  de: '/en/news/',
+  fr: '/en/news/',
+  it: '/en/news/',
+  pt: '/en/news/',
+  nl: '/en/news/',
+  pl: '/en/news/',
+};
+
+const i18n404 = Object.fromEntries(
+  languages.map((language) => [
+    language,
+    {
+      title: t(language, 'nf_title'),
+      desc: t(language, 'nf_desc'),
+      cta: t(language, 'nf_btn'),
+      news: t(language, 'nav_news'),
+      newsHref: newsPath[language],
+    },
+  ]),
+);
 ---
 
 <Base lang={lang}>
@@ -14,9 +41,12 @@ const lang = 'en' as const;
     <div class="container nf__grid grid">
       <div class="nf__text">
         <span class="tag">SPEC-00 / ERROR 404</span>
-        <h1 class="nf__title">{t(lang, 'nf_title')}</h1>
-        <p class="lead">{t(lang, 'nf_desc')}</p>
-        <a class="btn nf__cta" href="/">{t(lang, 'nf_btn')}</a>
+        <h1 class="nf__title" data-404="title">{t(lang, 'nf_title')}</h1>
+        <p class="lead" data-404="desc">{t(lang, 'nf_desc')}</p>
+        <div class="nf__links">
+          <a class="btn nf__cta" href="/" data-404="cta">{t(lang, 'nf_btn')}</a>
+          <a class="nf__news" href="/en/news/" data-404="news" data-404-href="news">{t(lang, 'nav_news')}</a>
+        </div>
       </div>
       <div class="nf__figure">
         <span class="tape nf__tape" aria-hidden="true"></span>
@@ -35,6 +65,36 @@ const lang = 'en' as const;
     </div>
   </main>
 </Base>
+
+<script is:inline define:vars={{ i18n404 }}>
+  // La 404 se sirve para cualquier URL inexistente y GitHub Pages no conoce el
+  // idioma: se adapta al del navegador, sin bloquear la carga y sin tocar nada
+  // si el idioma no está soportado (queda en inglés).
+  (function () {
+    var supported = ['en', 'es', 'de', 'fr', 'it', 'pt', 'nl', 'pl'];
+    var candidates = navigator.languages || [navigator.language || 'en'];
+    var lang = 'en';
+    for (var i = 0; i < candidates.length; i++) {
+      var code = String(candidates[i] || '').slice(0, 2).toLowerCase();
+      if (supported.indexOf(code) !== -1) {
+        lang = code;
+        break;
+      }
+    }
+    if (lang === 'en') return;
+    var texts = i18n404[lang];
+    if (!texts) return;
+    var map = { title: '.nf__title', desc: '.lead', cta: '.nf__cta', news: '.nf__news' };
+    for (var key in map) {
+      var el = document.querySelector(map[key]);
+      if (el && texts[key]) el.textContent = texts[key];
+    }
+    if (texts.newsHref) {
+      var news = document.querySelector('.nf__news');
+      if (news) news.setAttribute('href', texts.newsHref);
+    }
+  })();
+</script>
 
 <style>
   .nf {
@@ -55,7 +115,20 @@ const lang = 'en' as const;
   }
 
   .nf__cta {
+    margin-top: 0;
+  }
+
+  .nf__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-m);
     margin-top: var(--sp-m);
+  }
+
+  .nf__news {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .nf__figure {
