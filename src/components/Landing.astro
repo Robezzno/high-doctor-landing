@@ -5,7 +5,6 @@ import Mission from './Mission.astro';
 import Impact from './Impact.astro';
 import Join from './Join.astro';
 import Event from './Event.astro';
-import ContactForm from './ContactForm.astro';
 import Footer from './Footer.astro';
 import type { Lang } from '../i18n';
 
@@ -17,10 +16,11 @@ const { lang } = Astro.props;
 ---
 
 <Nav lang={lang} />
-<Hero lang={lang} />
-<Mission lang={lang} />
-<Impact lang={lang} />
-<Join lang={lang} />
-<Event lang={lang} />
-<ContactForm lang={lang} />
+<main id="main">
+  <Hero lang={lang} />
+  <Mission lang={lang} />
+  <Impact lang={lang} />
+  <Join lang={lang} />
+  <Event lang={lang} />
+</main>
 <Footer lang={lang} />

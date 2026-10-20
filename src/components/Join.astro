@@ -1,4 +1,5 @@
 ---
+import ContactForm from './ContactForm.astro';
 import { t, type Lang, type TranslationKey } from '../i18n';
 
 interface Props {
@@ -7,6 +8,11 @@ interface Props {
 
 const { lang } = Astro.props;
 
+/**
+ * Sección de captación: los seis motivos para unirse ("qué obtienes") van como
+ * columna lateral numerada, pegados al formulario. Así desaparece la segunda
+ * rejilla de tarjetas idénticas que tenía la web antigua.
+ */
 const benefits: { title: TranslationKey; text: TranslationKey }[] = [
   { title: 'join_b1_t', text: 'join_b1_d' },
   { title: 'join_b2_t', text: 'join_b2_d' },
@@ -17,22 +23,128 @@ const benefits: { title: TranslationKey; text: TranslationKey }[] = [
 ];
 ---
 
-<section id="join" class="join section reveal">
+<section id="join" class="join section section--paper grain reveal">
   <div class="container">
-    <div class="text-center">
-      <h2 class="section-title">{t(lang, 'join_title')}</h2>
-      <p class="section-subtitle">{t(lang, 'join_subtitle')}</p>
-    </div>
-    <div class="grid benefits">
-      {
-        benefits.map((benefit) => (
-          <div class="benefit-item">
-            <div class="icon">✓</div>
-            <h4>{t(lang, benefit.title)}</h4>
-            <p>{t(lang, benefit.text)}</p>
-          </div>
-        ))
-      }
+    <header class="section__head">
+      <span class="tag">SPEC-04 / {t(lang, 'nav_join')}</span>
+      <span class="mono join__folio">§ 04</span>
+    </header>
+
+    <div class="join__grid grid">
+      <div class="join__aside">
+        <h2 class="h2 join__title">{t(lang, 'join_title')}</h2>
+        <p class="lead join__lead">{t(lang, 'join_subtitle')}</p>
+
+        <h3 class="mono join__subhead" id="benefits-title">{t(lang, 'join_benefits')}</h3>
+        <ol class="benefits" aria-labelledby="benefits-title">
+          {
+            benefits.map((benefit, index) => (
+              <li class="benefit">
+                <span class="mono benefit__num">{String(index + 1).padStart(2, '0')}</span>
+                <div class="benefit__body">
+                  <h4 class="benefit__title">{t(lang, benefit.title)}</h4>
+                  <p class="benefit__text">{t(lang, benefit.text)}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="join__form" id="contact">
+        <ContactForm lang={lang} />
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .join__folio {
+    color: var(--c-ink-faint);
+  }
+
+  .join__aside {
+    grid-column: 1 / span 5;
+    min-width: 0;
+  }
+
+  .join__form {
+    grid-column: 7 / span 6;
+    min-width: 0;
+  }
+
+  .join__title {
+    margin-bottom: var(--sp-s);
+  }
+
+  .join__lead {
+    max-width: 34ch;
+  }
+
+  .join__subhead {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: 0.55rem;
+    border-bottom: 2px solid var(--c-ink);
+    color: var(--c-ink);
+  }
+
+  .benefits {
+    margin-top: 0;
+  }
+
+  .benefit {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--sp-2xs);
+    padding-block: clamp(0.65rem, 1.3vw, 0.95rem);
+    border-bottom: 1px solid var(--c-paper-3);
+  }
+
+  .benefit__num {
+    color: var(--c-green-deep);
+    font-size: var(--fs-mono-lg);
+  }
+
+  .benefit__title {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.3;
+    color: var(--c-ink);
+    margin-bottom: 0.1rem;
+  }
+
+  .benefit__text {
+    font-size: var(--fs-small);
+    color: var(--c-ink-soft);
+    max-width: 40ch;
+  }
+
+  .benefit:hover .benefit__num {
+    background-color: var(--c-marker);
+    color: var(--c-ink);
+    padding-inline: 0.2rem;
+  }
+
+  @media (max-width: 68rem) {
+    .join__aside {
+      grid-column: 1 / span 6;
+    }
+
+    .join__form {
+      grid-column: 7 / span 6;
+    }
+  }
+
+  @media (max-width: 55rem) {
+    .join__aside,
+    .join__form {
+      grid-column: 1 / -1;
+    }
+
+    .join__form {
+      margin-top: var(--sp-l);
+    }
+  }
+</style>

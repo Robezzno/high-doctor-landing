@@ -1,48 +1,302 @@
 ---
 import { Picture } from 'astro:assets';
-import logoCharacter from '../assets/logo-character.png';
-import { t, type Lang } from '../i18n';
+import character from '../assets/brand/logo-character.png';
+import logoText from '../assets/brand/logo-text.svg';
+import { languages, langPath, t, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+
+const langNames: Record<Lang, string> = {
+  en: 'English',
+  es: 'Español',
+  de: 'Deutsch',
+  fr: 'Français',
+  it: 'Italiano',
+  pt: 'Português',
+  nl: 'Nederlands',
+  pl: 'Polski',
+};
+
+const navItems = [
+  { href: '#mission', label: t(lang, 'nav_mission') },
+  { href: '#impact', label: t(lang, 'nav_impact') },
+  { href: '#join', label: t(lang, 'nav_join') },
+  { href: '#mary-jane', label: t(lang, 'nav_maryjane') },
+];
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
+<footer class="footer section--lab grain on-dark">
   <div class="container">
-    <div class="text-center mb-2">
-      <Picture
-        src={logoCharacter}
-        alt="High Doctor Foundation Logo"
-        class="footer-logo-img"
-        formats={['avif', 'webp']}
-        fallbackFormat="png"
-        widths={[120, 240]}
-        sizes="120px"
-        loading="lazy"
-      />
+    <div class="footer__top grid">
+      <div class="footer__masthead">
+        <!-- El logotipo en tinta azul marino va sobre una etiqueta de papel
+             pegada: así se lee sobre el verde laboratorio sin recolorearlo. -->
+        <div class="footer__plate">
+          <img
+            src={logoText.src}
+            width={logoText.width}
+            height={logoText.height}
+            alt="High Doctor Foundation"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <p class="footer__motto">{t(lang, 'ft_motto')}</p>
+        <p class="footer__tagline">{t(lang, 'ft_tagline')}</p>
+        <p class="mono footer__loc">{t(lang, 'ft_loc')}</p>
+      </div>
+
+      <div class="footer__figure" aria-hidden="true">
+        <Picture
+          src={character}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[240, 400, 600]}
+          sizes="(max-width: 55rem) 45vw, 20rem"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          class="footer__character"
+        />
+      </div>
     </div>
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>{t(lang, 'ft_brand')}</h3>
-        <p class="tagline">{t(lang, 'ft_tagline')}</p>
-        <p class="locations">{t(lang, 'ft_loc')}</p>
+
+    <div class="footer__cols">
+      <nav class="footer__col" aria-labelledby="footer-nav-title">
+        <h2 class="mono footer__coltitle" id="footer-nav-title">{t(lang, 'ft_nav')}</h2>
+        <ul>
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))
+          }
+          <li>
+            <a href="#contact">{t(lang, 'nav_cta')}</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h2 class="mono footer__coltitle">{t(lang, 'ft_contact')}</h2>
+        <ul>
+          <li>
+            <a href="mailto:highdoctorcsc@gmail.com">highdoctorcsc@gmail.com</a>
+          </li>
+          <li class="footer__plain">{t(lang, 'ft_loc')}</li>
+        </ul>
       </div>
-      <div class="footer-links">
-        <h4>{t(lang, 'ft_about')}</h4>
-        <p>{t(lang, 'ft_about_desc')}</p>
-      </div>
-      <div class="footer-links">
-        <h4>{t(lang, 'ft_focus')}</h4>
-        <p>{t(lang, 'ft_focus_desc')}</p>
+
+      <nav class="footer__col" aria-labelledby="footer-lang-title">
+        <h2 class="mono footer__coltitle" id="footer-lang-title">{t(lang, 'ft_lang')}</h2>
+        <ul>
+          {
+            languages.map((language) => (
+              <li>
+                <a
+                  href={langPath(language)}
+                  hreflang={language}
+                  lang={language}
+                  aria-current={language === lang ? 'true' : undefined}
+                >
+                  {langNames[language]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="footer__col">
+        <h2 class="mono footer__coltitle">{t(lang, 'ft_legal')}</h2>
+        <ul>
+          <!-- Prompt 04: estas anclas pasarán a ser /privacy/ y /legal/. -->
+          <li><a href="#privacy">{t(lang, 'ft_privacy')}</a></li>
+          <li><a href="#legal">{t(lang, 'ft_notice')}</a></li>
+        </ul>
       </div>
     </div>
-    <div class="footer-divider"></div>
-    <div class="footer-bottom">
-      <p class="motto">{t(lang, 'ft_motto')}</p>
-      <p>&copy; 2026 High Doctor Foundation. All rights reserved.</p>
+
+    <div class="footer__bottom">
+      <p class="mono">© {year} HIGH DOCTOR FOUNDATION — {t(lang, 'ft_rights')}</p>
+      <p class="mono footer__spec" aria-hidden="true">SPEC-06 / END OF FILE</p>
     </div>
   </div>
 </footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding-block: clamp(3rem, 6vw, 5rem) var(--sp-m);
+    border-top: 2px solid var(--c-ink);
+    overflow: hidden;
+  }
+
+  .footer__top {
+    align-items: end;
+    row-gap: var(--sp-l);
+  }
+
+  .footer__masthead {
+    grid-column: 1 / span 7;
+    min-width: 0;
+  }
+
+  .footer__plate {
+    display: inline-block;
+    padding: 0.9rem 1.1rem;
+    background-color: var(--c-paper);
+    border-radius: var(--r-1);
+    box-shadow: 5px 5px 0 rgb(0 0 0 / 40%);
+    rotate: -1.4deg;
+    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .footer__plate img {
+    height: clamp(2rem, 4vw, 3rem);
+    width: auto;
+  }
+
+  .footer__motto {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 1.1rem + 3.4vw, 3.6rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: var(--tracking-display);
+    color: var(--c-paper-on-dark);
+    margin-bottom: var(--sp-s);
+    max-width: 18ch;
+  }
+
+  .footer__tagline {
+    max-width: 34ch;
+    color: var(--c-paper-muted);
+  }
+
+  .footer__loc {
+    color: var(--c-green);
+  }
+
+  .footer__figure {
+    grid-column: 9 / span 4;
+    justify-self: end;
+    align-self: end;
+    width: min(100%, 20rem);
+    margin-bottom: -1rem;
+  }
+
+  .footer__figure picture,
+  .footer__character {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer__cols {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: var(--sp-m);
+    border-top: 1px solid rgb(244 239 228 / 22%);
+  }
+
+  .footer__coltitle {
+    color: var(--c-paper-muted);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.35rem;
+    border-bottom: 1px solid rgb(244 239 228 / 22%);
+  }
+
+  .footer__col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 2.75rem;
+    font-size: var(--fs-small);
+    color: var(--c-paper-on-dark);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .footer__col a:hover {
+    border-bottom-color: var(--c-marker);
+  }
+
+  .footer__col a[aria-current='true'] {
+    color: var(--c-marker);
+  }
+
+  .footer__plain {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: var(--fs-small);
+    color: var(--c-paper-muted);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2xs) var(--sp-s);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-top: var(--sp-s);
+    border-top: 1px solid rgb(244 239 228 / 22%);
+    color: var(--c-paper-muted);
+  }
+
+  .footer__bottom p {
+    margin: 0;
+  }
+
+  .footer__spec {
+    color: var(--c-green);
+  }
+
+  @media (max-width: 68rem) {
+    .footer__masthead {
+      grid-column: 1 / span 8;
+    }
+
+    .footer__figure {
+      grid-column: 9 / span 4;
+    }
+
+    .footer__cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--sp-l);
+    }
+  }
+
+  @media (max-width: 55rem) {
+    .footer__masthead {
+      grid-column: 1 / -1;
+    }
+
+    .footer__figure {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(62%, 16rem);
+      margin-bottom: -2rem;
+    }
+
+    .footer__cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .footer__cols {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

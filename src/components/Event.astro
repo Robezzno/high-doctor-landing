@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+import { featuredEvent } from '../data/event';
 import { t, type Lang } from '../i18n';
 
 interface Props {
@@ -6,12 +8,204 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+
+// Si hay fecha, se formatea en el idioma de la página (sin desplazamiento de
+// zona horaria: se interpreta como fecha civil en UTC).
+const dateLabel = featuredEvent.date
+  ? new Intl.DateTimeFormat(lang, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(new Date(`${featuredEvent.date}T12:00:00Z`))
+  : t(lang, 'ev_tba');
+
+const statusLabel =
+  featuredEvent.status === 'upcoming' ? t(lang, 'ev_upcoming') : t(lang, 'ev_past');
 ---
 
-<section id="mary-jane" class="mary-jane section highlight-section reveal">
-  <div class="container text-center">
-    <h2>{t(lang, 'mj_title')}</h2>
-    <p class="lead-text mt-1">{t(lang, 'mj_desc')}</p>
-    <a href="#contact" class="btn btn-primary mt-2">{t(lang, 'mj_btn')}</a>
+<section id="mary-jane" class="event section section--ink grain reveal">
+  <div class="container">
+    <header class="section__head">
+      <span class="tag tag--dark">SPEC-05 / {t(lang, 'nav_maryjane')}</span>
+      <span class="mono event__folio">§ 05</span>
+    </header>
+
+    <div class="event__grid grid">
+      <div class="event__main">
+        <p class="event__status mono" data-status={featuredEvent.status}>
+          <span class="event__dot" aria-hidden="true"></span>
+          {statusLabel}
+        </p>
+        <h2 class="h2 event__title">{t(lang, 'mj_title')}</h2>
+        <p class="lead event__lead">{t(lang, 'mj_desc')}</p>
+        <a class="btn btn--marker event__cta" href="#contact">
+          {t(lang, 'mj_btn')}
+          <Icon name="arrow" class="event__arrow" />
+        </a>
+      </div>
+
+      <div class="ticket">
+        <p class="mono ticket__stub" aria-hidden="true">ADMIT ONE / 046</p>
+        <dl class="ticket__rows">
+          <div class="ticket__row">
+            <dt class="mono">{t(lang, 'ev_date')}</dt>
+            <dd>{dateLabel}</dd>
+          </div>
+          <div class="ticket__row">
+            <dt class="mono">{t(lang, 'ev_city')}</dt>
+            <dd>{featuredEvent.city}</dd>
+          </div>
+          <div class="ticket__row">
+            <dt class="mono">{t(lang, 'ev_status')}</dt>
+            <dd>{statusLabel}</dd>
+          </div>
+        </dl>
+        <p class="mono ticket__note">MARY JANE BERLIN</p>
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  .event__folio {
+    color: var(--c-paper-muted);
+  }
+
+  .event__main {
+    grid-column: 1 / span 7;
+    min-width: 0;
+  }
+
+  .event__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: var(--sp-s);
+    color: var(--c-green);
+  }
+
+  .event__status[data-status='past'] {
+    color: var(--c-paper-muted);
+  }
+
+  .event__dot {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: var(--r-pill);
+    background-color: currentColor;
+  }
+
+  .event__title {
+    margin-bottom: var(--sp-s);
+  }
+
+  .event__lead {
+    max-width: 40ch;
+  }
+
+  .event__cta {
+    margin-top: var(--sp-m);
+  }
+
+  :global(.event__arrow) {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  /* --------------------------------------------------------------- Ficha */
+  .ticket {
+    --ticket-pad: clamp(1.1rem, 2.2vw, 1.6rem);
+    position: relative;
+    grid-column: 9 / span 4;
+    align-self: start;
+    padding: var(--ticket-pad);
+    background-color: var(--c-paper-2);
+    color: var(--c-ink);
+    border: 1.5px solid var(--c-ink);
+    border-radius: var(--r-1);
+    box-shadow: 6px 6px 0 rgb(0 0 0 / 35%);
+    rotate: -1.2deg;
+  }
+
+  /* Troquelado: dos muescas en los extremos de la línea de corte. */
+  .ticket__stub {
+    position: relative;
+    padding-bottom: 0.85rem;
+    border-bottom: 1.5px dashed rgb(0 12 60 / 45%);
+    color: var(--c-ink-faint);
+  }
+
+  .ticket__stub::before,
+  .ticket__stub::after {
+    content: '';
+    position: absolute;
+    bottom: -0.55rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: var(--c-ink);
+    border-radius: var(--r-pill);
+  }
+
+  .ticket__stub::before {
+    left: calc(-1 * var(--ticket-pad) - 0.55rem);
+  }
+
+  .ticket__stub::after {
+    right: calc(-1 * var(--ticket-pad) - 0.55rem);
+  }
+
+  .ticket__rows {
+    padding-top: 0.85rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .ticket__row {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .ticket__row dt {
+    color: var(--c-ink-faint);
+  }
+
+  .ticket__row dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .ticket__note {
+    margin-top: var(--sp-s);
+    padding-top: 0.7rem;
+    border-top: 1.5px dashed rgb(0 12 60 / 45%);
+    color: var(--c-green-deep);
+  }
+
+  @media (max-width: 68rem) {
+    .event__main {
+      grid-column: 1 / span 7;
+    }
+
+    .ticket {
+      grid-column: 8 / span 5;
+    }
+  }
+
+  @media (max-width: 55rem) {
+    .event__main,
+    .ticket {
+      grid-column: 1 / -1;
+    }
+
+    .ticket {
+      margin-top: var(--sp-l);
+      max-width: 26rem;
+      rotate: -0.8deg;
+    }
+  }
+</style>

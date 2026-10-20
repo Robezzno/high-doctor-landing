@@ -1,6 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
-import logoText from '../assets/logo-text.png';
+import logoText from '../assets/brand/logo-text.svg';
 import { languages, langPath, t, type Lang } from '../i18n';
 
 interface Props {
@@ -9,59 +8,357 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const langLabels: Record<Lang, string> = {
-  en: 'EN',
-  es: 'ES',
-  de: 'DE',
-  fr: 'FR',
-  it: 'IT',
-  pt: 'PT',
-  nl: 'NL',
-  pl: 'PL',
+/** Nombre de cada idioma en su propia lengua (para el desplegable). */
+const langNames: Record<Lang, string> = {
+  en: 'English',
+  es: 'Español',
+  de: 'Deutsch',
+  fr: 'Français',
+  it: 'Italiano',
+  pt: 'Português',
+  nl: 'Nederlands',
+  pl: 'Polski',
 };
+
+const navItems = [
+  { href: '#mission', label: t(lang, 'nav_mission'), num: '01' },
+  { href: '#impact', label: t(lang, 'nav_impact'), num: '02' },
+  { href: '#join', label: t(lang, 'nav_join'), num: '03' },
+  { href: '#mary-jane', label: t(lang, 'nav_maryjane'), num: '04' },
+];
 ---
 
-<nav class="navbar">
-  <div class="container nav-container">
-    <div class="logo">
-      <a href={`${langPath(lang)}#top`} aria-label="High Doctor Foundation">
-        <Picture
-          src={logoText}
-          alt="High Doctor Foundation"
-          class="logo-img"
-          formats={['avif', 'webp']}
-          fallbackFormat="png"
-          widths={[96, 192]}
-          sizes="192px"
-          loading="eager"
-        />
-      </a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#mission">{t(lang, 'nav_mission')}</a></li>
-      <li><a href="#impact">{t(lang, 'nav_impact')}</a></li>
-      <li><a href="#join">{t(lang, 'nav_join')}</a></li>
-      <li><a href="#mary-jane">{t(lang, 'nav_maryjane')}</a></li>
-      <li><a href="#contact" class="btn-nav">{t(lang, 'nav_cta')}</a></li>
-      <li>
-        <nav class="lang-switcher" aria-label="Language">
+<header class="nav" data-nav>
+  <div class="container nav__inner">
+    <a class="nav__brand" href={langPath(lang)} aria-label="High Doctor Foundation">
+      <img
+        class="nav__logo"
+        src={logoText.src}
+        width={logoText.width}
+        height={logoText.height}
+        alt="High Doctor Foundation"
+        loading="eager"
+        decoding="async"
+      />
+    </a>
+
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-panel"
+      data-nav-toggle
+    >
+      <span class="mono nav__toggle-label">{t(lang, 'nav_menu')}</span>
+      <span class="nav__bars" aria-hidden="true"><i></i><i></i></span>
+    </button>
+
+    <div class="nav__panel" id="nav-panel" data-nav-panel>
+      <ul class="nav__links">
+        {
+          navItems.map((item) => (
+            <li>
+              <a class="nav__link" href={item.href}>
+                <span class="nav__num mono" aria-hidden="true">
+                  {item.num}
+                </span>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="nav__cta">
+          <a class="btn nav__btn" href="#contact">{t(lang, 'nav_cta')}</a>
+        </li>
+      </ul>
+
+      <details class="langs">
+        <summary class="langs__trigger mono">
+          <span class="visually-hidden">{t(lang, 'ft_lang')}: </span>
+          {lang}
+          <span class="langs__caret" aria-hidden="true"></span>
+        </summary>
+        <ul class="langs__list">
           {
             languages.map((language) => (
-              <a
-                href={langPath(language)}
-                hreflang={language}
-                lang={language}
-                aria-current={language === lang ? 'true' : undefined}
-              >
-                {langLabels[language]}
-              </a>
+              <li>
+                <a
+                  class="langs__option"
+                  href={langPath(language)}
+                  hreflang={language}
+                  lang={language}
+                  aria-current={language === lang ? 'true' : undefined}
+                >
+                  <span class="mono langs__code">{language}</span>
+                  {langNames[language]}
+                </a>
+              </li>
             ))
           }
-        </nav>
-      </li>
-    </ul>
-    <div class="hamburger">
-      <span></span><span></span><span></span>
+        </ul>
+      </details>
     </div>
   </div>
-</nav>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background-color: var(--c-paper);
+    border-bottom: 1px solid var(--c-paper-3);
+  }
+
+  /* Sombra dura al despegarse: parece una hoja impresa sobre otra. */
+  .nav--stuck {
+    box-shadow: 0 2px 0 0 var(--c-ink);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-m);
+    min-height: 4.5rem;
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 0.35rem;
+  }
+
+  .nav__logo {
+    height: clamp(1.9rem, 2.6vw, 2.5rem);
+    width: auto;
+  }
+
+  .nav__panel {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1.6vw, 1.75rem);
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.2vw, 1.35rem);
+  }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    min-height: 44px;
+    padding-block: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    letter-spacing: var(--tracking-mono);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--c-ink-soft);
+    border-bottom: 2px solid transparent;
+    transition:
+      color var(--dur-fast) linear,
+      border-color var(--dur-fast) linear;
+  }
+
+  .nav__link:hover {
+    color: var(--c-ink);
+    border-bottom-color: var(--c-marker);
+  }
+
+  .nav__num {
+    font-size: 0.62rem;
+    color: var(--c-ink-faint);
+  }
+
+  .nav__btn {
+    min-height: 44px;
+    padding: 0.55rem 1rem;
+  }
+
+  /* -------------------------------------------------- Selector de idioma */
+  .langs {
+    position: relative;
+  }
+
+  .langs__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--c-paper-3);
+    border-radius: var(--r-2);
+    cursor: pointer;
+    color: var(--c-ink-soft);
+    list-style: none;
+  }
+
+  .langs__trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .langs__caret {
+    width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 4.5px solid currentColor;
+  }
+
+  .langs[open] .langs__trigger {
+    border-color: var(--c-ink);
+    color: var(--c-ink);
+  }
+
+  .langs__list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    min-width: 12rem;
+    padding: 0.35rem;
+    background-color: var(--c-paper);
+    border: 1px solid var(--c-ink);
+    border-radius: var(--r-2);
+    box-shadow: var(--shadow-2);
+    z-index: var(--z-panel);
+  }
+
+  .langs__option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0.4rem 0.6rem;
+    color: var(--c-ink-soft);
+    font-size: var(--fs-small);
+    text-decoration: none;
+    border-radius: var(--r-1);
+  }
+
+  .langs__option:hover {
+    background-color: var(--c-paper-2);
+    color: var(--c-ink);
+  }
+
+  .langs__option[aria-current='true'] {
+    color: var(--c-ink);
+    background-color: color-mix(in srgb, var(--c-marker) 45%, transparent);
+  }
+
+  .langs__code {
+    font-size: 0.66rem;
+    color: var(--c-ink-faint);
+  }
+
+  /* ------------------------------------------------------ Botón móvil */
+  .nav__toggle {
+    display: none;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.4rem 0.5rem;
+    background: none;
+    border: 1px solid var(--c-paper-3);
+    border-radius: var(--r-2);
+    cursor: pointer;
+    color: var(--c-ink);
+  }
+
+  .nav__bars {
+    display: grid;
+    gap: 4px;
+    width: 18px;
+  }
+
+  .nav__bars i {
+    display: block;
+    height: 2px;
+    background-color: currentColor;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .nav--open .nav__bars i:first-child {
+    transform: translateY(3px) rotate(45deg);
+  }
+
+  .nav--open .nav__bars i:last-child {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  @media (max-width: 68rem) {
+    .nav__toggle {
+      display: inline-flex;
+    }
+
+    .nav__inner {
+      flex-wrap: wrap;
+    }
+
+    .nav__panel {
+      flex: 1 0 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--sp-xs);
+      order: 3;
+    }
+
+    /* Con JS el panel se abre y se cierra; sin JS queda siempre desplegado. */
+    html.js .nav__panel {
+      display: none;
+    }
+
+    .nav--open .nav__panel,
+    html:not(.js) .nav__panel {
+      display: flex;
+      padding-block: var(--sp-s) var(--sp-m);
+      /* En pantallas bajas el panel se desplaza solo: nunca deja enlaces
+         inalcanzables por debajo del viewport. */
+      max-height: calc(100svh - 4.5rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .nav__links {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .nav__link {
+      justify-content: flex-start;
+      padding-block: 0.8rem;
+      border-bottom: 1px solid var(--c-paper-3);
+      font-size: var(--fs-mono-lg);
+    }
+
+    .nav__cta {
+      padding-top: var(--sp-s);
+    }
+
+    .nav__btn {
+      width: 100%;
+    }
+
+    .langs {
+      padding-top: var(--sp-xs);
+    }
+
+    .langs__trigger {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .langs__list {
+      position: static;
+      margin-top: 0.35rem;
+      box-shadow: none;
+    }
+  }
+</style>

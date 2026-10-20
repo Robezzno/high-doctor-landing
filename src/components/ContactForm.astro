@@ -1,4 +1,6 @@
 ---
+import { Picture } from 'astro:assets';
+import character from '../assets/brand/logo-character.png';
 import { t, tHtml, type Lang, type TranslationKey } from '../i18n';
 
 interface Props {
@@ -27,118 +29,373 @@ const interestValues = [
   'media',
   'other',
 ];
+
+/** Numeración de ficha: 01, 02, 03… delante de cada etiqueta. */
+const fieldNumbers = {
+  name: '01',
+  email: '02',
+  country: '03',
+  organization: '04',
+  profession: '05',
+  interest: '06',
+  linkedin: '07',
+  message: '08',
+};
 ---
 
-<section id="contact" class="contact section reveal">
-  <div class="container form-container glass-panel">
-    <div class="text-center">
-      <h2 class="section-title">{t(lang, 'form_title')}</h2>
-      <p class="mb-2">{t(lang, 'form_subtitle')}</p>
+<div class="sheet">
+  <header class="sheet__head">
+    <div class="sheet__meta">
+      <span class="tag">FORM 04 / APPLICATION</span>
+      <span class="mono sheet__req">{t(lang, 'form_required_note')}</span>
     </div>
-    <form
-      id="lead-form"
-      class="lead-form"
-      action="https://api.web3forms.com/submit"
-      method="POST"
-      data-msg-sending={t(lang, 'form_sending')}
-      data-msg-success={t(lang, 'form_success')}
-      data-msg-error={t(lang, 'form_error')}
-      data-btn-label={t(lang, 'form_btn')}
-    >
-      <!-- Web3Forms config -->
-      <input type="hidden" name="access_key" value="4abe23f2-0d49-48b0-83b5-fd372e6d6094" />
-      <input type="hidden" name="subject" value="Nuevo Lead - High Doctor Foundation" />
-      <input type="hidden" name="from_name" value="High Doctor Foundation" />
-      <input type="hidden" name="redirect" value="https://highdoctor.foundation" />
-      <input type="checkbox" name="botcheck" id="botcheck" style="display:none;" />
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">{t(lang, 'form_lbl_name')}</label>
-          <input type="text" id="name" name="name" required placeholder="Dr. Jane Doe" />
-        </div>
-        <div class="form-group">
-          <label for="email">{t(lang, 'form_lbl_email')}</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="jane.doe@example.com"
-          />
-        </div>
+    <h3 class="sheet__title">{t(lang, 'form_title')}</h3>
+    <p class="sheet__subtitle">{t(lang, 'form_subtitle')}</p>
+  </header>
+
+  <form
+    id="lead-form"
+    class="sheet__form"
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    data-msg-sending={t(lang, 'form_sending')}
+    data-msg-success={t(lang, 'form_success')}
+    data-msg-error={t(lang, 'form_error')}
+    data-btn-label={t(lang, 'form_btn')}
+  >
+    <!-- Web3Forms config -->
+    <input type="hidden" name="access_key" value="4abe23f2-0d49-48b0-83b5-fd372e6d6094" />
+    <input type="hidden" name="subject" value="Nuevo Lead - High Doctor Foundation" />
+    <input type="hidden" name="from_name" value="High Doctor Foundation" />
+    <input type="hidden" name="redirect" value="https://highdoctor.foundation" />
+    <input type="checkbox" name="botcheck" id="botcheck" style="display:none;" tabindex="-1" />
+
+    <div class="fields">
+      <div class="field">
+        <label for="name">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.name}</span>
+          {t(lang, 'form_lbl_name')}
+        </label>
+        <input type="text" id="name" name="name" required placeholder="Dr. Jane Doe" />
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="country">{t(lang, 'form_lbl_country')}</label>
-          <input type="text" id="country" name="country" required placeholder="e.g. Germany" />
-        </div>
-        <div class="form-group">
-          <label for="organization">{t(lang, 'form_lbl_org')}</label>
-          <input
-            type="text"
-            id="organization"
-            name="organization"
-            placeholder="University, Clinic, Company..."
-          />
-        </div>
+
+      <div class="field">
+        <label for="email">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.email}</span>
+          {t(lang, 'form_lbl_email')}
+        </label>
+        <input type="email" id="email" name="email" required placeholder="jane.doe@example.com" />
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="profession">{t(lang, 'form_lbl_prof')}</label>
-          <input
-            type="text"
-            id="profession"
-            name="profession"
-            required
-            placeholder="e.g. Researcher, Doctor..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="interest">{t(lang, 'form_lbl_int')}</label>
-          <select id="interest" name="interest" required>
-            <option value="" disabled selected>{t(lang, 'form_opt_1')}</option>
-            {
-              interestOptions.map((key, index) => (
-                <option value={interestValues[index]}>{t(lang, key)}</option>
-              ))
-            }
-          </select>
-        </div>
+
+      <div class="field">
+        <label for="country">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.country}</span>
+          {t(lang, 'form_lbl_country')}
+        </label>
+        <input type="text" id="country" name="country" required placeholder="e.g. Germany" />
       </div>
-      <div class="form-group">
-        <label for="linkedin">{t(lang, 'form_lbl_li')}</label>
+
+      <div class="field">
+        <label for="organization">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.organization}</span>
+          {t(lang, 'form_lbl_org')}
+        </label>
+        <input
+          type="text"
+          id="organization"
+          name="organization"
+          placeholder="University, Clinic, Company..."
+        />
+      </div>
+
+      <div class="field">
+        <label for="profession">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.profession}</span>
+          {t(lang, 'form_lbl_prof')}
+        </label>
+        <input
+          type="text"
+          id="profession"
+          name="profession"
+          required
+          placeholder="e.g. Researcher, Doctor..."
+        />
+      </div>
+
+      <div class="field">
+        <label for="interest">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.interest}</span>
+          {t(lang, 'form_lbl_int')}
+        </label>
+        <select id="interest" name="interest" required>
+          <option value="" disabled selected>{t(lang, 'form_opt_1')}</option>
+          {
+            interestOptions.map((key, index) => (
+              <option value={interestValues[index]}>{t(lang, key)}</option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="field field--full">
+        <label for="linkedin">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.linkedin}</span>
+          {t(lang, 'form_lbl_li')}
+        </label>
         <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." />
       </div>
-      <div class="form-group">
-        <label for="message">{t(lang, 'form_lbl_msg')}</label>
+
+      <div class="field field--full">
+        <label for="message">
+          <span class="mono field__num" aria-hidden="true">{fieldNumbers.message}</span>
+          {t(lang, 'form_lbl_msg')}
+        </label>
         <textarea
           id="message"
           name="message"
           rows="4"
           placeholder="Briefly describe your background or proposal..."></textarea>
       </div>
-      <div class="form-group checkbox-group">
-        <input type="checkbox" id="updates" name="updates" checked />
-        <label for="updates">{t(lang, 'form_lbl_check')}</label>
-      </div>
-      <div class="form-group checkbox-group">
-        <input type="checkbox" id="privacy-consent" name="privacy_consent" value="accepted" required />
-        <!-- Texto con enlace a la política de privacidad (llega como HTML del diccionario) -->
-        <label for="privacy-consent" set:html={tHtml(lang, 'form_lbl_consent')}></label>
-      </div>
-      <button type="submit" class="btn btn-primary btn-block">{t(lang, 'form_btn')}</button>
-      <div
-        id="form-status"
-        class="form-status hidden"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-      </div>
-    </form>
-  </div>
-</section>
+    </div>
 
-<script>
-  import '../scripts/contact-form.ts';
-</script>
+    <div class="consent">
+      <label class="check" for="updates">
+        <input type="checkbox" id="updates" name="updates" checked />
+        <span>{t(lang, 'form_lbl_check')}</span>
+      </label>
+
+      <label class="check" for="privacy-consent">
+        <input
+          type="checkbox"
+          id="privacy-consent"
+          name="privacy_consent"
+          value="accepted"
+          required
+        />
+        <!-- Texto con enlace a la política de privacidad (llega como HTML del diccionario) -->
+        <span set:html={tHtml(lang, 'form_lbl_consent')}></span>
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn--block">{t(lang, 'form_btn')}</button>
+
+    <div
+      id="form-status"
+      class="form-status hidden"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+    </div>
+
+    <!-- El personaje sólo aparece cuando el envío ha funcionado. -->
+    <div class="success-mascot" aria-hidden="true">
+      <Picture
+        src={character}
+        formats={['avif']}
+        fallbackFormat="webp"
+        widths={[120, 200]}
+        sizes="120px"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </form>
+</div>
+
+<style>
+  .sheet {
+    background-color: var(--c-paper);
+    border: 1.5px solid var(--c-ink);
+    border-radius: var(--r-2);
+    box-shadow: var(--shadow-2);
+    padding: clamp(1.15rem, 2.6vw, 2.25rem);
+  }
+
+  .sheet__head {
+    padding-bottom: var(--sp-s);
+    margin-bottom: var(--sp-m);
+    border-bottom: 2px solid var(--c-ink);
+  }
+
+  .sheet__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2xs) var(--sp-s);
+    margin-bottom: var(--sp-xs);
+  }
+
+  .sheet__req {
+    color: var(--c-ink-faint);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .sheet__title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.35rem;
+  }
+
+  .sheet__subtitle {
+    font-size: var(--fs-small);
+    color: var(--c-ink-soft);
+    max-width: 46ch;
+  }
+
+  /* --------------------------------------------------------------- Campos */
+  .fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-s);
+  }
+
+  .field {
+    min-width: 0;
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  .field label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45em;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    letter-spacing: var(--tracking-mono);
+    text-transform: uppercase;
+    color: var(--c-ink-soft);
+  }
+
+  .field__num {
+    color: var(--c-green-deep);
+    font-size: 0.7rem;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.65rem 0.7rem;
+    background-color: var(--c-paper-2);
+    color: var(--c-ink);
+    border: 1.5px solid var(--c-ink);
+    border-radius: var(--r-1);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.4;
+    transition: background-color var(--dur-fast) linear;
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 7rem;
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--c-ink-faint);
+    opacity: 1;
+  }
+
+  /* Foco bien visible: contorno de tinta + subrayado de rotulador. */
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    background-color: #fff;
+    outline: var(--focus-width) solid var(--c-ink);
+    outline-offset: 2px;
+    box-shadow: inset 0 -4px 0 var(--c-marker);
+  }
+
+  /* ------------------------------------------------------------ Consentimiento */
+  .consent {
+    margin-top: var(--sp-m);
+    padding-top: var(--sp-s);
+    border-top: 1px solid var(--c-paper-3);
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding-block: 0.45rem;
+    font-size: var(--fs-small);
+    color: var(--c-ink-soft);
+    cursor: pointer;
+  }
+
+  .check input {
+    flex: 0 0 auto;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.2rem;
+    accent-color: var(--c-ink);
+  }
+
+  .check a {
+    color: var(--c-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--c-green-deep);
+    text-decoration-thickness: 1.5px;
+  }
+
+  .sheet__form > .btn {
+    margin-top: var(--sp-s);
+  }
+
+  /* ------------------------------------------------------------ Estado */
+  .form-status {
+    margin-top: var(--sp-s);
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--c-ink);
+    border-radius: var(--r-1);
+    font-size: var(--fs-small);
+    box-shadow: var(--shadow-1);
+  }
+
+  .form-status--pending {
+    background-color: var(--c-marker);
+    color: var(--c-ink);
+  }
+
+  .form-status--success {
+    background-color: var(--c-success-bg);
+    color: var(--c-success);
+  }
+
+  .form-status--error {
+    background-color: var(--c-danger-bg);
+    color: var(--c-danger);
+  }
+
+  .success-mascot {
+    display: none;
+  }
+
+  .form-status--success + .success-mascot {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-s);
+    margin-top: var(--sp-s);
+  }
+
+  .success-mascot img {
+    width: 6rem;
+    height: auto;
+  }
+
+  @media (max-width: 34rem) {
+    .fields {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

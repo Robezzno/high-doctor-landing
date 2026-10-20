@@ -1,0 +1,159 @@
+---
+/**
+ * Ilustraciones de línea de moléculas reales, dibujadas como fórmula
+ * esqueletal (trazo único, sin relleno):
+ *
+ *   thc → Δ⁹-tetrahidrocannabinol: anillo bencénico con OH y pentilo,
+ *         anillo pirano con oxígeno y gem-dimetilo, ciclohexeno con metilo
+ *         y doble enlace Δ9. C₂₁H₃₀O₂
+ *   cbd → cannabidiol: resorcinol (dos OH) con pentilo unido por un enlace
+ *         simple a un ciclohexeno con metilo e isopropenilo. C₂₁H₃₀O₂
+ *   cbg → cannabigerol: resorcinol con pentilo y cadena geranilo
+ *         (doble enlace en C2=C3 y C6=C7, metilos en C3 y C7). C₂₁H₃₂O₂
+ *   cb1 → receptor CB1: topología de 7 hélices transmembrana (GPCR) entre
+ *         las dos capas de la membrana.
+ *
+ * Todo es `currentColor`: el mismo dibujo funciona sobre papel y sobre verde
+ * laboratorio sin duplicar ficheros.
+ */
+export type MoleculeName = 'thc' | 'cbd' | 'cbg' | 'cb1';
+
+interface Props {
+  name: MoleculeName;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+// Posiciones verificadas con trigonometría: hexágonos de 24 px de radio,
+// separados 41,6 px para compartir la arista vertical.
+---
+
+<svg
+  class:list={['mol', className]}
+  viewBox={name === 'cb1' ? '0 0 200 140' : '0 40 180 140'}
+  role="img"
+  aria-label={name === 'cb1' ? 'CB1 receptor' : name.toUpperCase()}
+>
+  {
+    name === 'thc' && (
+      <>
+        {/* Tres hexágonos fusionados: benceno · pirano · ciclohexeno */}
+        <path d="M 46 64 L 66.8 76 L 66.8 100 L 46 112 L 25.2 100 L 25.2 76 Z" />
+        <path d="M 129.1 64 L 149.9 76 L 149.9 100 L 129.1 112 L 108.4 100 L 108.4 76 Z" />
+        <path d="M 108.4 76 L 108.4 100 L 87.6 112 L 66.8 100" />
+        {/* Dobles enlaces aromáticos del benceno */}
+        <path d="M 30.6 77.7 L 44.8 69.6" />
+        <path d="M 62.6 79.8 L 62.6 96.2" />
+        <path d="M 44.8 106.4 L 30.6 98.3" />
+        {/* Doble enlace Δ9 del ciclohexeno */}
+        <path d="M 130.4 69.6 L 144.5 77.7" />
+        {/* Oxígeno del pirano en el vértice superior */}
+        <text class="mol__label" x="87.6" y="64" text-anchor="middle" dominant-baseline="middle">O</text>
+        {/* Fenol */}
+        <path d="M 25.2 76 L 15 62" />
+        <text class="mol__label" x="18" y="58" text-anchor="end">HO</text>
+        {/* Cadena pentilo */}
+        <path d="M 25.2 100 L 15 113 L 25.2 126 L 15 139 L 25.2 152 L 15 165" />
+        {/* Gem-dimetilo */}
+        <path d="M 87.6 112 L 78 125" />
+        <path d="M 87.6 112 L 97 125" />
+        {/* Metilo del ciclohexeno */}
+        <path d="M 129.1 64 L 129.1 50" />
+      </>
+    )
+  }
+
+  {
+    name === 'cbd' && (
+      <>
+        {/* Resorcinol y ciclohexeno unidos por un enlace simple */}
+        <path d="M 82 92 L 70 112.8 L 46 112.8 L 34 92 L 46 71.2 L 70 71.2 Z" />
+        <path d="M 154 92 L 142 112.8 L 118 112.8 L 106 92 L 118 71.2 L 142 71.2 Z" />
+        <path d="M 82 92 L 106 92" />
+        {/* Dobles enlaces del resorcinol */}
+        <path d="M 76.4 93.2 L 68.3 107.4" />
+        <path d="M 47.7 107.4 L 39.6 93.2" />
+        <path d="M 49.8 75.4 L 66.2 75.4" />
+        {/* Doble enlace del ciclohexeno */}
+        <path d="M 148.4 93.2 L 140.3 107.4" />
+        {/* Dos hidroxilos */}
+        <path d="M 70 71.2 L 78 58" />
+        <text class="mol__label" x="80" y="54">OH</text>
+        <path d="M 46 112.8 L 52 126" />
+        <text class="mol__label" x="38" y="130" text-anchor="end">HO</text>
+        {/* Pentilo */}
+        <path d="M 34 92 L 22 102 L 34 112 L 22 122 L 34 132" />
+        {/* Metilo del ciclohexeno */}
+        <path d="M 142 112.8 L 148 126" />
+        {/* Isopropenilo */}
+        <path d="M 142 71.2 L 150 59" />
+        <path d="M 150 59 L 162 63" />
+        <path d="M 149 62 L 161 66" />
+        <path d="M 150 59 L 140 51" />
+      </>
+    )
+  }
+
+  {
+    name === 'cbg' && (
+      <>
+        {/* Resorcinol con pentilo y cadena geranilo */}
+        <path d="M 76 92 L 64 112.8 L 40 112.8 L 28 92 L 40 71.2 L 64 71.2 Z" />
+        <path d="M 70.4 93.2 L 62.3 107.4" />
+        <path d="M 41.7 107.4 L 33.6 93.2" />
+        <path d="M 43.8 75.4 L 60.2 75.4" />
+        <path d="M 64 71.2 L 72 58" />
+        <text class="mol__label" x="74" y="54">OH</text>
+        <path d="M 40 112.8 L 46 126" />
+        <text class="mol__label" x="32" y="130" text-anchor="end">HO</text>
+        <path d="M 28 92 L 16 102 L 28 112 L 16 122 L 28 132" />
+        {/* Geranilo: C1…C8, dobles enlaces C2=C3 y C6=C7 */}
+        <path d="M 76 92 L 86 80 L 98 86 L 110 80 L 122 86 L 134 80 L 146 86 L 158 80" />
+        <path d="M 84.7 82.7 L 96.7 88.7" />
+        <path d="M 132.7 82.7 L 144.7 88.7" />
+        <path d="M 98 86 L 104 98" />
+        <path d="M 146 86 L 152 74" />
+      </>
+    )
+  }
+
+  {
+    name === 'cb1' && (
+      <>
+        {/* Membrana: dos capas */}
+        <path d="M 4 32 H 196" stroke-dasharray="5 5" />
+        <path d="M 4 98 H 196" stroke-dasharray="5 5" />
+        {/* Siete hélices transmembrana con sus bucles */}
+        <path d="M 18 6 L 30 16 V 114 Q 42 128 54 114 V 16 Q 66 2 78 16 V 114 Q 90 128 102 114 V 16 Q 114 2 126 16 V 114 Q 138 128 150 114 V 16 Q 162 2 174 16 V 114 L 186 124" />
+        <text class="mol__label" x="12" y="8" text-anchor="middle">N</text>
+        <text class="mol__label" x="190" y="132" text-anchor="middle">C</text>
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .mol {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    color: inherit;
+  }
+
+  .mol path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .mol__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    fill: currentColor;
+    stroke: none;
+  }
+</style>

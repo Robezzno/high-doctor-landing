@@ -1,0 +1,114 @@
+/*
+ * tokens.css — sistema de diseño "cuaderno de laboratorio"
+ *
+ * Una fundación científica seria con sentido del humor: papel crema, tinta
+ * azul marino del logotipo, verde de laboratorio y un único rotulador
+ * fluorescente. Los valores de color salen de `src/assets/brand/PALETA.md`,
+ * medidos sobre los originales del logo (no son aproximaciones).
+ */
+
+:root {
+  /* ---------------------------------------------------------------- Color */
+  --c-paper: #f4efe4; /* papel crema */
+  --c-paper-2: #ebe4d4; /* panel sobre papel (fichas, etiquetas) */
+  --c-paper-3: #ded5c1; /* reglas y bordes suaves sobre papel */
+  --c-ink: #000c3c; /* azul marino del logotipo */
+  --c-ink-soft: #3b4763; /* texto secundario sobre papel — 8,08:1 */
+  --c-ink-faint: #5a6478; /* notas al margen sobre papel — 5,19:1 */
+  --c-lab: #0e2a1f; /* verde laboratorio (secciones alternas) */
+  --c-lab-2: #16382a; /* panel dentro de una sección oscura */
+  --c-green: #00b63f; /* verde estrella: fondos, bordes y gráficos */
+  --c-green-deep: #0b6b30; /* verde para texto sobre papel — 5,80:1 */
+  --c-marker: #dff25b; /* rotulador fluorescente (único) */
+  --c-paper-on-dark: #f4efe4;
+  --c-paper-muted: #c3cdbe; /* texto secundario sobre oscuro — 9,3:1 */
+  --c-danger: #8c1d16;
+  --c-danger-bg: #f7e2df;
+  --c-success: #0b5d2b;
+  --c-success-bg: #e6f3e4;
+
+  /* ---------------------------------------------------------- Tipografía */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body:
+    'Inter Tight Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono:
+    'JetBrains Mono Variable', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  /* Escala fluida: el mínimo es el de 390 px y el máximo el de 1440 px. */
+  --fs-display: clamp(2.75rem, 1.05rem + 7.6vw, 6.75rem);
+  --fs-h2: clamp(2.05rem, 1.25rem + 3.4vw, 3.9rem);
+  --fs-h3: clamp(1.45rem, 1.1rem + 1.4vw, 2.1rem);
+  --fs-row: clamp(1.6rem, 1.05rem + 2.3vw, 3rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.55vw, 1.35rem);
+  --fs-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-small: 0.9375rem;
+  --fs-mono: 0.75rem;
+  --fs-mono-lg: 0.875rem;
+
+  --lh-tight: 0.98;
+  --lh-snug: 1.12;
+  --lh-body: 1.6;
+  --tracking-display: -0.022em;
+  --tracking-mono: 0.14em;
+
+  /* ------------------------------------------------------------ Espacio */
+  --sp-3xs: 0.25rem;
+  --sp-2xs: 0.5rem;
+  --sp-xs: 0.75rem;
+  --sp-s: 1rem;
+  --sp-m: 1.5rem;
+  --sp-l: 2.25rem;
+  --sp-xl: 3.5rem;
+  --sp-2xl: 5rem;
+  --sp-3xl: 7rem;
+
+  --container: 78rem;
+  --gutter: clamp(1.15rem, 0.4rem + 3.2vw, 3.25rem);
+  --grid-gap: clamp(1rem, 0.4rem + 1.8vw, 2rem);
+  --section-y: clamp(3.75rem, 1.8rem + 7vw, 7.5rem);
+  --measure: 34ch;
+
+  /* ------------------------------------------------------------- Radios */
+  /* Casi rectos: esto es una hoja impresa, no una app. */
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-pill: 999px;
+
+  /* ------------------------------------------------------------ Sombras */
+  /* Duras y desplazadas (tinta impresa), nunca difusas. */
+  --shadow-1: 3px 3px 0 var(--c-ink);
+  --shadow-2: 6px 6px 0 var(--c-ink);
+  --shadow-1-dark: 3px 3px 0 rgb(0 0 0 / 35%);
+  --shadow-2-dark: 6px 6px 0 rgb(0 0 0 / 35%);
+  --focus-offset: 3px;
+  --focus-width: 3px;
+
+  /* ------------------------------------------------------------ z-index */
+  --z-base: 1;
+  --z-grain: 2;
+  --z-sticky: 100;
+  --z-panel: 120;
+  --z-skip: 200;
+
+  /* ------------------------------------------------------ Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 520ms;
+}
+
+/* En las secciones oscuras el foco cambia de tinta a papel para seguir
+   siendo visible (contraste > 3:1 sobre el fondo). */
+.section--lab,
+.section--ink,
+.on-dark {
+  --focus-color: var(--c-paper-on-dark);
+}
+
+:root,
+.section--paper,
+.on-paper {
+  --focus-color: var(--c-ink);
+}

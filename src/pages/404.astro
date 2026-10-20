@@ -1,0 +1,94 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import character from '../assets/brand/logo-character.png';
+import { t } from '../i18n';
+
+// Página 404 estática (GitHub Pages la sirve para cualquier ruta inexistente).
+// Va en inglés: es la única página sin idioma en la URL.
+const lang = 'en' as const;
+---
+
+<Base lang={lang}>
+  <main id="main" class="nf section--paper grain">
+    <div class="container nf__grid grid">
+      <div class="nf__text">
+        <span class="tag">SPEC-00 / ERROR 404</span>
+        <h1 class="nf__title">{t(lang, 'nf_title')}</h1>
+        <p class="lead">{t(lang, 'nf_desc')}</p>
+        <a class="btn nf__cta" href="/">{t(lang, 'nf_btn')}</a>
+      </div>
+      <div class="nf__figure">
+        <span class="tape nf__tape" aria-hidden="true"></span>
+        <Picture
+          src={character}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[280, 480, 700]}
+          sizes="(max-width: 55rem) 60vw, 24rem"
+          alt=""
+          loading="eager"
+          decoding="async"
+          class="nf__character"
+        />
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: clamp(3rem, 8vw, 7rem);
+  }
+
+  .nf__text {
+    grid-column: 1 / span 6;
+    min-width: 0;
+  }
+
+  .nf__title {
+    font-size: var(--fs-h2);
+    margin-block: var(--sp-s) var(--sp-s);
+  }
+
+  .nf__cta {
+    margin-top: var(--sp-m);
+  }
+
+  .nf__figure {
+    position: relative;
+    grid-column: 8 / span 5;
+    align-self: center;
+    width: min(100%, 24rem);
+    justify-self: end;
+  }
+
+  :global(.nf__character) {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(6px 6px 0 rgb(0 12 60 / 12%));
+  }
+
+  .nf__tape {
+    top: -0.8rem;
+    left: 45%;
+    rotate: 2deg;
+  }
+
+  @media (max-width: 55rem) {
+    .nf__text,
+    .nf__figure {
+      grid-column: 1 / -1;
+    }
+
+    .nf__figure {
+      width: min(70%, 16rem);
+      justify-self: center;
+      order: -1;
+      margin-bottom: var(--sp-m);
+    }
+  }
+</style>

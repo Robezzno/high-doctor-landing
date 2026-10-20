@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+import Molecule from './Molecule.astro';
 import { t, type Lang, type TranslationKey } from '../i18n';
 
 interface Props {
@@ -7,32 +9,304 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const cards: { icon: string; title: TranslationKey; text: TranslationKey }[] = [
-  { icon: '🔬', title: 'impact_c1_t', text: 'impact_c1_d' },
-  { icon: '📚', title: 'impact_c2_t', text: 'impact_c2_d' },
-  { icon: '🩺', title: 'impact_c3_t', text: 'impact_c3_d' },
-  { icon: '🛡️', title: 'impact_c4_t', text: 'impact_c4_d' },
-  { icon: '🌍', title: 'impact_c5_t', text: 'impact_c5_d' },
-  { icon: '🤝', title: 'impact_c6_t', text: 'impact_c6_d' },
+type RowIcon = 'flask' | 'book' | 'pulse' | 'shield' | 'people' | 'globe';
+
+/** Las seis áreas de impacto: filas a todo el ancho, no una rejilla de tarjetas. */
+const rows: { icon: RowIcon; title: TranslationKey; text: TranslationKey }[] = [
+  { icon: 'flask', title: 'impact_c1_t', text: 'impact_c1_d' },
+  { icon: 'book', title: 'impact_c2_t', text: 'impact_c2_d' },
+  { icon: 'pulse', title: 'impact_c3_t', text: 'impact_c3_d' },
+  { icon: 'shield', title: 'impact_c4_t', text: 'impact_c4_d' },
+  { icon: 'people', title: 'impact_c5_t', text: 'impact_c5_d' },
+  { icon: 'globe', title: 'impact_c6_t', text: 'impact_c6_d' },
+];
+
+/** Lámina de especímenes: estructuras reales dibujadas a línea. */
+const specimens = [
+  { name: 'thc' as const, label: 'Δ⁹-THC', formula: ['C', '21', 'H', '30', 'O', '2'] },
+  { name: 'cbd' as const, label: 'CBD', formula: ['C', '21', 'H', '30', 'O', '2'] },
+  { name: 'cbg' as const, label: 'CBG', formula: ['C', '21', 'H', '32', 'O', '2'] },
+  { name: 'cb1' as const, label: 'CB1', formula: ['7TM', 'GPCR'] },
 ];
 ---
 
-<section id="impact" class="impact section dark-section reveal">
+<section id="impact" class="impact section section--lab grain reveal">
   <div class="container">
-    <div class="text-center">
-      <h2 class="section-title">{t(lang, 'impact_title')}</h2>
-      <p class="section-subtitle">{t(lang, 'impact_subtitle')}</p>
+    <header class="section__head">
+      <span class="tag tag--dark">SPEC-03 / {t(lang, 'nav_impact')}</span>
+      <span class="mono impact__folio">§ 03</span>
+    </header>
+
+    <div class="impact__head grid">
+      <h2 class="h2 impact__title">{t(lang, 'impact_title')}</h2>
+      <p class="lead impact__lead">{t(lang, 'impact_subtitle')}</p>
     </div>
-    <div class="grid cards">
+
+    <ol class="impact__list">
       {
-        cards.map((card) => (
-          <div class="card hover-glow">
-            <div class="card-icon">{card.icon}</div>
-            <h3>{t(lang, card.title)}</h3>
-            <p>{t(lang, card.text)}</p>
-          </div>
+        rows.map((row, index) => (
+          <li class="impact__item">
+            <details class="row" open={index === 0}>
+              <summary class="row__summary">
+                <span class="mono row__num">{String(index + 1).padStart(2, '0')}</span>
+                <h3 class="row__title">{t(lang, row.title)}</h3>
+                <span class="row__icon" aria-hidden="true">
+                  <Icon name={row.icon} />
+                </span>
+                <span class="row__toggle" aria-hidden="true" />
+              </summary>
+              <div class="row__panel">
+                <p>{t(lang, row.text)}</p>
+              </div>
+            </details>
+          </li>
         ))
       }
+    </ol>
+
+    <div class="specimens">
+      <div class="specimens__head">
+        <h3 class="mono specimens__title">SPECIMENS / FIG. 01 — 04</h3>
+        <span class="mono specimens__note">C₂₁ · CANNABINOIDS</span>
+      </div>
+      <ul class="specimens__grid">
+        {
+          specimens.map((specimen, index) => (
+            <li class="specimen">
+              <Molecule name={specimen.name} class="specimen__drawing" />
+              <p class="mono specimen__label">
+                <span class="specimen__index">{String(index + 1).padStart(2, '0')}</span>
+                {specimen.label}
+                <span class="specimen__formula">
+                  {specimen.formula.map((part) =>
+                    /^\d+$/.test(part) ? <sub>{part}</sub> : part,
+                  )}
+                </span>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </div>
 </section>
+
+<style>
+  .impact__folio {
+    color: var(--c-paper-muted);
+  }
+
+  .impact__head {
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .impact__title {
+    grid-column: 1 / span 7;
+    min-width: 0;
+  }
+
+  .impact__lead {
+    grid-column: 9 / span 4;
+    min-width: 0;
+    align-self: end;
+  }
+
+  /* ---------------------------------------------------------- Filas 01–06 */
+  .impact__list {
+    border-top: 1px solid rgb(244 239 228 / 22%);
+  }
+
+  .impact__item {
+    border-bottom: 1px solid rgb(244 239 228 / 22%);
+  }
+
+  .row__summary {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr) 2.5rem 2rem;
+    align-items: center;
+    gap: var(--sp-s);
+    min-height: 64px;
+    padding-block: clamp(0.85rem, 1.6vw, 1.35rem);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .row__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .row__num {
+    font-size: var(--fs-mono-lg);
+    color: var(--c-green);
+    padding-block: 0.15rem;
+    width: fit-content;
+  }
+
+  .row__title {
+    font-size: var(--fs-row);
+    line-height: 1.08;
+    font-weight: 600;
+    color: var(--c-paper-on-dark);
+    padding-inline: 0.05em;
+    transition: background-color var(--dur-fast) linear;
+    hyphens: auto;
+  }
+
+  .row__icon {
+    color: var(--c-paper-muted);
+    justify-self: end;
+  }
+
+  .row__icon :global(svg) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  /* Cruz que pasa a raya: el indicador de abierto/cerrado. */
+  .row__toggle {
+    position: relative;
+    justify-self: end;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .row__toggle::before,
+  .row__toggle::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1.5px;
+    background-color: var(--c-paper-muted);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .row__toggle::after {
+    rotate: 90deg;
+  }
+
+  .row:hover .row__title,
+  .row__summary:focus-visible .row__title {
+    background-color: var(--c-marker);
+    color: var(--c-ink);
+  }
+
+  .row[open] .row__num {
+    background-color: var(--c-marker);
+    color: var(--c-ink);
+    padding-inline: 0.25rem;
+  }
+
+  .row[open] .row__toggle::after {
+    rotate: 0deg;
+  }
+
+  .row__panel {
+    padding-bottom: clamp(1rem, 2vw, 1.6rem);
+    padding-left: calc(4rem + var(--sp-s));
+  }
+
+  .row__panel p {
+    max-width: 62ch;
+    color: var(--c-paper-muted);
+    font-size: var(--fs-body);
+  }
+
+  /* ------------------------------------------------------- Lámina de FIG. */
+  .specimens {
+    margin-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-top: var(--sp-s);
+    border-top: 1px solid rgb(244 239 228 / 22%);
+  }
+
+  .specimens__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-s);
+    margin-bottom: var(--sp-m);
+  }
+
+  .specimens__title,
+  .specimens__note {
+    color: var(--c-paper-muted);
+  }
+
+  .specimens__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .specimen {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2xs);
+    padding: var(--sp-s);
+    border: 1px solid rgb(244 239 228 / 22%);
+    border-radius: var(--r-1);
+    background-color: rgb(0 0 0 / 12%);
+  }
+
+  :global(.specimen__drawing) {
+    color: var(--c-paper-on-dark);
+    max-width: 12rem;
+  }
+
+  .specimen__label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45em;
+    color: var(--c-paper-on-dark);
+  }
+
+  .specimen__index {
+    color: var(--c-green);
+  }
+
+  .specimen__formula {
+    color: var(--c-paper-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .specimen__formula sub {
+    font-size: 0.72em;
+    line-height: 0;
+  }
+
+  @media (max-width: 68rem) {
+    .impact__title {
+      grid-column: 1 / span 6;
+    }
+
+    .impact__lead {
+      grid-column: 7 / span 6;
+    }
+
+    .specimens__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 55rem) {
+    .impact__title,
+    .impact__lead {
+      grid-column: 1 / -1;
+    }
+
+    .row__summary {
+      grid-template-columns: 2.75rem minmax(0, 1fr) 1.75rem;
+      gap: var(--sp-2xs);
+    }
+
+    .row__icon {
+      display: none;
+    }
+
+    .row__panel {
+      padding-left: calc(2.75rem + var(--sp-2xs));
+    }
+  }
+</style>

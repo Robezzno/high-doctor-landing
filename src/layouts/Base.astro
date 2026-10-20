@@ -1,6 +1,19 @@
 ---
+// Autoalojado: ni Google Fonts ni CDNs de terceros. Sólo el eje de peso (wght)
+// de cada familia, en sus subsets latino y latino-extendido (por el polaco);
+// el navegador descarga sólo el subset que necesita cada página.
+import '@fontsource-variable/fraunces/wght.css';
+import '@fontsource-variable/inter-tight/wght.css';
+import '@fontsource-variable/jetbrains-mono/wght.css';
+// Los dos ficheros que se usan por encima del pliegue (titular y texto) se
+// precargan: así el cambio de tipografía no mueve la página al cargar.
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import frauncesLatinExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-normal.woff2?url';
+import interLatin from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
+import interLatinExt from '@fontsource-variable/inter-tight/files/inter-tight-latin-ext-wght-normal.woff2?url';
+import '../styles/tokens.css';
 import '../styles/global.css';
-import { languages, langPath, type Lang } from '../i18n';
+import { languages, langPath, t, type Lang } from '../i18n';
 
 interface Props {
   /** Idioma de la página. */
@@ -10,6 +23,11 @@ interface Props {
 }
 
 const { lang, redirectBrowserLang = false } = Astro.props;
+
+// Sólo el polaco necesita el subset latino-extendido en la primera pantalla
+// (ą, ł, ż…); el resto de idiomas tira de latin. El alemán usa latin (ä, ö, ü, ß).
+const criticalFonts =
+  lang === 'pl' ? [frauncesLatin, frauncesLatinExt, interLatin, interLatinExt] : [frauncesLatin, interLatin];
 
 // Mismo <title> y misma descripción que la web antigua (los textos SEO
 // por idioma llegan en el prompt 09).
@@ -40,13 +58,24 @@ const alternates = languages.map((language) => ({
     }
     <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
 
-    <!-- Tipografías: igual que la web antigua, mismas familias y pesos. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Favicon y manifest de la marca (estrella verde sobre azul marino). -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#F4EFE4" />
+
+    {
+      criticalFonts.map((href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin="anonymous" />
+      ))
+    }
+
+    <!-- Marca de "hay JavaScript" para que el contenido nunca dependa de él:
+         sin JS, nada se oculta y el menú móvil se muestra desplegado. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
 
     {
       redirectBrowserLang && (
@@ -73,13 +102,9 @@ const alternates = languages.map((language) => ({
     }
   </head>
   <body>
+    <a class="skip-link" href="#main">{t(lang, 'a11y_skip')}</a>
     <slot />
 
-    <!-- vanilla-tilt sigue viniendo del CDN, como en la web antigua. -->
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
-    ></script>
     <script>
       import '../scripts/main.ts';
     </script>

@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import heroBg from '../assets/hero-bg.png';
+import character from '../assets/brand/logo-character.png';
+import Molecule from './Molecule.astro';
 import { t, type Lang } from '../i18n';
 
 interface Props {
@@ -8,28 +9,223 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+
+const title = t(lang, 'hero_title');
+
+/**
+ * Parte el titular por la palabra que va subrayada a rotulador. La palabra
+ * viene del diccionario (`hero_title_hl`); si por lo que sea no apareciera en
+ * el titular, se subraya la palabra más larga para no romper la composición.
+ */
+function splitHighlight(text: string, word: string) {
+  const at = word ? text.toLocaleLowerCase().indexOf(word.toLocaleLowerCase()) : -1;
+  if (at >= 0) {
+    return {
+      before: text.slice(0, at),
+      hl: text.slice(at, at + word.length),
+      after: text.slice(at + word.length),
+    };
+  }
+
+  let best = { word: '', at: 0 };
+  let cursor = 0;
+  for (const chunk of text.split(/(\s+)/)) {
+    if (chunk.trim().length > best.word.length) best = { word: chunk, at: cursor };
+    cursor += chunk.length;
+  }
+  return {
+    before: text.slice(0, best.at),
+    hl: best.word,
+    after: text.slice(best.at + best.word.length),
+  };
+}
+
+const { before, hl, after } = splitHighlight(title, t(lang, 'hero_title_hl'));
 ---
 
-<header class="hero" id="top">
-  <Picture
-    src={heroBg}
-    alt=""
-    class="hero-bg"
-    formats={['avif', 'webp']}
-    fallbackFormat="webp"
-    widths={[640, 1024]}
-    sizes="100vw"
-    loading="eager"
-  />
-  <div class="hero-overlay"></div>
-  <canvas id="network-canvas" class="network-canvas"></canvas>
-  <div class="container hero-content fade-in-up">
-    <span class="badge">{t(lang, 'hero_badge')}</span>
-    <h1>{t(lang, 'hero_title')}</h1>
-    <p>{t(lang, 'hero_subtitle')}</p>
-    <div class="hero-buttons">
-      <a href="#contact" class="btn btn-primary">{t(lang, 'hero_btn_1')}</a>
-      <a href="#contact" class="btn btn-secondary">{t(lang, 'hero_btn_2')}</a>
+<header class="hero section--paper grain" id="top">
+  <div class="container hero__grid grid">
+    <div class="hero__text">
+      <div class="hero__meta">
+        <span class="tag">SPEC-01 / {t(lang, 'hero_badge')}</span>
+        <span class="mono hero__folio">§ 01</span>
+      </div>
+
+      <h1 class="hero__title">{before}<span class="hl">{hl}</span>{after}</h1>
+
+      <p class="hero__lead">{t(lang, 'hero_subtitle')}</p>
+
+      <div class="hero__actions">
+        <a class="btn" href="#contact">{t(lang, 'hero_btn_1')}</a>
+        <a class="btn btn--ghost" href="#join">{t(lang, 'hero_btn_2')}</a>
+      </div>
+    </div>
+
+    <div class="hero__figure">
+      <Molecule name="thc" class="hero__mol" />
+      <div class="hero__portrait">
+        <span class="tape hero__tape" aria-hidden="true"></span>
+        <Picture
+          src={character}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[320, 480, 720]}
+          sizes="(max-width: 55rem) 62vw, 26rem"
+          alt=""
+          loading="eager"
+          decoding="async"
+          class="hero__character"
+        />
+      </div>
+      <p class="mono hero__caption" aria-hidden="true">Δ⁹-THC · C<sub>21</sub>H<sub>30</sub>O<sub>2</sub></p>
     </div>
   </div>
 </header>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(1.75rem, 3.5vw, 3rem) clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .hero__grid {
+    align-items: start;
+    row-gap: var(--sp-xl);
+  }
+
+  .hero__text {
+    grid-column: 1 / span 7;
+    min-width: 0;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-s);
+    margin-bottom: clamp(1.25rem, 2.5vw, 2.5rem);
+  }
+
+  .hero__folio {
+    color: var(--c-ink-faint);
+  }
+
+  .hero__title {
+    font-size: var(--fs-display);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-display);
+    hyphens: auto;
+    overflow-wrap: break-word;
+    margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  .hero__lead {
+    max-width: 42ch;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--c-ink-soft);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-xs);
+    margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+  }
+
+  /* ------------------------------------------------------------- Figura */
+  /* Personaje y molécula: dos piezas pegadas en la misma hoja. El dibujo de
+     línea se apoya en la esquina superior del personaje. */
+  .hero__figure {
+    grid-column: 9 / span 4;
+    position: relative;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .hero__portrait {
+    position: relative;
+    width: min(100%, 26rem);
+    margin-left: auto;
+  }
+
+  .hero__character {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(6px 6px 0 rgb(0 12 60 / 12%));
+  }
+
+  .hero__tape {
+    top: -0.9rem;
+    left: 50%;
+    translate: -50% 0;
+    rotate: -2.5deg;
+  }
+
+  /* Molécula de THC: dibujo de línea que se apoya en el personaje. */
+  .hero__figure :global(.hero__mol) {
+    align-self: flex-start;
+    width: clamp(7.5rem, 11vw, 10.5rem);
+    margin-left: -2rem;
+    margin-bottom: -2.5rem;
+    rotate: -6deg;
+    color: var(--c-ink);
+    opacity: 0.9;
+    z-index: 1;
+  }
+
+  .hero__caption {
+    margin-top: var(--sp-s);
+    text-align: right;
+    color: var(--c-ink-faint);
+  }
+
+  .hero__caption sub {
+    font-size: 0.72em;
+    line-height: 0;
+  }
+
+  @media (max-width: 68rem) {
+    .hero__text {
+      grid-column: 1 / span 8;
+    }
+
+    .hero__figure {
+      grid-column: 9 / span 4;
+    }
+  }
+
+  @media (max-width: 55rem) {
+    .hero__text,
+    .hero__figure {
+      grid-column: 1 / -1;
+    }
+
+    .hero__figure {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      align-items: end;
+      gap: var(--sp-s);
+      max-width: 32rem;
+    }
+
+    .hero__portrait {
+      grid-column: 2;
+      width: 100%;
+    }
+
+    .hero__figure :global(.hero__mol) {
+      grid-column: 1;
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: var(--sp-2xs);
+      rotate: -4deg;
+    }
+
+    .hero__caption {
+      display: none;
+    }
+  }
+</style>

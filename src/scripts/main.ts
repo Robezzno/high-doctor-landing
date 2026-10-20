@@ -1,176 +1,102 @@
 /**
- * Comportamiento de la web (idéntico al de `legacy/script.js`):
- * red de partículas del hero, vanilla-tilt, menú móvil, navbar al hacer scroll,
- * scroll suave y aparición de secciones. Sin i18n: cada idioma es su propia página.
+ * Comportamiento de la web (sin canvas de partículas ni vanilla-tilt):
+ * menú móvil accesible, sombra de la barra al hacer scroll y aparición de
+ * bloques al entrar en el viewport. Las animaciones de verdad llegan en el
+ * prompt 03 con GSAP; aquí sólo hay lo mínimo para que la página funcione.
  */
 
-type VanillaTiltLike = {
-  init: (elements: Element[], options: Record<string, unknown>) => void;
-};
+/* ------------------------------------------------------ Menú móvil */
+const nav = document.querySelector<HTMLElement>('[data-nav]');
+const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+const panel = document.querySelector<HTMLElement>('[data-nav-panel]');
 
-declare global {
-  interface Window {
-    VanillaTilt?: VanillaTiltLike;
-  }
+function setMenu(open: boolean): void {
+  if (!nav || !toggle) return;
+  nav.classList.toggle('nav--open', open);
+  toggle.setAttribute('aria-expanded', String(open));
 }
 
-/* ---------------- Red de partículas del hero ---------------- */
-const canvas = document.getElementById('network-canvas') as HTMLCanvasElement | null;
+if (toggle && panel) {
+  toggle.addEventListener('click', () => {
+    setMenu(!nav?.classList.contains('nav--open'));
+  });
 
-if (canvas) {
-  const ctx = canvas.getContext('2d');
+  panel.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenu(false));
+  });
 
-  if (ctx) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    class Particle {
-      constructor(
-        public x: number,
-        public y: number,
-        public directionX: number,
-        public directionY: number,
-        public size: number,
-      ) {}
-
-      draw(): void {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = '#17C3B2';
-        ctx.fill();
-      }
-
-      update(): void {
-        if (this.x > canvas!.width || this.x < 0) this.directionX = -this.directionX;
-        if (this.y > canvas!.height || this.y < 0) this.directionY = -this.directionY;
-        this.x += this.directionX;
-        this.y += this.directionY;
-        this.draw();
-      }
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && nav?.classList.contains('nav--open')) {
+      setMenu(false);
+      toggle.focus();
     }
+  });
 
-    let particlesArray: Particle[] = [];
-
-    function initParticles(): void {
-      particlesArray = [];
-      const numberOfParticles = (canvas!.height * canvas!.width) / 10000;
-      for (let i = 0; i < numberOfParticles; i++) {
-        const size = Math.random() * 2 + 1;
-        const x = Math.random() * (innerWidth - size * 4) + size * 2;
-        const y = Math.random() * (innerHeight - size * 4) + size * 2;
-        const directionX = Math.random() * 1.5 - 0.75;
-        const directionY = Math.random() * 1.5 - 0.75;
-        particlesArray.push(new Particle(x, y, directionX, directionY, size));
-      }
-    }
-
-    function connectParticles(): void {
-      for (let a = 0; a < particlesArray.length; a++) {
-        for (let b = a; b < particlesArray.length; b++) {
-          const distance =
-            (particlesArray[a].x - particlesArray[b].x) *
-              (particlesArray[a].x - particlesArray[b].x) +
-            (particlesArray[a].y - particlesArray[b].y) *
-              (particlesArray[a].y - particlesArray[b].y);
-          if (distance < (canvas!.width / 8) * (canvas!.height / 8)) {
-            const opacityValue = 1 - distance / 15000;
-            ctx!.strokeStyle = 'rgba(23, 195, 178,' + opacityValue + ')';
-            ctx!.lineWidth = 1;
-            ctx!.beginPath();
-            ctx!.moveTo(particlesArray[a].x, particlesArray[a].y);
-            ctx!.lineTo(particlesArray[b].x, particlesArray[b].y);
-            ctx!.stroke();
-          }
-        }
-      }
-    }
-
-    function animateParticles(): void {
-      requestAnimationFrame(animateParticles);
-      ctx!.clearRect(0, 0, innerWidth, innerHeight);
-      for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-      }
-      connectParticles();
-    }
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initParticles();
-    });
-
-    initParticles();
-    animateParticles();
-  }
+  // Si se pasa a escritorio con el menú abierto, se cierra: en escritorio el
+  // panel es siempre visible y el estado abierto sobra.
+  const desktop = window.matchMedia('(min-width: 55.01rem)');
+  desktop.addEventListener('change', (event) => {
+    if (event.matches) setMenu(false);
+  });
 }
 
-/* ---------------- vanilla-tilt ---------------- */
-if (typeof window.VanillaTilt !== 'undefined') {
-  window.VanillaTilt.init(
-    Array.from(document.querySelectorAll('.card, .benefit-item, .vision-card, .values-card')),
-    {
-      max: 15,
-      speed: 400,
-      glare: true,
-      'max-glare': 0.2,
+/* --------------------------------- Desplegable de idioma (sin JS: nativo) */
+const langDetails = document.querySelectorAll<HTMLDetailsElement>('details.langs');
+
+for (const details of langDetails) {
+  document.addEventListener('click', (event) => {
+    if (!details.open) return;
+    if (event.target instanceof Node && details.contains(event.target)) return;
+    details.open = false;
+  });
+
+  details.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && details.open) {
+      details.open = false;
+      details.querySelector('summary')?.focus();
+    }
+  });
+}
+
+/* ------------------------------------------- Barra fija al hacer scroll */
+const navbar = document.querySelector<HTMLElement>('[data-nav]');
+
+if (navbar) {
+  let ticking = false;
+  const update = (): void => {
+    navbar.classList.toggle('nav--stuck', window.scrollY > 12);
+    ticking = false;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
     },
+    { passive: true },
   );
+  update();
 }
 
-/* ---------------- Menú móvil ---------------- */
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
+/* -------------------------------------- Aparición de bloques al hacer scroll */
+const revealElements = document.querySelectorAll<HTMLElement>('.reveal');
 
-hamburger?.addEventListener('click', () => {
-  navLinks?.classList.toggle('active');
-  hamburger.classList.toggle('active');
-});
+if (revealElements.length > 0 && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+  );
 
-document.querySelectorAll('.nav-links a').forEach((link) => {
-  link.addEventListener('click', () => {
-    navLinks?.classList.remove('active');
-    hamburger?.classList.remove('active');
-  });
-});
-
-/* ---------------- Navbar al hacer scroll ---------------- */
-const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
-    navbar?.classList.add('scrolled');
-  } else {
-    navbar?.classList.remove('scrolled');
-  }
-});
-
-/* ---------------- Scroll suave ---------------- */
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener('click', (event) => {
-    const targetId = anchor.getAttribute('href');
-    if (!targetId || targetId === '#') return;
-    const target = document.querySelector(targetId);
-    if (target) {
-      event.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-/* ---------------- Aparición de secciones ---------------- */
-const revealElements = document.querySelectorAll('.reveal');
-const revealOnScroll = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('active');
-      observer.unobserve(entry.target);
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
-);
-
-revealElements.forEach((element) => revealOnScroll.observe(element));
+  revealElements.forEach((element) => observer.observe(element));
+} else {
+  revealElements.forEach((element) => element.classList.add('is-visible'));
+}
 
 export {};
