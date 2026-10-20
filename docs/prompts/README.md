@@ -22,5 +22,16 @@ Antes de empezar cualquiera, el agente debe leer:
 - Desplegado y comprobado en `https://highdoctor.foundation` tras el push (espera a que acabe el workflow y haz `curl` o abre el navegador).
 - Si algo no se ha podido probar, se dice en una línea.
 
+## Skills de diseño instaladas (úsalas)
+Están instaladas globalmente. Cárgalas con la herramienta Skill en la fase indicada:
+| Prompt | Skills |
+|---|---|
+| 02 identidad visual | `design-taste-frontend` (dirección de arte anti-slop + inspector en navegador), `impeccable` (diseño, tipografía, color, layout), `emil-design-eng` (detalles y pulido) |
+| 03 animaciones | `find-animation-opportunities` → `animate` (implementar) → `animation-performance` → `review-animations` (revisión final). `animation-vocabulary` para nombrar efectos, `apple-design` para muelles y gestos |
+| 04 contenido | `impeccable` (UX copy, jerarquía) |
+| 05 blog | `impeccable` + `design-taste-frontend` para las páginas de listado y post |
+| 09 QA | `impeccable` (audit/critique/polish), `break-ui` (datos extremos: títulos largos, alemán, polaco), `mobile-native` (fallos típicos en móvil), `review-animations` |
+`prototype` sirve para sacar varias versiones de una sección (p. ej. el hero) y elegir la mejor. Si una skill choca con una decisión de `docs/PLAN.md` o del prompt, manda el PLAN.
+
 ## Stack ya decidido (no cambiar sin motivo fuerte)
 Astro (salida estática) · TypeScript · CSS propio con custom properties (sin Tailwind, para huir del look genérico) · GSAP + ScrollTrigger · Lenis · Pages CMS · GitHub Actions · Satori/resvg/sharp · Instagram API with Instagram Login.
