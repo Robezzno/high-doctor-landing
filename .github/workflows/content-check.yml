@@ -1,0 +1,138 @@
+name: Comprobar contenido del blog
+
+# Valida el contrato de contenido del blog (docs/CONTENIDO.md) cada vez que un PR
+# o un push toca las noticias, el esquema o la configuración de la colección.
+#
+# Por qué existe: Pages CMS (y el bot del prompt 07) escriben Markdown directo en
+# `src/content/news/**`. Un frontmatter que no cumple `src/lib/news/schema.ts`
+# rompe el build. En vez de que eso llegue a producción sin explicación, este
+# workflow lo comprueba antes y deja un comentario claro con el error.
+#
+# Qué comprueba:
+#   1. `astro check` — tipos y esquema de la colección.
+#   2. `npm run build` — el build de verdad, que es el que valida cada post.
+#
+# Qué NO comprueba: `.pages.yml`. Ese fichero lo lee Pages CMS, no Astro; si se
+# rompe, el editor deja de funcionar pero la web sigue igual.
+
+on:
+  pull_request:
+    paths:
+      - 'src/content/**'
+      - 'src/content.config.ts'
+      - 'src/lib/news/**'
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/**'
+      - 'src/content.config.ts'
+      - 'src/lib/news/**'
+
+# Para poder comentar el fallo en el PR o en el commit.
+permissions:
+  contents: write
+  pull-requests: write
+
+# Si se guardan dos cambios seguidos, sólo interesa el último.
+concurrency:
+  group: content-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contenido:
+    name: Validar contenido
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Descargar el repo
+        uses: actions/checkout@v4
+
+      - name: Preparar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            bot/package-lock.json
+
+      - name: Instalar dependencias de la web
+        run: npm ci --no-audit --no-fund
+
+      # `astro check` analiza todo el TypeScript del repo, incluido `bot/`, que
+      # tiene su propio package.json. Sin sus dependencias da 3 errores falsos.
+      - name: Instalar dependencias del bot
+        working-directory: bot
+        run: npm ci --no-audit --no-fund
+
+      - name: Comprobar tipos y esquema (astro check)
+        run: |
+          set -o pipefail
+          npm run check 2>&1 | tee /tmp/content-check.log
+
+      - name: Build (valida el frontmatter de cada noticia)
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee -a /tmp/content-check.log
+
+      - name: Resumen correcto
+        if: success()
+        run: |
+          {
+            echo "### ✅ Contenido correcto"
+            echo ""
+            echo "El esquema y el build aceptan los cambios en \`src/content/**\`."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Avisar del fallo en el PR o en el commit
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -uo pipefail
+
+          # Últimas líneas del registro, sin códigos de color y recortadas.
+          detalle="$(sed -e 's/\x1b\[[0-9;]*m//g' /tmp/content-check.log 2>/dev/null | tail -n 40 || true)"
+          detalle="${detalle:0:3000}"
+          [ -n "$detalle" ] || detalle="(no hay registro: el fallo fue al preparar el entorno)"
+
+          cat > /tmp/content-check-comment.md <<EOF
+          ### ❌ El contenido del blog no ha pasado la comprobación
+
+          Algún fichero de \`src/content/**\` no cumple el contrato de \`docs/CONTENIDO.md\`.
+          **La web sigue como estaba**: no se ha publicado nada roto.
+
+          Qué suele ser:
+
+          - titular de más de 90 caracteres, entradilla de más de 200 o frase de Instagram de más de 80;
+          - \`category\` que no es una de las seis (\`investigacion\`, \`salud\`, \`legislacion\`, \`cultura\`, \`fundacion\`, \`eventos\`);
+          - \`lang\` que no coincide con la carpeta (\`es\` o \`en\`);
+          - \`cover\` con una ruta a una imagen que ya no existe;
+          - post del bot (\`author: bot\`) sin \`source\` con \`name\` y \`url\`.
+
+          Cómo arreglarlo: corrige ese campo en el CMS (o en el fichero) y vuelve a guardar.
+
+          <details><summary>Últimas líneas del registro</summary>
+
+          \`\`\`
+          $detalle
+          \`\`\`
+
+          </details>
+
+          [Ver el registro completo]($RUN_URL)
+          EOF
+
+          if [ -n "$PR" ]; then
+            gh pr comment "$PR" --repo "$REPO" --body-file /tmp/content-check-comment.md \
+              || echo "::warning::No se pudo comentar en el PR (¿token de sólo lectura?)"
+          else
+            gh api --method POST "repos/$REPO/commits/$SHA/comments" \
+              -F "body=@/tmp/content-check-comment.md" \
+              || echo "::warning::No se pudo comentar en el commit (¿token de sólo lectura?)"
+          fi

@@ -1,0 +1,357 @@
+# Pages CMS — configuración del blog de High Doctor Foundation
+#
+# Documentación: https://pagescms.org/docs
+# Guía de uso para Saf: docs/COMO-PUBLICAR.md
+# Contrato de contenido (campos, límites y rutas): docs/CONTENIDO.md
+#
+# Cada noticia es un Markdown en `src/content/news/<idioma>/<slug>.md` y lo
+# valida `src/lib/news/schema.ts`. Si un campo no cumple el contrato, el build
+# falla: por eso este fichero replica el contrato campo a campo.
+
+# ---------------------------------------------------------------------------
+# Imágenes
+# ---------------------------------------------------------------------------
+# Los ficheros subidos se guardan en `src/assets/news/` para que Astro los
+# optimice en el build (`<Image>` + `image()` del schema), en lugar de servirlos
+# tal cual desde `public/`.
+#
+# `output` es la ruta que Pages CMS escribe en el frontmatter. Tiene que ser
+# relativa al fichero .md (`src/content/news/es/…` y `src/content/news/en/…`
+# están a la misma profundidad) para que `image()` de Astro resuelva la imagen:
+#
+#   src/content/news/es/mi-post.md  →  ../../../assets/news/foto.jpg
+#   = src/assets/news/foto.jpg
+media:
+  input: src/assets/news
+  output: ../../../assets/news
+  categories: [image]
+  # Nombre de fichero seguro (sin acentos ni espacios) para que la URL no se rompa.
+  rename: safe
+
+# ---------------------------------------------------------------------------
+# Ajustes generales
+# ---------------------------------------------------------------------------
+settings:
+  content:
+    # Al guardar, conserva las claves del frontmatter que no están en este
+    # esquema. Las escribe el workflow, no una persona:
+    #   instagramId  → lo añade el prompt 08 al publicar en Instagram
+    #   source       → fuente original de los posts del bot (author: bot)
+    # (El estado «ya publicado» no es una clave aparte: es `instagram: published`,
+    # que sí está en el select de Instagram.)
+    merge: true
+  commit:
+    # Mensajes de commit en español, para reconocer un guardado del CMS en el historial.
+    templates:
+      create: 'contenido(cms): nueva noticia {path}'
+      update: 'contenido(cms): actualizar {path}'
+      delete: 'contenido(cms): borrar {path}'
+      rename: 'contenido(cms): renombrar {oldPath} a {newPath}'
+
+# ---------------------------------------------------------------------------
+# Colecciones
+# ---------------------------------------------------------------------------
+# Las dos colecciones tienen los mismos campos; sólo cambian la carpeta y el
+# idioma por defecto. Los campos que no aparecen aquí (`instagramId` y `source`)
+# se conservan gracias a `settings.content.merge`.
+content:
+  - name: noticias-es
+    label: Noticias (Español)
+    description: Noticias en español → /noticias/
+    type: collection
+    path: src/content/news/es
+    subfolders: false
+    # 2026-10-21-nace-high-doctor-foundation.md
+    filename:
+      template: '{year}-{month}-{day}-{primary}.md'
+      field: create
+    view:
+      primary: title
+      fields: [title, date, category, draft, instagram]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Titular
+        type: string
+        required: true
+        description: 'El titular de la noticia. Máximo 90 caracteres.'
+        options:
+          maxlength: 90
+
+      - name: summary
+        label: Entradilla
+        type: text
+        required: true
+        description: 'Resumen de una o dos frases. Máximo 200 caracteres: sale en el listado, en Google y en el pie de la imagen de Instagram.'
+        options:
+          maxlength: 200
+
+      - name: body
+        label: Texto de la noticia
+        type: rich-text
+        description: 'Escribe la noticia. No repitas el titular como título: empieza directamente por el texto.'
+        options:
+          format: markdown
+
+      - name: date
+        label: Fecha
+        type: date
+        required: true
+        description: 'Fecha de publicación. Por defecto, hoy.'
+        options:
+          format: yyyy-MM-dd
+
+      - name: lang
+        label: Idioma
+        type: select
+        hidden: true
+        default: es
+        description: 'Lo pone el CMS solo: tiene que coincidir con la carpeta (es o en).'
+        options:
+          values:
+            - name: es
+              label: Español
+
+      - name: category
+        label: Categoría
+        type: select
+        required: true
+        description: 'Una sola. Decide el color de la tarjeta social y la página de categoría.'
+        options:
+          values:
+            - name: investigacion
+              label: Investigación
+            - name: salud
+              label: Salud
+            - name: legislacion
+              label: Legislación
+            - name: cultura
+              label: Cultura
+            - name: fundacion
+              label: Fundación
+            - name: eventos
+              label: Eventos
+
+      - name: tags
+        label: Etiquetas
+        type: string
+        list: true
+        description: 'Palabras sueltas para el RSS. Opcional. Añade una por línea, en minúsculas.'
+        options:
+          maxlength: 40
+
+      - name: cover
+        label: Foto de portada
+        type: image
+        description: 'Opcional. Si no subes foto, la portada es la tarjeta que genera el build. Horizontal y no muy pesada va mejor.'
+        options:
+          categories: [image]
+
+      - name: coverAlt
+        label: Descripción de la foto
+        type: string
+        description: 'Qué se ve en la foto, para quien no puede verla. Obligatorio si pones foto.'
+        options:
+          maxlength: 200
+
+      - name: instagram
+        label: Instagram
+        type: select
+        default: pending
+        description: 'Si eliges «Publicar en Instagram», la noticia entra en la cola de publicación automática (prompt 08).'
+        options:
+          values:
+            - name: pending
+              label: Publicar en Instagram
+            - name: off
+              label: No publicar
+            - name: published
+              label: Ya publicado (lo marca el sistema, no lo cambies)
+
+      - name: instagramHook
+        label: Frase para la imagen de Instagram
+        type: string
+        description: 'Frase corta que saldrá en la imagen de Instagram (máx. 80). Si la dejas vacía se usa el titular.'
+        options:
+          maxlength: 80
+
+      - name: author
+        label: Autoría
+        type: select
+        default: equipo
+        description: 'Déjalo en «Equipo». «Bot» es sólo para las noticias que escribe el robot, y esas necesitan la fuente original.'
+        options:
+          values:
+            - name: equipo
+              label: Equipo High Doctor Foundation
+            - name: bot
+              label: Bot de noticias
+
+      - name: draft
+        label: Borrador
+        type: boolean
+        default: false
+        description: 'Si está activado, la noticia no se publica en la web (sí se ve en local con npm run dev).'
+
+      - name: translationKey
+        label: Clave de traducción
+        type: string
+        required: true
+        description: 'Identificador del post en los dos idiomas: pon el mismo valor en la versión ES y en la EN (por ejemplo: foundation-launch). Si la noticia sólo existe en un idioma, invéntate una clave corta.'
+        pattern:
+          regex: '^[a-z0-9-]+$'
+          message: 'Sólo minúsculas, números y guiones (por ejemplo: foundation-launch).'
+
+  - name: news-en
+    label: News (English)
+    description: News in English → /en/news/
+    type: collection
+    path: src/content/news/en
+    subfolders: false
+    filename:
+      template: '{year}-{month}-{day}-{primary}.md'
+      field: create
+    view:
+      primary: title
+      fields: [title, date, category, draft, instagram]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      # Mismos campos que la colección en español. Se repiten porque Pages CMS
+      # no comparte campos entre colecciones: si cambias uno, cambia el otro.
+      - name: title
+        label: Titular
+        type: string
+        required: true
+        description: 'El titular de la noticia. Máximo 90 caracteres.'
+        options:
+          maxlength: 90
+
+      - name: summary
+        label: Entradilla
+        type: text
+        required: true
+        description: 'Resumen de una o dos frases. Máximo 200 caracteres: sale en el listado, en Google y en el pie de la imagen de Instagram.'
+        options:
+          maxlength: 200
+
+      - name: body
+        label: Texto de la noticia
+        type: rich-text
+        description: 'Escribe la noticia. No repitas el titular como título: empieza directamente por el texto.'
+        options:
+          format: markdown
+
+      - name: date
+        label: Fecha
+        type: date
+        required: true
+        description: 'Fecha de publicación. Por defecto, hoy.'
+        options:
+          format: yyyy-MM-dd
+
+      - name: lang
+        label: Idioma
+        type: select
+        hidden: true
+        default: en
+        description: 'Lo pone el CMS solo: tiene que coincidir con la carpeta (en).'
+        options:
+          values:
+            - name: en
+              label: English
+
+      - name: category
+        label: Categoría
+        type: select
+        required: true
+        description: 'Una sola, con el mismo valor que en la versión ES. Decide el color de la tarjeta social y la página de categoría.'
+        options:
+          values:
+            - name: investigacion
+              label: Investigación
+            - name: salud
+              label: Salud
+            - name: legislacion
+              label: Legislación
+            - name: cultura
+              label: Cultura
+            - name: fundacion
+              label: Fundación
+            - name: eventos
+              label: Eventos
+
+      - name: tags
+        label: Etiquetas
+        type: string
+        list: true
+        description: 'Palabras sueltas para el RSS. Opcional. Añade una por línea, en minúsculas.'
+        options:
+          maxlength: 40
+
+      - name: cover
+        label: Foto de portada
+        type: image
+        description: 'Opcional. Si no subes foto, la portada es la tarjeta que genera el build. Horizontal y no muy pesada va mejor.'
+        options:
+          categories: [image]
+
+      - name: coverAlt
+        label: Descripción de la foto
+        type: string
+        description: 'Qué se ve en la foto, para quien no puede verla. Obligatorio si pones foto.'
+        options:
+          maxlength: 200
+
+      - name: instagram
+        label: Instagram
+        type: select
+        default: pending
+        description: 'Si eliges «Publicar en Instagram», la noticia entra en la cola de publicación automática (prompt 08).'
+        options:
+          values:
+            - name: pending
+              label: Publicar en Instagram
+            - name: off
+              label: No publicar
+            - name: published
+              label: Ya publicado (lo marca el sistema, no lo cambies)
+
+      - name: instagramHook
+        label: Frase para la imagen de Instagram
+        type: string
+        description: 'Frase corta que saldrá en la imagen de Instagram (máx. 80). Si la dejas vacía se usa el titular.'
+        options:
+          maxlength: 80
+
+      - name: author
+        label: Autoría
+        type: select
+        default: equipo
+        description: 'Déjalo en «Equipo». «Bot» es sólo para las noticias que escribe el robot, y esas necesitan la fuente original.'
+        options:
+          values:
+            - name: equipo
+              label: Equipo High Doctor Foundation
+            - name: bot
+              label: Bot de noticias
+
+      - name: draft
+        label: Borrador
+        type: boolean
+        default: false
+        description: 'Si está activado, la noticia no se publica en la web (sí se ve en local con npm run dev).'
+
+      - name: translationKey
+        label: Clave de traducción
+        type: string
+        required: true
+        description: 'Identificador del post en los dos idiomas: pon el mismo valor en la versión ES y en la EN (por ejemplo: foundation-launch). Si la noticia sólo existe en un idioma, invéntate una clave corta.'
+        pattern:
+          regex: '^[a-z0-9-]+$'
+          message: 'Sólo minúsculas, números y guiones (por ejemplo: foundation-launch).'
