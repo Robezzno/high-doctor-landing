@@ -303,6 +303,22 @@ const fieldNumbers = {
     transform: scaleX(1);
   }
 
+  /* Con movimiento reducido la etiqueta no sube ni se desplaza: cambia de
+     color y el trazo aparece ya dibujado. */
+  @media (prefers-reduced-motion: reduce) {
+    .field label {
+      transition: none;
+    }
+
+    .field label::after {
+      transition: none;
+    }
+
+    .field:focus-within label {
+      transform: none;
+    }
+  }
+
   .field__num {
     color: var(--c-green-deep);
     font-size: 0.7rem;
@@ -441,6 +457,8 @@ const fieldNumbers = {
       }
       to {
         opacity: 1;
+        /* La inclinación final la pone la propiedad `rotate` del CSS: aquí el
+           `transform` vuelve a 0 para no sumar otro giro. */
         transform: scale(1) rotate(0deg);
       }
     }

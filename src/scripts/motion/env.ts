@@ -28,7 +28,8 @@ export function saveData(): boolean {
  */
 export function markMotionReady(): void {
   const root = document.documentElement;
-  if (root.dataset.motion === 'armed' || root.dataset.motion === undefined) {
-    root.dataset.motion = 'ready';
-  }
+  // `failed` es el estado que pone el temporizador de seguridad del script
+  // inline si el paquete tarda más de 2,5 s: cuando por fin llega, la página
+  // vuelve a ser "ready" para recuperar el pin y el estado inicial del hero.
+  if (root.dataset.motion !== 'lite') root.dataset.motion = 'ready';
 }

@@ -59,8 +59,14 @@ export async function initMotion(): Promise<void> {
   const fine = window.matchMedia('(pointer: fine)').matches;
 
   // En móvil el repertorio se resuelve con CSS y un IntersectionObserver: no
-  // se descarga GSAP (ver `lite.ts`).
-  if (mobile) {
+  // se descarga GSAP (ver `lite.ts`). En páginas sin nada que animar (blog,
+  // listados, noticias) se hace lo mismo: descargar 55 KB de motor para no
+  // animar nada sería justo lo contrario del "import dinámico por componente".
+  const hasMotionTargets = document.querySelector(
+    '[data-hero], [data-impact-list], [data-process], [data-thread]',
+  );
+
+  if (mobile || !hasMotionTargets) {
     initLiteMotion();
     return;
   }

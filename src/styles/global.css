@@ -381,6 +381,20 @@ strong {
   transform: scaleX(1);
 }
 
+/* Movimiento reducido: los subrayados y la flecha cambian de estado sin
+   desplazarse. No queda ni una animación de `transform` en la página. */
+@media (prefers-reduced-motion: reduce) {
+  .link-draw::after,
+  .btn svg {
+    transition: none;
+  }
+
+  .btn:hover svg,
+  .btn:focus-visible svg {
+    transform: none;
+  }
+}
+
 /* ------------------------------------------------------- Titulares comunes */
 .h2 {
   font-size: var(--fs-h2);

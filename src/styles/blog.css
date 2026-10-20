@@ -312,6 +312,12 @@
   transform: scaleX(1);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .post-row__more::after {
+    transition: none;
+  }
+}
+
 .blog-empty {
   padding: 56px 0;
   color: var(--blog-muted);
@@ -692,6 +698,12 @@
 .latest-news__cta:hover::after,
 .latest-news__cta:focus-visible::after {
   transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .latest-news__cta::after {
+    transition: none;
+  }
 }
 
 .latest-news__note {

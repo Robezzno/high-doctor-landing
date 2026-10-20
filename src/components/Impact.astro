@@ -366,8 +366,10 @@ const specimens = [
       padding-left: calc(2.75rem + var(--sp-2xs));
     }
 
+    /* En móvil la fila también enseña su mini ilustración al abrirse: el
+       mismo dibujo del escritorio, más pequeño y al final del panel. */
     .row__figure {
-      display: none;
+      display: block;
     }
   }
 </style>

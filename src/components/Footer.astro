@@ -245,6 +245,12 @@ const year = new Date().getFullYear();
     transform: scaleX(1);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .footer__col a::after {
+      transition: none;
+    }
+  }
+
   .footer__col a[aria-current='true'] {
     color: var(--c-marker);
   }

@@ -102,6 +102,9 @@ export function initMicro({ gsap }: MotionLib): void {
       .timeline({ delay: 0.25 })
       .fromTo(
         stamp,
+        // El sello gira al estamparse y se queda con la inclinación de ficha
+        // (-11°): GSAP escribe `rotate` en línea sobre el elemento y anula la
+        // propiedad CSS `rotate`, así que el ángulo final se fija aquí.
         { opacity: 0, scale: 2.1, rotate: -26 },
         { opacity: 1, scale: 1, rotate: -11, duration: 0.36, ease: 'power4.in' },
       )

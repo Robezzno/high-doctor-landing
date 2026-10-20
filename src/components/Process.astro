@@ -208,10 +208,13 @@ const steps: {
 
   /* ------------------------------------------------- Pin (sólo escritorio) */
   /* El pin sólo existe cuando el motor de animaciones ha arrancado: sin JS la
-     sección es una lista normal, más corta, y no hay saltos de layout. */
+     sección es una lista normal, más corta, y no hay saltos de layout.
+     Alto = una pantalla de contenido (`100svh - 6rem`, lo que mide la columna
+     sticky) + exactamente una pantalla de scroll extra (el guion del prompt 03
+     no permite más). De ahí el `- 6rem`: sin él sobrarían 96 px de scroll. */
   @media (min-width: 55.01rem) {
     html:is([data-motion='armed'], [data-motion='ready']) .process__stage {
-      height: 250svh;
+      height: calc(200svh - 6rem);
     }
 
     html:is([data-motion='armed'], [data-motion='ready']) .process__sticky {

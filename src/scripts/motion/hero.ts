@@ -140,23 +140,33 @@ export function initHero({ gsap, SplitText }: MotionLib): void {
 
   /* -------------------------------- 6. El personaje sigue al cursor (2–4 px) */
   // Sólo con ratón y sólo después del rebote de entrada: en táctil no hay
-  // cursor que seguir y el efecto no aporta nada.
+  // cursor que seguir y el efecto no aporta nada. La mirada se resuelve como
+  // un parallax corto: el personaje se desplaza 3–4 px hacia el puntero (y gira
+  // una fracción de grado) mientras la molécula hace 2 px en sentido contrario.
+  // Eso da profundidad de lámina de laboratorio sin separar los ojos del PNG.
   if (portrait && finePointer()) {
     const xTo = gsap.quickTo(portrait, 'x', { duration: 0.55, ease: 'power2.out' });
     const yTo = gsap.quickTo(portrait, 'y', { duration: 0.55, ease: 'power2.out' });
+    const rTo = gsap.quickTo(portrait, 'rotate', { duration: 0.55, ease: 'power2.out' });
+    const molXTo = molecule
+      ? gsap.quickTo(molecule, 'x', { duration: 0.7, ease: 'power2.out' })
+      : null;
 
     const start = window.setTimeout(() => {
       const onPointerMove = (event: PointerEvent): void => {
         const nx = event.clientX / window.innerWidth - 0.5;
         const ny = event.clientY / window.innerHeight - 0.5;
-        xTo(nx * 6); // ±3 px
-        yTo(ny * 4); // ±2 px
+        xTo(nx * 8); // ±4 px
+        yTo(ny * 6); // ±3 px
+        rTo(nx * 1.2); // ±0,6°
+        molXTo?.(nx * -4); // 2 px al lado contrario: parallax de dos planos
       };
 
       window.addEventListener('pointermove', onPointerMove, { passive: true });
       onLeavePage(() => {
         window.removeEventListener('pointermove', onPointerMove);
-        gsap.set(portrait, { x: 0, y: 0 });
+        gsap.set(portrait, { x: 0, y: 0, rotate: 0 });
+        if (molecule) gsap.set(molecule, { x: 0 });
       });
     }, 1200);
 
