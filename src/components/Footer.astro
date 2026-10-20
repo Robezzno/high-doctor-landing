@@ -216,6 +216,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__col a {
+    position: relative;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -223,11 +224,25 @@ const year = new Date().getFullYear();
     font-size: var(--fs-small);
     color: var(--c-paper-on-dark);
     text-decoration: none;
-    border-bottom: 2px solid transparent;
   }
 
-  .footer__col a:hover {
-    border-bottom-color: var(--c-marker);
+  /* Subrayado que se dibuja de izquierda a derecha. */
+  .footer__col a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.55rem;
+    height: 2px;
+    background-color: var(--c-marker);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .footer__col a:hover::after,
+  .footer__col a:focus-visible::after {
+    transform: scaleX(1);
   }
 
   .footer__col a[aria-current='true'] {

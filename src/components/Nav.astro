@@ -173,6 +173,7 @@ const navItems = [
   }
 
   .nav__link {
+    position: relative;
     display: inline-flex;
     align-items: baseline;
     gap: 0.4em;
@@ -192,7 +193,25 @@ const navItems = [
 
   .nav__link:hover {
     color: var(--c-ink);
-    border-bottom-color: var(--c-marker);
+  }
+
+  /* El subrayado se dibuja de izquierda a derecha (sólo `transform`). */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.55rem;
+    height: 2px;
+    background-color: var(--c-marker);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .nav__link:hover::after,
+  .nav__link:focus-visible::after {
+    transform: scaleX(1);
   }
 
   .nav__num {

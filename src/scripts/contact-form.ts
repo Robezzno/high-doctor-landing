@@ -2,19 +2,28 @@
  * Envío del formulario a Web3Forms (lógica del prompt 00, sin cambios):
  * POST con FormData, sin borrar lo escrito si falla, aviso de estado accesible
  * y bloqueo de envíos duplicados. Los textos llegan desde el componente.
+ *
+ * Con `<ClientRouter />` el documento se intercambia sin recargar, así que esto
+ * es una función que `main.ts` llama en cada `astro:page-load`: si se quedara
+ * en código de módulo, tras la primera navegación los listeners apuntarían al
+ * formulario antiguo y el envío volvería a ser una navegación completa.
  */
-const form = document.getElementById('lead-form') as HTMLFormElement | null;
-const statusEl = document.getElementById('form-status');
-const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]') ?? null;
+export function initContactForm(): void {
+  const form = document.getElementById('lead-form') as HTMLFormElement | null;
+  // Un mismo nodo no se engancha dos veces (primera carga + page-load).
+  if (!form || form.dataset.bound === 'true') return;
+  form.dataset.bound = 'true';
 
-function setStatus(message: string, state: 'pending' | 'success' | 'error' | null): void {
-  if (!statusEl) return;
-  statusEl.className =
-    'form-status' + (state ? ` form-status--${state}` : '') + (message ? '' : ' hidden');
-  statusEl.textContent = message;
-}
+  const statusEl = document.getElementById('form-status');
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]') ?? null;
 
-if (form) {
+  function setStatus(message: string, state: 'pending' | 'success' | 'error' | null): void {
+    if (!statusEl) return;
+    statusEl.className =
+      'form-status' + (state ? ` form-status--${state}` : '') + (message ? '' : ' hidden');
+    statusEl.textContent = message;
+  }
+
   const messages = {
     sending: form.dataset.msgSending ?? '',
     success: form.dataset.msgSuccess ?? '',

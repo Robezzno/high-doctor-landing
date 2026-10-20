@@ -30,11 +30,11 @@ const specimens = [
 ];
 ---
 
-<section id="impact" class="impact section section--lab grain reveal">
+<section id="impact" class="impact section section--lab grain reveal" data-folio="04">
   <div class="container">
     <header class="section__head">
-      <span class="tag tag--dark">SPEC-03 / {t(lang, 'nav_impact')}</span>
-      <span class="mono impact__folio">§ 03</span>
+      <span class="tag tag--dark">SPEC-04 / {t(lang, 'nav_impact')}</span>
+      <span class="mono impact__folio">§ 04</span>
     </header>
 
     <div class="impact__head grid">
@@ -42,21 +42,28 @@ const specimens = [
       <p class="lead impact__lead">{t(lang, 'impact_subtitle')}</p>
     </div>
 
-    <ol class="impact__list">
+    <ol class="impact__list" data-impact-list>
       {
         rows.map((row, index) => (
-          <li class="impact__item">
+          <li class="impact__item" data-impact-row>
             <details class="row" open={index === 0}>
               <summary class="row__summary">
                 <span class="mono row__num">{String(index + 1).padStart(2, '0')}</span>
-                <h3 class="row__title">{t(lang, row.title)}</h3>
+                <span class="row__mask">
+                  <h3 class="row__title" data-impact-title>
+                    {t(lang, row.title)}
+                  </h3>
+                </span>
                 <span class="row__icon" aria-hidden="true">
                   <Icon name={row.icon} />
                 </span>
                 <span class="row__toggle" aria-hidden="true" />
               </summary>
-              <div class="row__panel">
+              <div class="row__panel" data-impact-panel>
                 <p>{t(lang, row.text)}</p>
+                <span class="row__figure" aria-hidden="true" data-impact-drawing>
+                  <Icon name={row.icon} />
+                </span>
               </div>
             </details>
           </li>
@@ -112,6 +119,33 @@ const specimens = [
     align-self: end;
   }
 
+  /* ------------------------------------------------- Modo ligero (móvil) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html[data-motion='lite']) .impact__item {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 420ms var(--ease-out),
+        transform 420ms var(--ease-out);
+    }
+
+    :global(html[data-motion='lite']) .impact__item.is-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* La mini ilustración se dibuja al abrir la fila, sin GSAP. */
+    :global(html[data-motion='lite']) .row__figure :global(path) {
+      stroke-dasharray: 90;
+      stroke-dashoffset: 90;
+      transition: stroke-dashoffset 520ms var(--ease-out) 120ms;
+    }
+
+    :global(html[data-motion='lite']) .row[open] .row__figure :global(path) {
+      stroke-dashoffset: 0;
+    }
+  }
+
   /* ---------------------------------------------------------- Filas 01–06 */
   .impact__list {
     border-top: 1px solid rgb(244 239 228 / 22%);
@@ -141,6 +175,12 @@ const specimens = [
     color: var(--c-green);
     padding-block: 0.15rem;
     width: fit-content;
+  }
+
+  /* Máscara del título: el texto sube desde su propia línea al entrar. */
+  .row__mask {
+    display: block;
+    overflow: hidden;
   }
 
   .row__title {
@@ -202,6 +242,9 @@ const specimens = [
   }
 
   .row__panel {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-m);
     padding-bottom: clamp(1rem, 2vw, 1.6rem);
     padding-left: calc(4rem + var(--sp-s));
   }
@@ -210,6 +253,20 @@ const specimens = [
     max-width: 62ch;
     color: var(--c-paper-muted);
     font-size: var(--fs-body);
+  }
+
+  /* Mini ilustración de la ficha: el icono del área, dibujado al abrir. */
+  .row__figure {
+    flex: 0 0 auto;
+    order: 2;
+    margin-left: auto;
+    color: var(--c-green);
+    opacity: 0.85;
+  }
+
+  .row__figure :global(svg) {
+    width: clamp(2.75rem, 4vw, 3.5rem);
+    height: auto;
   }
 
   /* ------------------------------------------------------- Lámina de FIG. */
@@ -307,6 +364,10 @@ const specimens = [
 
     .row__panel {
       padding-left: calc(2.75rem + var(--sp-2xs));
+    }
+
+    .row__figure {
+      display: none;
     }
   }
 </style>

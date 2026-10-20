@@ -2,6 +2,7 @@
 // Autoalojado: ni Google Fonts ni CDNs de terceros. Sólo el eje de peso (wght)
 // de cada familia, en sus subsets latino y latino-extendido (por el polaco);
 // el navegador descarga sólo el subset que necesita cada página.
+import { ClientRouter } from 'astro:transitions';
 import '@fontsource-variable/fraunces/wght.css';
 import '@fontsource-variable/inter-tight/wght.css';
 import '@fontsource-variable/jetbrains-mono/wght.css';
@@ -139,9 +140,32 @@ const imageUrl = image ? absolute(image) : undefined;
     }
 
     <!-- Marca de "hay JavaScript" para que el contenido nunca dependa de él:
-         sin JS, nada se oculta y el menú móvil se muestra desplegado. -->
-    <script is:inline>
-      document.documentElement.classList.add('js');
+         sin JS, nada se oculta y el menú móvil se muestra desplegado.
+         `data-astro-rerun` la vuelve a ejecutar en cada navegación con el
+         router, porque el intercambio de documento borra los atributos de
+         <html>. El temporizador de seguridad levanta el estado inicial si el
+         paquete de animación no llega a arrancar: el texto se lee siempre. -->
+    <script is:inline data-astro-rerun>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        try {
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          var wide = window.matchMedia('(min-width: 55.01rem)').matches;
+          var connection = navigator.connection;
+          var saving = connection && connection.saveData === true;
+          // Sólo se oculta el hero en escritorio, donde la entrada por líneas
+          // necesita reservar el sitio. En móvil la entrada es un `transform`.
+          if (!reduce && !saving && wide) {
+            root.dataset.motion = 'armed';
+            setTimeout(function () {
+              if (root.dataset.motion === 'armed') root.dataset.motion = 'failed';
+            }, 2500);
+          }
+        } catch (error) {
+          /* Sin matchMedia: se queda el estado final del CSS, que es legible. */
+        }
+      })();
     </script>
 
     {
@@ -149,6 +173,8 @@ const imageUrl = image ? absolute(image) : undefined;
         <script is:inline>
           // Primera visita a `/`: si el navegador está en otro idioma soportado,
           // se redirige una sola vez y se guarda la preferencia. Nunca bloquea la carga.
+          // No lleva `data-astro-rerun`: sólo debe decidir en una carga completa,
+          // no al volver a `/` desde el blog con el router.
           (function () {
             try {
               if (localStorage.getItem('preferredLang')) return;
@@ -167,6 +193,10 @@ const imageUrl = image ? absolute(image) : undefined;
         </script>
       )
     }
+
+    <!-- Transiciones entre páginas: portada ↔ blog ↔ noticia con View
+         Transitions. `fallback` cubre navegadores sin la API nativa. -->
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main">{t(lang, 'a11y_skip')}</a>
