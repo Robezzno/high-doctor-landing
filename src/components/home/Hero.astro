@@ -1,258 +1,521 @@
 ---
 import { Picture } from 'astro:assets';
-import trichomes from '../../assets/photos/trichomes.jpg';
-import koehler from '../../assets/photos/koehler.jpg';
-import { t, type Lang } from '../../i18n';
+import doctor from '../../assets/brand/logo-character.png';
+import { evidenceSources, evidenceTopics, gradeOf, type EvidenceTopic } from '../../data/evidence';
+import { t, type Lang, type TranslationKey } from '../../i18n';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+
+const letters = ['A', 'B', 'C', 'D', 'E'] as const;
+const sayKey = (letter: string) => `v2_doc_${letter.toLowerCase()}` as TranslationKey;
+const levelName = (topic: EvidenceTopic) => t(lang, `evd_lvl_${topic.level}` as TranslationKey);
+const titleOf = (topic: EvidenceTopic) => t(lang, `evd_${topic.id}_t` as TranslationKey);
+const shortSource = (topic: EvidenceTopic) => evidenceSources[topic.source].short;
+
+const first = evidenceTopics[0];
+const firstGrade = gradeOf(first.level);
+
+const options = evidenceTopics.map((topic) => {
+  const grade = gradeOf(topic.level);
+  return {
+    id: topic.id,
+    title: titleOf(topic),
+    grade,
+    level: levelName(topic),
+    group: topic.group,
+    say: t(lang, sayKey(grade)),
+    source: shortSource(topic),
+  };
+});
+
+const groups = [
+  { id: 'use', label: t(lang, 'evd_group_use') },
+  { id: 'risk', label: t(lang, 'evd_group_risk') },
+] as const;
 ---
 
-<!-- Hero en tablero de dos por dos: el nombre, dos fotografías de archivo que
-     se leen como una sola imagen partida, una frase en tinta y otra en el
-     verde de la estrella del logo. -->
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="hero__board">
-    <div class="tile hero__name-tile">
-      <h1 class="hero__name" id="hero-title" aria-label="High Doctor Foundation">
-        <span class="hero__line">High</span>
-        <span class="hero__line">Doctor</span>
-      </h1>
+<section class="hero" aria-labelledby="hero-title" data-hero-explorer>
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <h1 class="hero__title" id="hero-title">{t(lang, 'v2_hero_h1')}</h1>
+      <p class="hero__sub">{t(lang, 'v2_hero_sub')}</p>
+
+      <!-- La etiqueta: eliges tema y la nota cambia aquí mismo. -->
+      <div class="label">
+        <label class="label__ask" for="hero-topic">{t(lang, 'v2_hero_ask')}</label>
+        <div class="label__select">
+          <select id="hero-topic" data-topic-select>
+            {
+              groups.map((group) => (
+                <optgroup label={group.label}>
+                  {options
+                    .filter((o) => o.group === group.id)
+                    .map((o) => (
+                      <option
+                        value={o.id}
+                        data-grade={o.grade}
+                        data-level={o.level}
+                        data-say={o.say}
+                        data-source={o.source}
+                      >
+                        {o.title}
+                      </option>
+                    ))}
+                </optgroup>
+              ))
+            }
+          </select>
+          <svg class="label__chevron" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M3.5 6l4.5 4.5L12.5 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </div>
+
+        <div class="label__panel" aria-live="polite">
+          <p class="label__caption">{t(lang, 'v2_grade_label')}</p>
+          <ol class="strip" aria-hidden="true">
+            {
+              letters.map((letter) => (
+                <li
+                  class:list={[
+                    'strip__cell',
+                    `strip__cell--${letter.toLowerCase()}`,
+                    { 'is-on': letter === firstGrade },
+                  ]}
+                  data-letter={letter}
+                >
+                  {letter}
+                </li>
+              ))
+            }
+          </ol>
+          <p class="label__verdict">
+            <span class="visually-hidden">{t(lang, 'v2_grade_label')}: </span>
+            <span data-verdict-grade>{firstGrade}</span>
+            <span aria-hidden="true">·</span>
+            <span data-verdict-level>{levelName(first)}</span>
+          </p>
+          <p class="label__source">
+            {t(lang, 'evd_source')}: <span data-verdict-source>{shortSource(first)}</span>
+          </p>
+          <a class="link-arrow label__more" href={`#evd-${first.id}`} data-verdict-link>
+            {t(lang, 'v2_see_verdict')}
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d="M2 8h11M9 3.5 13.5 8 9 12.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </a>
+        </div>
+        <p class="label__legend">{t(lang, 'v2_grade_legend')}</p>
+      </div>
     </div>
 
-    <figure class="tile hero__photo hero__photo--a" data-shutter>
+    <figure class="hero__doctor">
+      <p class="bubble" data-bubble aria-live="polite">{t(lang, sayKey(firstGrade))}</p>
       <Picture
-        src={trichomes}
+        src={doctor}
         formats={['avif', 'webp']}
-        widths={[640, 960, 1280, 1920]}
-        sizes="(max-width: 64rem) 100vw, 50vw"
-        alt={t(lang, 'hero_alt_trichomes')}
-        class="photo"
+        widths={[280, 480, 720]}
+        sizes="(max-width: 60rem) 40vw, 30rem"
+        alt={t(lang, 'mascot_alt')}
         loading="eager"
         fetchpriority="high"
+        class="hero__doctor-img"
       />
     </figure>
-
-    <figure class="tile hero__photo hero__photo--b">
-      <Picture
-        src={koehler}
-        formats={['avif', 'webp']}
-        widths={[640, 960, 1280]}
-        sizes="(max-width: 64rem) 100vw, 50vw"
-        alt={t(lang, 'hero_alt_plate')}
-        class="photo"
-        loading="lazy"
-      />
-    </figure>
-
-    <div class="tile hero__statement hero__statement--dark">
-      <p>{t(lang, 'hero_statement')}</p>
-    </div>
-
-    <div class="tile hero__statement hero__statement--accent">
-      <p>{t(lang, 'hero_statement_2')}</p>
-      <a class="hero__link link-bar" href="#evidence">
-        {t(lang, 'hero_evidence_link')}
-      </a>
-    </div>
   </div>
 </section>
 
+<script>
+  /** Selector del hero: cambia la nota, la frase del doctor y la fuente. */
+  function initHeroExplorer(): void {
+    const root = document.querySelector<HTMLElement>('[data-hero-explorer]');
+    if (!root || root.dataset.bound === 'true') return;
+    root.dataset.bound = 'true';
+
+    const select = root.querySelector<HTMLSelectElement>('[data-topic-select]');
+    const cells = Array.from(root.querySelectorAll<HTMLElement>('[data-letter]'));
+    const grade = root.querySelector<HTMLElement>('[data-verdict-grade]');
+    const level = root.querySelector<HTMLElement>('[data-verdict-level]');
+    const source = root.querySelector<HTMLElement>('[data-verdict-source]');
+    const link = root.querySelector<HTMLAnchorElement>('[data-verdict-link]');
+    const bubble = root.querySelector<HTMLElement>('[data-bubble]');
+    if (!select || !grade || !level || !source || !link || !bubble) return;
+
+    const update = (): void => {
+      const option = select.selectedOptions[0];
+      if (!option) return;
+      const letter = option.dataset.grade ?? '';
+      for (const cell of cells) cell.classList.toggle('is-on', cell.dataset.letter === letter);
+      grade.textContent = letter;
+      level.textContent = option.dataset.level ?? '';
+      source.textContent = option.dataset.source ?? '';
+      link.href = `#evd-${option.value}`;
+      bubble.textContent = option.dataset.say ?? '';
+      bubble.classList.remove('is-new');
+      void bubble.offsetWidth;
+      bubble.classList.add('is-new');
+    };
+
+    select.addEventListener('change', update);
+
+    // El enlace abre la ficha completa del tema en la rejilla.
+    link.addEventListener('click', () => {
+      const target = document.getElementById(link.hash.slice(1));
+      if (target instanceof HTMLDetailsElement) target.open = true;
+    });
+  }
+
+  document.addEventListener('astro:page-load', initHeroExplorer);
+</script>
+
 <style>
   .hero {
-    padding: 0 8px 8px;
-  }
-
-  .hero__board {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(17rem, 1fr));
-    grid-template-areas:
-      'name name a a'
-      'b b dark accent';
-    gap: 8px;
-    height: max(36rem, calc(100svh - 84px));
-  }
-
-  .tile {
-    position: relative;
-    margin: 0;
-    overflow: hidden;
-  }
-
-  .hero__name-tile {
-    grid-area: name;
-    display: flex;
-    align-items: flex-end;
-    padding: max(1rem, calc(var(--margin) - 8px));
+    padding-block: clamp(1.5rem, 0.5rem + 3vw, 3.5rem) clamp(3rem, 2rem + 4vw, 5.5rem);
     background-color: var(--c-paper-2);
   }
 
-  .hero__name {
-    font-size: clamp(5rem, 1rem + 10vw, 12rem);
-    font-weight: 600;
-    line-height: 0.86;
-    letter-spacing: -0.05em;
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+    align-items: center;
   }
 
-  .hero__line {
+  .hero__title {
+    max-width: 24ch;
+    font-size: var(--fs-h1);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__sub {
+    max-width: 34rem;
+    margin: 1.25rem 0 2rem;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+    color: var(--c-ink-soft);
+  }
+
+  /* ---------------------------------------------------------- La etiqueta */
+  .label {
+    max-width: 36rem;
+    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    border-radius: var(--r-2);
+    background-color: var(--c-white);
+    box-shadow: var(--shadow-2);
+  }
+
+  .label__ask {
     display: block;
-  }
-
-  .hero__photo {
-    background-color: var(--c-ink);
-  }
-
-  .hero__photo--a {
-    grid-area: a;
-  }
-
-  .hero__photo--b {
-    grid-area: b;
-  }
-
-  .hero__photo :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .hero__photo--a :global(img) {
-    object-position: 55% 50%;
-    animation: drift 24s var(--ease-in-out) infinite alternate;
-  }
-
-  .hero__photo--b :global(img) {
-    object-position: 50% 18%;
-  }
-
-  .hero__statement {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: max(1rem, calc(var(--margin) - 8px));
-  }
-
-  .hero__statement p {
-    margin: 0;
-    font-size: clamp(1.25rem, 0.8rem + 0.9vw, 1.5rem);
+    margin-bottom: 0.6rem;
     font-weight: 500;
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-    hyphens: auto;
-    overflow-wrap: break-word;
   }
 
-  .hero__statement--dark {
-    grid-area: dark;
-    background-color: var(--c-ink);
-    color: var(--c-paper);
+  .label__select {
+    position: relative;
   }
 
-  .hero__statement--accent {
-    grid-area: accent;
-    background-color: var(--c-green);
-    color: var(--c-ink);
+  .label__select select {
+    width: 100%;
+    min-height: 56px;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    border: 2px solid var(--c-ink);
+    border-radius: var(--r-1);
+    background-color: var(--c-white);
+    font-size: 1.125rem;
+    font-weight: 500;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color var(--dur-fast) linear;
   }
 
-  .hero__link {
-    align-self: flex-start;
-    font-size: var(--step-body);
+  .label__select select:hover {
+    border-color: var(--c-green-ink);
   }
 
-  /* Imagen que se mueve: deriva lenta del microscopio. */
-  @keyframes drift {
-    from {
-      transform: scale(1.04) translate3d(0, 0, 0);
-    }
-    to {
-      transform: scale(1.12) translate3d(-2%, -1.5%, 0);
-    }
+  .label__chevron {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    translate: 0 -50%;
+    pointer-events: none;
   }
 
-  /* Persiana: la foto principal se abre desde abajo al cargar. El estado
-     inicial lo pone el script inline de Base (`armed`) sólo en escritorio y
-     se levanta con `ready`; si algo falla (`failed`) la foto está ahí. */
-  :global(html[data-motion='armed']) .hero__photo--a {
-    clip-path: inset(100% 0 0 0);
+  .label__panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'caption caption'
+      'strip strip'
+      'verdict verdict'
+      'source more';
+    gap: 0.5rem 1rem;
+    align-items: center;
+    margin-top: 1.25rem;
   }
 
-  :global(html[data-motion='ready']) .hero__photo--a {
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 1.1s var(--ease-out);
+  .label__caption {
+    grid-area: caption;
+    margin: 0;
+    font-size: var(--fs-small);
+    font-weight: 700;
   }
 
-  :global(html[data-motion='armed']) .hero__name .hero__line {
-    transform: translateY(0.35em);
-    opacity: 0;
+  /* Tira A–E: la letra activa crece y sale de la tira. */
+  .strip {
+    grid-area: strip;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    height: 5.5rem;
+    padding: 0 0.6rem;
+    border-radius: var(--r-2);
+    background-color: var(--c-paper-2);
   }
 
-  :global(html[data-motion='ready']) .hero__name .hero__line {
+  .strip__cell {
+    display: grid;
+    place-items: center;
+    height: 3rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
     transition:
-      transform 900ms var(--ease-out),
-      opacity 600ms var(--ease-out);
+      transform var(--dur-slow) var(--ease-spring),
+      height var(--dur-slow) var(--ease-spring),
+      font-size var(--dur-slow) var(--ease-spring),
+      box-shadow var(--dur-base) var(--ease-out);
   }
 
-  :global(html[data-motion='ready']) .hero__name .hero__line + .hero__line {
-    transition-delay: 90ms;
+  .strip__cell:first-child {
+    border-radius: 10px 0 0 10px;
   }
 
-  /* ---------------------------------------------------------- Teléfono */
-  @media (max-width: 64rem) {
-    .hero {
-      padding: 0 6px 6px;
+  .strip__cell:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+
+  .strip__cell--a {
+    background-color: var(--grade-a);
+    color: var(--grade-a-ink);
+  }
+
+  .strip__cell--b {
+    background-color: var(--grade-b);
+    color: var(--grade-b-ink);
+  }
+
+  .strip__cell--c {
+    background-color: var(--grade-c);
+    color: var(--grade-c-ink);
+  }
+
+  .strip__cell--d {
+    background-color: var(--grade-d);
+    color: var(--grade-d-ink);
+  }
+
+  .strip__cell--e {
+    background-color: var(--grade-e);
+    color: var(--grade-e-ink);
+  }
+
+  .strip__cell.is-on {
+    position: relative;
+    z-index: 1;
+    height: 4.6rem;
+    border: 3px solid var(--c-white);
+    border-radius: 12px;
+    font-size: 2.5rem;
+    transform: scale(1.1);
+    box-shadow: var(--shadow-2);
+  }
+
+  .label__verdict {
+    grid-area: verdict;
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+  }
+
+  .label__source {
+    grid-area: source;
+    margin: 0;
+    font-size: var(--fs-small);
+    color: var(--c-ink-soft);
+  }
+
+  .label__more {
+    grid-area: more;
+    justify-self: end;
+    font-size: var(--fs-small);
+  }
+
+  .label__legend {
+    margin: 1rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--c-paper-3);
+    font-size: var(--fs-small);
+    color: var(--c-ink-faint);
+  }
+
+  /* ---------------------------------------------------------- El doctor */
+  .hero__doctor {
+    position: relative;
+    margin: 0;
+    padding-top: 6.5rem;
+  }
+
+  .hero__doctor :global(.hero__doctor-img) {
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+    margin-inline: auto;
+    filter: drop-shadow(0 22px 26px rgb(0 12 60 / 18%));
+  }
+
+  .bubble {
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 4%;
+    z-index: 1;
+    margin: 0;
+    padding: 1rem 1.25rem;
+    border-radius: 18px;
+    background-color: var(--c-ink);
+    color: var(--c-white);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 46%;
+    width: 24px;
+    height: 24px;
+    background-color: var(--c-ink);
+    clip-path: polygon(0 0, 100% 0, 30% 100%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bubble.is-new {
+      animation: bubble-in 420ms var(--ease-spring);
     }
 
-    .hero__board {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: auto;
-      grid-template-areas:
-        'name name'
-        'dark accent'
-        'a a'
-        'b b';
-      gap: 6px;
-      height: auto;
+    @keyframes bubble-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+      }
     }
 
-    .hero__name-tile {
-      min-height: 30svh;
-      padding: 1.1rem;
+    .hero__doctor :global(.hero__doctor-img) {
+      animation: float 5s ease-in-out infinite alternate;
     }
 
-    .hero__name {
-      font-size: 22vw;
-    }
-
-    .hero__photo--a {
-      aspect-ratio: 4 / 3;
-    }
-
-    .hero__photo--b {
-      aspect-ratio: 4 / 3;
-    }
-
-    .hero__statement {
-      min-height: min(48vw, 16rem);
-      padding: 1rem;
-    }
-
-    .hero__statement p {
-      font-size: 1.125rem;
-    }
-
-    .hero__link {
-      font-size: 0.9375rem;
+    @keyframes float {
+      to {
+        transform: translateY(-10px) rotate(-1deg);
+      }
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__photo--a :global(img) {
-      animation: none;
+    .strip__cell {
+      transition: none;
+    }
+  }
+
+  /* ---------------------------------------------------------- Teléfono */
+  @media (max-width: 60rem) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__doctor {
+      order: -1;
+      display: grid;
+      grid-template-columns: 1fr 38%;
+      align-items: center;
+      gap: 0.75rem;
+      padding-top: 0;
+    }
+
+    .bubble {
+      position: relative;
+      inset: auto;
+      font-size: 0.9375rem;
+    }
+
+    .bubble::after {
+      bottom: auto;
+      top: 40%;
+      left: auto;
+      right: -14px;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .hero__doctor :global(.hero__doctor-img) {
+      max-width: 100%;
+    }
+
+    .hero__title {
+      max-width: none;
+      font-size: clamp(2rem, 1.2rem + 3.6vw, 2.75rem);
+    }
+
+    .hero__sub {
+      margin: 1rem 0 1.5rem;
+    }
+
+    .strip {
+      height: 4.75rem;
+      padding: 0 0.4rem;
+    }
+
+    .strip__cell {
+      height: 2.6rem;
+      font-size: 1.25rem;
+    }
+
+    .strip__cell.is-on {
+      height: 4rem;
+      font-size: 2rem;
+    }
+
+    .label__panel {
+      grid-template-areas:
+        'caption caption'
+        'strip strip'
+        'verdict verdict'
+        'source source'
+        'more more';
+    }
+
+    .label__more {
+      justify-self: start;
     }
   }
 </style>

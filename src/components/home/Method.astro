@@ -7,293 +7,184 @@ interface Props {
 
 const { lang } = Astro.props;
 
-/*
- * Diagrama "muchos en uno": 144 cuadrados. A la izquierda, sueltos (los
- * estudios tal como llegan); en el centro, apretados en una cinta de tres
- * (la lectura crítica); a la derecha, en filas ordenadas del verde de la
- * estrella (el material que publicamos). Se genera en el build con una
- * semilla fija: siempre sale el mismo dibujo.
- */
-function seeded(seed: number) {
-  let s = seed;
-  return () => {
-    s = (s * 1664525 + 1013904223) % 4294967296;
-    return s / 4294967296;
-  };
-}
-
-interface Square {
-  x: number;
-  y: number;
-  tone: 'pale' | 'pale2' | 'ink' | 'accent';
-  dx: number;
-  dy: number;
-}
-
-function buildSquares(vertical: boolean): { squares: Square[]; w: number; h: number } {
-  const rand = seeded(vertical ? 7 : 3);
-  const size = 12;
-  const W = vertical ? 300 : 1200;
-  const H = vertical ? 400 : 266;
-  const squares: Square[] = [];
-  // Coordenadas en el eje de avance (a) y el transversal (b).
-  const along = vertical ? H : W;
-  const across = vertical ? W : H;
-  const third = along / 3;
-
-  const push = (a: number, b: number, tone: Square['tone']) => {
-    const x = vertical ? b : a;
-    const y = vertical ? a : b;
-    // Desplazamiento inicial para la animación: todos salen "del desorden".
-    const dx = (rand() - 0.5) * (vertical ? 120 : 260);
-    const dy = (rand() - 0.5) * (vertical ? 160 : 140);
-    squares.push({ x, y, tone, dx, dy });
-  };
-
-  // 1. Dispersos, en dos tonos pálidos.
-  for (let i = 0; i < 52; i += 1) {
-    const a = 6 + rand() * (third - 34);
-    const b = 6 + rand() * (across - 24);
-    push(a, b, rand() > 0.5 ? 'pale' : 'pale2');
-  }
-
-  // 2. Cinta de tres de alto, apretada, en tinta.
-  const cols = vertical ? 12 : 26;
-  const step = size + 2;
-  const ribbonStart = third + (third - cols * step) / 2;
-  const ribbonB = across / 2 - (3 * step) / 2;
-  for (let c = 0; c < cols; c += 1) {
-    for (let r = 0; r < 3; r += 1) {
-      push(ribbonStart + c * step, ribbonB + r * step, 'ink');
-    }
-  }
-
-  // 3. Filas ordenadas y espaciadas, en el acento.
-  const rows = vertical ? 5 : 4;
-  const perRow = vertical ? 4 : 4;
-  const rest = 144 - squares.length;
-  const rowsNeeded = Math.ceil(rest / (rows * perRow)) > 1 ? rows : rows;
-  const colsRight = Math.ceil(rest / rowsNeeded);
-  const gapA = (third - 40) / Math.max(colsRight - 1, 1);
-  const gapB = (across - 60) / (rowsNeeded - 1);
-  let placed = 0;
-  for (let c = 0; c < colsRight && placed < rest; c += 1) {
-    for (let r = 0; r < rowsNeeded && placed < rest; r += 1) {
-      push(2 * third + 20 + c * gapA, 24 + r * gapB, 'accent');
-      placed += 1;
-    }
-  }
-  void perRow;
-
-  return { squares, w: W, h: H };
-}
-
-const horizontal = buildSquares(false);
-const vertical = buildSquares(true);
+const scale: { letter: string; def: TranslationKey }[] = [
+  { letter: 'A', def: 'v2_def_a' },
+  { letter: 'B', def: 'v2_def_b' },
+  { letter: 'C', def: 'v2_def_c' },
+  { letter: 'D', def: 'v2_def_d' },
+  { letter: 'E', def: 'v2_def_e' },
+];
 
 const steps: { title: TranslationKey; desc: TranslationKey }[] = [
   { title: 'process_step1_t', desc: 'process_step1_d' },
   { title: 'process_step2_t', desc: 'process_step2_d' },
   { title: 'process_step3_t', desc: 'process_step3_d' },
 ];
-
-const fmt = (n: number) => Math.round(n * 10) / 10;
 ---
 
-<section class="method" id="method" aria-labelledby="method-title">
-  <div class="container">
-    <div class="method__head" data-reveal>
-      <h2 class="h2 method__title" id="method-title">{t(lang, 'process_title')}</h2>
-      <p class="method__lead">{t(lang, 'process_lead')}</p>
-    </div>
-
-    <div class="method__body">
-      <div class="method__figure" data-diagram>
-        <svg
-          class="diagram diagram--h"
-          viewBox={`0 0 ${horizontal.w} ${horizontal.h}`}
-          role="img"
-          aria-hidden="true"
-          focusable="false"
-        >
-          {
-            horizontal.squares.map((sq, i) => (
-              <rect
-                x={fmt(sq.x)}
-                y={fmt(sq.y)}
-                width="12"
-                height="12"
-                class={`sq sq--${sq.tone}`}
-                style={`--dx:${fmt(sq.dx)}px;--dy:${fmt(sq.dy)}px;--n:${i}`}
-              />
-            ))
-          }
-        </svg>
-        <svg
-          class="diagram diagram--v"
-          viewBox={`0 0 ${vertical.w} ${vertical.h}`}
-          role="img"
-          aria-hidden="true"
-          focusable="false"
-        >
-          {
-            vertical.squares.map((sq, i) => (
-              <rect
-                x={fmt(sq.x)}
-                y={fmt(sq.y)}
-                width="12"
-                height="12"
-                class={`sq sq--${sq.tone}`}
-                style={`--dx:${fmt(sq.dx)}px;--dy:${fmt(sq.dy)}px;--n:${i}`}
-              />
-            ))
-          }
-        </svg>
-      </div>
-
-      <ol class="method__steps" data-reveal>
+<!-- Cómo se pone la nota: a la izquierda el método, a la derecha la escala
+     como la tabla de una etiqueta. -->
+<section class="section section--tint method" id="method" aria-labelledby="method-title">
+  <div class="container method__grid">
+    <div class="method__copy" data-reveal>
+      <h2 class="h2" id="method-title">{t(lang, 'v2_scale_title')}</h2>
+      <p class="lead">{t(lang, 'v2_scale_lead')}</p>
+      <ol class="steps">
         {
           steps.map((step) => (
-            <li class="method__step">
-              <h3 class="method__step-title">{t(lang, step.title)}</h3>
+            <li class="steps__item">
+              <h3 class="steps__title">{t(lang, step.title)}</h3>
               <p>{t(lang, step.desc)}</p>
             </li>
           ))
         }
       </ol>
     </div>
+
+    <div class="scale" data-reveal>
+      <p class="scale__title">{t(lang, 'v2_grade_label')}</p>
+      <dl class="scale__list">
+        {
+          scale.map((row) => (
+            <div class="scale__row">
+              <dt class={`scale__letter scale__letter--${row.letter.toLowerCase()}`}>{row.letter}</dt>
+              <dd>{t(lang, row.def)}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
   </div>
 </section>
 
 <style>
-  .method {
-    padding-block: var(--section-y);
-    background-color: var(--c-paper-2);
-  }
-
-  .method__head {
+  .method__grid {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--grid-gap);
-    align-items: end;
-    margin-bottom: clamp(3rem, 6vw, 6rem);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
   }
 
-  .method__title {
-    grid-column: 1 / 6;
+  .method__copy .lead {
+    max-width: 38rem;
+    margin: 1rem 0 2.5rem;
   }
 
-  .method__lead {
-    grid-column: 7 / 12;
-    margin: 0;
-    font-size: var(--step-lead);
-    line-height: 1.3;
-  }
-
-  .diagram {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-  }
-
-  .diagram--v {
-    display: none;
-  }
-
-  .sq {
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-
-  .sq--pale {
-    fill: var(--c-paper-3);
-  }
-
-  .sq--pale2 {
-    fill: #b9c0b6;
-  }
-
-  .sq--ink {
-    fill: var(--c-ink);
-  }
-
-  .sq--accent {
-    fill: var(--c-green);
-  }
-
-  /* Los cuadrados llegan desde el desorden cuando el diagrama entra en
-     pantalla. Sin JS (o con movimiento reducido) el dibujo está quieto. */
-  @media (prefers-reduced-motion: no-preference) {
-    :global(html[data-reveal-ready]) [data-diagram]:not(.is-in) .sq--ink,
-    :global(html[data-reveal-ready]) [data-diagram]:not(.is-in) .sq--accent {
-      transform: translate(var(--dx), var(--dy)) rotate(45deg) scale(0.6);
-      opacity: 0;
-    }
-
-    :global(html[data-reveal-ready]) [data-diagram] .sq {
-      transition:
-        transform 1.4s var(--ease-out),
-        opacity 0.6s var(--ease-out);
-      transition-delay: calc(var(--n) * 6ms);
-    }
-  }
-
-  .method__steps {
+  .steps {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--grid-gap);
-    margin-top: clamp(2rem, 4vw, 3.5rem);
+    gap: 1.5rem;
+    counter-reset: step;
   }
 
-  .method__step-title {
-    margin-bottom: 0.6rem;
-    font-size: var(--step-lead);
-    line-height: 1.1;
+  .steps__item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    column-gap: 1rem;
+    counter-increment: step;
   }
 
-  .method__step p {
-    max-width: 34ch;
+  /* El orden importa (cada paso depende del anterior): una lista real. */
+  .steps__item::before {
+    content: counter(step);
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--c-ink);
+    color: var(--c-white);
+    font-weight: 700;
+  }
+
+  .steps__title {
+    align-self: center;
+    font-size: var(--fs-h3);
+  }
+
+  .steps__item p {
+    margin: 0.35rem 0 0;
+    max-width: 34rem;
+    color: var(--c-ink-soft);
+  }
+
+  /* La escala, como la tabla de una etiqueta. */
+  .scale {
+    padding: 1.5rem;
+    border-radius: var(--r-2);
+    background-color: var(--c-white);
+    box-shadow: var(--shadow-1);
+  }
+
+  .scale__title {
+    margin: 0 0 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 6px solid var(--c-ink);
+    font-size: var(--fs-h3);
+    font-weight: 800;
+  }
+
+  .scale__list {
+    display: grid;
+  }
+
+  .scale__row {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--c-paper-3);
+  }
+
+  .scale__row:last-child {
+    border-bottom: 0;
+  }
+
+  .scale__letter {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .scale__letter--a {
+    background-color: var(--grade-a);
+    color: var(--grade-a-ink);
+  }
+
+  .scale__letter--b {
+    background-color: var(--grade-b);
+    color: var(--grade-b-ink);
+  }
+
+  .scale__letter--c {
+    background-color: var(--grade-c);
+    color: var(--grade-c-ink);
+  }
+
+  .scale__letter--d {
+    background-color: var(--grade-d);
+    color: var(--grade-d-ink);
+  }
+
+  .scale__letter--e {
+    background-color: var(--grade-e);
+    color: var(--grade-e-ink);
+  }
+
+  .scale__row dd {
     margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
   }
 
   @media (max-width: 55rem) {
-    .method__head {
+    .method__grid {
       grid-template-columns: 1fr;
-    }
-
-    .method__title,
-    .method__lead {
-      grid-column: 1;
-    }
-
-    .method__body {
-      display: grid;
-      grid-template-columns: 52fr 48fr;
-      gap: 1rem;
-    }
-
-    .diagram--h {
-      display: none;
-    }
-
-    .diagram--v {
-      display: block;
-    }
-
-    .method__steps {
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(3, 1fr);
-      gap: 0.75rem;
-      margin-top: 0;
-    }
-
-    .method__step-title {
-      font-size: 1.25rem;
-    }
-
-    .method__step p {
-      font-size: var(--step-small);
-      line-height: 1.4;
     }
   }
 </style>

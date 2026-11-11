@@ -1,68 +1,83 @@
 /*
- * tokens.css — sistema de diseño "informe impreso" (rediseño 2026-11)
+ * tokens.css — sistema "etiqueta de evidencia" (rediseño v2, 2026-11)
  *
- * Una fundación científica que se lee como un informe anual bien editado:
- * piedra clara, tinta azul marino del logotipo, campos enteros de verde
- * laboratorio y azul, y el verde de la estrella del logo como único acento
- * (la acción principal). El amarillo rotulador queda para un solo uso:
- * el medidor de evidencia.
+ * La web se lee como la etiqueta frontal de un envase: blanco limpio, gris
+ * azulado de panel, tinta azul marino del logotipo y una nota A–E por tema.
+ * La rampa de notas es monocroma (oscuro = más certeza) para que nadie lea
+ * «bueno/malo» donde sólo hay «seguro/no seguro». El verde de la estrella del
+ * logo es la acción.
  *
  * Los nombres antiguos (`--c-paper`, `--c-lab`…) se mantienen porque los usan
- * el blog, las páginas legales y las secciones ocultas por flags; sólo cambian
- * sus valores.
+ * el blog, las páginas legales y las secciones ocultas por flags.
  */
 
 :root {
   /* ---------------------------------------------------------------- Color */
-  --c-paper: #eef0ec; /* piedra clara: el suelo de la página */
-  --c-paper-2: #e2e5df; /* un paso de tono: superficies */
-  --c-paper-3: #d3d8d0; /* dos pasos: bandas alternas, campos de formulario */
+  --c-white: #ffffff;
+  --c-paper: #ffffff; /* suelo */
+  --c-paper-2: #f1f4f8; /* panel de etiqueta */
+  --c-paper-3: #e3e8ef; /* panel hundido, campos */
+  --c-line: #d5dce6; /* sólo formularios y la tira de notas */
   --c-ink: #000c3c; /* azul marino del logotipo */
-  --c-ink-soft: #3b4763; /* tinta suave — 8,1:1 sobre la piedra */
-  --c-ink-faint: #4a5468; /* notas — 6,4:1 sobre la piedra */
-  --c-lab: #0e2a1f; /* verde laboratorio: campo oscuro */
-  --c-lab-2: #143326; /* banda alterna dentro del campo oscuro */
-  --c-navy-2: #0a1a52; /* banda alterna dentro del campo azul */
-  --c-green: #00b63f; /* verde estrella: el acento (acción) */
-  --c-green-deep: #0b6b30; /* verde para texto sobre piedra — 5,9:1 */
-  --c-marker: #dff25b; /* rotulador: sólo el medidor de evidencia */
-  --c-paper-on-dark: #eef0ec;
-  --c-paper-muted: #c3cdbe; /* texto secundario sobre oscuro */
-  --c-danger: #8c1d16;
-  --c-danger-bg: #f7e2df;
-  --c-success: #0b5d2b;
-  --c-success-bg: #e2f1e2;
+  --c-ink-soft: #364261; /* texto secundario — 10:1 */
+  --c-ink-faint: #56617a; /* notas — 6,3:1 */
+  --c-lab: #0e2a1f;
+  --c-lab-2: #143326;
+  --c-navy-2: #0b1a55;
+  --c-green: #00b63f; /* acción */
+  --c-green-ink: #006b25; /* verde para texto — 6,4:1 */
+  --c-green-deep: #006b25;
+  --c-green-wash: #e3f7ea;
+  --c-risk: #a33a0b; /* etiqueta de riesgo (texto) — 6,6:1 */
+  --c-risk-wash: #fdeee6;
+  --c-marker: #dff25b;
+  --c-paper-on-dark: #ffffff;
+  --c-paper-muted: #c7cfe0;
+  --c-danger: #a3190f;
+  --c-danger-bg: #fde8e6;
+  --c-success: #006b25;
+  --c-success-bg: #e3f7ea;
+
+  /* Rampa de notas A–E: de más certeza (A) a menos (E). */
+  --grade-a: #000c3c;
+  --grade-b: #24366e;
+  --grade-c: #4d5f96;
+  --grade-d: #8a97bd;
+  --grade-e: #c4cbdd;
+  --grade-a-ink: #ffffff;
+  --grade-b-ink: #ffffff;
+  --grade-c-ink: #ffffff;
+  --grade-d-ink: #000c3c;
+  --grade-e-ink: #000c3c;
 
   /* ---------------------------------------------------------- Tipografía */
-  /* Una sola familia: Bricolage Grotesque, con eje óptico. */
-  --font-display:
-    'Bricolage Grotesque Variable', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --font-display: 'Rubik', 'Helvetica Neue', Arial, sans-serif;
   --font-body: var(--font-display);
-  /* Sin monoespaciada: lo que antes era "mono" se compone con la de texto. */
   --font-mono: var(--font-display);
 
-  /* Cinco tamaños hacen el trabajo visible. */
-  --step-display: clamp(4.5rem, 1.2rem + 12.5vw, 12rem); /* el nombre */
-  --step-head: clamp(2.25rem, 1.3rem + 3.6vw, 4.25rem); /* titulares de sección */
-  --step-lead: clamp(1.375rem, 1.1rem + 1vw, 2rem); /* declaraciones */
-  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem); /* texto */
-  --step-small: 0.875rem; /* notas y créditos */
+  /* Escala: la importancia decide el tamaño. */
+  --fs-h1: clamp(2.375rem, 1.6rem + 3.1vw, 3.875rem); /* 38 → 62 */
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem); /* 28 → 40 */
+  --fs-h3: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem); /* 20 → 24 */
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem); /* 18 → 21 */
+  --fs-body: clamp(1.0625rem, 1.03rem + 0.12vw, 1.125rem); /* 17 → 18 */
+  --fs-small: 0.9375rem; /* 15 */
+  --fs-grade: clamp(4.5rem, 3rem + 6vw, 7.5rem); /* la letra de la nota */
 
-  /* Alias antiguos, mapeados a los cinco pasos. */
-  --fs-display: var(--step-head);
-  --fs-h2: var(--step-head);
-  --fs-h3: var(--step-lead);
-  --fs-row: var(--step-lead);
-  --fs-lead: var(--step-lead);
-  --fs-body: var(--step-body);
-  --fs-small: var(--step-small);
-  --fs-mono: var(--step-small);
-  --fs-mono-lg: var(--step-small);
+  /* Alias antiguos. */
+  --fs-display: var(--fs-h1);
+  --fs-row: var(--fs-h3);
+  --fs-mono: var(--fs-small);
+  --fs-mono-lg: var(--fs-body);
+  --step-head: var(--fs-h2);
+  --step-lead: var(--fs-lead);
+  --step-body: var(--fs-body);
+  --step-small: var(--fs-small);
 
-  --lh-tight: 0.92;
-  --lh-snug: 1.05;
-  --lh-body: 1.5;
-  --tracking-display: -0.04em;
+  --lh-tight: 1.05;
+  --lh-snug: 1.15;
+  --lh-body: 1.6;
+  --tracking-display: -0.025em;
   --tracking-mono: 0;
 
   /* ------------------------------------------------------------ Espacio */
@@ -71,33 +86,29 @@
   --sp-xs: 0.75rem;
   --sp-s: 1rem;
   --sp-m: 1.5rem;
-  --sp-l: 2.25rem;
-  --sp-xl: 3.5rem;
-  --sp-2xl: 5rem;
+  --sp-l: 2rem;
+  --sp-xl: 3rem;
+  --sp-2xl: 4.5rem;
   --sp-3xl: 7rem;
 
-  /* Un par de márgenes para toda la página. */
-  --margin: clamp(1rem, 0.3rem + 3vw, 3rem);
-  --container: 90rem;
-  --gutter: var(--margin);
-  --grid-gap: clamp(1rem, 0.4rem + 1.8vw, 2rem);
-  --section-y: clamp(6rem, 3rem + 9vw, 11rem);
-  --measure: 38ch;
-  /* El eje del informe: 42 % del ancho. */
-  --axis: 42%;
+  --container: 75rem; /* 1200 px */
+  --measure: 42rem; /* lectura: ~70 caracteres */
+  --gutter: clamp(1.25rem, 0.6rem + 2.6vw, 2.5rem);
+  --margin: var(--gutter);
+  --grid-gap: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+  --section-y: clamp(3.5rem, 2rem + 5.5vw, 7.5rem);
 
   /* ------------------------------------------------------------- Radios */
-  --r-1: 0;
-  --r-2: 0;
-  --r-pill: 0;
+  --r-1: 8px;
+  --r-2: 14px; /* troquel de etiqueta */
+  --r-pill: 999px;
 
   /* ------------------------------------------------------------ Sombras */
-  /* Nada descansa sobre una sombra: las superficies se separan por tono. */
-  --shadow-1: none;
-  --shadow-2: none;
-  --shadow-1-dark: none;
-  --shadow-2-dark: none;
-  --shadow-float: 0 18px 40px -12px rgb(0 12 60 / 28%); /* sólo menús abiertos */
+  --shadow-1: 0 1px 2px rgb(0 12 60 / 6%), 0 4px 14px -6px rgb(0 12 60 / 14%);
+  --shadow-2: 0 2px 4px rgb(0 12 60 / 6%), 0 18px 40px -16px rgb(0 12 60 / 28%);
+  --shadow-1-dark: var(--shadow-1);
+  --shadow-2-dark: var(--shadow-2);
+  --shadow-float: var(--shadow-2);
   --focus-offset: 3px;
   --focus-width: 3px;
 
@@ -109,18 +120,17 @@
   --z-skip: 200;
 
   /* ------------------------------------------------------ Movimiento */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-fast: 140ms;
-  --dur-base: 240ms;
-  --dur-slow: 640ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 1.12, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 260ms;
+  --dur-slow: 520ms;
 }
 
-/* En las superficies oscuras el foco pasa a piedra para seguir viéndose. */
 .section--lab,
 .section--ink,
 .on-dark {
-  --focus-color: var(--c-paper-on-dark);
+  --focus-color: var(--c-white);
 }
 
 :root,

@@ -202,10 +202,9 @@ const interestValues = [
     width: 100%;
     min-height: 52px;
     padding: 0.8rem 0.95rem;
-    border: 0;
-    border-bottom: 2px solid var(--c-ink);
-    border-radius: 0;
-    background-color: var(--c-paper);
+    border: 1.5px solid var(--c-line);
+    border-radius: var(--r-1);
+    background-color: var(--c-paper-2);
     font-size: var(--step-body);
     transition:
       background-color var(--dur-fast) linear,
@@ -220,7 +219,7 @@ const interestValues = [
   input:hover,
   select:hover,
   textarea:hover {
-    background-color: #fff;
+    border-color: var(--grade-d);
   }
 
   input:focus-visible,
@@ -228,12 +227,13 @@ const interestValues = [
   textarea:focus-visible {
     outline: 3px solid var(--c-green);
     outline-offset: 0;
-    background-color: #fff;
+    border-color: var(--c-ink);
+    background-color: var(--c-white);
   }
 
   input:user-invalid,
   select:user-invalid {
-    border-bottom-color: var(--c-danger);
+    border-color: var(--c-danger);
   }
 
   textarea {
@@ -288,6 +288,7 @@ const interestValues = [
 
   .form-status {
     padding: 1rem 1.25rem;
+    border-radius: var(--r-1);
     font-weight: 500;
   }
 

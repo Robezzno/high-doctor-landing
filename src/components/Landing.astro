@@ -1,14 +1,12 @@
 ---
 import Nav from './Nav.astro';
 import Hero from './home/Hero.astro';
-import Mission from './home/Mission.astro';
+import Grades from './home/Grades.astro';
 import Method from './home/Method.astro';
-import Evidence from './home/Evidence.astro';
-import Chapters from './home/Chapters.astro';
-import Join from './home/Join.astro';
 import News from './home/News.astro';
-import Berlin from './home/Berlin.astro';
-import Contact from './home/Contact.astro';
+import About from './home/About.astro';
+import Event from './home/Event.astro';
+import Join from './home/Join.astro';
 import Stats from './Stats.astro';
 import Events from './Events.astro';
 import Team from './Team.astro';
@@ -26,20 +24,19 @@ const { lang } = Astro.props;
 <Nav lang={lang} />
 
 <main id="main">
+  <!-- El orden sigue la prioridad del visitante: consultar primero. -->
   <Hero lang={lang} />
-  <Mission lang={lang} />
+  <Grades lang={lang} />
   <Method lang={lang} />
-  <Evidence lang={lang} />
-  <Chapters lang={lang} />
-  <Join lang={lang} />
-  <!-- Secciones de confianza: cada una se oculta sola si falta el dato real
-       (flags en src/config/site.ts). No dejan huecos ni datos inventados. -->
-  <Stats lang={lang} />
   <News lang={lang} />
-  <Berlin lang={lang} />
-  <Events lang={lang} />
+  <About lang={lang} />
+  <!-- Secciones de confianza: se ocultan solas si falta el dato real
+       (flags en src/config/site.ts). -->
+  <Stats lang={lang} />
   <Team lang={lang} />
   <Partners lang={lang} />
-  <Contact lang={lang} />
+  <Event lang={lang} />
+  <Events lang={lang} />
+  <Join lang={lang} />
 </main>
 <Footer lang={lang} />

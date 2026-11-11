@@ -1,0 +1,143 @@
+---
+import { Picture } from 'astro:assets';
+import mcclintock from '../../assets/photos/mcclintock.jpg';
+import { t, type Lang, type TranslationKey } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const items: TranslationKey[] = [
+  'mission_li_1',
+  'mission_li_2',
+  'mission_li_3',
+  'mission_li_4',
+  'mission_li_5',
+  'mission_li_6',
+];
+---
+
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="container about__grid">
+    <figure class="about__photo" data-reveal>
+      <Picture
+        src={mcclintock}
+        formats={['avif', 'webp']}
+        widths={[480, 760, 1100]}
+        sizes="(max-width: 55rem) 100vw, 40vw"
+        alt={t(lang, 'impact_ch1_alt')}
+        loading="lazy"
+      />
+      <figcaption>{t(lang, 'impact_ch1_alt')}</figcaption>
+    </figure>
+
+    <div class="about__copy" data-reveal>
+      <h2 class="h2" id="about-title">{t(lang, 'mission_title')}</h2>
+      <p class="lead">{t(lang, 'mission_lead')}</p>
+      <p>{t(lang, 'mission_desc')}</p>
+      <h3 class="about__list-title">{t(lang, 'mission_list_title')}</h3>
+      <ul class="about__list">
+        {
+          items.map((key) => (
+            <li>
+              <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                <circle cx="10" cy="10" r="10" fill="var(--c-green-wash)" />
+                <path
+                  d="M6 10.3l2.6 2.6L14 7.5"
+                  fill="none"
+                  stroke="var(--c-green-ink)"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span>{t(lang, key)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+
+  .about__photo {
+    position: sticky;
+    top: 6rem;
+    margin: 0;
+  }
+
+  .about__photo :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 45% 30%;
+    border-radius: var(--r-2);
+  }
+
+  .about__photo figcaption {
+    margin-top: 0.6rem;
+    font-size: var(--fs-small);
+    color: var(--c-ink-faint);
+  }
+
+  .about__copy .lead {
+    margin: 1rem 0 1.25rem;
+    color: var(--c-ink);
+  }
+
+  .about__copy > p:not(.lead) {
+    max-width: var(--measure);
+    color: var(--c-ink-soft);
+  }
+
+  .about__list-title {
+    margin: 2.5rem 0 1rem;
+    font-size: var(--fs-h3);
+  }
+
+  .about__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+  }
+
+  .about__list li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    line-height: 1.45;
+  }
+
+  .about__list svg {
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 55rem) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about__photo {
+      position: static;
+    }
+
+    .about__photo :global(img) {
+      aspect-ratio: 16 / 10;
+    }
+
+    .about__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

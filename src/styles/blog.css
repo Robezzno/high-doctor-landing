@@ -496,7 +496,8 @@
 .post-body blockquote {
   margin: 2em 0;
   padding: 4px 0 4px 24px;
-  border-left: 3px solid var(--blog-spark);
+  border-radius: 12px;
+  background-color: var(--blog-surface);
   font-family: var(--font-heading);
   font-size: 1.32rem;
   line-height: 1.42;
@@ -531,7 +532,7 @@
   max-width: var(--blog-measure);
   padding: 18px 20px;
   border: 1px solid var(--blog-rule);
-  border-left: 4px solid var(--blog-accent);
+  border-radius: 14px;
   background-color: var(--blog-surface);
 }
 

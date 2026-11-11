@@ -40,8 +40,8 @@ const newsHref = lang === 'es' ? '/noticias/' : '/en/news/';
 const section = (id: string) => `${sectionBase}#${id}`;
 
 const navItems = [
-  { href: section('mission'), label: t(lang, 'nav_mission') },
   { href: section('evidence'), label: t(lang, 'nav_evidence') },
+  { href: section('about'), label: t(lang, 'v2_menu_about') },
   { href: section('mary-jane'), label: t(lang, 'nav_maryjane') },
 ];
 ---
@@ -118,7 +118,7 @@ const navItems = [
         </ul>
       </details>
 
-      <a class="nav__tile nav__cta" href={`${sectionBase}#contact`}>{t(lang, 'nav_cta')}</a>
+      <a class="nav__tile nav__cta" href={`${sectionBase}#join`}>{t(lang, 'v2_menu_join')}</a>
 
       {
         showSocial && (
@@ -141,126 +141,112 @@ const navItems = [
 </header>
 
 <style>
-  /* Barra de baldosas: logo, enlaces, idioma y la única acción. Cada baldosa
-     es un rectángulo relleno; los huecos de 8 px dejan ver la página. */
+  /* Barra blanca fija: logotipo, cuatro enlaces, idioma y una acción. */
   .nav {
     position: sticky;
     top: 0;
     z-index: var(--z-sticky);
-    padding: 8px;
-    background-color: var(--c-paper);
+    background-color: var(--c-white);
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .nav--stuck {
+    box-shadow: 0 1px 0 var(--c-paper-3), 0 10px 24px -18px rgb(0 12 60 / 30%);
   }
 
   .nav__bar {
     display: flex;
-    gap: 8px;
-    min-height: 60px;
+    align-items: center;
+    gap: 1rem;
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    min-height: 72px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
 
   .nav__tile {
     display: flex;
     align-items: center;
-    min-height: 60px;
-    background-color: var(--c-paper-2);
-    color: var(--c-ink);
   }
 
   .nav__brand {
     flex: 0 0 auto;
-    padding-inline: max(1rem, calc(var(--margin) - 8px));
-    transition: background-color var(--dur-fast) linear;
-  }
-
-  .nav__brand:hover {
-    background-color: var(--c-paper-3);
+    min-height: 48px;
+    margin-right: auto;
   }
 
   .nav__logo {
-    height: 2.1rem;
+    height: 2.25rem;
     width: auto;
   }
 
   .nav__panel {
     display: flex;
-    flex: 1 1 auto;
-    gap: 8px;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .nav__links {
-    flex: 1 1 auto;
-    gap: clamp(1rem, 2.4vw, 2.5rem);
-    justify-content: flex-end;
-    min-width: 0;
-    padding-inline: 1.5rem;
+    gap: 0.25rem;
   }
 
   .nav__link {
-    position: relative;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    font-size: var(--step-body);
+    padding-inline: 0.85rem;
+    border-radius: var(--r-pill);
+    font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
     white-space: nowrap;
+    transition: background-color var(--dur-fast) linear;
   }
 
-  .nav__link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 8px;
-    height: 3px;
-    background-color: var(--c-green);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform var(--dur-base) var(--ease-out);
+  .nav__link:hover {
+    background-color: var(--c-paper-2);
   }
 
-  .nav__link:hover::after,
-  .nav__link:focus-visible::after,
-  .nav__link[aria-current='page']::after {
-    transform: scaleX(1);
+  .nav__link[aria-current='page'] {
+    background-color: var(--c-paper-3);
   }
 
   .nav__cta {
-    flex: 0 0 auto;
-    justify-content: center;
-    padding-inline: 1.5rem;
-    background-color: var(--c-ink);
-    color: var(--c-paper);
-    font-weight: 600;
+    min-height: 44px;
+    padding-inline: 1.25rem;
+    border-radius: var(--r-pill);
+    background-color: var(--c-green);
+    color: var(--c-ink);
+    font-weight: 500;
     text-decoration: none;
     white-space: nowrap;
     transition:
       background-color var(--dur-fast) linear,
-      color var(--dur-fast) linear;
+      transform var(--dur-fast) var(--ease-out);
   }
 
   .nav__cta:hover {
-    background-color: var(--c-green);
-    color: var(--c-ink);
+    background-color: #00a338;
   }
 
   .nav__cta:active,
   .nav__toggle:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   /* --------------------------------------------------------- Idiomas */
   .langs {
     position: relative;
-    flex: 0 0 auto;
   }
 
   .langs__trigger {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    min-height: 60px;
-    padding-inline: 1.15rem;
-    font-weight: 600;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding-inline: 0.85rem;
+    border-radius: var(--r-pill);
+    font-weight: 500;
     cursor: pointer;
     list-style: none;
     transition: background-color var(--dur-fast) linear;
@@ -271,12 +257,12 @@ const navItems = [
   }
 
   .langs__trigger:hover {
-    background-color: var(--c-paper-3);
+    background-color: var(--c-paper-2);
   }
 
   .langs__caret {
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.45rem;
+    height: 0.45rem;
     border-right: 2px solid currentColor;
     border-bottom: 2px solid currentColor;
     transform: translateY(-2px) rotate(45deg);
@@ -294,12 +280,12 @@ const navItems = [
     z-index: var(--z-panel);
     min-width: 12rem;
     padding: 0.4rem;
-    background-color: var(--c-ink);
+    border-radius: var(--r-2);
+    background-color: var(--c-white);
   }
 
-  /* Sólo flota (y sólo entonces lleva sombra) cuando está abierto. */
   .langs[open] .langs__list {
-    box-shadow: var(--shadow-float);
+    box-shadow: var(--shadow-2);
   }
 
   .langs__option {
@@ -307,19 +293,18 @@ const navItems = [
     align-items: center;
     min-height: 44px;
     padding-inline: 0.85rem;
-    color: var(--c-paper);
+    border-radius: var(--r-1);
     text-decoration: none;
     transition: background-color var(--dur-fast) linear;
   }
 
   .langs__option:hover {
-    background-color: var(--c-navy-2);
+    background-color: var(--c-paper-2);
   }
 
   .langs__option[aria-current='true'] {
-    background-color: var(--c-green);
-    color: var(--c-ink);
-    font-weight: 600;
+    background-color: var(--c-paper-3);
+    font-weight: 700;
   }
 
   /* --------------------------------------------------------- Móvil */
@@ -331,41 +316,39 @@ const navItems = [
     display: none;
   }
 
-  @media (max-width: 75rem) {
-    .nav {
-      padding: 6px;
-    }
-
+  @media (max-width: 60rem) {
     .nav__bar {
       flex-wrap: wrap;
-      gap: 6px;
+      min-height: 64px;
+      gap: 0.5rem;
     }
 
-    .nav__brand {
-      flex: 1 1 auto;
+    .nav__logo {
+      height: 2rem;
     }
 
     .nav__toggle {
       display: flex;
-      flex: 0 0 auto;
-      gap: 0.75rem;
-      padding-inline: 1.15rem;
+      gap: 0.6rem;
+      min-height: 44px;
+      padding-inline: 1rem;
       border: 0;
-      background-color: var(--c-ink);
-      color: var(--c-paper);
-      font-weight: 600;
+      border-radius: var(--r-pill);
+      background-color: var(--c-paper-2);
+      font-weight: 500;
       cursor: pointer;
     }
 
     .nav__bars {
       display: grid;
       gap: 5px;
-      width: 1.35rem;
+      width: 1.2rem;
     }
 
     .nav__bars i {
       display: block;
       height: 2px;
+      border-radius: 2px;
       background-color: currentColor;
       transition: transform var(--dur-base) var(--ease-out);
     }
@@ -378,11 +361,12 @@ const navItems = [
       transform: translateY(-3.5px) rotate(-45deg);
     }
 
-    /* Con JS el panel se pliega; sin JS se queda desplegado y se lee entero. */
     .nav__panel {
       flex: 1 0 100%;
       flex-direction: column;
-      gap: 6px;
+      align-items: stretch;
+      gap: 0.5rem;
+      padding-bottom: 1rem;
     }
 
     :global(html.js) .nav__panel {
@@ -391,43 +375,38 @@ const navItems = [
 
     :global(html.js) .nav--open .nav__panel {
       display: flex;
-      max-height: calc(100svh - 80px);
+      max-height: calc(100svh - 72px);
       overflow-y: auto;
     }
 
     .nav__links {
       flex-direction: column;
       align-items: stretch;
-      gap: 0;
-      padding: 0.5rem 1.15rem;
     }
 
     .nav__link {
       min-height: 52px;
-      font-size: var(--step-lead);
-    }
-
-    .nav__link::after {
-      bottom: 6px;
+      font-size: 1.125rem;
     }
 
     .langs__list {
       position: static;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      box-shadow: none;
+      padding: 0;
+      box-shadow: none !important;
     }
 
     .nav__cta {
-      min-height: 60px;
+      justify-content: center;
+      min-height: 52px;
     }
 
     .nav__social {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
       gap: 0.5rem;
-      padding: 1rem 1.15rem;
+      padding: 0.5rem 0.85rem;
     }
 
     .nav__social-list {
@@ -438,7 +417,6 @@ const navItems = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .nav__link::after,
     .nav__bars i,
     .langs__caret {
       transition: none;

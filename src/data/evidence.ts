@@ -18,17 +18,22 @@ export type EvidenceLevel = 1 | 2 | 3 | 4 | 5;
 export type SourceId = 'nasem' | 'ema';
 
 export interface EvidenceSource {
+  /** Cita completa. */
   name: string;
+  /** Cita corta para la etiqueta del hero. */
+  short: string;
   url: string;
 }
 
 export const evidenceSources: Record<SourceId, EvidenceSource> = {
   nasem: {
     name: 'National Academies of Sciences, Engineering, and Medicine (2017). The Health Effects of Cannabis and Cannabinoids',
+    short: 'US National Academies (2017)',
     url: 'https://nap.nationalacademies.org/catalog/24625/the-health-effects-of-cannabis-and-cannabinoids-the-current-state',
   },
   ema: {
     name: 'European Medicines Agency (2019). Epidyolex (cannabidiol), EPAR',
+    short: 'European Medicines Agency (2019)',
     url: 'https://www.ema.europa.eu/en/medicines/human/EPAR/epidyolex',
   },
 };
@@ -78,3 +83,10 @@ export const evidenceTopics: EvidenceTopic[] = [
   // NASEM 2017: "substantial evidence" — fumar en el embarazo y menor peso al nacer.
   { id: 'pregnancy', group: 'risk', level: 4, source: 'nasem' },
 ];
+
+/** Nota A–E de un nivel: A = concluyente (5) … E = insuficiente (1). */
+export type Grade = 'A' | 'B' | 'C' | 'D' | 'E';
+
+export function gradeOf(level: EvidenceLevel): Grade {
+  return (['E', 'D', 'C', 'B', 'A'] as const)[level - 1];
+}

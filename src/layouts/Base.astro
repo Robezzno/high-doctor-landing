@@ -3,11 +3,17 @@
 // de cada familia, en sus subsets latino y latino-extendido (por el polaco);
 // el navegador descarga sólo el subset que necesita cada página.
 import { ClientRouter } from 'astro:transitions';
-import '@fontsource-variable/bricolage-grotesque/opsz.css';
-// La fuente del titular y del texto es la misma: se precarga su subset latino
-// (y el latino-extendido en polaco) para que no se mueva nada al cargar.
-import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
-import bricolageLatinExt from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-opsz-normal.woff2?url';
+// Rubik en pesos estáticos (no variable): carga igual en cualquier navegador.
+import '@fontsource/rubik/latin-400.css';
+import '@fontsource/rubik/latin-500.css';
+import '@fontsource/rubik/latin-700.css';
+import '@fontsource/rubik/latin-800.css';
+import '@fontsource/rubik/latin-ext-400.css';
+import '@fontsource/rubik/latin-ext-500.css';
+import '@fontsource/rubik/latin-ext-700.css';
+import '@fontsource/rubik/latin-ext-800.css';
+import rubik400 from '@fontsource/rubik/files/rubik-latin-400-normal.woff2?url';
+import rubik800 from '@fontsource/rubik/files/rubik-latin-800-normal.woff2?url';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/blog.css';
@@ -56,7 +62,7 @@ const {
 
 // Sólo el polaco necesita el subset latino-extendido en la primera pantalla
 // (ą, ł, ż…); el resto de idiomas tira de latin. El alemán usa latin (ä, ö, ü, ß).
-const criticalFonts = lang === 'pl' ? [bricolageLatin, bricolageLatinExt] : [bricolageLatin];
+const criticalFonts = [rubik400, rubik800];
 
 // Mismo <title> y misma descripción que la web antigua (los textos SEO
 // por idioma llegan en el prompt 09).
@@ -138,7 +144,7 @@ const imageUrl = image ? absolute(image) : undefined;
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#000C3C" />
+    <meta name="theme-color" content="#FFFFFF" />
 
     {
       criticalFonts.map((href) => (

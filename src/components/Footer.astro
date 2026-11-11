@@ -1,5 +1,4 @@
 ---
-import logoText from '../assets/brand/logo-text.svg';
 import { contactEmail, showSection, socialLinks } from '../config/site';
 import { credits } from '../data/credits';
 import { legalPath } from '../data/legal';
@@ -17,8 +16,8 @@ interface Props {
 const { lang, sectionBase = '' } = Astro.props;
 
 const section = (id: string) => `${sectionBase}#${id}`;
-
 const showSocial = showSection('social');
+const newsHref = lang === 'es' ? '/noticias/' : '/en/news/';
 
 const langNames: Record<Lang, string> = {
   en: 'English',
@@ -32,11 +31,12 @@ const langNames: Record<Lang, string> = {
 };
 
 const navItems = [
-  { href: section('mission'), label: t(lang, 'nav_mission') },
   { href: section('evidence'), label: t(lang, 'nav_evidence') },
-  { href: section('impact'), label: t(lang, 'nav_impact') },
-  { href: section('join'), label: t(lang, 'nav_join') },
+  { href: section('method'), label: t(lang, 'v2_scale_title') },
+  { href: newsHref, label: t(lang, 'nav_news') },
+  { href: section('about'), label: t(lang, 'v2_menu_about') },
   { href: section('mary-jane'), label: t(lang, 'nav_maryjane') },
+  { href: section('join'), label: t(lang, 'v2_join_title') },
 ];
 
 const legalItems = [
@@ -45,51 +45,50 @@ const legalItems = [
   { href: legalPath(lang, 'cookies'), label: t(lang, 'ft_cookies') },
 ];
 
-const [mailUser, mailDomain] = contactEmail.split('@');
 const year = new Date().getFullYear();
 ---
 
-<!-- El cierre: un campo entero del verde de la estrella y la forma de
-     escribirnos como titular. -->
 <footer class="footer">
-  <div class="footer__top">
-    <div class="footer__notes">
-      <img
-        class="footer__logo"
-        src={logoText.src}
-        width={logoText.width}
-        height={logoText.height}
-        alt="High Doctor Foundation"
-        loading="lazy"
-        decoding="async"
-      />
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <p class="footer__name">High Doctor Foundation</p>
       <p>{t(lang, 'ft_tagline')}</p>
-      <p>{t(lang, 'ft_about_desc')}</p>
+      <a class="footer__mail" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+      {
+        showSocial && (
+          <ul class="footer__social">
+            {socialLinks.map((link) => (
+              <li>
+                <a href={link.url} rel="me noopener" target="_blank">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </div>
 
-    <nav class="footer__nav" aria-labelledby="footer-nav-title">
-      <h2 class="visually-hidden" id="footer-nav-title">{t(lang, 'ft_nav')}</h2>
+    <nav class="footer__col" aria-labelledby="footer-nav-title">
+      <h2 class="footer__title" id="footer-nav-title">{t(lang, 'ft_nav')}</h2>
       <ul>
         {
           navItems.map((item) => (
             <li>
-              <a class="link-draw" href={item.href}>
-                {item.label}
-              </a>
+              <a href={item.href}>{item.label}</a>
             </li>
           ))
         }
       </ul>
     </nav>
 
-    <nav class="footer__nav" aria-labelledby="footer-lang-title">
-      <h2 class="visually-hidden" id="footer-lang-title">{t(lang, 'ft_lang')}</h2>
-      <ul>
+    <nav class="footer__col" aria-labelledby="footer-lang-title">
+      <h2 class="footer__title" id="footer-lang-title">{t(lang, 'ft_lang')}</h2>
+      <ul class="footer__langs">
         {
           languages.map((language) => (
             <li>
               <a
-                class="link-draw"
                 href={langPath(language)}
                 hreflang={language}
                 lang={language}
@@ -103,42 +102,22 @@ const year = new Date().getFullYear();
       </ul>
     </nav>
 
-    <a class="footer__top-link link-bar" href="#top">{t(lang, 'ft_top')}</a>
-  </div>
-
-  <div class="footer__contact">
-    <h2 class="visually-hidden">{t(lang, 'ft_write')}</h2>
-    <a class="footer__mail" href={`mailto:${contactEmail}`}>
-      <span>{mailUser}</span><span>@{mailDomain}</span>
-    </a>
-    {
-      showSocial && (
-        <ul class="footer__social">
-          {socialLinks.map((link) => (
+    <div class="footer__col">
+      <h2 class="footer__title">{t(lang, 'ft_legal')}</h2>
+      <ul>
+        {
+          legalItems.map((item) => (
             <li>
-              <a class="link-bar" href={link.url} rel="me noopener" target="_blank">
-                {link.label}
-              </a>
+              <a href={item.href}>{item.label}</a>
             </li>
-          ))}
-        </ul>
-      )
-    }
+          ))
+        }
+      </ul>
+    </div>
   </div>
 
-  <div class="footer__meta">
-    <ul class="footer__legal">
-      {
-        legalItems.map((item) => (
-          <li>
-            <a class="link-draw" href={item.href}>
-              {item.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
+  <div class="footer__bottom">
+    <p class="footer__disclaimer">{t(lang, 'evd_disclaimer')}</p>
     <details class="footer__credits">
       <summary>{t(lang, 'ft_credits')}</summary>
       <ul>
@@ -148,183 +127,148 @@ const year = new Date().getFullYear();
               <a href={credit.page} rel="noopener" target="_blank">
                 {credit.title}
               </a>
-              , {credit.creator}, <a href={credit.licenseUrl} rel="noopener" target="_blank">{credit.license}</a>, Wikimedia Commons
+              , {credit.creator},{' '}
+              <a href={credit.licenseUrl} rel="noopener" target="_blank">
+                {credit.license}
+              </a>
+              , Wikimedia Commons
             </li>
           ))
         }
       </ul>
     </details>
-
-    <p class="footer__year">© {year} High Doctor Foundation · {t(lang, 'ft_rights')}</p>
+    <p>© {year} High Doctor Foundation · {t(lang, 'ft_rights')}</p>
   </div>
 </footer>
 
 <style>
   .footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 3rem;
-    min-height: 90svh;
-    padding: 2.5rem var(--margin) 1.5rem;
-    background-color: var(--c-green);
-    color: var(--c-ink);
-    --focus-color: var(--c-ink);
+    padding: clamp(3rem, 2rem + 4vw, 5rem) 0 2rem;
+    background-color: var(--c-ink);
+    color: var(--c-white);
+    --focus-color: var(--c-white);
   }
 
-  .footer__top {
+  .footer__inner,
+  .footer__bottom {
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .footer__inner {
     display: grid;
-    grid-template-columns: 5fr 2fr 2fr 2fr;
-    gap: var(--grid-gap);
-    align-items: start;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
   }
 
-  .footer__notes {
+  .footer__brand {
     display: grid;
     gap: 0.75rem;
-    max-width: 44ch;
-    font-size: var(--step-small);
-    line-height: 1.45;
+    align-content: start;
+    max-width: 24rem;
   }
 
-  .footer__notes p {
+  .footer__brand p {
     margin: 0;
+    color: var(--c-paper-muted);
   }
 
-  .footer__logo {
-    width: 9rem;
-    height: auto;
-    margin-bottom: 0.5rem;
-  }
-
-  .footer__nav ul {
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .footer__nav a {
-    display: inline-block;
-    padding-block: 0.2rem;
-    font-size: var(--step-small);
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .footer__nav a[aria-current='true'] {
-    font-weight: 700;
-  }
-
-  .footer__top-link {
-    justify-self: end;
-    font-size: var(--step-small);
-  }
-
-  .footer__contact {
-    display: grid;
-    gap: 1.5rem;
+  .footer__name {
+    font-size: var(--fs-h3);
+    font-weight: 800;
+    color: var(--c-white) !important;
   }
 
   .footer__mail {
-    display: block;
-    font-size: clamp(3rem, 1rem + 10vw, 12rem);
-    font-weight: 600;
-    line-height: 0.9;
-    letter-spacing: -0.05em;
+    justify-self: start;
+    font-weight: 500;
+    text-decoration-color: var(--c-green);
+  }
+
+  .footer__title {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .footer__col ul {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .footer__langs {
+    grid-template-columns: repeat(2, auto);
+    justify-content: start;
+    column-gap: 1.25rem;
+  }
+
+  .footer__col a,
+  .footer__social a {
+    color: var(--c-paper-muted);
     text-decoration: none;
-    overflow-wrap: anywhere;
+    transition: color var(--dur-fast) linear;
   }
 
-  .footer__mail span {
-    display: block;
-    transition: transform var(--dur-slow) var(--ease-out);
+  .footer__col a:hover,
+  .footer__social a:hover {
+    color: var(--c-white);
+    text-decoration: underline;
+    text-decoration-color: var(--c-green);
   }
 
-  .footer__mail:hover span:last-child {
-    transform: translateX(0.12em);
-  }
-
-  .footer__mail:hover span:first-child {
-    transform: translateX(-0.04em);
+  .footer__col a[aria-current='true'] {
+    color: var(--c-white);
+    font-weight: 700;
   }
 
   .footer__social {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
-  .footer__meta {
+  .footer__bottom {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 1rem 2rem;
-    align-items: start;
-    font-size: var(--step-small);
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 14%);
+    font-size: var(--fs-small);
+    color: var(--c-paper-muted);
   }
 
-  .footer__legal {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.25rem;
+  .footer__bottom p {
+    margin: 0;
   }
 
-  .footer__legal a {
-    text-decoration: none;
-    font-weight: 500;
+  .footer__disclaimer {
+    max-width: var(--measure);
   }
 
   .footer__credits summary {
     cursor: pointer;
-    font-weight: 500;
     text-decoration: underline;
-    text-decoration-thickness: 2px;
     text-underline-offset: 0.2em;
   }
 
   .footer__credits ul {
     display: grid;
-    gap: 0.4rem;
-    max-width: 60ch;
+    gap: 0.35rem;
     margin-top: 0.75rem;
   }
 
-  .footer__year {
-    justify-self: end;
-    margin: 0;
-    text-align: right;
+  .footer__credits a {
+    color: inherit;
   }
 
   @media (max-width: 55rem) {
-    .footer__top {
+    .footer__inner {
       grid-template-columns: 1fr 1fr;
     }
 
-    .footer__notes {
+    .footer__brand {
       grid-column: 1 / -1;
-    }
-
-    .footer__top-link {
-      grid-column: 1 / -1;
-      justify-self: start;
-    }
-
-    .footer__mail {
-      font-size: 12vw;
-    }
-
-    .footer__meta {
-      grid-template-columns: 1fr;
-      font-size: 0.8125rem;
-    }
-
-    .footer__year {
-      justify-self: start;
-      text-align: left;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .footer__mail span {
-      transition: none;
     }
   }
 </style>

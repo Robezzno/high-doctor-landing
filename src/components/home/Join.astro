@@ -1,4 +1,8 @@
 ---
+import { Picture } from 'astro:assets';
+import doctor from '../../assets/brand/logo-character.png';
+import ContactForm from '../ContactForm.astro';
+import { contactEmail } from '../../config/site';
 import { t, type Lang, type TranslationKey } from '../../i18n';
 
 interface Props {
@@ -7,152 +11,142 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const benefits: { title: TranslationKey; desc: TranslationKey; terms: TranslationKey }[] = [
-  { title: 'join_b1_t', desc: 'join_b1_d', terms: 'join_b1_terms' },
-  { title: 'join_b2_t', desc: 'join_b2_d', terms: 'join_b2_terms' },
-  { title: 'join_b3_t', desc: 'join_b3_d', terms: 'join_b3_terms' },
-  { title: 'join_b4_t', desc: 'join_b4_d', terms: 'join_b4_terms' },
-  { title: 'join_b5_t', desc: 'join_b5_d', terms: 'join_b5_terms' },
-  { title: 'join_b6_t', desc: 'join_b6_d', terms: 'join_b6_terms' },
+const benefits: { title: TranslationKey; desc: TranslationKey }[] = [
+  { title: 'join_b1_t', desc: 'join_b1_d' },
+  { title: 'join_b2_t', desc: 'join_b2_d' },
+  { title: 'join_b3_t', desc: 'join_b3_d' },
+  { title: 'join_b4_t', desc: 'join_b4_d' },
+  { title: 'join_b5_t', desc: 'join_b5_d' },
+  { title: 'join_b6_t', desc: 'join_b6_d' },
 ];
 ---
 
-<!-- Dos mitades pegadas: la declaración en tono claro y, en el tono más
-     oscuro, lo que obtienes al entrar, fila a fila. -->
-<section class="join" id="join" aria-labelledby="join-title">
-  <div class="join__statement" data-reveal>
-    <h2 class="h2 join__title" id="join-title">
-      <span class="join__line">{t(lang, 'join_head_1')}</span>
-      <span class="join__line join__line--right">{t(lang, 'join_head_2')}</span>
-    </h2>
-    <div class="join__foot">
-      <p class="join__text">
-        {t(lang, 'join_subtitle')}{' '}{t(lang, 'join_lead_2')}
-      </p>
-      <a class="btn btn--accent join__btn" href="#contact">
-        {t(lang, 'nav_cta')}
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-          <path d="M2 9h12M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"></path>
-        </svg>
-      </a>
+<!-- `#contact` se mantiene como ancla para los enlaces antiguos. -->
+<section class="section section--tint join" id="join" aria-labelledby="join-title">
+  <span id="contact" class="join__anchor"></span>
+  <div class="container join__grid">
+    <div class="join__copy" data-reveal>
+      <h2 class="h2" id="join-title">{t(lang, 'v2_join_title')}</h2>
+      <p class="lead">{t(lang, 'v2_join_lead')}</p>
+
+      <h3 class="join__benefits-title">{t(lang, 'join_benefits')}</h3>
+      <ul class="join__benefits">
+        {
+          benefits.map((benefit) => (
+            <li>
+              <strong>{t(lang, benefit.title)}</strong>
+              <span>{t(lang, benefit.desc)}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="join__mail">
+        <Picture
+          src={doctor}
+          formats={['avif', 'webp']}
+          widths={[160, 320]}
+          sizes="96px"
+          alt=""
+          loading="lazy"
+          class="join__doctor"
+        />
+        <p>
+          {t(lang, 'contact_question')}<br />
+          <a class="link-arrow" href={`mailto:${contactEmail}`}>{contactEmail}</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="join__form">
+      <p class="join__form-note">{t(lang, 'form_subtitle')}</p>
+      <ContactForm lang={lang} />
     </div>
   </div>
-
-  <ul class="join__rows" data-reveal>
-    {
-      benefits.map((benefit) => (
-        <li class="join__row">
-          <h3 class="join__row-title">{t(lang, benefit.title)}</h3>
-          <p class="join__row-desc">{t(lang, benefit.desc)}</p>
-          <p class="join__row-terms">{t(lang, benefit.terms)}</p>
-        </li>
-      ))
-    }
-  </ul>
 </section>
 
 <style>
-  .join {
+  .join__anchor {
+    position: absolute;
+    top: 0;
+  }
+
+  .join__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .join__statement {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 3rem;
-    min-height: 90svh;
-    padding: clamp(2rem, 4vw, 4rem) var(--margin);
-    background-color: var(--c-paper-2);
-  }
-
-  .join__title {
-    font-size: var(--step-head);
-  }
-
-  .join__line {
-    display: block;
-  }
-
-  .join__line--right {
-    text-align: right;
-  }
-
-  .join__foot {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-
-  .join__text {
-    max-width: 30ch;
-    margin: 0;
-  }
-
-  .join__rows {
-    display: grid;
-    grid-auto-rows: 1fr;
-    background-color: var(--c-ink);
-    color: var(--c-paper);
-  }
-
-  .join__row {
-    display: grid;
-    grid-template-columns: 5fr 4fr 3fr;
-    gap: 1.25rem;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
     align-items: start;
-    padding: 1.75rem var(--margin) 1.75rem 1.75rem;
-    transition: background-color var(--dur-base) linear;
   }
 
-  .join__row:nth-child(even) {
-    background-color: var(--c-navy-2);
+  .join__copy .lead {
+    margin: 1rem 0 2rem;
   }
 
-  .join__row:hover {
-    background-color: var(--c-lab);
+  .join__benefits-title {
+    margin-bottom: 1rem;
+    font-size: var(--fs-h3);
   }
 
-  .join__row-title {
-    font-size: var(--step-lead);
-    line-height: 1.05;
+  .join__benefits {
+    display: grid;
+    gap: 1rem;
   }
 
-  .join__row-desc {
-    margin: 0;
-    font-size: 1rem;
+  .join__benefits li {
+    display: grid;
+    gap: 0.15rem;
+    padding-left: 1.25rem;
+    position: relative;
     line-height: 1.45;
   }
 
-  .join__row-terms {
-    margin: 0;
-    font-size: var(--step-small);
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--c-paper-muted);
+  .join__benefits li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--c-green);
   }
 
-  @media (max-width: 64rem) {
-    .join {
+  .join__benefits span {
+    color: var(--c-ink-soft);
+    font-size: 1rem;
+  }
+
+  .join__mail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .join__mail p {
+    margin: 0;
+  }
+
+  .join__mail :global(.join__doctor) {
+    width: 6rem;
+    height: auto;
+  }
+
+  .join__form {
+    padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+    border-radius: var(--r-2);
+    background-color: var(--c-white);
+    box-shadow: var(--shadow-1);
+  }
+
+  .join__form-note {
+    margin: 0 0 1.5rem;
+    color: var(--c-ink-soft);
+  }
+
+  @media (max-width: 55rem) {
+    .join__grid {
       grid-template-columns: 1fr;
-    }
-
-    .join__statement {
-      min-height: 0;
-      padding-top: 5rem;
-    }
-
-    .join__title {
-      font-size: 10vw;
-    }
-
-    .join__row {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-      padding: 1.5rem var(--margin);
     }
   }
 </style>
