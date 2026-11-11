@@ -6,7 +6,8 @@
  */
 
 :root {
-  --blog-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* Rediseño 2026-11: sin monoespaciada, la misma familia que la portada. */
+  --blog-mono: var(--font-body);
 }
 
 /* ------------------------------------------------------------------ */
@@ -14,13 +15,13 @@
 /* ------------------------------------------------------------------ */
 
 .blog {
-  --blog-bg: #f4efe4;
-  --blog-surface: #fffdf8;
-  --blog-ink: #0b1640;
-  --blog-muted: rgba(11, 22, 64, 0.62);
-  --blog-rule: rgba(11, 22, 64, 0.16);
-  --blog-accent: #0a2e1f;
-  --blog-spark: #1db954;
+  --blog-bg: var(--c-paper);
+  --blog-surface: var(--c-paper-2);
+  --blog-ink: var(--c-ink);
+  --blog-muted: var(--c-ink-soft);
+  --blog-rule: var(--c-paper-3);
+  --blog-accent: var(--c-ink);
+  --blog-spark: var(--c-green);
   --blog-measure: 68ch;
 
   background-color: var(--blog-bg);
@@ -137,7 +138,7 @@
 .chip[aria-current='page'] {
   background-color: var(--blog-accent);
   border-color: var(--blog-accent);
-  color: #f4efe4;
+  color: var(--c-paper);
 }
 
 /* ------------------------------------------------------------------ */
@@ -357,7 +358,7 @@
 .pagination__current {
   background-color: var(--blog-accent);
   border-color: var(--blog-accent);
-  color: #f4efe4;
+  color: var(--c-paper);
 }
 
 .pagination__spacer {
@@ -636,7 +637,7 @@
 
 .latest-news {
   padding: 90px 0;
-  background-color: #f4efe4;
+  background-color: var(--c-paper);
   color: #0b1640;
 }
 
@@ -805,4 +806,17 @@
   .latest-news {
     padding: 64px 0;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Rediseño 2026-11: etiquetas en tamaño legible y caja de frase,      */
+/* sin mayúsculas espaciadas ni esquinas redondeadas.                  */
+/* ------------------------------------------------------------------ */
+.blog [class],
+.latest-news [class] {
+  text-transform: none;
+}
+
+.blog * {
+  border-radius: 0 !important;
 }

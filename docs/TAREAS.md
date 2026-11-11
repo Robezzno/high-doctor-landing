@@ -1,5 +1,20 @@
 # TAREAS — highdoctor.foundation
 
+## Rediseño 2026-11 (rama `rediseno`, pendiente de OK de Saf para publicar)
+- 2026-11-11: portada rehecha con dirección «informe impreso» (skill design-taste-frontend, seed 25026389):
+  - Una sola familia (Bricolage Grotesque), paleta de marca (azul marino, verde estrella), piedra clara en vez de crema, sin monoespaciada, sin sombras ni líneas finas.
+  - Secciones nuevas en `src/components/home/`: hero en tablero 2×2, misión, «Cómo trabajamos» (diagrama de 144 cuadrados que se ordenan al entrar), **«Qué dice la evidencia»** (pieza interactiva: 10 temas con nivel NASEM 2017 / EMA y fuente; datos en `src/data/evidence.ts`), capítulos a pantalla completa, unirse, noticias, Mary Jane Berlín y contacto + formulario (mismos IDs y Web3Forms).
+  - 9 fotos de archivo de Wikimedia Commons (dominio público / CC), créditos en el footer (`src/data/credits.ts`).
+  - Animaciones sin GSAP (IntersectionObserver + CSS, `src/scripts/motion/reveal.ts`), respetan reduced-motion y se leen sin JS. Lenis sólo con ratón.
+  - Textos nuevos en los 8 idiomas. Blog y legales heredan colores y tipografía.
+  - Verificado: inspector de diseño 0 FAIL en los 8 idiomas a 1440/768/390, `vitest` 137/137, e2e + axe 41/41, crawler sin enlaces rotos.
+- 2026-11-11: módulo `publicador/` (rama `feat/publicador`): servicio para VPS que genera con IA y publica en blog + redes. 109 tests, demo en dry-run, Docker. **Nada contratado** (VPS y API de IA de pago necesitan OK de Saf).
+
+### Pendiente del rediseño
+- OK de Saf para mergear `rediseno` a `main` (publica en producción).
+- Revisar los textos médicos de «Qué dice la evidencia» (ES/EN redactados contra NASEM 2017 y EMA; los otros 6 idiomas traducidos).
+- Rediseño a fondo del blog y de las tarjetas sociales (todavía usan Fraunces en la imagen generada).
+
 ## Hecho
 - 2026-10-20: repo localizado (`Robezzno/high-doctor-landing`), acceso de push comprobado, diagnóstico de la web y plan completo en `docs/PLAN.md`.
 - 2026-10-20: prompts de ejecución en `docs/prompts/` (00 → 09) y `_config.yml` para que Jekyll no publique `docs/` en la web.
