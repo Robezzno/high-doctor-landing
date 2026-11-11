@@ -1,6 +1,12 @@
 # TAREAS — highdoctor.foundation
 
-## Rediseño 2026-11 (rama `rediseno`, pendiente de OK de Saf para publicar)
+## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)
+- 2026-11-11: Saf rechazó la v1 («no hay coherencia entre el tamaño de las cosas y la misión»). Investigados referentes (Drug Science, MAPS, Cochrane, OWID, Project CBD, Wellcome) y entrevista: público general y pacientes, acción principal leer/consultar, mascota protagonista. Dirección elegida por Saf: notas A–E tipo etiqueta.
+  - Portada: hero con el explorador funcionando (selector → nota A–E + fuente + frase del doctor), todas las notas en fichas desplegables, cómo ponemos la nota, noticias, quiénes somos, Mary Jane Berlín y únete + formulario. Rubik estática (no variable). Contrato en `.impeccable/surfaces/home.md`, producto en `PRODUCT.md`.
+  - Copia autocontenida en churflix `/srv/media/sync/High Doctor Foundation - web.html` (se regenera con `node scripts/single-file.mjs es/index.html <salida>` tras `npm run build`).
+  - Verificado: vitest 137/137, e2e+axe 41/41, enlaces OK, detector impeccable limpio.
+
+## Rediseño v1 (descartado, historial)
 - 2026-11-11: portada rehecha con dirección «informe impreso» (skill design-taste-frontend, seed 25026389):
   - Una sola familia (Bricolage Grotesque), paleta de marca (azul marino, verde estrella), piedra clara en vez de crema, sin monoespaciada, sin sombras ni líneas finas.
   - Secciones nuevas en `src/components/home/`: hero en tablero 2×2, misión, «Cómo trabajamos» (diagrama de 144 cuadrados que se ordenan al entrar), **«Qué dice la evidencia»** (pieza interactiva: 10 temas con nivel NASEM 2017 / EMA y fuente; datos en `src/data/evidence.ts`), capítulos a pantalla completa, unirse, noticias, Mary Jane Berlín y contacto + formulario (mismos IDs y Web3Forms).
