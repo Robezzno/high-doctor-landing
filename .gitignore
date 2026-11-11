@@ -15,3 +15,5 @@ server*.log
 .env
 .env.*
 e2e/.artifacts/
+.taste-skill/
+.claude/worktrees/

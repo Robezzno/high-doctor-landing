@@ -1,0 +1,544 @@
+---
+import { evidenceSources, evidenceTopics, type EvidenceTopic } from '../../data/evidence';
+import { t, type Lang, type TranslationKey } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const key = (topic: EvidenceTopic, part: 't' | 'f' | 'm') =>
+  `evd_${topic.id}_${part}` as TranslationKey;
+const levelKey = (level: number) => `evd_lvl_${level}` as TranslationKey;
+
+const groups: { id: EvidenceTopic['group']; label: TranslationKey }[] = [
+  { id: 'use', label: 'evd_group_use' },
+  { id: 'risk', label: 'evd_group_risk' },
+];
+
+const levels = [1, 2, 3, 4, 5];
+---
+
+<!-- La pieza viva de la página: eliges un tema y lees el veredicto, su nivel
+     en la escala de cinco y la fuente. Sin JS se leen todos los temas uno
+     detrás de otro y las pestañas son enlaces a cada uno. -->
+<section class="evidence" id="evidence" aria-labelledby="evidence-title">
+  <div class="container">
+    <div class="evidence__head" data-reveal>
+      <h2 class="h2 evidence__title" id="evidence-title">
+        <span class="evidence__title-soft">{t(lang, 'evd_title_1')}</span>
+        <span>{t(lang, 'evd_title_2')}</span>
+      </h2>
+      <p class="evidence__lead">{t(lang, 'evd_lead')}</p>
+    </div>
+
+    <div class="evidence__board" data-evidence>
+      <div class="evidence__tabs" role="tablist" aria-label={t(lang, 'evd_tabs_label')} aria-orientation="vertical">
+        {
+          groups.map((group) => (
+            <div class="evidence__group" role="presentation">
+              <p class="evidence__group-label" role="presentation">{t(lang, group.label)}</p>
+              {evidenceTopics
+                .filter((topic) => topic.group === group.id)
+                .map((topic) => (
+                  <a
+                    class="evidence__tab"
+                    href={`#evd-${topic.id}`}
+                    role="tab"
+                    id={`evd-tab-${topic.id}`}
+                    aria-controls={`evd-${topic.id}`}
+                    aria-selected={topic.id === 'pain' ? 'true' : 'false'}
+                    tabindex={topic.id === 'pain' ? 0 : -1}
+                    data-evidence-tab={topic.id}
+                    data-level={topic.level}
+                  >
+                    <span class="evidence__tab-name">{t(lang, key(topic, 't'))}</span>
+                    <span class="evidence__tab-meter" aria-hidden="true">
+                      {levels.map((level) => (
+                        <i class:list={{ on: level <= topic.level }} />
+                      ))}
+                    </span>
+                  </a>
+                ))}
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="evidence__panels">
+        {
+          evidenceTopics.map((topic) => {
+            const source = evidenceSources[topic.source];
+            return (
+              <article
+                class="evidence__panel"
+                id={`evd-${topic.id}`}
+                role="tabpanel"
+                aria-labelledby={`evd-tab-${topic.id}`}
+                data-evidence-panel={topic.id}
+                data-group={topic.group}
+              >
+                <div class="band band--verdict">
+                  <h3 class="evidence__topic">{t(lang, key(topic, 't'))}</h3>
+                  <p class="evidence__verdict">
+                    <span class="visually-hidden">{t(lang, 'evd_scale')}: </span>
+                    {t(lang, levelKey(topic.level))}
+                  </p>
+                  <div class="evidence__scale">
+                    <ol class="meter" aria-hidden="true">
+                      {levels.map((level) => (
+                        <li class:list={['meter__step', { on: level <= topic.level, now: level === topic.level }]}>
+                          <span>{t(lang, levelKey(level))}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
+                <div class="band band--finding">
+                  <p class="evidence__finding">{t(lang, key(topic, 'f'))}</p>
+                </div>
+                <div class="band band--means">
+                  <p class="band__label">{t(lang, 'evd_means')}</p>
+                  <p>{t(lang, key(topic, 'm'))}</p>
+                </div>
+                <div class="band band--source">
+                  <p class="band__label">{t(lang, 'evd_source')}</p>
+                  <p>
+                    <a class="link-bar evidence__source" href={source.url} rel="noopener" target="_blank">
+                      {source.name}
+                    </a>
+                  </p>
+                </div>
+              </article>
+            );
+          })
+        }
+        <p class="evidence__disclaimer">{t(lang, 'evd_disclaimer')}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /**
+   * Pestañas accesibles (patrón ARIA tabs): flechas arriba/abajo, Inicio y Fin.
+   * Se engancha en cada `astro:page-load` porque el router cambia el nodo.
+   */
+  function initEvidence(): void {
+    const root = document.querySelector<HTMLElement>('[data-evidence]');
+    if (!root || root.dataset.bound === 'true') return;
+    root.dataset.bound = 'true';
+    root.classList.add('is-live');
+
+    const tabs = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-evidence-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-evidence-panel]'));
+
+    const select = (id: string, focus = false): void => {
+      for (const tab of tabs) {
+        const active = tab.dataset.evidenceTab === id;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        if (active && focus) tab.focus();
+      }
+      for (const panel of panels) {
+        const active = panel.dataset.evidencePanel === id;
+        panel.hidden = !active;
+        if (active) {
+          panel.classList.remove('is-shown');
+          void panel.offsetWidth;
+          panel.classList.add('is-shown');
+        }
+      }
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        select(tab.dataset.evidenceTab ?? '');
+      });
+      tab.addEventListener('keydown', (event) => {
+        let next = -1;
+        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        if (next < 0) return;
+        event.preventDefault();
+        select(tabs[next].dataset.evidenceTab ?? '', true);
+      });
+    });
+
+    select(tabs[0]?.dataset.evidenceTab ?? '');
+  }
+
+  document.addEventListener('astro:page-load', initEvidence);
+</script>
+
+<style>
+  .evidence {
+    padding-block: var(--section-y);
+  }
+
+  .evidence__head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .evidence__title {
+    grid-column: 1 / 8;
+  }
+
+  .evidence__title span {
+    display: block;
+  }
+
+  .evidence__title-soft {
+    color: var(--c-ink-faint);
+  }
+
+  .evidence__lead {
+    grid-column: 9 / 13;
+    margin: 0;
+  }
+
+  .evidence__board {
+    display: grid;
+    grid-template-columns: minmax(13rem, 17rem) 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  /* ---------------------------------------------------------- Pestañas */
+  .evidence__tabs {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .evidence__group {
+    display: grid;
+    gap: 6px;
+  }
+
+  .evidence__group-label {
+    margin: 0 0 0.35rem;
+    font-size: var(--step-small);
+    font-weight: 600;
+    color: var(--c-ink-soft);
+  }
+
+  .evidence__tab {
+    display: grid;
+    gap: 0.45rem;
+    min-height: 64px;
+    padding: 0.7rem 0.9rem;
+    background-color: var(--c-paper-2);
+    color: var(--c-ink);
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-fast) linear,
+      color var(--dur-fast) linear,
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .evidence__tab:hover {
+    background-color: var(--c-paper-3);
+    transform: translateX(4px);
+  }
+
+  .evidence__tab:active {
+    transform: scale(0.98);
+  }
+
+  .evidence__tab[aria-selected='true'] {
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+    transform: none;
+  }
+
+  .evidence__tab-meter {
+    display: flex;
+    gap: 3px;
+  }
+
+  .evidence__tab-meter i {
+    width: 14px;
+    height: 5px;
+    background-color: var(--c-paper-3);
+  }
+
+  .evidence__tab-meter i.on {
+    background-color: var(--c-green-deep);
+  }
+
+  .evidence__tab[aria-selected='true'] .evidence__tab-meter i {
+    background-color: rgb(238 240 236 / 22%);
+  }
+
+  .evidence__tab[aria-selected='true'] .evidence__tab-meter i.on {
+    background-color: var(--c-green);
+  }
+
+  /* ---------------------------------------------------------- Paneles */
+  .evidence__panels {
+    display: grid;
+    gap: 4rem;
+  }
+
+  .is-live .evidence__panels {
+    gap: 1.5rem;
+  }
+
+  .evidence__panel[hidden] {
+    display: none;
+  }
+
+  .evidence__panel {
+    display: grid;
+    gap: 4px;
+    scroll-margin-top: 6rem;
+  }
+
+  .band {
+    padding: clamp(1.15rem, 2.4vw, 2rem);
+    background-color: var(--c-paper-2);
+  }
+
+  .band--finding,
+  .band--source {
+    background-color: var(--c-paper-3);
+  }
+
+  .band--verdict {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 1rem 2rem;
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+  }
+
+  .evidence__panel[data-group='risk'] .band--verdict {
+    background-color: var(--c-lab);
+  }
+
+  .evidence__topic {
+    grid-column: 1 / -1;
+    font-size: var(--step-lead);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--c-paper-muted);
+  }
+
+  .evidence__verdict {
+    margin: 0;
+    font-size: var(--step-head);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: var(--tracking-display);
+  }
+
+  .meter {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    min-width: min(26rem, 100%);
+  }
+
+  .meter__step {
+    display: grid;
+    gap: 0.4rem;
+    font-size: var(--step-small);
+    color: var(--c-paper-muted);
+  }
+
+  .meter__step::before {
+    content: '';
+    height: 14px;
+    background-color: rgb(238 240 236 / 16%);
+    transform-origin: left center;
+  }
+
+  .meter__step.on::before {
+    background-color: var(--c-green);
+  }
+
+  .meter__step.now::before {
+    background-color: var(--c-marker);
+  }
+
+  .meter__step.now {
+    color: var(--c-paper);
+    font-weight: 600;
+  }
+
+  .meter__step span {
+    overflow-wrap: anywhere;
+    line-height: 1.2;
+    visibility: hidden;
+  }
+
+  .meter__step.now span {
+    visibility: visible;
+  }
+
+  .evidence__finding {
+    max-width: 36ch;
+    margin: 0;
+    font-size: var(--step-lead);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .band--means,
+  .band--source {
+    display: grid;
+    grid-template-columns: minmax(8rem, 12rem) 1fr;
+    gap: 0.5rem 2rem;
+  }
+
+  .band--means p,
+  .band--source p {
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  .band__label {
+    font-weight: 600;
+  }
+
+  .evidence__source {
+    font-weight: 500;
+    font-size: var(--step-small);
+    text-decoration-thickness: 2px;
+  }
+
+  .evidence__disclaimer {
+    margin: 0;
+    font-size: var(--step-small);
+    color: var(--c-ink-soft);
+    max-width: 70ch;
+  }
+
+  /* Cambio de tema: las bandas entran por turno y el medidor se rellena. */
+  @media (prefers-reduced-motion: no-preference) {
+    .evidence__panel.is-shown .band {
+      animation: band-in 520ms var(--ease-out) both;
+    }
+
+    .evidence__panel.is-shown .band:nth-child(2) {
+      animation-delay: 60ms;
+    }
+
+    .evidence__panel.is-shown .band:nth-child(3) {
+      animation-delay: 120ms;
+    }
+
+    .evidence__panel.is-shown .band:nth-child(4) {
+      animation-delay: 180ms;
+    }
+
+    .evidence__panel.is-shown .meter__step.on::before {
+      animation: meter-fill 700ms var(--ease-out) both;
+    }
+
+    .evidence__panel.is-shown .meter__step:nth-child(2)::before {
+      animation-delay: 80ms;
+    }
+
+    .evidence__panel.is-shown .meter__step:nth-child(3)::before {
+      animation-delay: 160ms;
+    }
+
+    .evidence__panel.is-shown .meter__step:nth-child(4)::before {
+      animation-delay: 240ms;
+    }
+
+    .evidence__panel.is-shown .meter__step:nth-child(5)::before {
+      animation-delay: 320ms;
+    }
+
+    @keyframes band-in {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+    }
+
+    @keyframes meter-fill {
+      from {
+        transform: scaleX(0);
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------- Teléfono */
+  @media (max-width: 55rem) {
+    .evidence__head {
+      grid-template-columns: 1fr;
+    }
+
+    .evidence__title,
+    .evidence__lead {
+      grid-column: 1;
+    }
+
+    .evidence__board {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    /* Los temas pasan a fichas que se reparten en varias líneas. */
+    .is-live .evidence__tabs {
+      gap: 1rem;
+    }
+
+    .is-live .evidence__group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .is-live .evidence__group-label {
+      flex: 1 0 100%;
+      margin: 0;
+    }
+
+    .is-live .evidence__tab {
+      flex: 0 0 auto;
+      min-height: 48px;
+      align-content: center;
+    }
+
+    .is-live .evidence__tab-meter {
+      display: none;
+    }
+
+    .evidence__tab:hover {
+      transform: none;
+    }
+
+    .band--verdict {
+      grid-template-columns: 1fr;
+    }
+
+    .meter {
+      min-width: 0;
+    }
+
+    .meter__step span {
+      display: none;
+    }
+
+    .band--means,
+    .band--source {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

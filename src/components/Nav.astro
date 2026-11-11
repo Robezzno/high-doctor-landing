@@ -14,11 +14,11 @@ interface Props {
   langHrefs?: Partial<Record<Lang, string>>;
   /** Sección activa, para `aria-current`. */
   current?: 'home' | 'news';
-  /** Sombra dura fija: obligatorio fuera de la portada, donde no hay hero. */
+  /** Compatibilidad: antes fijaba la sombra; la barra ya no lleva sombra. */
   solid?: boolean;
 }
 
-const { lang, sectionBase = '', langHrefs, current = 'home', solid = false } = Astro.props;
+const { lang, sectionBase = '', langHrefs, current = 'home' } = Astro.props;
 
 /** Redes sociales: sólo con `sections.social` en true y enlaces reales de Saf. */
 const showSocial = showSection('social');
@@ -40,16 +40,15 @@ const newsHref = lang === 'es' ? '/noticias/' : '/en/news/';
 const section = (id: string) => `${sectionBase}#${id}`;
 
 const navItems = [
-  { href: section('mission'), label: t(lang, 'nav_mission'), num: '01' },
-  { href: section('impact'), label: t(lang, 'nav_impact'), num: '02' },
-  { href: section('join'), label: t(lang, 'nav_join'), num: '03' },
-  { href: section('mary-jane'), label: t(lang, 'nav_maryjane'), num: '04' },
+  { href: section('mission'), label: t(lang, 'nav_mission') },
+  { href: section('evidence'), label: t(lang, 'nav_evidence') },
+  { href: section('mary-jane'), label: t(lang, 'nav_maryjane') },
 ];
 ---
 
-<header class:list={['nav', { 'nav--stuck': solid }]} data-nav>
-  <div class="container nav__inner">
-    <a class="nav__brand" href={langPath(lang)} aria-label="High Doctor Foundation">
+<header class="nav" data-nav>
+  <div class="nav__bar">
+    <a class="nav__tile nav__brand" href={langPath(lang)} aria-label="High Doctor Foundation">
       <img
         class="nav__logo"
         src={logoText.src}
@@ -62,25 +61,22 @@ const navItems = [
     </a>
 
     <button
-      class="nav__toggle"
+      class="nav__tile nav__toggle"
       type="button"
       aria-expanded="false"
       aria-controls="nav-panel"
       data-nav-toggle
     >
-      <span class="mono nav__toggle-label">{t(lang, 'nav_menu')}</span>
+      <span class="nav__toggle-label">{t(lang, 'nav_menu')}</span>
       <span class="nav__bars" aria-hidden="true"><i></i><i></i></span>
     </button>
 
     <div class="nav__panel" id="nav-panel" data-nav-panel>
-      <ul class="nav__links">
+      <ul class="nav__tile nav__links">
         {
           navItems.map((item) => (
             <li>
               <a class="nav__link" href={item.href}>
-                <span class="nav__num mono" aria-hidden="true">
-                  {item.num}
-                </span>
                 {item.label}
               </a>
             </li>
@@ -92,19 +88,15 @@ const navItems = [
             href={newsHref}
             aria-current={current === 'news' ? 'page' : undefined}
           >
-            <span class="nav__num mono" aria-hidden="true">05</span>
             {t(lang, 'nav_news')}
           </a>
         </li>
-        <li class="nav__cta">
-          <a class="btn nav__btn" href={`${sectionBase}#contact`}>{t(lang, 'nav_cta')}</a>
-        </li>
       </ul>
 
-      <details class="langs">
-        <summary class="langs__trigger mono">
+      <details class="nav__tile langs">
+        <summary class="langs__trigger">
           <span class="visually-hidden">{t(lang, 'ft_lang')}: </span>
-          {lang}
+          <span class="langs__current">{lang.toUpperCase()}</span>
           <span class="langs__caret" aria-hidden="true"></span>
         </summary>
         <ul class="langs__list">
@@ -118,7 +110,6 @@ const navItems = [
                   lang={language}
                   aria-current={language === lang ? 'true' : undefined}
                 >
-                  <span class="mono langs__code">{language}</span>
                   {langNames[language]}
                 </a>
               </li>
@@ -127,20 +118,16 @@ const navItems = [
         </ul>
       </details>
 
+      <a class="nav__tile nav__cta" href={`${sectionBase}#contact`}>{t(lang, 'nav_cta')}</a>
+
       {
-        /* Redes sociales en la cabecera móvil; en escritorio viven en el footer. */
         showSocial && (
-          <div class="nav__social">
-            <span class="mono nav__social-title">{t(lang, 'social_follow')}</span>
+          <div class="nav__tile nav__social">
+            <span class="nav__social-title">{t(lang, 'social_follow')}</span>
             <ul class="nav__social-list">
               {socialLinks.map((link) => (
                 <li>
-                  <a
-                    class="nav__social-link mono"
-                    href={link.url}
-                    rel="me noopener"
-                    target="_blank"
-                  >
+                  <a class="nav__social-link" href={link.url} rel="me noopener" target="_blank">
                     {link.label}
                   </a>
                 </li>
@@ -154,328 +141,307 @@ const navItems = [
 </header>
 
 <style>
+  /* Barra de baldosas: logo, enlaces, idioma y la única acción. Cada baldosa
+     es un rectángulo relleno; los huecos de 8 px dejan ver la página. */
   .nav {
     position: sticky;
     top: 0;
     z-index: var(--z-sticky);
+    padding: 8px;
     background-color: var(--c-paper);
-    border-bottom: 1px solid var(--c-paper-3);
   }
 
-  /* Sombra dura al despegarse: parece una hoja impresa sobre otra. */
-  .nav--stuck {
-    box-shadow: 0 2px 0 0 var(--c-ink);
+  .nav__bar {
+    display: flex;
+    gap: 8px;
+    min-height: 60px;
   }
 
-  .nav__inner {
+  .nav__tile {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-m);
-    min-height: 4.5rem;
+    min-height: 60px;
+    background-color: var(--c-paper-2);
+    color: var(--c-ink);
   }
 
   .nav__brand {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    padding-block: 0.35rem;
+    flex: 0 0 auto;
+    padding-inline: max(1rem, calc(var(--margin) - 8px));
+    transition: background-color var(--dur-fast) linear;
+  }
+
+  .nav__brand:hover {
+    background-color: var(--c-paper-3);
   }
 
   .nav__logo {
-    height: clamp(1.9rem, 2.6vw, 2.5rem);
+    height: 2.1rem;
     width: auto;
   }
 
   .nav__panel {
     display: flex;
-    align-items: center;
-    gap: clamp(0.75rem, 1.6vw, 1.75rem);
+    flex: 1 1 auto;
+    gap: 8px;
   }
 
   .nav__links {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.5rem, 1.2vw, 1.35rem);
+    flex: 1 1 auto;
+    gap: clamp(1rem, 2.4vw, 2.5rem);
+    padding-inline: 1.5rem;
+    /* Los enlaces empiezan en la línea central de la página. */
+    padding-left: max(1.5rem, calc(50vw - 18rem));
   }
 
   .nav__link {
     position: relative;
     display: inline-flex;
-    align-items: baseline;
-    gap: 0.4em;
+    align-items: center;
     min-height: 44px;
-    padding-block: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: var(--fs-mono);
-    letter-spacing: var(--tracking-mono);
-    text-transform: uppercase;
+    font-size: var(--step-body);
+    font-weight: 500;
     text-decoration: none;
-    color: var(--c-ink-soft);
-    border-bottom: 2px solid transparent;
-    transition:
-      color var(--dur-fast) linear,
-      border-color var(--dur-fast) linear;
+    white-space: nowrap;
   }
 
-  .nav__link:hover {
-    color: var(--c-ink);
-  }
-
-  /* El subrayado se dibuja de izquierda a derecha (sólo `transform`). */
   .nav__link::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0.55rem;
-    height: 2px;
-    background-color: var(--c-marker);
+    bottom: 8px;
+    height: 3px;
+    background-color: var(--c-green);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform var(--dur-base) var(--ease-out);
   }
 
   .nav__link:hover::after,
-  .nav__link:focus-visible::after {
+  .nav__link:focus-visible::after,
+  .nav__link[aria-current='page']::after {
     transform: scaleX(1);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .nav__link::after {
-      transition: none;
-    }
+  .nav__cta {
+    flex: 0 0 auto;
+    justify-content: center;
+    padding-inline: 1.5rem;
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--dur-fast) linear,
+      color var(--dur-fast) linear;
   }
 
-  .nav__num {
-    font-size: 0.62rem;
-    color: var(--c-ink-faint);
+  .nav__cta:hover {
+    background-color: var(--c-green);
+    color: var(--c-ink);
   }
 
-  .nav__btn {
-    min-height: 44px;
-    padding: 0.55rem 1rem;
+  .nav__cta:active,
+  .nav__toggle:active {
+    transform: scale(0.98);
   }
 
-  /* -------------------------------------------------- Selector de idioma */
+  /* --------------------------------------------------------- Idiomas */
   .langs {
     position: relative;
+    flex: 0 0 auto;
   }
 
   .langs__trigger {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.45rem;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.4rem 0.65rem;
-    border: 1px solid var(--c-paper-3);
-    border-radius: var(--r-2);
+    gap: 0.5rem;
+    min-height: 60px;
+    padding-inline: 1.15rem;
+    font-weight: 600;
     cursor: pointer;
-    color: var(--c-ink-soft);
     list-style: none;
+    transition: background-color var(--dur-fast) linear;
   }
 
   .langs__trigger::-webkit-details-marker {
     display: none;
   }
 
-  .langs__caret {
-    width: 0;
-    height: 0;
-    border-left: 3.5px solid transparent;
-    border-right: 3.5px solid transparent;
-    border-top: 4.5px solid currentColor;
+  .langs__trigger:hover {
+    background-color: var(--c-paper-3);
   }
 
-  .langs[open] .langs__trigger {
-    border-color: var(--c-ink);
-    color: var(--c-ink);
+  .langs__caret {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .langs[open] .langs__caret {
+    transform: translateY(2px) rotate(225deg);
   }
 
   .langs__list {
     position: absolute;
+    top: calc(100% + 8px);
     right: 0;
-    top: calc(100% + 0.5rem);
-    min-width: 12rem;
-    padding: 0.35rem;
-    background-color: var(--c-paper);
-    border: 1px solid var(--c-ink);
-    border-radius: var(--r-2);
-    box-shadow: var(--shadow-2);
     z-index: var(--z-panel);
+    min-width: 12rem;
+    padding: 0.4rem;
+    background-color: var(--c-ink);
+  }
+
+  /* Sólo flota (y sólo entonces lleva sombra) cuando está abierto. */
+  .langs[open] .langs__list {
+    box-shadow: var(--shadow-float);
   }
 
   .langs__option {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
     min-height: 44px;
-    padding: 0.4rem 0.6rem;
-    color: var(--c-ink-soft);
-    font-size: var(--fs-small);
+    padding-inline: 0.85rem;
+    color: var(--c-paper);
     text-decoration: none;
-    border-radius: var(--r-1);
+    transition: background-color var(--dur-fast) linear;
   }
 
   .langs__option:hover {
-    background-color: var(--c-paper-2);
-    color: var(--c-ink);
+    background-color: var(--c-navy-2);
   }
 
   .langs__option[aria-current='true'] {
+    background-color: var(--c-green);
     color: var(--c-ink);
-    background-color: color-mix(in srgb, var(--c-marker) 45%, transparent);
+    font-weight: 600;
   }
 
-  .langs__code {
-    font-size: 0.66rem;
-    color: var(--c-ink-faint);
+  /* --------------------------------------------------------- Móvil */
+  .nav__toggle {
+    display: none;
   }
 
-  /* -------------------------------------------------- Redes (móvil) */
-  /* En escritorio los enlaces sociales viven en el footer; aquí sólo se ven
-     cuando el panel del menú está desplegado en móvil. */
   .nav__social {
     display: none;
   }
 
-  .nav__social-title {
-    color: var(--c-ink-faint);
-    border-bottom: 1px solid var(--c-paper-3);
-    padding-bottom: 0.45rem;
-  }
-
-  .nav__social-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.9rem;
-    padding-top: 0.45rem;
-  }
-
-  .nav__social-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    color: var(--c-ink-soft);
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-  }
-
-  .nav__social-link:hover {
-    color: var(--c-ink);
-    border-bottom-color: var(--c-marker);
-  }
-
-  /* ------------------------------------------------------ Botón móvil */
-  .nav__toggle {
-    display: none;
-    align-items: center;
-    gap: 0.55rem;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.4rem 0.5rem;
-    background: none;
-    border: 1px solid var(--c-paper-3);
-    border-radius: var(--r-2);
-    cursor: pointer;
-    color: var(--c-ink);
-  }
-
-  .nav__bars {
-    display: grid;
-    gap: 4px;
-    width: 18px;
-  }
-
-  .nav__bars i {
-    display: block;
-    height: 2px;
-    background-color: currentColor;
-    transition: transform var(--dur-fast) var(--ease-out);
-  }
-
-  .nav--open .nav__bars i:first-child {
-    transform: translateY(3px) rotate(45deg);
-  }
-
-  .nav--open .nav__bars i:last-child {
-    transform: translateY(-3px) rotate(-45deg);
-  }
-
-  @media (max-width: 68rem) {
-    .nav__toggle {
-      display: inline-flex;
+  @media (max-width: 64rem) {
+    .nav {
+      padding: 6px;
     }
 
-    .nav__inner {
+    .nav__bar {
       flex-wrap: wrap;
+      gap: 6px;
     }
 
+    .nav__brand {
+      flex: 1 1 auto;
+    }
+
+    .nav__toggle {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 0.75rem;
+      padding-inline: 1.15rem;
+      border: 0;
+      background-color: var(--c-ink);
+      color: var(--c-paper);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav__bars {
+      display: grid;
+      gap: 5px;
+      width: 1.35rem;
+    }
+
+    .nav__bars i {
+      display: block;
+      height: 2px;
+      background-color: currentColor;
+      transition: transform var(--dur-base) var(--ease-out);
+    }
+
+    .nav--open .nav__bars i:first-child {
+      transform: translateY(3.5px) rotate(45deg);
+    }
+
+    .nav--open .nav__bars i:last-child {
+      transform: translateY(-3.5px) rotate(-45deg);
+    }
+
+    /* Con JS el panel se pliega; sin JS se queda desplegado y se lee entero. */
     .nav__panel {
       flex: 1 0 100%;
       flex-direction: column;
-      align-items: stretch;
-      gap: var(--sp-xs);
-      order: 3;
+      gap: 6px;
     }
 
-    /* Con JS el panel se abre y se cierra; sin JS queda siempre desplegado. */
-    html.js .nav__panel {
+    :global(html.js) .nav__panel {
       display: none;
     }
 
-    .nav--open .nav__panel,
-    html:not(.js) .nav__panel {
+    :global(html.js) .nav--open .nav__panel {
       display: flex;
-      padding-block: var(--sp-s) var(--sp-m);
-      /* En pantallas bajas el panel se desplaza solo: nunca deja enlaces
-         inalcanzables por debajo del viewport. */
-      max-height: calc(100svh - 4.5rem);
+      max-height: calc(100svh - 80px);
       overflow-y: auto;
-      overscroll-behavior: contain;
     }
 
     .nav__links {
       flex-direction: column;
       align-items: stretch;
       gap: 0;
+      padding: 0.5rem 1.15rem;
     }
 
     .nav__link {
-      justify-content: flex-start;
-      padding-block: 0.8rem;
-      border-bottom: 1px solid var(--c-paper-3);
-      font-size: var(--fs-mono-lg);
+      min-height: 52px;
+      font-size: var(--step-lead);
     }
 
-    .nav__cta {
-      padding-top: var(--sp-s);
-    }
-
-    .nav__btn {
-      width: 100%;
-    }
-
-    .langs {
-      padding-top: var(--sp-xs);
-    }
-
-    .langs__trigger {
-      width: 100%;
-      justify-content: space-between;
+    .nav__link::after {
+      bottom: 6px;
     }
 
     .langs__list {
       position: static;
-      margin-top: 0.35rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       box-shadow: none;
     }
 
+    .nav__cta {
+      min-height: 60px;
+    }
+
     .nav__social {
-      display: grid;
-      gap: 0.25rem;
-      padding-top: var(--sp-xs);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 1rem 1.15rem;
+    }
+
+    .nav__social-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav__link::after,
+    .nav__bars i,
+    .langs__caret {
+      transition: none;
     }
   }
 </style>

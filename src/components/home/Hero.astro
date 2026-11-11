@@ -1,0 +1,256 @@
+---
+import { Picture } from 'astro:assets';
+import trichomes from '../../assets/photos/trichomes.jpg';
+import koehler from '../../assets/photos/koehler.jpg';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<!-- Hero en tablero de dos por dos: el nombre, dos fotografías de archivo que
+     se leen como una sola imagen partida, una frase en tinta y otra en el
+     verde de la estrella del logo. -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__board">
+    <div class="tile hero__name-tile">
+      <h1 class="hero__name" id="hero-title" aria-label="High Doctor Foundation">
+        <span class="hero__line">High</span>
+        <span class="hero__line">Doctor</span>
+      </h1>
+    </div>
+
+    <figure class="tile hero__photo hero__photo--a" data-shutter>
+      <Picture
+        src={trichomes}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280, 1920]}
+        sizes="(max-width: 64rem) 100vw, 50vw"
+        alt={t(lang, 'hero_alt_trichomes')}
+        class="photo"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </figure>
+
+    <figure class="tile hero__photo hero__photo--b">
+      <Picture
+        src={koehler}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 64rem) 100vw, 50vw"
+        alt={t(lang, 'hero_alt_plate')}
+        class="photo"
+        loading="lazy"
+      />
+    </figure>
+
+    <div class="tile hero__statement hero__statement--dark">
+      <p>{t(lang, 'hero_statement')}</p>
+    </div>
+
+    <div class="tile hero__statement hero__statement--accent">
+      <p>{t(lang, 'hero_statement_2')}</p>
+      <a class="hero__link link-bar" href="#evidence">
+        {t(lang, 'hero_evidence_link')}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 0 8px 8px;
+  }
+
+  .hero__board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(17rem, 1fr));
+    grid-template-areas:
+      'name name a a'
+      'b b dark accent';
+    gap: 8px;
+    height: max(36rem, calc(100svh - 84px));
+  }
+
+  .tile {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .hero__name-tile {
+    grid-area: name;
+    display: flex;
+    align-items: flex-end;
+    padding: max(1rem, calc(var(--margin) - 8px));
+    background-color: var(--c-paper-2);
+  }
+
+  .hero__name {
+    font-size: clamp(5rem, 1rem + 10vw, 12rem);
+    font-weight: 600;
+    line-height: 0.86;
+    letter-spacing: -0.05em;
+  }
+
+  .hero__line {
+    display: block;
+  }
+
+  .hero__photo {
+    background-color: var(--c-ink);
+  }
+
+  .hero__photo--a {
+    grid-area: a;
+  }
+
+  .hero__photo--b {
+    grid-area: b;
+  }
+
+  .hero__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__photo--a :global(img) {
+    object-position: 55% 50%;
+    animation: drift 24s var(--ease-in-out) infinite alternate;
+  }
+
+  .hero__photo--b :global(img) {
+    object-position: 50% 18%;
+  }
+
+  .hero__statement {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: max(1rem, calc(var(--margin) - 8px));
+  }
+
+  .hero__statement p {
+    margin: 0;
+    font-size: clamp(1.25rem, 0.8rem + 0.9vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .hero__statement--dark {
+    grid-area: dark;
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+  }
+
+  .hero__statement--accent {
+    grid-area: accent;
+    background-color: var(--c-green);
+    color: var(--c-ink);
+  }
+
+  .hero__link {
+    align-self: flex-start;
+    font-size: var(--step-body);
+  }
+
+  /* Imagen que se mueve: deriva lenta del microscopio. */
+  @keyframes drift {
+    from {
+      transform: scale(1.04) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.12) translate3d(-2%, -1.5%, 0);
+    }
+  }
+
+  /* Persiana: la foto principal se abre desde abajo al cargar. El estado
+     inicial lo pone el script inline de Base (`armed`) sólo en escritorio y
+     se levanta con `ready`; si algo falla (`failed`) la foto está ahí. */
+  :global(html[data-motion='armed']) .hero__photo--a {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  :global(html[data-motion='ready']) .hero__photo--a {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1.1s var(--ease-out);
+  }
+
+  :global(html[data-motion='armed']) .hero__name .hero__line {
+    transform: translateY(0.35em);
+    opacity: 0;
+  }
+
+  :global(html[data-motion='ready']) .hero__name .hero__line {
+    transition:
+      transform 900ms var(--ease-out),
+      opacity 600ms var(--ease-out);
+  }
+
+  :global(html[data-motion='ready']) .hero__name .hero__line + .hero__line {
+    transition-delay: 90ms;
+  }
+
+  /* ---------------------------------------------------------- Teléfono */
+  @media (max-width: 64rem) {
+    .hero {
+      padding: 0 6px 6px;
+    }
+
+    .hero__board {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: auto;
+      grid-template-areas:
+        'name name'
+        'dark accent'
+        'a a'
+        'b b';
+      gap: 6px;
+      height: auto;
+    }
+
+    .hero__name-tile {
+      min-height: 30svh;
+      padding: 1.1rem;
+    }
+
+    .hero__name {
+      font-size: 22vw;
+    }
+
+    .hero__photo--a {
+      aspect-ratio: 4 / 3;
+    }
+
+    .hero__photo--b {
+      aspect-ratio: 4 / 3;
+    }
+
+    .hero__statement {
+      min-height: min(48vw, 16rem);
+      padding: 1rem;
+    }
+
+    .hero__statement p {
+      font-size: 1.125rem;
+    }
+
+    .hero__link {
+      font-size: 0.9375rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__photo--a :global(img) {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,246 @@
+---
+import { Picture } from 'astro:assets';
+import berlin from '../../assets/photos/berlin.jpg';
+import leaf from '../../assets/photos/leaf.jpg';
+import greenhouse from '../../assets/photos/greenhouse.jpg';
+import character from '../../assets/brand/logo-character.png';
+import { featuredEvent } from '../../data/event';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const date = featuredEvent.date
+  ? new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'long', year: 'numeric' }).format(
+      new Date(`${featuredEvent.date}T12:00:00`),
+    )
+  : t(lang, 'ev_tba');
+const status = featuredEvent.status === 'past' ? t(lang, 'ev_past') : t(lang, 'ev_upcoming');
+
+const strip = [
+  { src: berlin, alt: t(lang, 'mj_alt_1'), position: '50% 60%' },
+  { src: leaf, alt: t(lang, 'mj_alt_2'), position: '50% 50%' },
+  { src: greenhouse, alt: t(lang, 'mj_alt_3'), position: '50% 45%' },
+];
+---
+
+<!-- Tres fotografías pegadas y, debajo, un campo de color con la invitación.
+     La frase subrayada es la acción: no hay botón. -->
+<section class="berlin" id="mary-jane" aria-labelledby="berlin-title">
+  <div class="berlin__strip" data-reveal>
+    {
+      strip.map((photo) => (
+        <figure class="berlin__photo">
+          <Picture
+            src={photo.src}
+            formats={['avif', 'webp']}
+            widths={[480, 760, 1100]}
+            sizes="(max-width: 55rem) 100vw, 34vw"
+            alt={photo.alt}
+            class="photo"
+            loading="lazy"
+            style={`object-position:${photo.position}`}
+          />
+        </figure>
+      ))
+    }
+  </div>
+
+  <div class="berlin__band">
+    <div class="berlin__text" data-reveal>
+      <h2 class="berlin__title" id="berlin-title">{t(lang, 'mj_title')}</h2>
+      <p class="berlin__lead">
+        {t(lang, 'mj_lead_pre')}<a class="berlin__action" href="#contact"
+          >{t(lang, 'mj_lead_link')}</a
+        >{t(lang, 'mj_lead_post')}
+      </p>
+      <dl class="berlin__facts">
+        <div>
+          <dt>{t(lang, 'ev_date')}</dt>
+          <dd>{date}</dd>
+        </div>
+        <div>
+          <dt>{t(lang, 'ev_city')}</dt>
+          <dd>{featuredEvent.city}</dd>
+        </div>
+        <div>
+          <dt>{t(lang, 'ev_status')}</dt>
+          <dd>{status}</dd>
+        </div>
+        {
+          featuredEvent.url && (
+            <div>
+              <dt class="visually-hidden">{t(lang, 'ev_link')}</dt>
+              <dd>
+                <a class="link-bar" href={featuredEvent.url} rel="noopener" target="_blank">
+                  {t(lang, 'ev_link')}
+                </a>
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+    <figure class="berlin__mascot">
+      <Picture
+        src={character}
+        formats={['avif', 'webp']}
+        widths={[200, 400]}
+        sizes="200px"
+        alt={t(lang, 'mascot_alt')}
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .berlin__strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .berlin__photo {
+    height: 40svh;
+    min-height: 16rem;
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--c-ink);
+  }
+
+  .berlin__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s var(--ease-out);
+  }
+
+  .berlin__photo:hover :global(img) {
+    transform: scale(1.05);
+  }
+
+  .berlin__band {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    min-height: 44svh;
+    padding: clamp(2.5rem, 5vw, 4.5rem) var(--margin);
+    background-color: var(--c-lab);
+    color: var(--c-paper);
+  }
+
+  .berlin__text {
+    grid-column: 1 / 8;
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+
+  .berlin__title {
+    max-width: 18ch;
+    font-size: var(--step-head);
+    line-height: 0.98;
+    letter-spacing: var(--tracking-display);
+  }
+
+  .berlin__lead {
+    margin: 0;
+    max-width: 36ch;
+    font-size: var(--step-lead);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .berlin__action {
+    text-decoration-line: underline;
+    text-decoration-color: var(--c-green);
+    text-decoration-thickness: 4px;
+    text-underline-offset: 6px;
+    transition:
+      text-decoration-thickness var(--dur-fast) var(--ease-out),
+      text-underline-offset var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) linear;
+  }
+
+  .berlin__action:hover {
+    color: var(--c-green);
+    text-decoration-thickness: 6px;
+    text-underline-offset: 4px;
+  }
+
+  .berlin__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .berlin__facts dt {
+    font-size: var(--step-small);
+    color: var(--c-paper-muted);
+  }
+
+  .berlin__facts dd {
+    margin: 0.2rem 0 0;
+    font-weight: 600;
+  }
+
+  .berlin__mascot {
+    grid-column: 11 / 13;
+    align-self: end;
+    justify-self: end;
+    width: clamp(7rem, 12vw, 11rem);
+    margin: 0;
+  }
+
+  .berlin__mascot :global(img) {
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 100%;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .berlin__mascot:hover :global(img) {
+    transform: rotate(-4deg) scale(1.04);
+  }
+
+  @media (max-width: 55rem) {
+    .berlin__strip {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .berlin__photo {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 1;
+    }
+
+    .berlin__photo:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 4 / 3;
+    }
+
+    .berlin__band {
+      grid-template-columns: 1fr 6rem;
+      padding-bottom: 2rem;
+    }
+
+    .berlin__text {
+      grid-column: 1 / -1;
+    }
+
+    .berlin__title {
+      font-size: 2.25rem;
+    }
+
+    .berlin__mascot {
+      grid-column: 2;
+      width: 6rem;
+    }
+  }
+</style>

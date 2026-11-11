@@ -1,0 +1,165 @@
+---
+import { t, type Lang } from '../../i18n';
+import {
+  blogHrefForSiteLang,
+  categoryLabel,
+  formatShortDate,
+  getPosts,
+  isoDate,
+  postUrl,
+  slugOf,
+} from '../../lib/news';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+/** EN y ES muestran su idioma; los otros seis, las noticias en EN. */
+const newsLang = lang === 'es' ? 'es' : 'en';
+const posts = (await getPosts(newsLang)).slice(0, 3);
+const blogHref = blogHrefForSiteLang(lang);
+const showLanguageNote = lang !== 'es' && lang !== 'en';
+---
+
+{
+  posts.length > 0 && (
+    <section class="news" id="news" aria-labelledby="news-title">
+      <div class="container news__grid">
+        <div class="news__side" data-reveal>
+          <h2 class="h2 news__title" id="news-title">
+            {t(lang, 'home_news_title')}
+          </h2>
+          {showLanguageNote && <p class="news__note">{t(lang, 'home_news_note')}</p>}
+          <a class="link-bar news__all" href={blogHref}>
+            {t(lang, 'home_news_cta')}
+          </a>
+        </div>
+
+        <ul class="news__list" data-reveal>
+          {posts.map((post) => {
+            const slug = slugOf(post);
+            return (
+              <li class="news__item">
+                <h3 class="news__item-title">
+                  <a href={postUrl(newsLang, slug)} transition:name={`post-title-${slug}`}>
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="news__summary">
+                  {post.data.summary}{' '}
+                  <span class="news__meta">
+                    <time datetime={isoDate(post.data.date)}>{formatShortDate(post.data.date)}</time>
+                    {' · '}
+                    {categoryLabel(newsLang, post.data.category)}
+                  </span>
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .news {
+    padding-block: var(--section-y);
+  }
+
+  .news__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .news__side {
+    grid-column: 1 / 5;
+    position: sticky;
+    top: 6rem;
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .news__note {
+    margin: 0;
+    font-size: var(--step-small);
+    color: var(--c-ink-soft);
+  }
+
+  .news__list {
+    grid-column: 6 / 13;
+    display: grid;
+    gap: 6px;
+  }
+
+  .news__item {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    background-color: var(--c-paper-2);
+    transition: background-color var(--dur-fast) linear;
+  }
+
+  .news__item:nth-child(even) {
+    background-color: var(--c-paper-3);
+  }
+
+  .news__item:hover {
+    background-color: var(--c-green);
+  }
+
+  .news__meta {
+    display: inline-block;
+    font-size: var(--step-small);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .news__item-title {
+    font-size: var(--step-lead);
+    line-height: 1.12;
+  }
+
+  .news__item-title a {
+    text-decoration: none;
+  }
+
+  /* Toda la fila es clicable; el enlace real sigue siendo el titular. */
+  .news__item-title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .news__summary {
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  @media (max-width: 55rem) {
+    .news__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .news__side,
+    .news__list {
+      grid-column: 1;
+    }
+
+    .news__item-title {
+      font-size: 1.125rem;
+    }
+
+    .news__side {
+      position: static;
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>

@@ -3,15 +3,11 @@
 // de cada familia, en sus subsets latino y latino-extendido (por el polaco);
 // el navegador descarga sólo el subset que necesita cada página.
 import { ClientRouter } from 'astro:transitions';
-import '@fontsource-variable/fraunces/wght.css';
-import '@fontsource-variable/inter-tight/wght.css';
-import '@fontsource-variable/jetbrains-mono/wght.css';
-// Los dos ficheros que se usan por encima del pliegue (titular y texto) se
-// precargan: así el cambio de tipografía no mueve la página al cargar.
-import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
-import frauncesLatinExt from '@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-normal.woff2?url';
-import interLatin from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
-import interLatinExt from '@fontsource-variable/inter-tight/files/inter-tight-latin-ext-wght-normal.woff2?url';
+import '@fontsource-variable/bricolage-grotesque/opsz.css';
+// La fuente del titular y del texto es la misma: se precarga su subset latino
+// (y el latino-extendido en polaco) para que no se mueva nada al cargar.
+import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
+import bricolageLatinExt from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-opsz-normal.woff2?url';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/blog.css';
@@ -60,8 +56,7 @@ const {
 
 // Sólo el polaco necesita el subset latino-extendido en la primera pantalla
 // (ą, ł, ż…); el resto de idiomas tira de latin. El alemán usa latin (ä, ö, ü, ß).
-const criticalFonts =
-  lang === 'pl' ? [frauncesLatin, frauncesLatinExt, interLatin, interLatinExt] : [frauncesLatin, interLatin];
+const criticalFonts = lang === 'pl' ? [bricolageLatin, bricolageLatinExt] : [bricolageLatin];
 
 // Mismo <title> y misma descripción que la web antigua (los textos SEO
 // por idioma llegan en el prompt 09).
@@ -143,7 +138,7 @@ const imageUrl = image ? absolute(image) : undefined;
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#F4EFE4" />
+    <meta name="theme-color" content="#000C3C" />
 
     {
       criticalFonts.map((href) => (

@@ -1,0 +1,158 @@
+---
+import { t, type Lang, type TranslationKey } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const benefits: { title: TranslationKey; desc: TranslationKey; terms: TranslationKey }[] = [
+  { title: 'join_b1_t', desc: 'join_b1_d', terms: 'join_b1_terms' },
+  { title: 'join_b2_t', desc: 'join_b2_d', terms: 'join_b2_terms' },
+  { title: 'join_b3_t', desc: 'join_b3_d', terms: 'join_b3_terms' },
+  { title: 'join_b4_t', desc: 'join_b4_d', terms: 'join_b4_terms' },
+  { title: 'join_b5_t', desc: 'join_b5_d', terms: 'join_b5_terms' },
+  { title: 'join_b6_t', desc: 'join_b6_d', terms: 'join_b6_terms' },
+];
+---
+
+<!-- Dos mitades pegadas: la declaración en tono claro y, en el tono más
+     oscuro, lo que obtienes al entrar, fila a fila. -->
+<section class="join" id="join" aria-labelledby="join-title">
+  <div class="join__statement" data-reveal>
+    <h2 class="h2 join__title" id="join-title">
+      <span class="join__line">{t(lang, 'join_head_1')}</span>
+      <span class="join__line join__line--right">{t(lang, 'join_head_2')}</span>
+    </h2>
+    <div class="join__foot">
+      <p class="join__text">
+        {t(lang, 'join_subtitle')}{' '}{t(lang, 'join_lead_2')}
+      </p>
+      <a class="btn btn--accent join__btn" href="#contact">
+        {t(lang, 'nav_cta')}
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path d="M2 9h12M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <ul class="join__rows" data-reveal>
+    {
+      benefits.map((benefit) => (
+        <li class="join__row">
+          <h3 class="join__row-title">{t(lang, benefit.title)}</h3>
+          <p class="join__row-desc">{t(lang, benefit.desc)}</p>
+          <p class="join__row-terms">{t(lang, benefit.terms)}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .join {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .join__statement {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3rem;
+    min-height: 90svh;
+    padding: clamp(2rem, 4vw, 4rem) var(--margin);
+    background-color: var(--c-paper-2);
+  }
+
+  .join__title {
+    font-size: var(--step-head);
+  }
+
+  .join__line {
+    display: block;
+  }
+
+  .join__line--right {
+    text-align: right;
+  }
+
+  .join__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .join__text {
+    max-width: 30ch;
+    margin: 0;
+  }
+
+  .join__rows {
+    display: grid;
+    grid-auto-rows: 1fr;
+    background-color: var(--c-ink);
+    color: var(--c-paper);
+  }
+
+  .join__row {
+    display: grid;
+    grid-template-columns: 5fr 4fr 3fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.75rem var(--margin) 1.75rem 1.75rem;
+    transition: background-color var(--dur-base) linear;
+  }
+
+  .join__row:nth-child(even) {
+    background-color: var(--c-navy-2);
+  }
+
+  .join__row:hover {
+    background-color: var(--c-lab);
+  }
+
+  .join__row-title {
+    font-size: var(--step-lead);
+    line-height: 1.05;
+  }
+
+  .join__row-desc {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .join__row-terms {
+    margin: 0;
+    font-size: var(--step-small);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--c-paper-muted);
+  }
+
+  @media (max-width: 64rem) {
+    .join {
+      grid-template-columns: 1fr;
+    }
+
+    .join__statement {
+      min-height: 0;
+      padding-top: 5rem;
+    }
+
+    .join__title {
+      font-size: 10vw;
+    }
+
+    .join__row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      padding: 1.5rem var(--margin);
+    }
+  }
+</style>

@@ -42,7 +42,7 @@ function initNav(): void {
 
   // Si se pasa a escritorio con el menú abierto, se cierra: en escritorio el
   // panel es siempre visible y el estado abierto sobra.
-  const desktop = window.matchMedia('(min-width: 55.01rem)');
+  const desktop = window.matchMedia('(min-width: 64.01rem)');
   desktop.addEventListener('change', (event) => {
     if (event.matches) setMenu(false);
   });
