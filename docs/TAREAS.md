@@ -2,6 +2,12 @@
 
 > **Proyecto en pausa (2026-11-12).** El publicador automático y la documentación interna viven en el repo **privado** `Robezzno/high-doctor-publicador` (ver su `COMO-SEGUIR.md`). Este repo es público y sólo contiene la web.
 
+## Noticias de la web (manuales mientras no hay publicador)
+- 2026-11-14: dos noticias nuevas en ES y EN (rama `rediseno`, salen al publicar el rediseño), contrastadas en ≥2 fuentes cada una:
+  - `hombres-mujeres-efectos-cannabis-ucla` (investigación): estudio de UCLA en *Neuropsychopharmacology* (nota oficial de UCLA + News-Medical; DOI en el texto).
+  - `anmat-prohibe-aceite-cannabis-sin-registro` (salud): Disposición ANMAT 7206/2026 (Boletín Oficial + Infobae + La Nación). Enlaza con el mito «cualquier aceite de CBD sirve».
+- Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
+
 ## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)
 - 2026-11-11: Saf rechazó la v1 («no hay coherencia entre el tamaño de las cosas y la misión»). Investigados referentes (Drug Science, MAPS, Cochrane, OWID, Project CBD, Wellcome) y entrevista: público general y pacientes, acción principal leer/consultar, mascota protagonista. Dirección elegida por Saf: notas A–E tipo etiqueta.
   - Portada: hero con el explorador funcionando (selector → nota A–E + fuente + frase del doctor), todas las notas en fichas desplegables, cómo ponemos la nota, noticias, quiénes somos, Mary Jane Berlín y únete + formulario. Rubik estática (no variable). Contrato en `.impeccable/surfaces/home.md`, producto en `PRODUCT.md`.
