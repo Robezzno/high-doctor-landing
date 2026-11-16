@@ -15,7 +15,18 @@
 ## Rediseño v3 «más elegante» (rama `rediseno-v3`, NO publicar)
 - 2026-11-17: encargo de Saf: rediseñar con la skill **Modern Web Guidance** de Google Chrome (instalada en `~/.claude/skills/modern-web-guidance`, CLI `npx -y modern-web-guidance@latest search|retrieve`) para que quede más elegante. Sin publicar; solo se publicaron los gráficos de noticias.
   - `legacy-scan src` → 0 hallazgos (el código ya es moderno; el salto es de diseño).
-  - En curso: plan de Fable (diagnóstico + dirección + pasos). Cómo retomar: si no hay plan en este fichero, pedirlo de nuevo; si lo hay, seguir el primer paso sin marcar.
+  - Dirección «la etiqueta, bien impresa»: solo Rubik con jerarquía por peso (titulares 500, 800 sólo para letras A–E), escala con menos tamaños, suelo blanco sin bandas, verde sólo en acción/foco, mascota en busto sin rótulo, notas en filas de tabla.
+  - Pasos (marcar al terminar):
+    - [ ] 1 Base: tokens.css, global.css, Base.astro (pesos, escala, sin `.section--tint`).
+    - [ ] 2 Hero: letra activa gigante, una línea de veredicto, select `base-select` con @supports, busto. Conservar ids/data-*.
+    - [ ] 3 Notas (Grades): filas A→E, sin pastillas de color, `::details-content` + `interpolate-size`. Conservar `evd-*`.
+    - [ ] 4 Método, Quiénes somos, Únete: más compactos.
+    - [ ] 5 `NewsFigure.astro`: gráfico en HTML en portada, destacado, listado y post.
+    - [ ] 6 Tarjeta social con tokens y Rubik.
+    - [ ] 7 Blog: titulares 500, chips píldora, portada del post baja, progreso de lectura.
+    - [ ] 8 Movimiento más corto (opcional).
+    - [ ] 9 Cierre: build, vitest, e2e+axe, qa:links, capturas ES/DE/PL a 1440 y 390.
+  - No tocar: ClientRouter, IDs del formulario, evidence.ts, rutas. Claves i18n nuevas en los 8 idiomas.
 
 ## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)
 - 2026-11-11: Saf rechazó la v1 («no hay coherencia entre el tamaño de las cosas y la misión»). Investigados referentes (Drug Science, MAPS, Cochrane, OWID, Project CBD, Wellcome) y entrevista: público general y pacientes, acción principal leer/consultar, mascota protagonista. Dirección elegida por Saf: notas A–E tipo etiqueta.
