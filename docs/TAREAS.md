@@ -7,7 +7,7 @@
   - `hombres-mujeres-efectos-cannabis-ucla` (investigación): estudio de UCLA en *Neuropsychopharmacology* (nota oficial de UCLA + News-Medical; DOI en el texto).
   - `anmat-prohibe-aceite-cannabis-sin-registro` (salud): Disposición ANMAT 7206/2026 (Boletín Oficial + Infobae + La Nación). Enlaza con el mito «cualquier aceite de CBD sirve».
 - 2026-11-16: dos más en ES y EN, publicadas también en `main` (producción) junto a las del 14:
-  - `cannabis-cancer-oral-metaanalisis` (investigación): metaanálisis en *Health Science Reports*, doi:10.1002/hsr2.73499 (resumen leído en Europe PMC + Marijuana Herald).
+  - `cbd-memoria-miedo-estres-postraumatico` (investigación): CBD y extinción del miedo en ratas, USP Ribeirão Preto (*Neuropharmacology*, doi:10.1016/j.neuropharm.2026.111256, resumen en Europe PMC + Marijuana Herald). Sustituye a la del cáncer oral, retirada por Saf.
   - `cannabis-dolor-cronico-registro-britanico` (investigación): registro británico, 3.744 pacientes con dolor crónico a 24 meses (*J Clin Pharmacol*, doi:10.1002/jcph.70313, resumen en Europe PMC + NORML). Sustituye a la del ictus (AHA), retirada por petición de Saf: línea editorial en `docs/CONTENIDO.md`.
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
