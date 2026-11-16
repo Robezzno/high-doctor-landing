@@ -6,6 +6,9 @@
 - 2026-11-14: dos noticias nuevas en ES y EN (rama `rediseno`, salen al publicar el rediseño), contrastadas en ≥2 fuentes cada una:
   - `hombres-mujeres-efectos-cannabis-ucla` (investigación): estudio de UCLA en *Neuropsychopharmacology* (nota oficial de UCLA + News-Medical; DOI en el texto).
   - `anmat-prohibe-aceite-cannabis-sin-registro` (salud): Disposición ANMAT 7206/2026 (Boletín Oficial + Infobae + La Nación). Enlaza con el mito «cualquier aceite de CBD sirve».
+- 2026-11-16: dos más en ES y EN, publicadas también en `main` (producción) junto a las del 14:
+  - `cannabis-cancer-oral-metaanalisis` (investigación): metaanálisis en *Health Science Reports*, doi:10.1002/hsr2.73499 (resumen leído en Europe PMC + Marijuana Herald).
+  - `cannabis-ictus-corazon-aha-2026` (salud): póster de Tulane en AHA Scientific Sessions 2026 (nota AHA vía News-Medical + AJMC + HCPLive). Sin revisión por pares, se dice en el texto.
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
 ## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)
