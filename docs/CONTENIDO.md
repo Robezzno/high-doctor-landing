@@ -143,6 +143,14 @@ Decisiones y porqué:
 
 Es la decisión de `docs/PLAN.md`: no se generan ocho versiones de cada noticia.
 
+## Línea editorial (decidida por Saf, 2026-11-16)
+
+Serios pero sin espantar. Elegimos noticias que **informan o aportan** sobre el cannabis:
+investigación sobre usos terapéuticos, avances regulatorios, desmontar mitos, calidad
+y control de producto. **No** publicamos estudios que lo pintan mal sin prueba sólida
+(asociaciones en encuestas, pósters sin revisar, titulares alarmistas). Siempre con
+fuente primaria y contando con honestidad qué tipo de estudio es.
+
 ## Posts de salud
 
 Si `category: salud`, el post muestra siempre el aviso:
