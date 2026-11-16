@@ -12,6 +12,11 @@
 - 2026-11-17: **gráfico propio en cada noticia** (campo `grafico` del contrato): cifra clave, etiqueta y hasta 3 datos con barra. Sale en la tarjeta social, la imagen OG, la portada del post y como miniatura en el listado. Publicado en `main`.
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
+## Rediseño v3 «más elegante» (rama `rediseno-v3`, NO publicar)
+- 2026-11-17: encargo de Saf: rediseñar con la skill **Modern Web Guidance** de Google Chrome (instalada en `~/.claude/skills/modern-web-guidance`, CLI `npx -y modern-web-guidance@latest search|retrieve`) para que quede más elegante. Sin publicar; solo se publicaron los gráficos de noticias.
+  - `legacy-scan src` → 0 hallazgos (el código ya es moderno; el salto es de diseño).
+  - En curso: plan de Fable (diagnóstico + dirección + pasos). Cómo retomar: si no hay plan en este fichero, pedirlo de nuevo; si lo hay, seguir el primer paso sin marcar.
+
 ## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)
 - 2026-11-11: Saf rechazó la v1 («no hay coherencia entre el tamaño de las cosas y la misión»). Investigados referentes (Drug Science, MAPS, Cochrane, OWID, Project CBD, Wellcome) y entrevista: público general y pacientes, acción principal leer/consultar, mascota protagonista. Dirección elegida por Saf: notas A–E tipo etiqueta.
   - Portada: hero con el explorador funcionando (selector → nota A–E + fuente + frase del doctor), todas las notas en fichas desplegables, cómo ponemos la nota, noticias, quiénes somos, Mary Jane Berlín y únete + formulario. Rubik estática (no variable). Contrato en `.impeccable/surfaces/home.md`, producto en `PRODUCT.md`.
