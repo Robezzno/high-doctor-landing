@@ -9,6 +9,7 @@
 - 2026-11-16: dos más en ES y EN, publicadas también en `main` (producción) junto a las del 14:
   - `cbd-memoria-miedo-estres-postraumatico` (investigación): CBD y extinción del miedo en ratas, USP Ribeirão Preto (*Neuropharmacology*, doi:10.1016/j.neuropharm.2026.111256, resumen en Europe PMC + Marijuana Herald). Sustituye a la del cáncer oral, retirada por Saf.
   - `cannabis-dolor-cronico-registro-britanico` (investigación): registro británico, 3.744 pacientes con dolor crónico a 24 meses (*J Clin Pharmacol*, doi:10.1002/jcph.70313, resumen en Europe PMC + NORML). Sustituye a la del ictus (AHA), retirada por petición de Saf: línea editorial en `docs/CONTENIDO.md`.
+- 2026-11-17: **gráfico propio en cada noticia** (campo `grafico` del contrato): cifra clave, etiqueta y hasta 3 datos con barra. Sale en la tarjeta social, la imagen OG, la portada del post y como miniatura en el listado. Publicado en `main`.
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
 ## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)

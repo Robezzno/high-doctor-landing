@@ -13,6 +13,13 @@ tags:
 author: equipo
 instagram: 'off'
 instagramHook: 'Nace High Doctor Foundation'
+grafico:
+  cifra: '6 áreas'
+  etiqueta: 'de trabajo que se sostienen entre sí'
+  datos:
+    - texto: 'Investigación y conocimiento médico'
+    - texto: 'Educación y reducción de riesgos'
+    - texto: 'Comunidad, cultura y red internacional'
 ---
 
 High Doctor Foundation es una fundación independiente dedicada a la investigación, la educación, la divulgación científica y el desarrollo cultural en torno al cannabis y los cannabinoides. Nace de una experiencia acumulada en la promoción de la educación, la responsabilidad y la cultura, y lo hace con una idea sencilla: **el conocimiento sólo sirve cuando circula**.

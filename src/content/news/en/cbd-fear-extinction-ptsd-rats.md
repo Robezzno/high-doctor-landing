@@ -16,6 +16,13 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'CBD and fear memory: a lead for post-traumatic stress'
+grafico:
+  cifra: '7 days'
+  etiqueta: 'of CBD were enough to protect fear extinction'
+  datos:
+    - texto: 'Works through two routes: serotonin 5-HT1A and CB1'
+    - texto: 'As effective as the reference antidepressant'
+    - texto: 'Uncovers a new target in the brain'
 ---
 
 Getting over trauma is not about erasing the memory but about learning that the danger has passed. That process is called **fear extinction**, and in post-traumatic stress disorder (PTSD) it is exactly what breaks down. First-line treatments, such as some antidepressants, do not work for everyone. A team at Ribeirão Preto Medical School (University of São Paulo), a world-leading group in cannabidiol research, published a study in *Neuropharmacology* on 6 November that points to **CBD as a candidate**.

@@ -126,6 +126,15 @@ export interface CardContent {
   hook?: string;
   category: string;
   date: Date;
+  /** Gráfico de la noticia (campo `grafico`). Si falta, se dibuja la molécula. */
+  figure?: CardFigure;
+}
+
+/** Dato clave en grande y hasta tres datos de apoyo, con barra si son porcentaje. */
+export interface CardFigure {
+  cifra: string;
+  etiqueta: string;
+  datos: { texto: string; porcentaje?: number }[];
 }
 
 export const SOCIAL_CARD_SIZE = { width: 1080, height: 1350 } as const;
@@ -426,6 +435,225 @@ function footerRow(
   );
 }
 
+/** Porcentaje con la convención de cada idioma: «56 %» en ES, «56%» en EN. */
+function formatPercent(value: number, lang: 'es' | 'en'): string {
+  const rounded = Math.round(value);
+  return lang === 'es' ? `${rounded}\u00A0%` : `${rounded}%`;
+}
+
+/** Tamaño de la cifra grande según su longitud. */
+function figureValueSize(text: string, variant: 'social' | 'og'): number {
+  const length = text.length;
+  if (variant === 'og') {
+    if (length <= 4) return 116;
+    if (length <= 7) return 92;
+    return 70;
+  }
+  if (length <= 4) return 220;
+  if (length <= 7) return 172;
+  return 128;
+}
+
+/** Una fila de datos: texto y, si hay porcentaje, barra proporcional con su cifra. */
+function figureRow(
+  row: CardFigure['datos'][number],
+  palette: CardPalette,
+  lang: 'es' | 'en',
+  variant: 'social' | 'og',
+): Node {
+  const textSize = variant === 'og' ? 17 : 28;
+  const barHeight = variant === 'og' ? 6 : 12;
+  const hasBar = typeof row.porcentaje === 'number';
+
+  const text = h(
+    'div',
+    {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: variant === 'og' ? 10 : 16,
+      fontFamily: FONTS.serif.family,
+      fontWeight: 500,
+      fontSize: textSize,
+      lineHeight: 1.25,
+      color: palette.ink,
+    },
+    [
+      hasBar
+        ? h(
+            'div',
+            {
+              fontFamily: FONTS.mono.family,
+              fontWeight: 500,
+              fontSize: variant === 'og' ? 17 : 28,
+              color: palette.accent,
+              flexShrink: 0,
+            },
+            formatPercent(row.porcentaje as number, lang),
+          )
+        : h('div', {
+            width: variant === 'og' ? 7 : 11,
+            height: variant === 'og' ? 7 : 11,
+            borderRadius: '50%',
+            backgroundColor: palette.accent,
+            flexShrink: 0,
+            marginBottom: variant === 'og' ? 3 : 5,
+          }),
+      h('div', { display: 'flex', flex: 1 }, row.texto),
+    ],
+  );
+
+  if (!hasBar) return text;
+
+  return h('div', { display: 'flex', flexDirection: 'column', gap: variant === 'og' ? 7 : 12 }, [
+    text,
+    h('div', { display: 'flex', width: '100%', height: barHeight, backgroundColor: palette.rule }, [
+      h('div', {
+        width: `${Math.max(1.5, Math.min(100, row.porcentaje as number))}%`,
+        height: barHeight,
+        backgroundColor: palette.accent,
+      }),
+    ]),
+  ]);
+}
+
+/** Bloque del gráfico: cifra grande, etiqueta y datos de apoyo. */
+function figureBlock(
+  figure: CardFigure,
+  palette: CardPalette,
+  lang: 'es' | 'en',
+  variant: 'social' | 'og',
+): Node {
+  const valueSize = figureValueSize(figure.cifra, variant);
+  return h(
+    'div',
+    {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: variant === 'og' ? 14 : 30,
+    },
+    [
+      h(
+        'div',
+        {
+          fontFamily: FONTS.serif.family,
+          fontWeight: 700,
+          fontSize: valueSize,
+          lineHeight: 0.92,
+          letterSpacing: -0.035 * valueSize,
+          color: palette.accent,
+        },
+        figure.cifra,
+      ),
+      h(
+        'div',
+        {
+          fontFamily: FONTS.serif.family,
+          fontWeight: 500,
+          fontSize: variant === 'og' ? 21 : 36,
+          lineHeight: 1.2,
+          color: palette.ink,
+        },
+        figure.etiqueta,
+      ),
+      h(
+        'div',
+        {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: variant === 'og' ? 12 : 26,
+          marginTop: variant === 'og' ? 6 : 14,
+        },
+        figure.datos.slice(0, 3).map((row) => figureRow(row, palette, lang, variant)),
+      ),
+    ],
+  );
+}
+
+/** Tamaño del gancho cuando comparte la tarjeta con el gráfico. */
+function compactHookSize(text: string, variant: 'social' | 'og'): number {
+  const length = text.length;
+  if (variant === 'og') {
+    if (length <= 40) return 46;
+    if (length <= 60) return 40;
+    return 34;
+  }
+  if (length <= 44) return 64;
+  if (length <= 60) return 56;
+  return 50;
+}
+
+/** Zona central cuando el post trae gráfico. */
+function figureMiddle(
+  content: CardContent,
+  figure: CardFigure,
+  palette: CardPalette,
+  variant: 'social' | 'og',
+  padding: number,
+): Node {
+  const hook = hookFor(content);
+  const hookSize = compactHookSize(hook, variant);
+  const hookNode = h(
+    'div',
+    {
+      fontFamily: FONTS.serif.family,
+      fontWeight: 700,
+      fontSize: hookSize,
+      lineHeight: 1.08,
+      letterSpacing: -0.02 * hookSize,
+      color: palette.ink,
+    },
+    hook,
+  );
+
+  if (variant === 'og') {
+    return h(
+      'div',
+      {
+        display: 'flex',
+        alignItems: 'center',
+        flex: 1,
+        gap: 48,
+        marginLeft: padding,
+        marginRight: padding,
+      },
+      [
+        h('div', { display: 'flex', flex: 1 }, hookNode),
+        h(
+          'div',
+          {
+            display: 'flex',
+            width: 440,
+            borderLeft: `1px solid ${palette.rule}`,
+            paddingLeft: 40,
+          },
+          figureBlock(figure, palette, content.lang, variant),
+        ),
+      ],
+    );
+  }
+
+  return h(
+    'div',
+    {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      flex: 1,
+      gap: 48,
+      marginLeft: padding,
+      marginRight: padding,
+    },
+    [
+      hookNode,
+      h(
+        'div',
+        { display: 'flex', borderTop: `1px solid ${palette.rule}`, paddingTop: 44 },
+        figureBlock(figure, palette, content.lang, variant),
+      ),
+    ],
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /* Plantilla                                                           */
 /* ------------------------------------------------------------------ */
@@ -453,7 +681,9 @@ function buildMarkup(content: CardContent, variant: 'social' | 'og'): Node {
     },
     [
       h('div', { marginTop: variant === 'og' ? 48 : 84 }, specimenRow(content, palette, variant, padding)),
-      h(
+      content.figure
+        ? figureMiddle(content, content.figure, palette, variant, padding)
+        : h(
         'div',
         {
           display: 'flex',

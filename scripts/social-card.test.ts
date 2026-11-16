@@ -52,4 +52,26 @@ describe('generador de tarjetas sociales', () => {
     const metadata = await sharp(buffer).metadata();
     expect(metadata.format).toBe('jpeg');
   }, RENDER_TIMEOUT);
+
+  it('dibuja el gráfico de la noticia (cifra, etiqueta y barras) en los dos formatos', async () => {
+    const figure = {
+      cifra: '3.744',
+      etiqueta: 'pacientes con dolor crónico seguidos durante dos años',
+      datos: [
+        { texto: 'alcanzó una mejoría clara del dolor', porcentaje: 57 },
+        { texto: 'un dato sin porcentaje' },
+        { texto: 'porcentaje fuera de rango se recorta', porcentaje: 0 },
+      ],
+    };
+    const withFigure = await renderSocialCard({ ...post, figure });
+    const without = await renderSocialCard(post);
+    const meta = await sharp(withFigure).metadata();
+    expect(meta.width).toBe(1080);
+    expect(meta.height).toBe(1350);
+    expect(withFigure.equals(without)).toBe(false);
+
+    const og = await sharp(await renderOgImage({ ...post, figure })).metadata();
+    expect(og.width).toBe(1200);
+    expect(og.height).toBe(630);
+  }, RENDER_TIMEOUT);
 });

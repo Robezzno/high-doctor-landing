@@ -247,10 +247,22 @@
 
 .post-row {
   display: grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: 180px 1fr 136px;
   gap: 36px;
   padding: 30px 0;
   border-bottom: 1px solid var(--blog-rule);
+}
+
+.post-row__figure {
+  display: block;
+  align-self: start;
+}
+
+.post-row__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
 }
 
 .post-row__meta {
@@ -767,11 +779,12 @@
   }
 
   .post-row {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-columns: 1fr 88px;
+    gap: 12px 16px;
   }
 
   .post-row__meta {
+    grid-column: 1 / -1;
     flex-direction: row;
     align-items: center;
     gap: 14px;

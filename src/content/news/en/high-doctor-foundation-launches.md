@@ -13,6 +13,13 @@ tags:
 author: equipo
 instagram: 'off'
 instagramHook: 'High Doctor Foundation launches'
+grafico:
+  cifra: '6 areas'
+  etiqueta: 'of work that support each other'
+  datos:
+    - texto: 'Research and medical knowledge'
+    - texto: 'Education and harm reduction'
+    - texto: 'Community, culture and international network'
 ---
 
 High Doctor Foundation is an independent foundation dedicated to research, education, science communication and cultural development around cannabis and cannabinoids. It grows out of accumulated experience promoting education, responsibility and culture, with one simple idea behind it: **knowledge only matters when it circulates**.

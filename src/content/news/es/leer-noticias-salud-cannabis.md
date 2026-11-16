@@ -12,6 +12,13 @@ tags:
   - alfabetización mediática
 author: equipo
 instagram: 'off'
+grafico:
+  cifra: '5 preguntas'
+  etiqueta: 'para leer una noticia de salud sobre cannabis'
+  datos:
+    - texto: '¿Cuál es la fuente original?'
+    - texto: '¿Qué tipo de estudio es?'
+    - texto: '¿Qué no dice el titular?'
 ---
 
 Cada pocas semanas aparece una noticia que atribuye al cannabis un efecto extraordinario, para bien o para mal. La mayoría de esas noticias no son falsas: son **incompletas**. Y una noticia incompleta sobre salud puede hacer más daño que una falsa, porque parece fundada.

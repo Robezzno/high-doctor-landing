@@ -16,6 +16,13 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'Does cannabis affect men and women the same?'
+grafico:
+  cifra: 'Same THC'
+  etiqueta: 'in the blood, but different effects by sex and frequency'
+  datos:
+    - texto: 'Occasional male users felt stronger effects'
+    - texto: 'Women and frequent users responded alike'
+    - texto: 'Placebo-controlled, blinded trial'
 ---
 
 For years it has been said that women are more sensitive to the effects of cannabis. A study from the UCLA Center for Cannabis and Cannabinoids, published this month in *Neuropsychopharmacology*, suggests the answer depends on something else as well: **how often each person uses**.
