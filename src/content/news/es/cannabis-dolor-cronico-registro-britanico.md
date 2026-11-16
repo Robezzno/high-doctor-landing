@@ -16,6 +16,16 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'Dolor crónico y cannabis medicinal: qué pasa a los dos años'
+grafico:
+  cifra: '3.744'
+  etiqueta: 'pacientes con dolor crónico seguidos durante dos años'
+  datos:
+    - texto: 'alcanzó una mejoría clara del dolor'
+      porcentaje: 57
+    - texto: 'de los perfiles de pacientes acabó con menos dolor'
+      porcentaje: 100
+    - texto: 'de quienes tomaban opioides los redujo de forma notable'
+      porcentaje: 23
 ---
 
 El dolor crónico es uno de los motivos más habituales por los que se receta cannabis medicinal. Lo que faltaba era saber **qué pasa con el tiempo**: si la mejoría se mantiene y por qué a unas personas les va mejor que a otras. Un análisis del Registro Británico de Cannabis Medicinal (UK Medical Cannabis Registry), publicado en el *Journal of Clinical Pharmacology*, ha seguido a 3.744 pacientes durante dos años.

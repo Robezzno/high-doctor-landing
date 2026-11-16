@@ -15,6 +15,13 @@ tags:
   - método científico
 author: equipo
 instagram: 'off'
+grafico:
+  cifra: '3 preguntas'
+  etiqueta: 'antes de creer un resultado sobre cannabinoides'
+  datos:
+    - texto: '¿En qué modelo se ha estudiado?'
+    - texto: '¿Cuántas personas y durante cuánto tiempo?'
+    - texto: '¿Quién lo financia y qué se mide?'
 ---
 
 La investigación sobre cannabinoides es un campo joven, con mucha literatura y no toda de la misma calidad. Esa mezcla es la raíz de casi todas las confusiones: un titular que promete mucho suele venir de un estudio pequeño, en células o en animales, que nadie ha replicado todavía.

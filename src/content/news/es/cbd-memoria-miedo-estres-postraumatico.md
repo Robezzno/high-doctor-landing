@@ -16,6 +16,13 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'El CBD y la memoria del miedo: una pista para el estrés postraumático'
+grafico:
+  cifra: '7 días'
+  etiqueta: 'de CBD bastaron para proteger la superación del miedo'
+  datos:
+    - texto: 'Funciona por dos vías: serotonina 5-HT1A y CB1'
+    - texto: 'Eficacia similar al antidepresivo de referencia'
+    - texto: 'Descubre una diana nueva en el cerebro'
 ---
 
 Superar un trauma no es borrar el recuerdo, sino aprender que ya no hay peligro. A ese proceso se le llama **extinción del miedo**, y en el trastorno de estrés postraumático (TEPT) es justo lo que falla. Los tratamientos de primera línea, como algunos antidepresivos, no funcionan para todo el mundo. Un equipo de la Facultad de Medicina de Ribeirão Preto (Universidad de São Paulo), un grupo de referencia mundial en cannabidiol, publicó el 6 de noviembre en *Neuropharmacology* un estudio que apunta al **CBD como candidato**.

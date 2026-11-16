@@ -7,6 +7,7 @@ import {
   isoDate,
   postUrl,
   slugOf,
+  socialCardPath,
   type NewsEntry,
   type NewsLang,
 } from '../../lib/news';
@@ -39,4 +40,15 @@ const href = postUrl(lang, slug);
     <p class="post-row__summary">{entry.data.summary}</p>
     <a class="post-row__more" href={href}>{strings.readPost} →</a>
   </div>
+  <!-- Miniatura del gráfico de la noticia (la misma tarjeta que la portada del post). -->
+  <a class="post-row__figure" href={href} aria-hidden="true" tabindex="-1">
+    <img
+      src={socialCardPath(lang, slug)}
+      alt=""
+      width="1080"
+      height="1350"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
 </article>

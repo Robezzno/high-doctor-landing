@@ -1,5 +1,38 @@
 # TAREAS — highdoctor.foundation
 
+> **Proyecto en pausa (2026-11-12).** El publicador automático y la documentación interna viven en el repo **privado** `Robezzno/high-doctor-publicador` (ver su `COMO-SEGUIR.md`). Este repo es público y sólo contiene la web.
+
+## Noticias de la web (manuales mientras no hay publicador)
+- 2026-11-14: dos noticias nuevas en ES y EN (rama `rediseno`, salen al publicar el rediseño), contrastadas en ≥2 fuentes cada una:
+  - `hombres-mujeres-efectos-cannabis-ucla` (investigación): estudio de UCLA en *Neuropsychopharmacology* (nota oficial de UCLA + News-Medical; DOI en el texto).
+  - `anmat-prohibe-aceite-cannabis-sin-registro` (salud): Disposición ANMAT 7206/2026 (Boletín Oficial + Infobae + La Nación). Enlaza con el mito «cualquier aceite de CBD sirve».
+- 2026-11-16: dos más en ES y EN, publicadas también en `main` (producción) junto a las del 14:
+  - `cbd-memoria-miedo-estres-postraumatico` (investigación): CBD y extinción del miedo en ratas, USP Ribeirão Preto (*Neuropharmacology*, doi:10.1016/j.neuropharm.2026.111256, resumen en Europe PMC + Marijuana Herald). Sustituye a la del cáncer oral, retirada por Saf.
+  - `cannabis-dolor-cronico-registro-britanico` (investigación): registro británico, 3.744 pacientes con dolor crónico a 24 meses (*J Clin Pharmacol*, doi:10.1002/jcph.70313, resumen en Europe PMC + NORML). Sustituye a la del ictus (AHA), retirada por petición de Saf: línea editorial en `docs/CONTENIDO.md`.
+- 2026-11-17: **gráfico propio en cada noticia** (campo `grafico` del contrato): cifra clave, etiqueta y hasta 3 datos con barra. Sale en la tarjeta social, la imagen OG, la portada del post y como miniatura en el listado. Publicado en `main`.
+- Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
+
+## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)
+- 2026-11-11: Saf rechazó la v1 («no hay coherencia entre el tamaño de las cosas y la misión»). Investigados referentes (Drug Science, MAPS, Cochrane, OWID, Project CBD, Wellcome) y entrevista: público general y pacientes, acción principal leer/consultar, mascota protagonista. Dirección elegida por Saf: notas A–E tipo etiqueta.
+  - Portada: hero con el explorador funcionando (selector → nota A–E + fuente + frase del doctor), todas las notas en fichas desplegables, cómo ponemos la nota, noticias, quiénes somos, Mary Jane Berlín y únete + formulario. Rubik estática (no variable). Contrato en `.impeccable/surfaces/home.md`, producto en `PRODUCT.md`.
+  - Copia autocontenida en churflix `/srv/media/sync/High Doctor Foundation - web.html` (se regenera con `node scripts/single-file.mjs es/index.html <salida>` tras `npm run build`).
+  - Verificado: vitest 137/137, e2e+axe 41/41, enlaces OK, detector impeccable limpio.
+
+## Rediseño v1 (descartado, historial)
+- 2026-11-11: portada rehecha con dirección «informe impreso» (skill design-taste-frontend, seed 25026389):
+  - Una sola familia (Bricolage Grotesque), paleta de marca (azul marino, verde estrella), piedra clara en vez de crema, sin monoespaciada, sin sombras ni líneas finas.
+  - Secciones nuevas en `src/components/home/`: hero en tablero 2×2, misión, «Cómo trabajamos» (diagrama de 144 cuadrados que se ordenan al entrar), **«Qué dice la evidencia»** (pieza interactiva: 10 temas con nivel NASEM 2017 / EMA y fuente; datos en `src/data/evidence.ts`), capítulos a pantalla completa, unirse, noticias, Mary Jane Berlín y contacto + formulario (mismos IDs y Web3Forms).
+  - 9 fotos de archivo de Wikimedia Commons (dominio público / CC), créditos en el footer (`src/data/credits.ts`).
+  - Animaciones sin GSAP (IntersectionObserver + CSS, `src/scripts/motion/reveal.ts`), respetan reduced-motion y se leen sin JS. Lenis sólo con ratón.
+  - Textos nuevos en los 8 idiomas. Blog y legales heredan colores y tipografía.
+  - Verificado: inspector de diseño 0 FAIL en los 8 idiomas a 1440/768/390, `vitest` 137/137, e2e + axe 41/41, crawler sin enlaces rotos.
+- 2026-11-11: módulo `publicador/` (rama `feat/publicador`): servicio para VPS que genera con IA y publica en blog + redes. 109 tests, demo en dry-run, Docker. **Nada contratado** (VPS y API de IA de pago necesitan OK de Saf).
+
+### Pendiente del rediseño
+- OK de Saf para mergear `rediseno` a `main` (publica en producción).
+- Revisar los textos médicos de «Qué dice la evidencia» (ES/EN redactados contra NASEM 2017 y EMA; los otros 6 idiomas traducidos).
+- Rediseño a fondo del blog y de las tarjetas sociales (todavía usan Fraunces en la imagen generada).
+
 ## Hecho
 - 2026-10-20: repo localizado (`Robezzno/high-doctor-landing`), acceso de push comprobado, diagnóstico de la web y plan completo en `docs/PLAN.md`.
 - 2026-10-20: prompts de ejecución en `docs/prompts/` (00 → 09) y `_config.yml` para que Jekyll no publique `docs/` en la web.

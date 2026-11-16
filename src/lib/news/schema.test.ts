@@ -80,4 +80,17 @@ describe('esquema de la colección news', () => {
     expect(schema.safeParse({ ...equipoPost, cover: 'portada.jpg' }).success).toBe(true);
     expect(schema.safeParse({ ...equipoPost, cover: 42 }).success).toBe(false);
   });
+
+  it('acepta un gráfico válido y rechaza uno con más de tres datos o porcentaje fuera de rango', () => {
+    const grafico = {
+      cifra: '3.744',
+      etiqueta: 'pacientes seguidos durante dos años',
+      datos: [{ texto: 'mejoran el dolor', porcentaje: 57 }, { texto: 'sin barra' }],
+    };
+    expect(newsSchema.safeParse({ ...equipoPost, grafico }).success).toBe(true);
+    const cuatro = { ...grafico, datos: Array(4).fill({ texto: 'x' }) };
+    expect(newsSchema.safeParse({ ...equipoPost, grafico: cuatro }).success).toBe(false);
+    const fuera = { ...grafico, datos: [{ texto: 'x', porcentaje: 140 }] };
+    expect(newsSchema.safeParse({ ...equipoPost, grafico: fuera }).success).toBe(false);
+  });
 });

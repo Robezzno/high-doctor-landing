@@ -16,6 +16,13 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'Not every cannabis oil is a medicine'
+grafico:
+  cifra: '4 checks'
+  etiqueta: 'to spot a trustworthy cannabis oil'
+  datos:
+    - texto: 'A health registration number'
+    - texto: 'Exact composition and a lab analysis'
+    - texto: 'Recommended by a health professional'
 ---
 
 On 12 November 2026, Argentina's medicines regulator (ANMAT) published **Disposition 7206/2026** in the Official Gazette. It bans the use, sale (online included) and distribution of "Canna Oil" products nationwide until they obtain health authorisation.

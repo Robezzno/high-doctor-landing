@@ -16,6 +16,13 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'No todo aceite de cannabis es un medicamento'
+grafico:
+  cifra: '4 claves'
+  etiqueta: 'para reconocer un aceite de cannabis fiable'
+  datos:
+    - texto: 'Número de registro sanitario'
+    - texto: 'Composición exacta y análisis de laboratorio'
+    - texto: 'Indicado por un profesional sanitario'
 ---
 
 El 12 de noviembre de 2026, la Administración Nacional de Medicamentos de Argentina (ANMAT) publicó en el Boletín Oficial la **Disposición 7206/2026**, que prohíbe en todo el país el uso, la venta (también por internet) y la distribución de los productos «Canna Oil», hasta que obtengan autorización sanitaria.

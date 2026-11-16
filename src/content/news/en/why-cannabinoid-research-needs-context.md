@@ -15,6 +15,13 @@ tags:
   - scientific method
 author: equipo
 instagram: 'off'
+grafico:
+  cifra: '3 questions'
+  etiqueta: 'to ask before trusting a cannabinoid result'
+  datos:
+    - texto: 'What model was it studied in?'
+    - texto: 'How many people, and for how long?'
+    - texto: 'Who funded it, and what was measured?'
 ---
 
 Cannabinoid research is a young field with a large body of literature, and not all of it is of the same quality. That mixture is behind almost every confusion: a headline that promises a lot usually comes from a small study in cells or animals that nobody has replicated yet.

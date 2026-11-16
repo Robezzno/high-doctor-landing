@@ -37,6 +37,30 @@ export type InstagramStatus = (typeof INSTAGRAM_STATUSES)[number];
 export const TITLE_MAX = 90;
 export const SUMMARY_MAX = 200;
 export const INSTAGRAM_HOOK_MAX = 80;
+export const FIGURE_VALUE_MAX = 12;
+export const FIGURE_LABEL_MAX = 70;
+export const FIGURE_ROW_MAX = 64;
+
+/**
+ * Gráfico de la noticia: el dato clave en grande y hasta tres datos de apoyo
+ * (con barra si llevan porcentaje). Lo pinta `scripts/social-card.ts` en la
+ * tarjeta, que es la portada del post, del listado y de la imagen social.
+ */
+export const figureSchema = z.object({
+  cifra: z.string().min(1).max(FIGURE_VALUE_MAX),
+  etiqueta: z.string().min(1).max(FIGURE_LABEL_MAX),
+  datos: z
+    .array(
+      z.object({
+        texto: z.string().min(1).max(FIGURE_ROW_MAX),
+        porcentaje: z.number().min(0).max(100).optional(),
+      }),
+    )
+    .min(1)
+    .max(3),
+});
+
+export type NewsFigure = z.infer<typeof figureSchema>;
 
 /** El bot no publica nada sin enlace a la fuente original. */
 const botNeedsSource = (post: { author: string; source?: unknown }, ctx: z.RefinementCtx) => {
@@ -80,6 +104,7 @@ export function createNewsSchema<Cover extends z.ZodType = z.ZodString>(
       instagram: z.enum(INSTAGRAM_STATUSES).default('pending'),
       instagramId: z.string().min(1).optional(),
       instagramHook: z.string().min(1).max(INSTAGRAM_HOOK_MAX).optional(),
+      grafico: figureSchema.optional(),
     })
     .superRefine(botNeedsSource);
 }

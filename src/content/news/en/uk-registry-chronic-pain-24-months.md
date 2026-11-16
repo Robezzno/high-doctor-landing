@@ -16,6 +16,16 @@ source:
 author: equipo
 instagram: 'off'
 instagramHook: 'Chronic pain and medical cannabis: what happens after two years'
+grafico:
+  cifra: '3,744'
+  etiqueta: 'chronic pain patients followed for two years'
+  datos:
+    - texto: 'reached a clear improvement in pain'
+      porcentaje: 57
+    - texto: 'of patient profiles ended with less pain'
+      porcentaje: 100
+    - texto: 'of those on opioids cut them down meaningfully'
+      porcentaje: 23
 ---
 
 Chronic pain is one of the most common reasons medical cannabis is prescribed. What was missing was **what happens over time**: whether the improvement lasts, and why some people do better than others. An analysis of the UK Medical Cannabis Registry, published in the *Journal of Clinical Pharmacology*, followed 3,744 patients for two years.

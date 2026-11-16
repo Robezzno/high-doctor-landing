@@ -26,6 +26,7 @@ export const GET: APIRoute = async ({ props }) => {
     slug: slugOf(entry),
     title: entry.data.title,
     hook: entry.data.instagramHook,
+    figure: entry.data.grafico,
     category: entry.data.category,
     date: entry.data.date,
   });

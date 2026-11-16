@@ -12,6 +12,13 @@ tags:
   - media literacy
 author: equipo
 instagram: 'off'
+grafico:
+  cifra: '5 questions'
+  etiqueta: 'to read a cannabis health story'
+  datos:
+    - texto: 'What is the original source?'
+    - texto: 'What kind of study is it?'
+    - texto: 'What does the headline leave out?'
 ---
 
 Every few weeks a story appears crediting cannabis with an extraordinary effect, for better or worse. Most of those stories are not false: they are **incomplete**. And an incomplete health story can do more damage than a false one, because it looks well founded.
