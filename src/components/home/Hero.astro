@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import doctor from '../../assets/brand/logo-character.png';
+// Busto sin el rótulo «HIGH DOCTOR» (el logo ya está en el menú).
+import doctor from '../../assets/brand/doctor-bust.png';
 import { evidenceSources, evidenceTopics, gradeOf, type EvidenceTopic } from '../../data/evidence';
 import { t, type Lang, type TranslationKey } from '../../i18n';
 
@@ -43,6 +44,7 @@ const groups = [
     <div class="hero__copy">
       <h1 class="hero__title" id="hero-title">{t(lang, 'v2_hero_h1')}</h1>
       <p class="hero__sub">{t(lang, 'v2_hero_sub')}</p>
+    </div>
 
       <!-- La etiqueta: eliges tema y la nota cambia aquí mismo. -->
       <div class="label">
@@ -82,6 +84,31 @@ const groups = [
 
         <div class="label__panel" aria-live="polite">
           <p class="label__caption">{t(lang, 'v2_grade_label')}</p>
+          <div class="verdict">
+            <p class="verdict__grade">
+              <span class="visually-hidden">{t(lang, 'v2_grade_label')}: </span>
+              <span data-verdict-grade>{firstGrade}</span>
+            </p>
+            <div class="verdict__text">
+              <p class="verdict__level" data-verdict-level>{levelName(first)}</p>
+              <p class="label__source">
+                {t(lang, 'evd_source')}: <span data-verdict-source>{shortSource(first)}</span>
+              </p>
+              <a class="link-arrow label__more" href={`#evd-${first.id}`} data-verdict-link>
+                {t(lang, 'v2_see_verdict')}
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M2 8h11M9 3.5 13.5 8 9 12.5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- Escala A–E: dónde cae la nota. -->
           <ol class="strip" aria-hidden="true">
             {
               letters.map((letter) => (
@@ -93,44 +120,22 @@ const groups = [
                   ]}
                   data-letter={letter}
                 >
-                  {letter}
+                  <span class="strip__letter">{letter}</span>
                 </li>
               ))
             }
           </ol>
-          <p class="label__verdict">
-            <span class="visually-hidden">{t(lang, 'v2_grade_label')}: </span>
-            <span data-verdict-grade>{firstGrade}</span>
-            <span aria-hidden="true">·</span>
-            <span data-verdict-level>{levelName(first)}</span>
-          </p>
-          <p class="label__source">
-            {t(lang, 'evd_source')}: <span data-verdict-source>{shortSource(first)}</span>
-          </p>
-          <a class="link-arrow label__more" href={`#evd-${first.id}`} data-verdict-link>
-            {t(lang, 'v2_see_verdict')}
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path
-                d="M2 8h11M9 3.5 13.5 8 9 12.5"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-            </svg>
-          </a>
         </div>
         <p class="label__legend">{t(lang, 'v2_grade_legend')}</p>
       </div>
-    </div>
 
     <figure class="hero__doctor">
       <p class="bubble" data-bubble aria-live="polite">{t(lang, sayKey(firstGrade))}</p>
       <Picture
         src={doctor}
         formats={['avif', 'webp']}
-        widths={[280, 480, 720]}
-        sizes="(max-width: 60rem) 40vw, 30rem"
+        widths={[240, 400, 640]}
+        sizes="(max-width: 60rem) 34vw, 22rem"
         alt={t(lang, 'mascot_alt')}
         loading="eager"
         fetchpriority="high"
@@ -185,37 +190,57 @@ const groups = [
 
 <style>
   .hero {
-    padding-block: clamp(1.5rem, 0.5rem + 3vw, 3.5rem) clamp(3rem, 2rem + 4vw, 5.5rem);
-    background-color: var(--c-paper-2);
+    padding-block: clamp(2rem, 1rem + 3vw, 4.5rem) var(--section-y);
   }
 
+  /* Escritorio: titular y doctor a la izquierda, la etiqueta a la derecha,
+     todo en la primera pantalla. */
   .hero__grid {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: clamp(1.5rem, 1rem + 2vw, 3rem);
-    align-items: center;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    grid-template-areas:
+      'copy label'
+      'doctor label';
+    gap: 2rem clamp(2rem, 1rem + 4vw, 5rem);
+    align-items: start;
+  }
+
+  .hero__copy {
+    grid-area: copy;
+  }
+
+  .label {
+    grid-area: label;
+    align-self: center;
+  }
+
+  .hero__doctor {
+    grid-area: doctor;
   }
 
   .hero__title {
-    max-width: 24ch;
+    max-width: 18ch;
     font-size: var(--fs-h1);
-    font-weight: 800;
-    line-height: 1.04;
-    letter-spacing: -0.03em;
+    font-weight: var(--fw-head);
+    line-height: 1.02;
+    letter-spacing: var(--tracking-display);
+    font-size-adjust: cap-height from-font;
   }
 
   .hero__sub {
-    max-width: 34rem;
-    margin: 1.25rem 0 2rem;
+    max-width: 32rem;
+    margin: 1.5rem 0 0;
     font-size: var(--fs-lead);
     line-height: 1.5;
     color: var(--c-ink-soft);
   }
 
   /* ---------------------------------------------------------- La etiqueta */
+  /* La única sombra de la página: la etiqueta, como un envase sobre la mesa. */
   .label {
     max-width: 36rem;
-    padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    padding: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+    border: 1px solid var(--c-line);
     border-radius: var(--r-2);
     background-color: var(--c-white);
     box-shadow: var(--shadow-2);
@@ -223,8 +248,9 @@ const groups = [
 
   .label__ask {
     display: block;
-    margin-bottom: 0.6rem;
-    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: var(--fs-small);
+    color: var(--c-ink-soft);
   }
 
   .label__select {
@@ -233,13 +259,13 @@ const groups = [
 
   .label__select select {
     width: 100%;
-    min-height: 56px;
+    min-height: 3.25rem;
     padding: 0.75rem 3rem 0.75rem 1rem;
-    border: 2px solid var(--c-ink);
+    border: 1px solid var(--c-ink);
     border-radius: var(--r-1);
     background-color: var(--c-white);
     font-size: 1.125rem;
-    font-weight: 500;
+    font-weight: var(--fw-head);
     appearance: none;
     cursor: pointer;
     transition: border-color var(--dur-fast) linear;
@@ -257,120 +283,165 @@ const groups = [
     pointer-events: none;
   }
 
+  /* Select a medida donde el navegador lo permite; si no, el nativo de arriba. */
+  @supports (appearance: base-select) {
+    .label__select select,
+    .label__select select::picker(select) {
+      appearance: base-select;
+    }
+
+    .label__select select {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Mantenemos nuestro chevrón (mismo trazo que el resto de iconos). */
+    .label__select select::picker-icon {
+      display: none;
+    }
+
+    .label__chevron {
+      transition: rotate var(--dur-base) var(--ease-out);
+    }
+
+    .label__select:has(select:open) .label__chevron {
+      rotate: 180deg;
+    }
+
+    .label__select select::picker(select) {
+      margin-top: 0.375rem;
+      padding: 0.375rem;
+      border: 1px solid var(--c-line);
+      border-radius: var(--r-1);
+      background-color: var(--c-white);
+      box-shadow: var(--shadow-2);
+    }
+
+    .label__select optgroup {
+      padding-top: 0.25rem;
+      font-size: var(--fs-small);
+      font-weight: var(--fw-head);
+      color: var(--c-ink-faint);
+    }
+
+    .label__select option {
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: var(--fw-regular);
+      color: var(--c-ink);
+      cursor: pointer;
+    }
+
+    .label__select option:hover,
+    .label__select option:focus-visible {
+      background-color: var(--c-paper-2);
+    }
+
+    .label__select option::checkmark {
+      color: var(--c-green-ink);
+    }
+  }
+
   .label__panel {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      'caption caption'
-      'strip strip'
-      'verdict verdict'
-      'source more';
-    gap: 0.5rem 1rem;
-    align-items: center;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
   }
 
   .label__caption {
-    grid-area: caption;
     margin: 0;
     font-size: var(--fs-small);
-    font-weight: 700;
+    color: var(--c-ink-soft);
   }
 
-  /* Tira A–E: la letra activa crece y sale de la tira. */
-  .strip {
-    grid-area: strip;
+  /* La nota: la letra es lo más grande de la página. */
+  .verdict {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
     align-items: center;
-    height: 5.5rem;
-    padding: 0 0.6rem;
-    border-radius: var(--r-2);
-    background-color: var(--c-paper-2);
   }
 
-  .strip__cell {
+  .verdict__grade {
+    margin: 0;
+    font-size: var(--fs-grade);
+    font-weight: var(--fw-grade);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--c-ink);
+  }
+
+  .verdict__text {
     display: grid;
-    place-items: center;
-    height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 800;
-    line-height: 1;
-    transition:
-      transform var(--dur-slow) var(--ease-spring),
-      height var(--dur-slow) var(--ease-spring),
-      font-size var(--dur-slow) var(--ease-spring),
-      box-shadow var(--dur-base) var(--ease-out);
+    gap: 0.4rem;
+    justify-items: start;
   }
 
-  .strip__cell:first-child {
-    border-radius: 10px 0 0 10px;
-  }
-
-  .strip__cell:last-child {
-    border-radius: 0 10px 10px 0;
-  }
-
-  .strip__cell--a {
-    background-color: var(--grade-a);
-    color: var(--grade-a-ink);
-  }
-
-  .strip__cell--b {
-    background-color: var(--grade-b);
-    color: var(--grade-b-ink);
-  }
-
-  .strip__cell--c {
-    background-color: var(--grade-c);
-    color: var(--grade-c-ink);
-  }
-
-  .strip__cell--d {
-    background-color: var(--grade-d);
-    color: var(--grade-d-ink);
-  }
-
-  .strip__cell--e {
-    background-color: var(--grade-e);
-    color: var(--grade-e-ink);
-  }
-
-  .strip__cell.is-on {
-    position: relative;
-    z-index: 1;
-    height: 4.6rem;
-    border: 3px solid var(--c-white);
-    border-radius: 12px;
-    font-size: 2.5rem;
-    transform: scale(1.1);
-    box-shadow: var(--shadow-2);
-  }
-
-  .label__verdict {
-    grid-area: verdict;
-    display: flex;
-    gap: 0.5rem;
-    margin: 0.5rem 0 0;
-    font-size: var(--fs-h3);
-    font-weight: 700;
+  .verdict__level {
+    margin: 0;
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-head);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
   .label__source {
-    grid-area: source;
     margin: 0;
     font-size: var(--fs-small);
     color: var(--c-ink-soft);
   }
 
   .label__more {
-    grid-area: more;
-    justify-self: end;
+    margin-top: 0.35rem;
     font-size: var(--fs-small);
   }
 
+  /* Escala fina A–E: la marca activa crece; el resto se queda en filete. */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-top: 1.25rem;
+  }
+
+  .strip__cell {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: var(--fw-head);
+    color: var(--c-ink-faint);
+  }
+
+  .strip__cell::before {
+    content: '';
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--strip-color);
+    opacity: 0.35;
+    transform-origin: bottom;
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .strip__cell--a { --strip-color: var(--grade-a); }
+  .strip__cell--b { --strip-color: var(--grade-b); }
+  .strip__cell--c { --strip-color: var(--grade-c); }
+  .strip__cell--d { --strip-color: var(--grade-d); }
+  .strip__cell--e { --strip-color: var(--grade-e); }
+
+  .strip__cell.is-on {
+    color: var(--c-ink);
+    font-weight: var(--fw-strong);
+  }
+
+  .strip__cell.is-on::before {
+    opacity: 1;
+    transform: scaleY(1.67);
+  }
+
   .label__legend {
-    margin: 1rem 0 0;
+    margin: 1.25rem 0 0;
     padding-top: 1rem;
     border-top: 1px solid var(--c-paper-3);
     font-size: var(--fs-small);
@@ -378,72 +449,63 @@ const groups = [
   }
 
   /* ---------------------------------------------------------- El doctor */
+  /* El doctor habla desde el lado del titular: bocadillo a su izquierda. */
   .hero__doctor {
-    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    align-items: center;
+    gap: 1.25rem;
     margin: 0;
-    padding-top: 6.5rem;
   }
 
   .hero__doctor :global(.hero__doctor-img) {
     width: 100%;
-    max-width: 30rem;
+    max-width: 15rem;
     height: auto;
-    margin-inline: auto;
-    filter: drop-shadow(0 22px 26px rgb(0 12 60 / 18%));
+    /* El busto se funde con el suelo en vez de cortarse en seco. */
+    mask-image: linear-gradient(to bottom, #000 82%, transparent);
   }
 
   .bubble {
-    position: absolute;
-    top: 0;
-    left: 8%;
-    right: 4%;
-    z-index: 1;
+    position: relative;
+    max-width: 22rem;
     margin: 0;
-    padding: 1rem 1.25rem;
-    border-radius: 18px;
+    padding: 0.875rem 1.125rem;
+    border-radius: 16px;
     background-color: var(--c-ink);
     color: var(--c-white);
-    font-size: 1.0625rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: var(--fw-head);
     line-height: 1.4;
   }
 
   .bubble::after {
     content: '';
     position: absolute;
-    bottom: -12px;
-    left: 46%;
-    width: 24px;
-    height: 24px;
+    top: 50%;
+    right: -12px;
+    width: 20px;
+    height: 20px;
+    translate: 0 -50%;
     background-color: var(--c-ink);
-    clip-path: polygon(0 0, 100% 0, 30% 100%);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .bubble.is-new {
-      animation: bubble-in 420ms var(--ease-spring);
+      animation: bubble-in 300ms var(--ease-out);
     }
 
     @keyframes bubble-in {
       from {
         opacity: 0;
-        transform: translateY(8px) scale(0.96);
-      }
-    }
-
-    .hero__doctor :global(.hero__doctor-img) {
-      animation: float 5s ease-in-out infinite alternate;
-    }
-
-    @keyframes float {
-      to {
-        transform: translateY(-10px) rotate(-1deg);
+        transform: translateY(6px);
       }
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .strip__cell {
+    .strip__cell::before {
       transition: none;
     }
   }
@@ -452,70 +514,28 @@ const groups = [
   @media (max-width: 60rem) {
     .hero__grid {
       grid-template-columns: 1fr;
+      grid-template-areas:
+        'doctor'
+        'copy'
+        'label';
+      gap: 1.5rem;
     }
 
     .hero__doctor {
-      order: -1;
-      display: grid;
-      grid-template-columns: 1fr 38%;
-      align-items: center;
-      gap: 0.75rem;
-      padding-top: 0;
+      grid-template-columns: minmax(0, 1fr) 7.5rem;
     }
 
     .bubble {
-      position: relative;
-      inset: auto;
+      max-width: none;
       font-size: 0.9375rem;
-    }
-
-    .bubble::after {
-      bottom: auto;
-      top: 40%;
-      left: auto;
-      right: -14px;
-      clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
     .hero__doctor :global(.hero__doctor-img) {
       max-width: 100%;
     }
 
-    .hero__title {
-      max-width: none;
-      font-size: clamp(2rem, 1.2rem + 3.6vw, 2.75rem);
-    }
-
     .hero__sub {
-      margin: 1rem 0 1.5rem;
-    }
-
-    .strip {
-      height: 4.75rem;
-      padding: 0 0.4rem;
-    }
-
-    .strip__cell {
-      height: 2.6rem;
-      font-size: 1.25rem;
-    }
-
-    .strip__cell.is-on {
-      height: 4rem;
-      font-size: 2rem;
-    }
-
-    .label__panel {
-      grid-template-areas:
-        'caption caption'
-        'strip strip'
-        'verdict verdict'
-        'source source'
-        'more more';
-    }
-
-    .label__more {
-      justify-self: start;
+      margin-top: 1rem;
     }
   }
 </style>

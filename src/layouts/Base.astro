@@ -13,7 +13,7 @@ import '@fontsource/rubik/latin-ext-500.css';
 import '@fontsource/rubik/latin-ext-700.css';
 import '@fontsource/rubik/latin-ext-800.css';
 import rubik400 from '@fontsource/rubik/files/rubik-latin-400-normal.woff2?url';
-import rubik800 from '@fontsource/rubik/files/rubik-latin-800-normal.woff2?url';
+import rubik500 from '@fontsource/rubik/files/rubik-latin-500-normal.woff2?url';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/blog.css';
@@ -62,7 +62,7 @@ const {
 
 // Sólo el polaco necesita el subset latino-extendido en la primera pantalla
 // (ą, ł, ż…); el resto de idiomas tira de latin. El alemán usa latin (ä, ö, ü, ß).
-const criticalFonts = [rubik400, rubik800];
+const criticalFonts = [rubik400, rubik500];
 
 // Mismo <title> y misma descripción que la web antigua (los textos SEO
 // por idioma llegan en el prompt 09).

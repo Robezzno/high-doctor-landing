@@ -30,8 +30,9 @@ body {
   color: var(--c-ink);
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: var(--lh-body);
+  font-size-adjust: from-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
@@ -71,9 +72,9 @@ h5,
 h6 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: var(--fw-head);
   line-height: var(--lh-snug);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
@@ -131,8 +132,10 @@ html {
   color: var(--c-ink);
 }
 
+/* v3: suelo blanco continuo; las secciones se separan por aire y un filete. */
 .section--tint {
-  background-color: var(--c-paper-2);
+  background-color: var(--c-paper);
+  border-top: 1px solid var(--c-line);
 }
 
 .section--lab {

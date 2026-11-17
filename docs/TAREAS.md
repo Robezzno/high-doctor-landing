@@ -17,8 +17,8 @@
   - `legacy-scan src` → 0 hallazgos (el código ya es moderno; el salto es de diseño).
   - Dirección «la etiqueta, bien impresa»: solo Rubik con jerarquía por peso (titulares 500, 800 sólo para letras A–E), escala con menos tamaños, suelo blanco sin bandas, verde sólo en acción/foco, mascota en busto sin rótulo, notas en filas de tabla.
   - Pasos (marcar al terminar):
-    - [ ] 1 Base: tokens.css, global.css, Base.astro (pesos, escala, sin `.section--tint`).
-    - [ ] 2 Hero: letra activa gigante, una línea de veredicto, select `base-select` con @supports, busto. Conservar ids/data-*.
+    - [x] 1 Base: tokens.css, global.css, Base.astro (pesos, escala, sin `.section--tint`).
+    - [x] 2 Hero: letra activa gigante, una línea de veredicto, select `base-select` con @supports, busto. Conservar ids/data-*.
     - [ ] 3 Notas (Grades): filas A→E, sin pastillas de color, `::details-content` + `interpolate-size`. Conservar `evd-*`.
     - [ ] 4 Método, Quiénes somos, Únete: más compactos.
     - [ ] 5 `NewsFigure.astro`: gráfico en HTML en portada, destacado, listado y post.
