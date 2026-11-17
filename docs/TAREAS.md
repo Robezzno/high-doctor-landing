@@ -29,7 +29,7 @@
   - 2026-11-17: **v3 completa en la rama, sin publicar.** vitest 139/139, e2e+axe 41/41, qa:links OK (61 páginas), capturas ES/DE/PL a 1440 y 390. Copia para el móvil en churflix: `/srv/media/sync/High Doctor Foundation - web v3.html`.
     - Guías de modern-web-guidance aplicadas: typography, visually-stable-font-fallbacks, branded-select-styling, accordion, animate-to-intrinsic-sizes, card, scroll-progress-indicator.
     - Ojo e2e: `astro preview` ahora se queda en segundo plano y Playwright cree que «sale antes de tiempo»; arrancar antes `npm run preview -- --port 4321 --host 127.0.0.1` (lo reutiliza) y pararlo con `npx astro preview stop`.
-    - Pendiente (commit aparte): Title Case de textos («Nuestra Misión», «Networking Internacional») y placeholders del formulario en inglés fijos en `ContactForm.astro`. Necesita claves i18n en los 8 idiomas.
+    - Hecho (2026-11-17): fuera el Title Case en los 8 idiomas (el alemán conserva sus sustantivos en mayúscula) y placeholders del formulario traducidos (`form_ph_*`). Lo hizo `despacho-ia trabajar`, lo verificó `verificar` (i18n, 139 tests, build, dist sin «Dr. Jane Doe», 276 claves iguales en los 8 JSON).
     - Para publicar: OK de Saf → merge de `rediseno-v3` (incluye v2) a `main`.
   - No tocar: ClientRouter, IDs del formulario, evidence.ts, rutas. Claves i18n nuevas en los 8 idiomas.
 

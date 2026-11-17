@@ -17,3 +17,4 @@ server*.log
 e2e/.artifacts/
 .taste-skill/
 .claude/worktrees/
+.despacho/

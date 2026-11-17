@@ -50,7 +50,7 @@ const interestValues = [
   <div class="fields">
     <div class="field">
       <label for="name">{t(lang, 'form_lbl_name')}</label>
-      <input type="text" id="name" name="name" required autocomplete="name" placeholder="Dr. Jane Doe" />
+      <input type="text" id="name" name="name" required autocomplete="name" placeholder={t(lang, 'form_ph_name')} />
     </div>
 
     <div class="field">
@@ -61,7 +61,7 @@ const interestValues = [
         name="email"
         required
         autocomplete="email"
-        placeholder="jane.doe@example.com"
+        placeholder={t(lang, 'form_ph_email')}
       />
     </div>
 
@@ -73,7 +73,7 @@ const interestValues = [
         name="country"
         required
         autocomplete="country-name"
-        placeholder="e.g. Germany"
+        placeholder={t(lang, 'form_ph_country')}
       />
     </div>
 
@@ -84,7 +84,7 @@ const interestValues = [
         id="organization"
         name="organization"
         autocomplete="organization"
-        placeholder="University, Clinic, Company..."
+        placeholder={t(lang, 'form_ph_org')}
       />
     </div>
 
@@ -95,7 +95,7 @@ const interestValues = [
         id="profession"
         name="profession"
         required
-        placeholder="e.g. Researcher, Doctor..."
+        placeholder={t(lang, 'form_ph_profession')}
       />
     </div>
 
@@ -122,7 +122,7 @@ const interestValues = [
         id="message"
         name="message"
         rows="4"
-        placeholder="Briefly describe your background or proposal..."></textarea>
+        placeholder={t(lang, 'form_ph_message')}></textarea>
     </div>
   </div>
 
