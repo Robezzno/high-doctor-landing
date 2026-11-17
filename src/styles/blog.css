@@ -66,8 +66,6 @@
   gap: 10px;
   font-family: var(--blog-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--blog-muted);
   margin-bottom: 18px;
 }
@@ -110,8 +108,6 @@
   width: 100%;
   font-family: var(--blog-mono);
   font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--blog-muted);
   margin-bottom: 4px;
 }
@@ -125,7 +121,6 @@
   border-radius: 999px;
   font-family: var(--blog-mono);
   font-size: 0.76rem;
-  letter-spacing: 0.06em;
   color: var(--blog-ink);
   background-color: transparent;
 }
@@ -173,8 +168,6 @@
   gap: 10px;
   font-family: var(--blog-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
   color: var(--blog-accent);
   margin-bottom: 18px;
 }
@@ -204,7 +197,6 @@
   gap: 16px;
   font-family: var(--blog-mono);
   font-size: 0.76rem;
-  letter-spacing: 0.08em;
   color: var(--blog-muted);
 }
 
@@ -218,8 +210,6 @@
   gap: 8px;
   font-family: var(--blog-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--blog-accent);
 }
 
@@ -275,7 +265,6 @@
 .post-row__date {
   font-family: var(--blog-mono);
   font-size: 0.78rem;
-  letter-spacing: 0.06em;
   color: var(--blog-muted);
 }
 
@@ -301,8 +290,6 @@
   margin-top: 12px;
   font-family: var(--blog-mono);
   font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--blog-accent);
   border-bottom: 1px solid var(--blog-rule);
 }
@@ -411,9 +398,7 @@
   border-top: 1px solid var(--blog-rule);
   font-family: var(--blog-mono);
   font-size: 0.76rem;
-  letter-spacing: 0.08em;
   color: var(--blog-muted);
-  text-transform: uppercase;
 }
 
 .post-cover {
@@ -432,7 +417,6 @@
   padding: 10px 14px;
   font-family: var(--blog-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.06em;
   color: var(--blog-muted);
   border-top: 1px solid var(--blog-rule);
 }
@@ -451,16 +435,6 @@
 
 .post-body p {
   hyphens: auto;
-}
-
-.post-body > p:first-of-type::first-letter {
-  float: left;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 4.1em;
-  line-height: 0.82;
-  padding: 0.06em 0.12em 0 0;
-  color: var(--blog-accent);
 }
 
 .post-body h2 {
@@ -552,8 +526,6 @@
   display: block;
   font-family: var(--blog-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--blog-muted);
   margin-bottom: 8px;
 }
@@ -599,8 +571,6 @@
 .share__title {
   font-family: var(--blog-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--blog-muted);
   margin-bottom: 12px;
 }
@@ -623,8 +593,6 @@
   border-top: 1px solid var(--blog-rule);
   font-family: var(--blog-mono);
   font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .post-nav a {
@@ -689,8 +657,6 @@
   position: relative;
   font-family: var(--blog-mono);
   font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   color: #0a2e1f;
   border-bottom: 1px solid rgba(11, 22, 64, 0.28);
   padding-bottom: 3px;
@@ -723,7 +689,6 @@
 .latest-news__note {
   font-family: var(--blog-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.06em;
   color: rgba(11, 22, 64, 0.6);
   margin-bottom: 26px;
 }
@@ -747,7 +712,6 @@
 .latest-card__date {
   font-family: var(--blog-mono);
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
   color: rgba(11, 22, 64, 0.6);
 }
 
@@ -808,11 +772,7 @@
     font-size: 1.02rem;
   }
 
-  .post-body > p:first-of-type::first-letter {
-    font-size: 3.4em;
-  }
-
-  .post-meta {
+    .post-meta {
     gap: 12px;
     font-size: 0.72rem;
   }
@@ -823,14 +783,101 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Rediseño 2026-11: etiquetas en tamaño legible y caja de frase,      */
-/* sin mayúsculas espaciadas ni esquinas redondeadas.                  */
+/* Rediseño v3 «la etiqueta, bien impresa»: titulares en 500 y sin      */
+/* subrayado, etiquetas en píldora, metadatos sin mayúsculas, radios   */
+/* de troquel (14 px) y portada del post baja.                          */
 /* ------------------------------------------------------------------ */
 .blog [class],
 .latest-news [class] {
   text-transform: none;
 }
 
-.blog * {
-  border-radius: 0 !important;
+.post-title,
+.featured__title,
+.post-row__title,
+.blog-header h1 {
+  font-weight: var(--fw-head);
+  letter-spacing: -0.025em;
+}
+
+.featured__title a,
+.post-row__title a {
+  text-decoration: none;
+}
+
+.featured__title a:hover,
+.post-row__title a:hover {
+  color: var(--c-green-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--c-green);
+}
+
+.chip {
+  border-radius: var(--r-pill);
+  text-decoration: none;
+}
+
+.specimen {
+  text-decoration: none;
+}
+
+.post-row__more {
+  text-decoration: none;
+}
+
+.post-cover {
+  border: 0;
+  background: none;
+}
+
+.post-cover figcaption {
+  padding: 0.6rem 0 0;
+  border-top: 0;
+}
+
+/* Barra de progreso de lectura del post: sólo CSS, mejora progresiva. */
+.read-progress {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    @keyframes read-progress {
+      from {
+        transform: scaleX(0);
+      }
+
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .read-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: var(--z-skip);
+      height: 3px;
+      background-color: var(--c-green);
+      transform-origin: 0 50%;
+      animation: read-progress auto linear;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+/* Sin mayúsculas espaciadas, los metadatos necesitan su tamaño legible. */
+.blog-eyebrow,
+.featured__label,
+.featured__meta,
+.post-row__date,
+.post-row__meta .specimen,
+.specimen,
+.chip,
+.post-meta,
+.post-cover figcaption,
+.post-row__more,
+.blog-filter__label {
+  font-size: 0.875rem;
 }

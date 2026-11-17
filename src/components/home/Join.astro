@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import doctor from '../../assets/brand/logo-character.png';
+import doctor from '../../assets/brand/doctor-bust.png';
 import ContactForm from '../ContactForm.astro';
 import { contactEmail } from '../../config/site';
 import { t, type Lang, type TranslationKey } from '../../i18n';
@@ -104,11 +104,10 @@ const benefits: { title: TranslationKey; desc: TranslationKey }[] = [
     content: '';
     position: absolute;
     left: 0;
-    top: 0.55rem;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background-color: var(--c-green);
+    top: 0.75rem;
+    width: 0.625rem;
+    height: 1px;
+    background-color: var(--c-ink);
   }
 
   .join__benefits span {
@@ -134,9 +133,9 @@ const benefits: { title: TranslationKey; desc: TranslationKey }[] = [
 
   .join__form {
     padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+    border: 1px solid var(--c-line);
     border-radius: var(--r-2);
     background-color: var(--c-white);
-    box-shadow: var(--shadow-1);
   }
 
   .join__form-note {

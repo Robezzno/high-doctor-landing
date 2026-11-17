@@ -12,13 +12,17 @@ const k = (topic: EvidenceTopic, part: 't' | 'f' | 'm') => `evd_${topic.id}_${pa
 const levelName = (topic: EvidenceTopic) => t(lang, `evd_lvl_${topic.level}` as TranslationKey);
 
 const groups = [
-  { id: 'use', title: t(lang, 'evd_group_use'), tag: t(lang, 'v2_tag_use') },
-  { id: 'risk', title: t(lang, 'evd_group_risk'), tag: t(lang, 'v2_tag_risk') },
+  { id: 'use', title: t(lang, 'evd_group_use') },
+  { id: 'risk', title: t(lang, 'evd_group_risk') },
 ] as const;
+
+// Dentro de cada grupo, de más certeza (A) a menos (E): se lee como una escala.
+const byGrade = (a: EvidenceTopic, b: EvidenceTopic) => gradeOf(a.level).localeCompare(gradeOf(b.level));
 ---
 
-<!-- Todas las notas: cada tema es una ficha que se despliega (details nativo,
-     funciona sin JavaScript y con teclado). -->
+<!-- Todas las notas: cada tema es una fila de la etiqueta que se despliega
+     (details nativo: funciona sin JavaScript, con teclado y con buscar en la página).
+     No es exclusivo a propósito: así se pueden comparar dos temas abiertos. -->
 <section class="section grades" id="evidence" aria-labelledby="grades-title">
   <div class="container">
     <div class="head" data-reveal>
@@ -28,46 +32,46 @@ const groups = [
 
     {
       groups.map((group) => (
-        <div class="grades__group">
-          <h3 class="grades__group-title">{group.title}</h3>
+        <div class="grades__group" aria-labelledby={`grades-${group.id}`} role="group">
+          <h3 class="grades__group-title" id={`grades-${group.id}`}>
+            {group.title}
+          </h3>
           <ul class="grades__list" data-reveal>
             {evidenceTopics
               .filter((topic) => topic.group === group.id)
+              .sort(byGrade)
               .map((topic) => {
                 const grade = gradeOf(topic.level);
                 const source = evidenceSources[topic.source];
                 return (
                   <li>
-                    <details class="card" id={`evd-${topic.id}`} name="evidence">
-                      <summary class="card__summary">
+                    <details class="row" id={`evd-${topic.id}`}>
+                      <summary class="row__summary">
                         <span class={`grade grade--${grade.toLowerCase()}`} aria-hidden="true">
                           {grade}
                         </span>
-                        <span class="card__main">
-                          <span class={`tag tag--${group.id}`}>{group.tag}</span>
-                          <span class="card__title">{t(lang, k(topic, 't'))}</span>
-                          <span class="card__level">
-                            <span class="visually-hidden">{t(lang, 'v2_grade_label')}: {grade}, </span>
-                            {levelName(topic)}
-                          </span>
+                        <span class="row__title">{t(lang, k(topic, 't'))}</span>
+                        <span class="row__level">
+                          <span class="visually-hidden">{t(lang, 'v2_grade_label')}: {grade}, </span>
+                          {levelName(topic)}
                         </span>
-                        <svg class="card__chevron" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                        <svg class="row__chevron" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true">
                           <path
                             d="M5 7.5l5 5 5-5"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2.2"
+                            stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
                           />
                         </svg>
                       </summary>
-                      <div class="card__body">
-                        <p class="card__finding">{t(lang, k(topic, 'f'))}</p>
+                      <div class="row__body">
+                        <p class="row__finding">{t(lang, k(topic, 'f'))}</p>
                         <p>
                           <strong>{t(lang, 'evd_means')}.</strong> {t(lang, k(topic, 'm'))}
                         </p>
-                        <p class="card__source">
+                        <p class="row__source">
                           {t(lang, 'evd_source')}:{' '}
                           <a href={source.url} rel="noopener" target="_blank">
                             {source.name}
@@ -88,95 +92,82 @@ const groups = [
 </section>
 
 <style>
+  /* Cada grupo: título a la izquierda, filas de etiqueta a la derecha. */
+  .grades__group {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: var(--grid-gap);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--c-ink);
+  }
+
   .grades__group + .grades__group {
-    margin-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
   }
 
   .grades__group-title {
-    margin-bottom: 1rem;
     font-size: var(--fs-h3);
   }
 
   .grades__list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
-    align-items: start;
   }
 
-  .card {
-    border-radius: var(--r-2);
-    background-color: var(--c-paper-2);
-    transition:
-      background-color var(--dur-fast) linear,
-      box-shadow var(--dur-base) var(--ease-out);
+  .grades__list > li + li {
+    border-top: 1px solid var(--c-line);
   }
 
-  .card:hover {
-    background-color: var(--c-paper-3);
-  }
-
-  .card[open] {
-    background-color: var(--c-white);
-    box-shadow: var(--shadow-2);
-  }
-
-  .card__summary {
+  .row__summary {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
     gap: 1rem;
     align-items: center;
-    padding: 0.9rem 1.1rem 0.9rem 0.9rem;
+    min-height: 4.25rem;
+    padding: 0.75rem 0.25rem;
     cursor: pointer;
     list-style: none;
-    border-radius: var(--r-2);
   }
 
-  .card__summary::-webkit-details-marker {
+  .row__summary::-webkit-details-marker {
     display: none;
   }
 
-  .card__main {
-    display: grid;
-    gap: 0.3rem;
-    justify-items: start;
-  }
-
-  .card__title {
+  .row__title {
     font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.25;
+    font-weight: var(--fw-head);
+    line-height: 1.3;
+    transition: color var(--dur-fast) linear;
   }
 
-  .card__level {
+  .row__summary:hover .row__title {
+    color: var(--c-green-ink);
+  }
+
+  .row__level {
     font-size: var(--fs-small);
+    color: var(--c-ink-faint);
+    text-align: end;
+  }
+
+  .row__chevron {
     color: var(--c-ink-soft);
+    transition: rotate var(--dur-base) var(--ease-out);
   }
 
-  .card__chevron {
-    transition: transform var(--dur-base) var(--ease-out);
+  .row[open] .row__chevron {
+    rotate: 180deg;
   }
 
-  .card[open] .card__chevron {
-    transform: rotate(180deg);
-  }
-
-  /* La nota: un cuadrado troquelado con la letra. */
+  /* La nota: un troquel pequeño con la letra. */
   .grade {
     display: grid;
     place-items: center;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 12px;
-    font-size: 2.25rem;
-    font-weight: 800;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--r-1);
+    font-size: 1.5rem;
+    font-weight: var(--fw-grade);
     line-height: 1;
-    transition: transform var(--dur-base) var(--ease-spring);
-  }
-
-  .card:hover .grade,
-  .card[open] .grade {
-    transform: scale(1.06) rotate(-3deg);
   }
 
   .grade--a {
@@ -204,62 +195,93 @@ const groups = [
     color: var(--grade-e-ink);
   }
 
-  .card__body {
-    padding: 0 1.25rem 1.25rem calc(0.9rem + 4rem + 1rem);
+  /* Apertura animada hasta su altura natural (mejora progresiva: sin soporte,
+     abre al instante). */
+  .row::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
   }
 
-  .card__finding {
-    font-size: 1.125rem;
-    font-weight: 500;
-    line-height: 1.45;
+  .row:not([open])::details-content {
+    block-size: 0;
   }
 
-  .card__source {
+  @media (prefers-reduced-motion: no-preference) {
+    .row::details-content {
+      transition:
+        block-size 300ms var(--ease-out),
+        content-visibility 300ms,
+        display 300ms;
+      transition-behavior: allow-discrete;
+    }
+  }
+
+  .row__body {
+    max-width: var(--measure);
+    padding: 0 0.25rem 1.5rem calc(2.75rem + 1.25rem);
+  }
+
+  .row__finding {
+    font-size: 1.0625rem;
+    font-weight: var(--fw-head);
+    line-height: 1.5;
+  }
+
+  .row__source {
     font-size: var(--fs-small);
     color: var(--c-ink-soft);
   }
 
-  .card__source a {
+  .row__source a {
     overflow-wrap: anywhere;
   }
 
-  .card__source a:hover {
+  .row__source a:hover {
     text-decoration-color: var(--c-green);
   }
 
   .grades__disclaimer {
     max-width: var(--measure);
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     font-size: var(--fs-small);
     color: var(--c-ink-faint);
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .card[open] .card__body {
-      animation: open-body 380ms var(--ease-out);
-    }
-
-    @keyframes open-body {
-      from {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
-    }
-  }
-
   @media (max-width: 50rem) {
-    .grades__list {
+    .grades__group {
       grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .row__summary {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas:
+        'grade title chevron'
+        'grade level chevron';
+      gap: 0.15rem 0.875rem;
     }
 
     .grade {
-      width: 3.25rem;
-      height: 3.25rem;
-      font-size: 1.85rem;
+      grid-area: grade;
     }
 
-    .card__body {
-      padding: 0 1rem 1.15rem;
+    .row__title {
+      grid-area: title;
+      font-size: 1.0625rem;
+    }
+
+    .row__level {
+      grid-area: level;
+      text-align: start;
+    }
+
+    .row__chevron {
+      grid-area: chevron;
+    }
+
+    .row__body {
+      padding: 0 0 1.25rem;
     }
   }
 </style>

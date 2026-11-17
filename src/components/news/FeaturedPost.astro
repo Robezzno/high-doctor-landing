@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
+import NewsFigure from './NewsFigure.astro';
 import { blogT } from '../../i18n/blog';
 import {
   categoryLabel,
@@ -39,6 +40,15 @@ const coverAlt = entry.data.coverAlt ?? entry.data.title;
           sizes="(max-width: 900px) 100vw, 520px"
           loading="eager"
           transition:name={`post-cover-${slug}`}
+        />
+      ) : entry.data.grafico ? (
+        <NewsFigure
+          figure={entry.data.grafico}
+          lang={lang}
+          category={entry.data.category}
+          categoryText={categoryLabel(lang, entry.data.category)}
+          variant="card"
+          transitionName={`post-cover-${slug}`}
         />
       ) : (
         <img

@@ -25,8 +25,8 @@ const items: TranslationKey[] = [
       <Picture
         src={mcclintock}
         formats={['avif', 'webp']}
-        widths={[480, 760, 1100]}
-        sizes="(max-width: 55rem) 100vw, 40vw"
+        widths={[360, 560, 840]}
+        sizes="(max-width: 55rem) 100vw, 28vw"
         alt={t(lang, 'impact_ch1_alt')}
         loading="lazy"
       />
@@ -43,9 +43,8 @@ const items: TranslationKey[] = [
           items.map((key) => (
             <li>
               <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
-                <circle cx="10" cy="10" r="10" fill="var(--c-green-wash)" />
                 <path
-                  d="M6 10.3l2.6 2.6L14 7.5"
+                  d="M5 10.3l3.2 3.2L15 6.5"
                   fill="none"
                   stroke="var(--c-green-ink)"
                   stroke-width="2.2"
@@ -65,14 +64,12 @@ const items: TranslationKey[] = [
 <style>
   .about__grid {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
     gap: clamp(2rem, 1rem + 4vw, 5rem);
     align-items: start;
   }
 
   .about__photo {
-    position: sticky;
-    top: 6rem;
     margin: 0;
   }
 
@@ -129,11 +126,11 @@ const items: TranslationKey[] = [
     }
 
     .about__photo {
-      position: static;
+      max-width: 22rem;
     }
 
     .about__photo :global(img) {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 3 / 2;
     }
 
     .about__list {

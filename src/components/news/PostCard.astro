@@ -1,4 +1,5 @@
 ---
+import NewsFigure from './NewsFigure.astro';
 import { blogT } from '../../i18n/blog';
 import {
   categoryLabel,
@@ -42,13 +43,18 @@ const href = postUrl(lang, slug);
   </div>
   <!-- Miniatura del gráfico de la noticia (la misma tarjeta que la portada del post). -->
   <a class="post-row__figure" href={href} aria-hidden="true" tabindex="-1">
-    <img
-      src={socialCardPath(lang, slug)}
-      alt=""
-      width="1080"
-      height="1350"
-      loading="lazy"
-      decoding="async"
-    />
+    {
+      entry.data.grafico ? (
+        <NewsFigure
+          figure={entry.data.grafico}
+          lang={lang}
+          category={entry.data.category}
+          categoryText={categoryLabel(lang, entry.data.category)}
+          variant="thumb"
+        />
+      ) : (
+        <img src={socialCardPath(lang, slug)} alt="" width="1080" height="1350" loading="lazy" decoding="async" />
+      )
+    }
   </a>
 </article>

@@ -1,4 +1,5 @@
 ---
+import NewsFigure from '../news/NewsFigure.astro';
 import { t, type Lang } from '../../i18n';
 import {
   blogHrefForSiteLang,
@@ -52,18 +53,27 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
             const slug = slugOf(post);
             return (
               <li class="post">
-                <img
-                  class="post__image"
-                  src={`/social/${newsLang}/${slug}.jpg`}
-                  width="1080"
-                  height="1350"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
+                {post.data.grafico ? (
+                  <NewsFigure
+                    figure={post.data.grafico}
+                    lang={newsLang}
+                    category={post.data.category}
+                    categoryText={categoryLabel(newsLang, post.data.category)}
+                    variant="teaser"
+                  />
+                ) : (
+                  <img
+                    class="post__image"
+                    src={`/social/${newsLang}/${slug}.jpg`}
+                    width="1080"
+                    height="1350"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
                 <div class="post__body">
                   <p class="post__meta">
-                    <span class="tag">{categoryLabel(newsLang, post.data.category)}</span>
                     <time datetime={isoDate(post.data.date)}>{formatShortDate(post.data.date)}</time>
                   </p>
                   <h3 class="post__title">
@@ -101,21 +111,30 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
     gap: var(--grid-gap);
   }
 
+  /* Tarjeta plana: el gráfico arriba y el texto debajo, sin caja ni sombra. */
   .post {
     position: relative;
     display: grid;
     grid-template-rows: auto 1fr;
-    overflow: hidden;
-    border-radius: var(--r-2);
-    background-color: var(--c-paper-2);
-    transition:
-      transform var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out);
+    gap: 1rem;
   }
 
-  .post:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-2);
+  .post {
+    min-width: 0;
+  }
+
+  .post :global(.nf) {
+    min-block-size: clamp(10rem, 6rem + 10vw, 14rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .post :global(.nf) {
+      transition: translate var(--dur-base) var(--ease-out);
+    }
+
+    .post:hover :global(.nf) {
+      translate: 0 -3px;
+    }
   }
 
   .post__image {
@@ -127,9 +146,8 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
 
   .post__body {
     display: grid;
-    gap: 0.6rem;
+    gap: 0.5rem;
     align-content: start;
-    padding: 1.25rem;
   }
 
   .post__meta {
@@ -143,8 +161,8 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
   }
 
   .post__title {
-    font-size: 1.25rem;
-    line-height: 1.25;
+    font-size: 1.1875rem;
+    line-height: 1.3;
   }
 
   .post__title a {
@@ -171,20 +189,6 @@ const showLanguageNote = lang !== 'es' && lang !== 'en';
   @media (max-width: 55rem) {
     .news__list {
       grid-template-columns: 1fr;
-    }
-
-    .post {
-      grid-template-columns: 7rem 1fr;
-      grid-template-rows: auto;
-    }
-
-    .post__image {
-      height: 100%;
-      aspect-ratio: auto;
-    }
-
-    .post__body {
-      padding: 1rem;
     }
 
     .post__summary {

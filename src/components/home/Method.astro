@@ -29,16 +29,6 @@ const steps: { title: TranslationKey; desc: TranslationKey }[] = [
     <div class="method__copy" data-reveal>
       <h2 class="h2" id="method-title">{t(lang, 'v2_scale_title')}</h2>
       <p class="lead">{t(lang, 'v2_scale_lead')}</p>
-      <ol class="steps">
-        {
-          steps.map((step) => (
-            <li class="steps__item">
-              <h3 class="steps__title">{t(lang, step.title)}</h3>
-              <p>{t(lang, step.desc)}</p>
-            </li>
-          ))
-        }
-      </ol>
     </div>
 
     <div class="scale" data-reveal>
@@ -54,6 +44,17 @@ const steps: { title: TranslationKey; desc: TranslationKey }[] = [
         }
       </dl>
     </div>
+
+    <ol class="steps" data-reveal>
+      {
+        steps.map((step) => (
+          <li class="steps__item">
+            <h3 class="steps__title">{t(lang, step.title)}</h3>
+            <p>{t(lang, step.desc)}</p>
+          </li>
+        ))
+      }
+    </ol>
   </div>
 </section>
 
@@ -67,61 +68,54 @@ const steps: { title: TranslationKey; desc: TranslationKey }[] = [
 
   .method__copy .lead {
     max-width: 38rem;
-    margin: 1rem 0 2.5rem;
+    margin-top: 1rem;
   }
 
+  /* Los tres pasos, en fila: el orden importa, así que es una lista real. */
   .steps {
+    grid-column: 1 / -1;
     display: grid;
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--grid-gap);
     counter-reset: step;
   }
 
   .steps__item {
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    column-gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--c-line);
     counter-increment: step;
   }
 
-  /* El orden importa (cada paso depende del anterior): una lista real. */
   .steps__item::before {
-    content: counter(step);
-    grid-row: span 2;
-    display: grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background-color: var(--c-ink);
-    color: var(--c-white);
-    font-weight: 700;
+    content: counter(step, decimal-leading-zero);
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-head);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-green-ink);
   }
 
   .steps__title {
-    align-self: center;
     font-size: var(--fs-h3);
   }
 
   .steps__item p {
-    margin: 0.35rem 0 0;
-    max-width: 34rem;
+    margin: 0.4rem 0 0;
     color: var(--c-ink-soft);
   }
 
-  /* La escala, como la tabla de una etiqueta. */
+  /* La escala, como la tabla nutricional de una etiqueta: filete grueso arriba. */
   .scale {
-    padding: 1.5rem;
-    border-radius: var(--r-2);
-    background-color: var(--c-white);
-    box-shadow: var(--shadow-1);
+    border-top: 6px solid var(--c-ink);
   }
 
   .scale__title {
-    margin: 0 0 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 6px solid var(--c-ink);
-    font-size: var(--fs-h3);
-    font-weight: 800;
+    margin: 0;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--c-ink);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-strong);
   }
 
   .scale__list {
@@ -130,25 +124,21 @@ const steps: { title: TranslationKey; desc: TranslationKey }[] = [
 
   .scale__row {
     display: grid;
-    grid-template-columns: 3rem 1fr;
+    grid-template-columns: 2.25rem 1fr;
     gap: 1rem;
     align-items: center;
-    padding-block: 0.7rem;
-    border-bottom: 1px solid var(--c-paper-3);
-  }
-
-  .scale__row:last-child {
-    border-bottom: 0;
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--c-line);
   }
 
   .scale__letter {
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    font-weight: 800;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 6px;
+    font-size: 1.125rem;
+    font-weight: var(--fw-grade);
   }
 
   .scale__letter--a {
@@ -178,12 +168,13 @@ const steps: { title: TranslationKey; desc: TranslationKey }[] = [
 
   .scale__row dd {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     line-height: 1.4;
   }
 
   @media (max-width: 55rem) {
-    .method__grid {
+    .method__grid,
+    .steps {
       grid-template-columns: 1fr;
     }
   }

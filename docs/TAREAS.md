@@ -19,11 +19,11 @@
   - Pasos (marcar al terminar):
     - [x] 1 Base: tokens.css, global.css, Base.astro (pesos, escala, sin `.section--tint`).
     - [x] 2 Hero: letra activa gigante, una línea de veredicto, select `base-select` con @supports, busto. Conservar ids/data-*.
-    - [ ] 3 Notas (Grades): filas A→E, sin pastillas de color, `::details-content` + `interpolate-size`. Conservar `evd-*`.
-    - [ ] 4 Método, Quiénes somos, Únete: más compactos.
-    - [ ] 5 `NewsFigure.astro`: gráfico en HTML en portada, destacado, listado y post.
+    - [x] 3 Notas (Grades): filas A→E, sin pastillas de color, `::details-content` + `interpolate-size`. Conservar `evd-*`.
+    - [x] 4 Método, Quiénes somos, Únete: más compactos.
+    - [x] 5 `NewsFigure.astro`: gráfico en HTML en portada, destacado, listado y post.
     - [ ] 6 Tarjeta social con tokens y Rubik.
-    - [ ] 7 Blog: titulares 500, chips píldora, portada del post baja, progreso de lectura.
+    - [x] 7 Blog: titulares 500, chips píldora, portada del post baja, progreso de lectura.
     - [ ] 8 Movimiento más corto (opcional).
     - [ ] 9 Cierre: build, vitest, e2e+axe, qa:links, capturas ES/DE/PL a 1440 y 390.
   - No tocar: ClientRouter, IDs del formulario, evidence.ts, rutas. Claves i18n nuevas en los 8 idiomas.
