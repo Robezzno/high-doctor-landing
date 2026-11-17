@@ -12,7 +12,7 @@
 - 2026-11-17: **gráfico propio en cada noticia** (campo `grafico` del contrato): cifra clave, etiqueta y hasta 3 datos con barra. Sale en la tarjeta social, la imagen OG, la portada del post y como miniatura en el listado. Publicado en `main`.
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
-## Rediseño v3 «más elegante» (rama `rediseno-v3`, NO publicar)
+## Rediseño v3 «más elegante» — PUBLICADO en producción el 2026-11-17 (incluye v2)
 - 2026-11-17: encargo de Saf: rediseñar con la skill **Modern Web Guidance** de Google Chrome (instalada en `~/.claude/skills/modern-web-guidance`, CLI `npx -y modern-web-guidance@latest search|retrieve`) para que quede más elegante. Sin publicar; solo se publicaron los gráficos de noticias.
   - `legacy-scan src` → 0 hallazgos (el código ya es moderno; el salto es de diseño).
   - Dirección «la etiqueta, bien impresa»: solo Rubik con jerarquía por peso (titulares 500, 800 sólo para letras A–E), escala con menos tamaños, suelo blanco sin bandas, verde sólo en acción/foco, mascota en busto sin rótulo, notas en filas de tabla.
@@ -27,6 +27,7 @@
     - [x] 8 Movimiento más corto (opcional).
     - [x] 9 Cierre: build, vitest, e2e+axe, qa:links, capturas ES/DE/PL a 1440 y 390.
   - 2026-11-17: **v3 completa en la rama, sin publicar.** vitest 139/139, e2e+axe 41/41, qa:links OK (61 páginas), capturas ES/DE/PL a 1440 y 390. Copia para el móvil en churflix: `/srv/media/sync/High Doctor Foundation - web v3.html`.
+  - 2026-11-17: **publicada**: merge de `rediseno-v3` en `main` (7a5279f), deploy de Pages OK, los 8 idiomas responden 200 y sirven el diseño nuevo. Tarjetas sociales nuevas (Rubik) también en producción.
     - Guías de modern-web-guidance aplicadas: typography, visually-stable-font-fallbacks, branded-select-styling, accordion, animate-to-intrinsic-sizes, card, scroll-progress-indicator.
     - Ojo e2e: `astro preview` ahora se queda en segundo plano y Playwright cree que «sale antes de tiempo»; arrancar antes `npm run preview -- --port 4321 --host 127.0.0.1` (lo reutiliza) y pararlo con `npx astro preview stop`.
     - Hecho (2026-11-17): fuera el Title Case en los 8 idiomas (el alemán conserva sus sustantivos en mayúscula) y placeholders del formulario traducidos (`form_ph_*`). Lo hizo `despacho-ia trabajar`, lo verificó `verificar` (i18n, 139 tests, build, dist sin «Dr. Jane Doe», 276 claves iguales en los 8 JSON).
