@@ -22,10 +22,15 @@
     - [x] 3 Notas (Grades): filas A→E, sin pastillas de color, `::details-content` + `interpolate-size`. Conservar `evd-*`.
     - [x] 4 Método, Quiénes somos, Únete: más compactos.
     - [x] 5 `NewsFigure.astro`: gráfico en HTML en portada, destacado, listado y post.
-    - [ ] 6 Tarjeta social con tokens y Rubik.
+    - [x] 6 Tarjeta social con tokens y Rubik.
     - [x] 7 Blog: titulares 500, chips píldora, portada del post baja, progreso de lectura.
-    - [ ] 8 Movimiento más corto (opcional).
-    - [ ] 9 Cierre: build, vitest, e2e+axe, qa:links, capturas ES/DE/PL a 1440 y 390.
+    - [x] 8 Movimiento más corto (opcional).
+    - [x] 9 Cierre: build, vitest, e2e+axe, qa:links, capturas ES/DE/PL a 1440 y 390.
+  - 2026-11-17: **v3 completa en la rama, sin publicar.** vitest 139/139, e2e+axe 41/41, qa:links OK (61 páginas), capturas ES/DE/PL a 1440 y 390. Copia para el móvil en churflix: `/srv/media/sync/High Doctor Foundation - web v3.html`.
+    - Guías de modern-web-guidance aplicadas: typography, visually-stable-font-fallbacks, branded-select-styling, accordion, animate-to-intrinsic-sizes, card, scroll-progress-indicator.
+    - Ojo e2e: `astro preview` ahora se queda en segundo plano y Playwright cree que «sale antes de tiempo»; arrancar antes `npm run preview -- --port 4321 --host 127.0.0.1` (lo reutiliza) y pararlo con `npx astro preview stop`.
+    - Pendiente (commit aparte): Title Case de textos («Nuestra Misión», «Networking Internacional») y placeholders del formulario en inglés fijos en `ContactForm.astro`. Necesita claves i18n en los 8 idiomas.
+    - Para publicar: OK de Saf → merge de `rediseno-v3` (incluye v2) a `main`.
   - No tocar: ClientRouter, IDs del formulario, evidence.ts, rutas. Claves i18n nuevas en los 8 idiomas.
 
 ## Rediseño v2 «etiqueta de evidencia» (rama `rediseno`, pendiente de OK de Saf para publicar)

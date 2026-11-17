@@ -31,15 +31,16 @@ import sharp from 'sharp';
  * 02 los sustituirá por los definitivos. Cambiar aquí cambia todas las tarjetas.
  */
 export const SOCIAL_THEME = {
-  paper: '#F4EFE4',
-  ink: '#0B1640',
-  green: '#1DB954',
-  deepGreen: '#0A2E1F',
-  gold: '#D4AF37',
-  mutedOnLight: 'rgba(11, 22, 64, 0.55)',
-  mutedOnDark: 'rgba(244, 239, 228, 0.6)',
-  ruleOnLight: 'rgba(11, 22, 64, 0.18)',
-  ruleOnDark: 'rgba(244, 239, 228, 0.22)',
+  // Los mismos valores que src/styles/tokens.css (rediseño v3).
+  paper: '#FFFFFF',
+  ink: '#000C3C',
+  green: '#00B63F',
+  deepGreen: '#000C3C',
+  gold: '#00B63F',
+  mutedOnLight: 'rgba(0, 12, 60, 0.6)',
+  mutedOnDark: 'rgba(199, 207, 224, 0.85)',
+  ruleOnLight: 'rgba(0, 12, 60, 0.16)',
+  ruleOnDark: 'rgba(255, 255, 255, 0.18)',
   site: 'highdoctor.foundation',
 } as const;
 
@@ -74,15 +75,17 @@ const DARK_PALETTE = (bg: string = SOCIAL_THEME.ink): CardPalette => ({
  * cultura y eventos.
  */
 export const CATEGORY_PALETTES: Record<string, CardPalette> = {
+  // v3: una sola pieza para todas las categorías (marino + verde), igual que
+  // el gráfico HTML de la web (src/components/news/NewsFigure.astro).
   investigacion: DARK_PALETTE(SOCIAL_THEME.ink),
-  salud: DARK_PALETTE(SOCIAL_THEME.deepGreen),
-  legislacion: LIGHT_PALETTE(SOCIAL_THEME.ink),
+  salud: DARK_PALETTE(SOCIAL_THEME.ink),
+  legislacion: DARK_PALETTE(SOCIAL_THEME.ink),
   cultura: DARK_PALETTE(SOCIAL_THEME.ink),
-  fundacion: LIGHT_PALETTE(SOCIAL_THEME.green),
-  eventos: { ...DARK_PALETTE(SOCIAL_THEME.deepGreen), accent: SOCIAL_THEME.gold },
+  fundacion: DARK_PALETTE(SOCIAL_THEME.ink),
+  eventos: DARK_PALETTE(SOCIAL_THEME.ink),
 };
 
-/** Paleta de reserva: papel crema con acento verde. */
+/** Paleta de reserva: papel blanco con acento verde. */
 export const DEFAULT_PALETTE: CardPalette = LIGHT_PALETTE();
 
 /**
@@ -90,18 +93,20 @@ export const DEFAULT_PALETTE: CardPalette = LIGHT_PALETTE();
  * El prompt 02 confirmará la pareja definitiva; basta con cambiar estos archivos.
  */
 export const FONTS = {
+  // v3: Rubik, la tipografía de la web. `serif` y `mono` se conservan como
+  // nombres de rol: titulares/cifras y texto auxiliar.
   serif: {
-    family: 'Fraunces',
+    family: 'Rubik',
     files: [
-      { weight: 500, file: 'fraunces/files/fraunces-latin-500-normal.woff' },
-      { weight: 700, file: 'fraunces/files/fraunces-latin-700-normal.woff' },
+      { weight: 500, file: 'rubik/files/rubik-latin-500-normal.woff' },
+      { weight: 700, file: 'rubik/files/rubik-latin-800-normal.woff' },
     ],
   },
   mono: {
-    family: 'JetBrains Mono',
+    family: 'Rubik',
     files: [
-      { weight: 400, file: 'jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff' },
-      { weight: 500, file: 'jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff' },
+      { weight: 400, file: 'rubik/files/rubik-latin-400-normal.woff' },
+      { weight: 500, file: 'rubik/files/rubik-latin-500-normal.woff' },
     ],
   },
 } as const;
@@ -322,7 +327,7 @@ function specimenRow(
   sideMargin: number,
 ): Node {
   const labelSize = variant === 'og' ? 15 : 22;
-  const label = categoryLabelFor(content.category, content.lang).toUpperCase();
+  const label = categoryLabelFor(content.category, content.lang);
 
   return h(
     'div',
@@ -350,10 +355,9 @@ function specimenRow(
               fontFamily: FONTS.mono.family,
               fontWeight: 500,
               fontSize: labelSize,
-              letterSpacing: variant === 'og' ? 2.4 : 3.6,
+              letterSpacing: 0,
               color: palette.accent,
-              textTransform: 'uppercase',
-            },
+                },
             label,
           ),
         ],
@@ -364,9 +368,8 @@ function specimenRow(
           fontFamily: FONTS.mono.family,
           fontWeight: 400,
           fontSize: variant === 'og' ? 13 : 17,
-          letterSpacing: variant === 'og' ? 1.6 : 2.2,
+          letterSpacing: 0,
           color: palette.muted,
-          textTransform: 'uppercase',
         },
         `High Doctor Foundation · ${content.lang.toUpperCase()}`,
       ),
@@ -596,7 +599,7 @@ function figureMiddle(
     'div',
     {
       fontFamily: FONTS.serif.family,
-      fontWeight: 700,
+      fontWeight: 500,
       fontSize: hookSize,
       lineHeight: 1.08,
       letterSpacing: -0.02 * hookSize,
@@ -699,7 +702,7 @@ function buildMarkup(content: CardContent, variant: 'social' | 'og'): Node {
             'div',
             {
               fontFamily: FONTS.serif.family,
-              fontWeight: 700,
+              fontWeight: 500,
               fontSize,
               lineHeight: variant === 'og' ? 1.12 : 1.06,
               letterSpacing: -0.02 * fontSize,

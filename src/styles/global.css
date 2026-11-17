@@ -402,14 +402,14 @@ html {
 @media (prefers-reduced-motion: no-preference) {
   html[data-reveal-ready] [data-reveal]:not(.is-in) > * {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(8px);
   }
 
   html[data-reveal-ready] [data-reveal] > * {
     transition:
-      opacity 600ms var(--ease-out),
-      transform 800ms var(--ease-out);
-    transition-delay: calc(var(--i, 0) * 70ms);
+      opacity 300ms var(--ease-out),
+      transform 400ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 50ms);
   }
 }
 
