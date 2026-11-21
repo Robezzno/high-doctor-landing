@@ -2,6 +2,9 @@
 
 > **Proyecto en pausa (2026-11-12).** El publicador automático y la documentación interna viven en el repo **privado** `Robezzno/high-doctor-publicador` (ver su `COMO-SEGUIR.md`). Este repo es público y sólo contiene la web.
 
+## CLAUDE.md del proyecto
+- 2026-11-21: `CLAUDE.md` en la raíz (69 líneas): qué es, ramas (`main` = producción; `rediseno-v3` ya mergeada, mismo commit), comandos, publicación, bot, Instagram y token, mapa y qué no tocar. Comandos comprobados: `npm test` 139/139, `npm run check` 0 errores, `npm run build` 65 páginas, `qa:links` OK, `test:e2e` 41/41, `i18n:check` OK, bot `npm test` 97/97 y `typecheck` OK. Sin probar a propósito: deploy (publica), workflows de Instagram y `bot npm run dry-run` (necesita token de LLM).
+
 ## Noticias de la web (manuales mientras no hay publicador)
 - 2026-11-14: dos noticias nuevas en ES y EN (rama `rediseno`, salen al publicar el rediseño), contrastadas en ≥2 fuentes cada una:
   - `hombres-mujeres-efectos-cannabis-ucla` (investigación): estudio de UCLA en *Neuropsychopharmacology* (nota oficial de UCLA + News-Medical; DOI en el texto).
