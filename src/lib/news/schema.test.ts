@@ -93,4 +93,10 @@ describe('esquema de la colección news', () => {
     const fuera = { ...grafico, datos: [{ texto: 'x', porcentaje: 140 }] };
     expect(newsSchema.safeParse({ ...equipoPost, grafico: fuera }).success).toBe(false);
   });
+
+  it('acepta el crédito de la foto y exige una URL válida', () => {
+    const coverCredit = { autor: 'Ana', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:X.jpg' };
+    expect(newsSchema.safeParse({ ...equipoPost, coverCredit }).success).toBe(true);
+    expect(newsSchema.safeParse({ ...equipoPost, coverCredit: { ...coverCredit, url: 'no-es-url' } }).success).toBe(false);
+  });
 });

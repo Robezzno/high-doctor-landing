@@ -154,9 +154,10 @@ const langHrefs = {
             <Image
               src={entry.data.cover}
               alt={entry.data.coverAlt ?? entry.data.title}
-              widths={[480, 760, 1080]}
+              widths={[480, 760, 1080, 1520]}
               sizes="(max-width: 760px) 100vw, 760px"
               loading="eager"
+              fetchpriority="high"
               transition:name={`post-cover-${slug}`}
             />
           ) : entry.data.grafico ? (
@@ -181,9 +182,37 @@ const langHrefs = {
           )
         }
         <figcaption>
-          {strings.featuredLabel} · High Doctor Foundation · {formatDate(entry.data.date, lang)}
+          {
+            entry.data.cover && entry.data.coverCredit ? (
+              <>
+                {lang === 'es' ? 'Foto' : 'Photo'}:{' '}
+                <a href={entry.data.coverCredit.url} rel="noopener" target="_blank">
+                  {entry.data.coverCredit.autor}
+                </a>{' '}
+                · {entry.data.coverCredit.licencia} · Wikimedia Commons
+              </>
+            ) : (
+              <>
+                {strings.featuredLabel} · High Doctor Foundation · {formatDate(entry.data.date, lang)}
+              </>
+            )
+          }
         </figcaption>
       </figure>
+
+      {
+        entry.data.cover && entry.data.grafico && (
+          <div class="post-figure">
+            <NewsFigure
+              figure={entry.data.grafico}
+              lang={lang}
+              category={entry.data.category}
+              categoryText={categoryLabel(lang, entry.data.category)}
+              variant="cover"
+            />
+          </div>
+        )
+      }
 
       {isHealth && (
         <div class="callout callout--health" role="note">

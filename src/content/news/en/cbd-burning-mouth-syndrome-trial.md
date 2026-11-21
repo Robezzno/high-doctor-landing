@@ -13,6 +13,12 @@ tags:
 source:
   name: 'Oral Surgery, Oral Medicine, Oral Pathology and Oral Radiology'
   url: 'https://doi.org/10.1016/j.oooo.2026.07.010'
+cover: '../../../assets/news/cbd-burning-mouth-syndrome-trial.jpg'
+coverAlt: 'Researcher pipetting samples in a laboratory'
+coverCredit:
+  autor: 'Aidar Turlanov'
+  licencia: 'CC BY 4.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Precision_pipetting_in_biology_research.jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'CBD for burning mouth pain: what a placebo-controlled trial found'

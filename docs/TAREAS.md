@@ -16,6 +16,11 @@
 - 2026-11-21: dos más en ES y EN, publicadas en `main`: ensayo con placebo de aceite de CBD en el síndrome de boca ardiente (UFPR, doi:10.1016/j.oooo.2026.07.010) y nuevo cannabinoide 373.15b del Technion que potencia el tamoxifeno (doi:10.1016/j.biopha.2026.119942). Contrastadas con el abstract de PubMed y cobertura secundaria. Descartadas por la línea editorial: meta-análisis de EClinicalMedicine (la prensa lo cuenta como «no sirve en salud mental») y ensayo de JAMA Pediatrics (resultado negativo).
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
+## Revisión de la web (2026-11-21, publicada)
+- Hecho: título y descripción SEO traducidos en los 8 idiomas (`seo_title`, `seo_description`), imagen de compartir por defecto (`public/og-default.jpg`), ficha NewsArticle en cada noticia, CSS dentro del HTML (`inlineStylesheets: 'always'`), logo SVG de 72 a 19 KB, sin PNG/JPG de reserva en las imágenes del home.
+- Hecho: foto libre (Wikimedia Commons, con autor y licencia bajo la portada) en las 9 noticias ES/EN: portada del post + gráfico debajo, portada de la web con la cifra clave encima y miniatura en el listado.
+- Ideas pendientes de Saf (necesitan sus datos o su OK): datos legales y sección Equipo, página propia por cada tema de evidencia (gran palanca de SEO), boletín por correo, redes en el pie, FAQ, cómo apoyar/donar.
+
 ## Rediseño v3 «más elegante» — PUBLICADO en producción el 2026-11-17 (incluye v2)
 - 2026-11-17: encargo de Saf: rediseñar con la skill **Modern Web Guidance** de Google Chrome (instalada en `~/.claude/skills/modern-web-guidance`, CLI `npx -y modern-web-guidance@latest search|retrieve`) para que quede más elegante. Sin publicar; solo se publicaron los gráficos de noticias.
   - `legacy-scan src` → 0 hallazgos (el código ya es moderno; el salto es de diseño).

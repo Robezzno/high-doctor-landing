@@ -13,6 +13,12 @@ tags:
 source:
   name: 'Boletín Oficial de la República Argentina (Disposición ANMAT 7206/2026)'
   url: 'https://www.boletinoficial.gob.ar/detalleAviso/primera/350249/20261112'
+cover: '../../../assets/news/anmat-unregistered-cannabis-oil.jpg'
+coverAlt: 'Cuentagotas y frasco ámbar de aceite sobre un plato blanco'
+coverCredit:
+  autor: 'Sherpa SEO'
+  licencia: 'CC BY 3.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Cannabis-Tincture-on-Plate-by-workwithsherpa.jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'No todo aceite de cannabis es un medicamento'

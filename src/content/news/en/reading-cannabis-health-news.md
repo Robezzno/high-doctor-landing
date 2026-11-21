@@ -10,6 +10,12 @@ tags:
   - outreach
   - evidence
   - media literacy
+cover: '../../../assets/news/reading-cannabis-health-news.jpg'
+coverAlt: 'Library reading room with a round table and old bookshelves'
+coverCredit:
+  autor: 'Michael D Beckwith'
+  licencia: 'CC BY 3.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Chethams_Library_Reading_Room.jpg'
 author: equipo
 instagram: 'off'
 grafico:

@@ -160,6 +160,9 @@
   display: block;
   width: 100%;
   height: auto;
+  border-radius: var(--r-2);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
 }
 
 .featured__label {
@@ -253,6 +256,19 @@
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--r-1);
+}
+
+/* Portada con foto: recorte panorámico y esquinas como el resto de la v3. */
+.post-cover img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--r-2);
+}
+
+.post-figure {
+  margin: 0 0 40px;
 }
 
 .post-row__meta {

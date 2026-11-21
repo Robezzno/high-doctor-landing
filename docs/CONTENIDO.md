@@ -36,6 +36,7 @@ src/content/news/en/high-doctor-foundation-launches.md →  /en/news/high-doctor
 | `tags` | lista de textos | no (por defecto `[]`) | Etiquetas libres para el RSS |
 | `cover` | imagen | no | Si falta, la portada es la tarjeta generada en el build |
 | `coverAlt` | texto | no | Texto alternativo de la portada |
+| `coverCredit` | objeto | sí si hay `cover` con licencia CC BY | `autor`, `licencia` (p. ej. `CC BY 4.0`) y `url` de la página de la foto; sale bajo la portada del post. Fotos libres de Wikimedia Commons, guardadas en `src/assets/news/<translationKey>.jpg` (1600 px), con `cover: '../../../assets/news/<translationKey>.jpg'` |
 | `source` | `{ name, url }` | **sí si `author: bot`** | Enlace a la fuente original; el build falla si falta |
 | `author` | texto | sí | `equipo`, `bot` o un nombre |
 | `draft` | booleano | no (`false`) | En `astro build` no se publica; en `astro dev` sí se ve |

@@ -13,6 +13,12 @@ tags:
 source:
   name: 'UCLA Health (Neuropsychopharmacology)'
   url: 'https://www.uclahealth.org/news/release/study-challenges-belief-women-are-more-sensitive-effects'
+cover: '../../../assets/news/ucla-sex-differences-smoked-cannabis.jpg'
+coverAlt: 'Gloved hand placing a tablet into laboratory testing equipment'
+coverCredit:
+  autor: 'The U.S. Food and Drug Administration'
+  licencia: 'Public domain'
+  url: 'https://commons.wikimedia.org/wiki/File:Generic_Drug_Research_(5896)_(8493711422).jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'Does cannabis affect men and women the same?'

@@ -93,6 +93,14 @@ export function createNewsSchema<Cover extends z.ZodType = z.ZodString>(
       tags: z.array(z.string().min(1)).default([]),
       cover: cover.optional(),
       coverAlt: z.string().min(1).optional(),
+      /** Autoría y licencia de la foto de portada (obligatorio mostrarlo en CC BY). */
+      coverCredit: z
+        .object({
+          autor: z.string().min(1),
+          licencia: z.string().min(1),
+          url: z.url(),
+        })
+        .optional(),
       source: z
         .object({
           name: z.string().min(1),

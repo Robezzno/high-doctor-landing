@@ -13,6 +13,12 @@ tags:
   - evidencia
   - cannabinoides
   - método científico
+cover: '../../../assets/news/cannabinoid-research-context.jpg'
+coverAlt: 'Manos con guantes ajustando una muestra en un microscopio'
+coverCredit:
+  autor: 'Shixart1985'
+  licencia: 'CC BY 2.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Close-up_of_a_lab_technitian_adjusting_a_microscope_glass_slide.jpg'
 author: equipo
 instagram: 'off'
 grafico:

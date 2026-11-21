@@ -13,6 +13,12 @@ tags:
 source:
   name: 'Neuropharmacology (Universidad de São Paulo)'
   url: 'https://doi.org/10.1016/j.neuropharm.2026.111256'
+cover: '../../../assets/news/cbd-fear-extinction-ptsd-rats.jpg'
+coverAlt: 'Rata blanca de laboratorio sujetada con cuidado por manos con guantes'
+coverCredit:
+  autor: 'Anna Marchenkova'
+  licencia: 'CC BY 4.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Laboratory_rat.jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'El CBD y la memoria del miedo: una pista para el estrés postraumático'

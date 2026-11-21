@@ -13,6 +13,12 @@ tags:
 source:
   name: 'Biomedicine & Pharmacotherapy (Technion)'
   url: 'https://doi.org/10.1016/j.biopha.2026.119942'
+cover: '../../../assets/news/new-cannabinoid-technion-tamoxifen.jpg'
+coverAlt: 'Células cancerosas teñidas con fluorescencia verde al microscopio'
+coverCredit:
+  autor: 'Korinna'
+  licencia: 'CC BY 4.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Fluorescence_microscopy_of_the_oral_cancer_cells.jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'Un cannabinoide recién descubierto que refuerza el tamoxifeno'

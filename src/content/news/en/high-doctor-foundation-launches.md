@@ -10,6 +10,12 @@ tags:
   - launch
   - network
   - outreach
+cover: '../../../assets/news/foundation-launch.jpg'
+coverAlt: 'Green leaves of an outdoor cannabis plant'
+coverCredit:
+  autor: 'Miran Rijavec'
+  licencia: 'CC BY 2.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Himachal_Pradesh_-_Manali_-_Cannabis_Sativa_var._Indica_(4135437745).jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'High Doctor Foundation launches'

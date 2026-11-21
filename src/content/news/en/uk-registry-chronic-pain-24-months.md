@@ -13,6 +13,12 @@ tags:
 source:
   name: 'Journal of Clinical Pharmacology'
   url: 'https://doi.org/10.1002/jcph.70313'
+cover: '../../../assets/news/uk-registry-chronic-pain-24-months.jpg'
+coverAlt: 'Greenhouse with rows of cannabis plants under cultivation'
+coverCredit:
+  autor: 'Cannabis Tours'
+  licencia: 'CC BY-SA 4.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Commercial_Cannabis_Greenhouse_Facility.jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'Chronic pain and medical cannabis: what happens after two years'

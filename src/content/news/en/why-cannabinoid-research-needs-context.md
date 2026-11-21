@@ -13,6 +13,12 @@ tags:
   - evidence
   - cannabinoids
   - scientific method
+cover: '../../../assets/news/cannabinoid-research-context.jpg'
+coverAlt: 'Gloved hands adjusting a slide under a microscope'
+coverCredit:
+  autor: 'Shixart1985'
+  licencia: 'CC BY 2.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Close-up_of_a_lab_technitian_adjusting_a_microscope_glass_slide.jpg'
 author: equipo
 instagram: 'off'
 grafico:

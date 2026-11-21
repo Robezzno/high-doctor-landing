@@ -10,6 +10,12 @@ tags:
   - divulgación
   - evidencia
   - alfabetización mediática
+cover: '../../../assets/news/reading-cannabis-health-news.jpg'
+coverAlt: 'Sala de lectura de biblioteca con mesa redonda y estanterías antiguas'
+coverCredit:
+  autor: 'Michael D Beckwith'
+  licencia: 'CC BY 3.0'
+  url: 'https://commons.wikimedia.org/wiki/File:Chethams_Library_Reading_Room.jpg'
 author: equipo
 instagram: 'off'
 grafico:
