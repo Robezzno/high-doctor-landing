@@ -64,10 +64,9 @@ const {
 // (ą, ł, ż…); el resto de idiomas tira de latin. El alemán usa latin (ä, ö, ü, ß).
 const criticalFonts = [rubik400, rubik500];
 
-// Mismo <title> y misma descripción que la web antigua (los textos SEO
-// por idioma llegan en el prompt 09).
+// Título y descripción por defecto, traducidos a cada idioma.
 const siteName = 'High Doctor Foundation';
-const defaultTitle = `${siteName} | Advancing Cannabis Knowledge`;
+const defaultTitle = t(lang, 'seo_title');
 // En el blog el título del post manda y el nombre del sitio se añade al final,
 // sin duplicarlo cuando el título del post ya lo incluye.
 const title = customTitle
@@ -76,9 +75,7 @@ const title = customTitle
     : `${customTitle} | ${siteName}`
   : defaultTitle;
 const ogTitle = customTitle ?? defaultTitle;
-const description =
-  customDescription ??
-  'High Doctor Foundation is an independent non-profit organization dedicated to education, culture, community development and social awareness regarding cannabis and cannabinoids.';
+const description = customDescription ?? t(lang, 'seo_description');
 
 const site = Astro.site ?? new URL('https://highdoctor.foundation');
 const canonical = new URL(Astro.url.pathname, site);
@@ -91,7 +88,9 @@ const alternates: Alternate[] =
     href: absolute(langPath(language)),
   }));
 
-const imageUrl = image ? absolute(image) : undefined;
+// Sin imagen propia, la de la marca (1200×630) para que ninguna página
+// se comparta sin imagen.
+const imageUrl = absolute(image ?? '/og-default.jpg');
 ---
 
 <!doctype html>

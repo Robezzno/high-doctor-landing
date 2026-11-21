@@ -6,6 +6,9 @@ export default defineConfig({
   // Dominio de producción: se usa para canonical, hreflang y el sitemap futuro.
   site: 'https://highdoctor.foundation',
   output: 'static',
+  // El CSS va dentro del HTML: pesa ~6 KB comprimido y se ahorra una ida y
+  // vuelta de red antes de pintar (Lighthouse, 2026-11-21).
+  build: { inlineStylesheets: 'always' },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'es', 'de', 'fr', 'it', 'pt', 'nl', 'pl'],

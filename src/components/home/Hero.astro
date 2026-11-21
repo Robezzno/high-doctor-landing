@@ -134,6 +134,7 @@ const groups = [
       <Picture
         src={doctor}
         formats={['avif', 'webp']}
+        fallbackFormat="webp"
         widths={[240, 400, 640]}
         sizes="(max-width: 60rem) 34vw, 22rem"
         alt={t(lang, 'mascot_alt')}

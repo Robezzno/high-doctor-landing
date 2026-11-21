@@ -63,6 +63,26 @@ const readingMinutes = Math.max(1, Math.round(words / 200));
 
 const isHealth = entry.data.category === 'salud';
 
+// Ficha NewsArticle (schema.org) para que los buscadores entiendan la noticia.
+const article: Record<string, unknown> = {
+  headline: entry.data.title,
+  description: entry.data.summary,
+  datePublished: entry.data.date.toISOString(),
+  dateModified: entry.data.date.toISOString(),
+  inLanguage: lang,
+  mainEntityOfPage: absoluteUrl,
+  image: [new URL(ogImagePath(lang, slug), site).href, new URL(socialCardPath(lang, slug), site).href],
+  author: { '@type': 'Organization', name: 'High Doctor Foundation', url: site.href },
+  publisher: {
+    '@type': 'Organization',
+    name: 'High Doctor Foundation',
+    logo: { '@type': 'ImageObject', url: new URL('/icon-512.png', site).href },
+  },
+  ...(entry.data.source ? { isBasedOn: entry.data.source.url } : {}),
+};
+article['@context'] = 'https://schema.org';
+article['@type'] = 'NewsArticle';
+
 const alternates = translation
   ? [
       {
@@ -95,6 +115,7 @@ const langHrefs = {
   publishedTime={entry.data.date.toISOString()}
   alternates={alternates}
   rss={rssUrl(lang)}
+  structuredData={[article]}
 >
   <Nav
     lang={lang}
