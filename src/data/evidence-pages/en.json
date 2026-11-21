@@ -1,0 +1,107 @@
+{
+  "base": "evidence",
+  "ui": {
+    "hubTitle": "What the evidence says about cannabis, topic by topic",
+    "hubLead": "Ten common questions about cannabis and cannabinoids, each with its A–E grade, what is known, what is still unknown and the source in plain sight.",
+    "hubDescription": "A–E evidence grades on the medical uses and risks of cannabis: pain, nausea, epilepsy, sleep, anxiety, cancer and more, each with its source.",
+    "crumbHome": "Home",
+    "crumbHub": "Evidence",
+    "kindUse": "Medical use",
+    "kindRisk": "Risk",
+    "verdictLabel": "Evidence grade",
+    "studied": "What has been studied",
+    "unknown": "What we still don't know",
+    "practical": "In practice",
+    "scaleTitle": "How to read the grade",
+    "scaleLead": "We use the five levels of the 2017 review by the US National Academies of Sciences: A is the most certain and E means there is not enough data yet.",
+    "relatedNews": "Related news",
+    "otherTopics": "Other topics",
+    "reviewed": "Reviewed",
+    "seePage": "See the full page",
+    "hubLink": "All topics",
+    "ctaTitle": "Do you work in healthcare or research?",
+    "ctaText": "Join the High Doctor Foundation network and help us review the evidence."
+  },
+  "topics": {
+    "pain": {
+      "slug": "cannabis-chronic-pain",
+      "question": "Does cannabis help with chronic pain?",
+      "description": "Grade B: there is substantial evidence that cannabis and cannabinoids reduce chronic pain in adults. What has been studied, what is missing and what it means.",
+      "studied": "The US National Academies review brought together dozens of placebo-controlled clinical trials and concluded that there is substantial evidence that cannabinoids reduce chronic pain in adults. Most of those trials studied neuropathic pain (pain that comes from the nerves) and used a mouth spray containing THC and CBD (nabiximols). The improvement is real, though modest in size.",
+      "unknown": "Many trials lasted only a few weeks, so less is known about years of use. It is also unclear which product, which THC-to-CBD ratio and which dose work best for each type of pain. Patient registries, such as the UK one, are now providing longer follow-up data.",
+      "practical": "It is one of the best-studied medical uses of cannabis. The sensible approach is to discuss it with a healthcare professional, start with low doses and review how it goes: the product, the dose and medical follow-up make the difference."
+    },
+    "nausea": {
+      "slug": "cannabis-chemotherapy-nausea",
+      "question": "Does cannabis relieve chemotherapy nausea?",
+      "description": "Grade A: there is conclusive evidence that oral cannabinoids reduce chemotherapy-induced nausea and vomiting. What is known and how they are used.",
+      "studied": "This is the medical use with the strongest evidence. Since the 1980s, many clinical trials have shown that cannabinoids taken by mouth, such as dronabinol and nabilone, reduce the nausea and vomiting caused by chemotherapy. That is why cannabinoid medicines are approved for this use in several countries.",
+      "unknown": "Anti-nausea drugs have improved a lot since then, and few trials compare cannabinoids directly with the newest medicines. It is also not yet clear which patients benefit most from adding them to their treatment.",
+      "practical": "They are usually used when standard anti-nausea drugs are not enough. If you are having chemotherapy and your nausea is not under control, tell your oncology team: they can assess whether a cannabinoid fits your case."
+    },
+    "ms": {
+      "slug": "cannabis-multiple-sclerosis-spasticity",
+      "question": "Does cannabis help with multiple sclerosis spasticity?",
+      "description": "Grade B: there is substantial evidence that cannabinoids improve the spasticity reported by people with multiple sclerosis. What is known and what is not.",
+      "studied": "Spasticity is the muscle stiffness and spasms that many people with multiple sclerosis live with. Clinical trials show substantial evidence that oral cannabinoids taken over several weeks improve the spasticity that patients themselves report. A mouth spray containing THC and CBD (nabiximols) is approved for this use in several European countries.",
+      "unknown": "The improvement is clearer when patients rate it than when doctors measure it with clinical scales, where the evidence is limited. There is less data on use over years and on other symptoms of the disease.",
+      "practical": "It is a recognised option when standard treatments for spasticity are not enough. The decision is made with the neurologist, who can say whether a cannabinoid medicine is suitable."
+    },
+    "epilepsy": {
+      "slug": "cbd-childhood-epilepsy",
+      "question": "Does CBD work for childhood epilepsy?",
+      "description": "Grade A: in 2019 the European Medicines Agency approved a CBD medicine for Dravet and Lennox-Gastaut syndromes. What the clinical trials show.",
+      "studied": "Several randomised, placebo-controlled clinical trials showed that a purified CBD medicine reduces seizures in Dravet and Lennox-Gastaut syndromes, two severe childhood epilepsies that respond poorly to other treatments. On the strength of that data, the European Medicines Agency approved it in 2019 and later extended its use to tuberous sclerosis complex.",
+      "unknown": "Researchers are still studying whether CBD helps in other types of epilepsy and what its long-term role is. The trial results apply to a pharmaceutical-grade medicine at controlled doses, not to the CBD products sold in shops.",
+      "practical": "It is the clearest proof that a cannabinoid can become an effective medicine. It is used under a neurologist's supervision, alongside other antiseizure drugs and with regular blood tests, because it can interact with them."
+    },
+    "sleep": {
+      "slug": "cannabis-sleep",
+      "question": "Does cannabis improve sleep?",
+      "description": "Grade C: there is moderate evidence that cannabinoids improve short-term sleep when it is disrupted by pain, fibromyalgia, multiple sclerosis or sleep apnoea.",
+      "studied": "Studies show moderate evidence that cannabinoids improve short-term sleep in people whose rest is disrupted by another condition: chronic pain, fibromyalgia, multiple sclerosis or sleep apnoea. In many cases sleep was measured as a secondary outcome in pain trials.",
+      "unknown": "There is no good evidence for insomnia without another cause, or for continuous use over months or years. Patient registries report lasting improvements, but without a comparison group it is impossible to know how much is due to the treatment.",
+      "practical": "It can make sense when poor sleep goes hand in hand with pain or another condition already being treated with cannabinoids. For insomnia with no other cause, talk to a professional first about the options with more evidence."
+    },
+    "anxiety": {
+      "slug": "cbd-anxiety",
+      "question": "Does CBD help with anxiety?",
+      "description": "Grade D: a small study found that CBD reduced public-speaking anxiety in people with social anxiety. Why that is not yet enough to recommend it.",
+      "studied": "The National Academies review found limited evidence: a small study in people with social anxiety found that a dose of CBD reduced anxiety during a public-speaking test. Lab studies on how CBD acts in the brain, such as those on the serotonin system, point in the same direction.",
+      "unknown": "Large, long trials in people with anxiety disorders are still needed to confirm the effect, the right dose and how long it lasts. CBD and THC do not act the same way: high doses of THC can increase anxiety.",
+      "practical": "It is a promising line of research, but not yet enough to recommend it as a treatment. If you have anxiety, start by talking to a professional: there are treatments with strong evidence."
+    },
+    "cancer": {
+      "slug": "cannabis-cancer",
+      "question": "Can cannabis treat cancer?",
+      "description": "Grade E: there is not enough evidence that cannabinoids treat cancer in people. What lab research says and what is still unknown.",
+      "studied": "In the lab, several cannabinoids slow the growth of tumour cells and some strengthen the effect of cancer treatments. It is an active line of research. But when it comes to trials in people showing that cannabinoids treat cancer, gliomas included, the evidence is insufficient.",
+      "unknown": "Clinical trials are still needed to test whether what works in cells and animals also works in patients, with which compounds and in which cancers. Meanwhile, there is evidence that cannabinoids help with symptoms such as chemotherapy nausea.",
+      "practical": "Claims that cannabis cures cancer have no data behind them. Never abandon or delay a treatment because of one. If you are interested in cannabinoids for symptoms, talk to your oncology team."
+    },
+    "psychosis": {
+      "slug": "cannabis-psychosis-schizophrenia",
+      "question": "Does cannabis increase the risk of psychosis?",
+      "description": "Grade B: there is substantial evidence that cannabis use is associated with a higher risk of schizophrenia and other psychoses, especially with frequent use.",
+      "studied": "Studies that follow large groups of people for years show substantial evidence of an association between cannabis use and the risk of developing schizophrenia or other psychoses. The more frequent the use, the higher the risk, which is concentrated in daily use and high-THC products.",
+      "unknown": "An association alone does not prove that cannabis causes psychosis: genetics, the age at which use starts and other factors play a part. Researchers are studying why some people are more vulnerable than others and the role of CBD, which does not have this effect.",
+      "practical": "To reduce the risk: avoid daily use, delay the age of first use, choose products with less THC and do not use if there is a family history of psychosis. If symptoms such as extreme suspicion or strange ideas appear, seek professional help."
+    },
+    "driving": {
+      "slug": "cannabis-driving",
+      "question": "Is it dangerous to drive after using cannabis?",
+      "description": "Grade B: there is substantial evidence that cannabis use is associated with more road traffic accidents. Why it affects driving and how to avoid the risk.",
+      "studied": "Studies show substantial evidence that driving after using cannabis is associated with a higher risk of road traffic accidents. THC affects attention, coordination and reaction time, especially in the first few hours.",
+      "unknown": "Blood THC levels are a poor guide to impairment, so there is still no simple way to measure when someone can drive safely again. The effect varies with the dose, the route of use and each person's habits.",
+      "practical": "Do not drive after using cannabis. If you have taken it, wait several hours or use another way to get around, and never combine it with alcohol, which multiplies the risk. In many countries it is also a serious offence."
+    },
+    "pregnancy": {
+      "slug": "cannabis-pregnancy",
+      "question": "Is cannabis safe during pregnancy?",
+      "description": "Grade B: there is substantial evidence that smoking cannabis during pregnancy is associated with lower birth weight. What is known and what health authorities advise.",
+      "studied": "Studies show substantial evidence that smoking cannabis during pregnancy is associated with lower birth weight. THC crosses the placenta and also passes into breast milk.",
+      "unknown": "For other possible effects on the baby's development, the evidence is limited. It is hard to separate the effect of cannabis from that of other factors, such as tobacco, and more studies with long follow-up are needed.",
+      "practical": "Health authorities advise against cannabis during pregnancy and breastfeeding, CBD included. If you use it for nausea or another symptom, talk to your midwife or doctor: there are safe alternatives."
+    }
+  }
+}

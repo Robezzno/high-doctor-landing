@@ -1,0 +1,107 @@
+{
+  "base": "preuves",
+  "ui": {
+    "hubTitle": "Ce que disent les preuves sur le cannabis, sujet par sujet",
+    "hubLead": "Dix questions fréquentes sur le cannabis et les cannabinoïdes, chacune avec sa note de A à E, ce que l'on sait, ce que l'on ignore encore et la source bien visible.",
+    "hubDescription": "Notes de preuve de A à E sur les usages médicaux et les risques du cannabis : douleur, nausées, épilepsie, sommeil, anxiété, cancer et plus, avec leur source.",
+    "crumbHome": "Accueil",
+    "crumbHub": "Preuves",
+    "kindUse": "Usage médical",
+    "kindRisk": "Risque",
+    "verdictLabel": "Note de preuve",
+    "studied": "Ce qui a été étudié",
+    "unknown": "Ce que l'on ignore encore",
+    "practical": "En pratique",
+    "scaleTitle": "Comment lire la note",
+    "scaleLead": "Nous utilisons les cinq niveaux de la revue de 2017 des Académies nationales des sciences des États-Unis : A est le plus certain et E signifie qu'il n'y a pas encore assez de données.",
+    "relatedNews": "Actualités liées",
+    "otherTopics": "Autres sujets",
+    "reviewed": "Révisé",
+    "seePage": "Voir la page complète",
+    "hubLink": "Tous les sujets",
+    "ctaTitle": "Vous travaillez dans la santé ou la recherche ?",
+    "ctaText": "Rejoignez le réseau de la Fondation High Doctor et aidez-nous à réviser les preuves."
+  },
+  "topics": {
+    "pain": {
+      "slug": "cannabis-douleur-chronique",
+      "question": "Le cannabis aide-t-il contre la douleur chronique ?",
+      "description": "Note B : il existe des preuves substantielles que le cannabis et les cannabinoïdes réduisent la douleur chronique chez l'adulte. Ce qu'on sait et ce qui manque.",
+      "studied": "La revue des Académies nationales des sciences des États-Unis a réuni des dizaines d'essais cliniques contrôlés par placebo et conclu qu'il existe des preuves substantielles que les cannabinoïdes réduisent la douleur chronique chez l'adulte. La plupart de ces essais portaient sur la douleur neuropathique (celle qui provient des nerfs) et utilisaient un spray buccal contenant du THC et du CBD (nabiximols). L'amélioration est réelle, bien que modeste.",
+      "unknown": "Beaucoup d'essais n'ont duré que quelques semaines : on en sait donc moins sur des années d'utilisation. On ignore aussi quel produit, quel rapport THC/CBD et quelle dose conviennent le mieux à chaque type de douleur. Des registres de patients, comme celui du Royaume-Uni, apportent désormais des données de suivi plus longues.",
+      "practical": "C'est l'un des usages médicaux du cannabis les mieux étudiés. La démarche raisonnable est d'en parler avec un professionnel de santé, de commencer par de faibles doses et d'évaluer les résultats : le produit, la dose et le suivi médical font la différence."
+    },
+    "nausea": {
+      "slug": "cannabis-nausees-chimiotherapie",
+      "question": "Le cannabis soulage-t-il les nausées de la chimiothérapie ?",
+      "description": "Note A : il existe des preuves concluantes que les cannabinoïdes oraux réduisent les nausées et vomissements dus à la chimiothérapie. Ce que l'on sait.",
+      "studied": "C'est l'usage médical dont les preuves sont les plus solides. Depuis les années 1980, de nombreux essais cliniques ont montré que les cannabinoïdes pris par voie orale, comme le dronabinol et la nabilone, réduisent les nausées et vomissements provoqués par la chimiothérapie. C'est pourquoi des médicaments à base de cannabinoïdes sont autorisés pour cet usage dans plusieurs pays.",
+      "unknown": "Les médicaments contre les nausées ont beaucoup progressé depuis, et peu d'essais comparent directement les cannabinoïdes aux traitements les plus récents. On ne sait pas non plus encore quels patients tirent le plus de bénéfice à les ajouter à leur traitement.",
+      "practical": "Ils sont généralement utilisés lorsque les antinauséeux habituels ne suffisent pas. Si vous suivez une chimiothérapie et que vos nausées ne sont pas contrôlées, parlez-en à votre équipe d'oncologie : elle pourra évaluer si un cannabinoïde convient à votre cas."
+    },
+    "ms": {
+      "slug": "cannabis-sclerose-en-plaques-spasticite",
+      "question": "Le cannabis aide-t-il contre la spasticité de la sclérose en plaques ?",
+      "description": "Note B : il existe des preuves substantielles que les cannabinoïdes améliorent la spasticité rapportée par les personnes atteintes de sclérose en plaques.",
+      "studied": "La spasticité désigne la raideur et les spasmes musculaires dont souffrent de nombreuses personnes atteintes de sclérose en plaques. Les essais cliniques montrent des preuves substantielles que les cannabinoïdes oraux, pris pendant plusieurs semaines, améliorent la spasticité telle que la rapportent les patients eux-mêmes. Un spray buccal contenant du THC et du CBD (nabiximols) est autorisé pour cet usage dans plusieurs pays européens.",
+      "unknown": "L'amélioration est plus nette lorsque ce sont les patients qui l'évaluent que lorsque les médecins la mesurent avec des échelles cliniques, où les preuves sont limitées. On dispose de moins de données sur l'usage au long cours et sur les autres symptômes de la maladie.",
+      "practical": "C'est une option reconnue lorsque les traitements habituels de la spasticité ne suffisent pas. La décision se prend avec le neurologue, qui peut dire si un médicament à base de cannabinoïdes est adapté."
+    },
+    "epilepsy": {
+      "slug": "cbd-epilepsie-enfant",
+      "question": "Le CBD fonctionne-t-il contre l'épilepsie de l'enfant ?",
+      "description": "Note A : en 2019, l'Agence européenne des médicaments a autorisé un médicament à base de CBD pour les syndromes de Dravet et de Lennox-Gastaut.",
+      "studied": "Plusieurs essais cliniques randomisés et contrôlés par placebo ont montré qu'un médicament à base de CBD purifié réduit les crises dans les syndromes de Dravet et de Lennox-Gastaut, deux épilepsies sévères de l'enfant qui répondent mal aux autres traitements. Sur la base de ces données, l'Agence européenne des médicaments l'a autorisé en 2019, puis a étendu son usage à la sclérose tubéreuse de Bourneville.",
+      "unknown": "Les chercheurs étudient encore si le CBD est utile dans d'autres types d'épilepsie et quel est son rôle à long terme. Les résultats des essais valent pour un médicament de qualité pharmaceutique à doses contrôlées, pas pour les produits au CBD vendus en boutique.",
+      "practical": "C'est la preuve la plus claire qu'un cannabinoïde peut devenir un médicament efficace. Il s'utilise sous la supervision d'un neurologue, avec d'autres antiépileptiques et des analyses de sang régulières, car il peut interagir avec eux."
+    },
+    "sleep": {
+      "slug": "cannabis-sommeil",
+      "question": "Le cannabis améliore-t-il le sommeil ?",
+      "description": "Note C : il existe des preuves modérées que les cannabinoïdes améliorent le sommeil à court terme lorsqu'il est perturbé par la douleur ou une maladie.",
+      "studied": "Les études montrent des preuves modérées que les cannabinoïdes améliorent le sommeil à court terme chez les personnes dont le repos est perturbé par une autre affection : douleur chronique, fibromyalgie, sclérose en plaques ou apnée du sommeil. Dans de nombreux cas, le sommeil était mesuré comme critère secondaire dans des essais sur la douleur.",
+      "unknown": "Il n'existe pas de bonnes preuves pour l'insomnie sans autre cause, ni pour une utilisation continue pendant des mois ou des années. Les registres de patients rapportent des améliorations durables, mais sans groupe de comparaison il est impossible de savoir quelle part revient au traitement.",
+      "practical": "Cela peut avoir du sens lorsque le mauvais sommeil va de pair avec une douleur ou une autre affection déjà traitée par cannabinoïdes. Pour une insomnie sans autre cause, parlez d'abord avec un professionnel des options mieux étayées."
+    },
+    "anxiety": {
+      "slug": "cbd-anxiete",
+      "question": "Le CBD aide-t-il contre l'anxiété ?",
+      "description": "Note D : une petite étude a observé que le CBD réduisait l'anxiété de la prise de parole en public chez des personnes avec anxiété sociale. Pas assez encore.",
+      "studied": "La revue des Académies nationales des sciences a conclu à des preuves limitées : une petite étude chez des personnes souffrant d'anxiété sociale a montré qu'une dose de CBD réduisait l'anxiété lors d'un test de prise de parole en public. Des études de laboratoire sur l'action du CBD dans le cerveau, comme celles sur le système de la sérotonine, vont dans le même sens.",
+      "unknown": "Il faut encore de grands essais de longue durée chez des personnes souffrant de troubles anxieux pour confirmer l'effet, la bonne dose et sa durée. Le CBD et le THC n'agissent pas de la même manière : de fortes doses de THC peuvent augmenter l'anxiété.",
+      "practical": "C'est une piste de recherche prometteuse, mais pas encore suffisante pour le recommander comme traitement. Si vous souffrez d'anxiété, commencez par en parler à un professionnel : il existe des traitements aux preuves solides."
+    },
+    "cancer": {
+      "slug": "cannabis-cancer",
+      "question": "Le cannabis peut-il soigner le cancer ?",
+      "description": "Note E : il n'existe pas assez de preuves que les cannabinoïdes soignent le cancer chez l'être humain. Ce que dit la recherche en laboratoire.",
+      "studied": "En laboratoire, plusieurs cannabinoïdes ralentissent la croissance de cellules tumorales et certains renforcent l'effet des traitements anticancéreux. C'est une piste de recherche active. Mais pour ce qui est d'essais chez l'être humain montrant que les cannabinoïdes soignent le cancer, y compris les gliomes, les preuves sont insuffisantes.",
+      "unknown": "Il faut encore des essais cliniques pour vérifier si ce qui fonctionne sur des cellules et chez l'animal fonctionne aussi chez les patients, avec quels composés et dans quels cancers. En attendant, il existe des preuves que les cannabinoïdes aident contre des symptômes comme les nausées de la chimiothérapie.",
+      "practical": "Les affirmations selon lesquelles le cannabis guérit le cancer ne reposent sur aucune donnée. N'abandonnez ni ne retardez jamais un traitement à cause d'elles. Si les cannabinoïdes vous intéressent pour les symptômes, parlez-en à votre équipe d'oncologie."
+    },
+    "psychosis": {
+      "slug": "cannabis-psychose-schizophrenie",
+      "question": "Le cannabis augmente-t-il le risque de psychose ?",
+      "description": "Note B : il existe des preuves substantielles que la consommation de cannabis est associée à un risque plus élevé de schizophrénie et d'autres psychoses.",
+      "studied": "Des études qui suivent de grands groupes de personnes pendant des années montrent des preuves substantielles d'une association entre la consommation de cannabis et le risque de développer une schizophrénie ou d'autres psychoses. Plus la consommation est fréquente, plus le risque est élevé : il se concentre sur l'usage quotidien et les produits riches en THC.",
+      "unknown": "Une association à elle seule ne prouve pas que le cannabis cause la psychose : la génétique, l'âge de début de la consommation et d'autres facteurs jouent un rôle. Les chercheurs étudient pourquoi certaines personnes sont plus vulnérables que d'autres, ainsi que le rôle du CBD, qui n'a pas cet effet.",
+      "practical": "Pour réduire le risque : évitez l'usage quotidien, retardez l'âge de la première consommation, choisissez des produits moins riches en THC et ne consommez pas en cas d'antécédents familiaux de psychose. Si des symptômes comme une méfiance extrême ou des idées étranges apparaissent, cherchez une aide professionnelle."
+    },
+    "driving": {
+      "slug": "cannabis-conduite",
+      "question": "Est-il dangereux de conduire après avoir consommé du cannabis ?",
+      "description": "Note B : il existe des preuves substantielles que le cannabis est associé à davantage d'accidents de la route. Pourquoi et comment éviter le risque.",
+      "studied": "Les études montrent des preuves substantielles que conduire après avoir consommé du cannabis est associé à un risque plus élevé d'accidents de la route. Le THC altère l'attention, la coordination et le temps de réaction, surtout durant les premières heures.",
+      "unknown": "Le taux de THC dans le sang est un mauvais indicateur de l'altération : il n'existe donc toujours pas de moyen simple de mesurer à partir de quand une personne peut de nouveau conduire en sécurité. L'effet varie selon la dose, la voie de consommation et les habitudes de chacun.",
+      "practical": "Ne conduisez pas après avoir consommé du cannabis. Si vous en avez pris, attendez plusieurs heures ou utilisez un autre moyen de transport, et ne le mélangez jamais à l'alcool, qui multiplie le risque. Dans de nombreux pays, c'est en outre une infraction grave."
+    },
+    "pregnancy": {
+      "slug": "cannabis-grossesse",
+      "question": "Le cannabis est-il sûr pendant la grossesse ?",
+      "description": "Note B : il existe des preuves substantielles que fumer du cannabis pendant la grossesse est associé à un poids de naissance plus faible.",
+      "studied": "Les études montrent des preuves substantielles que fumer du cannabis pendant la grossesse est associé à un poids de naissance plus faible. Le THC traverse le placenta et passe aussi dans le lait maternel.",
+      "unknown": "Pour d'autres effets possibles sur le développement du bébé, les preuves sont limitées. Il est difficile de distinguer l'effet du cannabis de celui d'autres facteurs, comme le tabac, et il faut davantage d'études avec un long suivi.",
+      "practical": "Les autorités sanitaires déconseillent le cannabis pendant la grossesse et l'allaitement, CBD compris. Si vous en consommez contre des nausées ou un autre symptôme, parlez-en à votre sage-femme ou à votre médecin : il existe des alternatives sûres."
+    }
+  }
+}

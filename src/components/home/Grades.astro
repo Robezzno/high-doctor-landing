@@ -1,6 +1,7 @@
 ---
 import { evidenceSources, evidenceTopics, gradeOf, type EvidenceTopic } from '../../data/evidence';
 import { t, type Lang, type TranslationKey } from '../../i18n';
+import { evidenceContent, evidenceHubPath, evidenceTopicPath } from '../../lib/evidence';
 
 interface Props {
   lang: Lang;
@@ -77,6 +78,9 @@ const byGrade = (a: EvidenceTopic, b: EvidenceTopic) => gradeOf(a.level).localeC
                             {source.name}
                           </a>
                         </p>
+                        <a class="link-arrow row__page" href={evidenceTopicPath(lang, topic.id)}>
+                          {evidenceContent[lang].ui.seePage}
+                        </a>
                       </div>
                     </details>
                   </li>
@@ -87,11 +91,24 @@ const byGrade = (a: EvidenceTopic, b: EvidenceTopic) => gradeOf(a.level).localeC
       ))
     }
 
+    <p class="grades__all">
+      <a class="link-arrow" href={evidenceHubPath(lang)}>{evidenceContent[lang].ui.hubLink}</a>
+    </p>
+
     <p class="grades__disclaimer">{t(lang, 'evd_disclaimer')}</p>
   </div>
 </section>
 
 <style>
+  .row__page {
+    margin-top: 0.25rem;
+    font-size: var(--fs-small);
+  }
+
+  .grades__all {
+    margin: clamp(2rem, 1.5rem + 1.5vw, 3rem) 0 0;
+  }
+
   /* Cada grupo: título a la izquierda, filas de etiqueta a la derecha. */
   .grades__group {
     display: grid;

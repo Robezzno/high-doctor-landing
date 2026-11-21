@@ -12,6 +12,10 @@ const SCANS: Array<{ name: string; path: string }> = [
   { name: 'noticias ES', path: '/noticias/' },
   { name: 'news EN', path: '/en/news/' },
   { name: '404', path: '/esta-pagina-no-existe/' },
+  { name: 'evidencia ES (índice)', path: '/es/evidencia/' },
+  { name: 'evidence EN (ficha)', path: '/evidence/cannabis-chronic-pain/' },
+  { name: 'dowody PL (ficha de riesgo)', path: '/pl/dowody/konopie-psychoza-schizofrenia/' },
+  { name: 'noticia ES con caja de evidencia', path: '/noticias/cbd-sindrome-boca-ardiente-ensayo/' },
 ];
 
 for (const { name, path } of SCANS) {

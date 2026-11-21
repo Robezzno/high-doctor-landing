@@ -16,13 +16,15 @@
 - 2026-11-21: dos más en ES y EN, publicadas en `main`: ensayo con placebo de aceite de CBD en el síndrome de boca ardiente (UFPR, doi:10.1016/j.oooo.2026.07.010) y nuevo cannabinoide 373.15b del Technion que potencia el tamoxifeno (doi:10.1016/j.biopha.2026.119942). Contrastadas con el abstract de PubMed y cobertura secundaria. Descartadas por la línea editorial: meta-análisis de EClinicalMedicine (la prensa lo cuenta como «no sirve en salud mental») y ensayo de JAMA Pediatrics (resultado negativo).
 - Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
-## Fichas por tema de evidencia (2026-11-21, EN CURSO)
+## Fichas por tema de evidencia (2026-11-21, PUBLICADO)
 Encargo de Saf: «haz lo de la página propia, intégralo con cuidado».
 - URLs: `/evidence/<slug>/` (EN) y `/<lang>/<base>/<slug>/` (es evidencia, de evidenz, fr preuves, it evidenze, pt evidencia, nl bewijs, pl dowody), más un índice por idioma `/<base>/`.
 - Contenido: `src/data/evidence-pages/<lang>.json` (slug, pregunta-h1, descripción, «qué se ha estudiado», «qué falta por saber», «en la práctica» + textos de interfaz), validado con zod y test. Nota, nivel, fuente, «qué dice» y «qué significa» salen de lo que ya existe (`evidence.ts` + i18n). Sin citas nuevas: solo NASEM 2017 y EMA.
 - Página: migas, pregunta, veredicto con la letra grande, escala A–E con la nota marcada, tres secciones, noticias relacionadas (campo nuevo `evidencia` en las noticias), otros temas, aviso médico, CTA únete. JSON-LD MedicalWebPage + FAQPage + BreadcrumbList.
 - Integración: filas de «Todas las notas» y enlace del hero → ficha; pie con enlace al índice; noticia con tema → caja «Qué dice la evidencia» enlazando a la ficha.
-- Pasos: [ ] contenido ES/EN · [ ] traducciones (agentes) · [ ] rutas y plantilla · [ ] integración · [ ] tests + e2e + capturas · [ ] publicar
+- Pasos: [x] contenido ES/EN · [x] traducciones (agentes, revisadas por muestreo) · [x] rutas y plantilla · [x] integración · [x] tests (145) + e2e/axe (47) + qa:links (153 páginas) · [x] publicar
+- El enlace de la nota grande del hero sigue abriendo la fila de la portada (desde ahí, «Ver la ficha completa»): no se tocó su script.
+- Para añadir un tema: id en `src/data/evidence.ts`, sus claves `evd_<id>_t/f/m` en las 8 i18n y su bloque en los 8 `evidence-pages/*.json` (el build falla si falta algo).
 - Retomar: mirar qué casillas faltan; el contenido ya escrito está en `src/data/evidence-pages/`.
 
 ## Revisión de la web (2026-11-21, publicada)

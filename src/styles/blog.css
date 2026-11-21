@@ -897,3 +897,52 @@
 .blog-filter__label {
   font-size: 0.875rem;
 }
+
+/* Caja «Nota de la evidencia» al final de una noticia con tema: enlaza a la ficha. */
+.post-evidence {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: center;
+  max-width: var(--blog-measure);
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 0;
+  border-top: 6px solid var(--c-ink);
+  border-bottom: 1px solid var(--c-ink);
+}
+
+.post-evidence p {
+  margin: 0;
+}
+
+.post-evidence__grade {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--r-1);
+  font-size: 2rem;
+  font-weight: var(--fw-grade);
+}
+
+.post-evidence__grade--a { background-color: var(--grade-a); color: var(--grade-a-ink); }
+.post-evidence__grade--b { background-color: var(--grade-b); color: var(--grade-b-ink); }
+.post-evidence__grade--c { background-color: var(--grade-c); color: var(--grade-c-ink); }
+.post-evidence__grade--d { background-color: var(--grade-d); color: var(--grade-d-ink); }
+.post-evidence__grade--e { background-color: var(--grade-e); color: var(--grade-e-ink); }
+
+.post-evidence__label {
+  font-size: 0.875rem;
+  color: var(--c-ink-soft);
+}
+
+.post-evidence__q {
+  font-weight: var(--fw-head);
+}
+
+.post-evidence__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-weight: var(--fw-head);
+  color: var(--c-green-ink);
+}

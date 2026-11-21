@@ -1,0 +1,23 @@
+---
+/** Ficha de un tema en los siete idiomas con prefijo (`/es/evidencia/cannabis-dolor-cronico/`…). */
+import EvidenceTopicPage from '../../../components/evidence/EvidenceTopicPage.astro';
+import { evidenceTopicIds, type EvidenceTopicId } from '../../../data/evidence';
+import { defaultLang, languages, type Lang } from '../../../i18n';
+import { evidenceContent } from '../../../lib/evidence';
+
+export function getStaticPaths() {
+  return languages
+    .filter((lang) => lang !== defaultLang)
+    .flatMap((lang) =>
+      evidenceTopicIds.map((id) => ({
+        params: { lang, section: evidenceContent[lang].base, slug: evidenceContent[lang].topics[id].slug },
+        props: { id },
+      })),
+    );
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const { id } = Astro.props as { id: EvidenceTopicId };
+---
+
+<EvidenceTopicPage lang={lang} id={id} />

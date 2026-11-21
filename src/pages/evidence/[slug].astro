@@ -1,0 +1,16 @@
+---
+import EvidenceTopicPage from '../../components/evidence/EvidenceTopicPage.astro';
+import { evidenceTopicIds, type EvidenceTopicId } from '../../data/evidence';
+import { evidenceContent } from '../../lib/evidence';
+
+export function getStaticPaths() {
+  return evidenceTopicIds.map((id) => ({
+    params: { slug: evidenceContent.en.topics[id].slug },
+    props: { id },
+  }));
+}
+
+const { id } = Astro.props as { id: EvidenceTopicId };
+---
+
+<EvidenceTopicPage lang="en" id={id} />

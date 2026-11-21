@@ -19,6 +19,8 @@ coverCredit:
   autor: 'Aidar Turlanov'
   licencia: 'CC BY 4.0'
   url: 'https://commons.wikimedia.org/wiki/File:Precision_pipetting_in_biology_research.jpg'
+evidencia:
+  - pain
 author: equipo
 instagram: 'off'
 instagramHook: 'CBD contra el dolor de boca ardiente: lo que vio un ensayo con placebo'

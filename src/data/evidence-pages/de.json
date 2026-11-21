@@ -1,0 +1,107 @@
+{
+  "base": "evidenz",
+  "ui": {
+    "hubTitle": "Was die Evidenz über Cannabis sagt, Thema für Thema",
+    "hubLead": "Zehn häufige Fragen zu Cannabis und Cannabinoiden, jeweils mit Note von A bis E, dem aktuellen Wissensstand, den offenen Fragen und der Quelle direkt daneben.",
+    "hubDescription": "Evidenznoten von A bis E zu medizinischen Anwendungen und Risiken von Cannabis: Schmerzen, Übelkeit, Epilepsie, Schlaf, Angst, Krebs und mehr, jeweils mit Quelle.",
+    "crumbHome": "Startseite",
+    "crumbHub": "Evidenz",
+    "kindUse": "Medizinische Anwendung",
+    "kindRisk": "Risiko",
+    "verdictLabel": "Evidenznote",
+    "studied": "Was untersucht wurde",
+    "unknown": "Was wir noch nicht wissen",
+    "practical": "In der Praxis",
+    "scaleTitle": "So lesen Sie die Note",
+    "scaleLead": "Wir verwenden die fünf Stufen des Berichts der US-amerikanischen National Academies of Sciences von 2017: A ist die sicherste Stufe, E bedeutet, dass es noch nicht genug Daten gibt.",
+    "relatedNews": "Verwandte Nachrichten",
+    "otherTopics": "Weitere Themen",
+    "reviewed": "Geprüft",
+    "seePage": "Zur vollständigen Seite",
+    "hubLink": "Alle Themen",
+    "ctaTitle": "Arbeiten Sie im Gesundheitswesen oder in der Forschung?",
+    "ctaText": "Werden Sie Teil des Netzwerks der High Doctor Foundation und helfen Sie uns, die Evidenz zu prüfen."
+  },
+  "topics": {
+    "pain": {
+      "slug": "cannabis-chronische-schmerzen",
+      "question": "Hilft Cannabis bei chronischen Schmerzen?",
+      "description": "Note B: Es gibt substanzielle Evidenz, dass Cannabis und Cannabinoide chronische Schmerzen bei Erwachsenen lindern. Was untersucht ist und was fehlt.",
+      "studied": "Der Bericht der US-amerikanischen National Academies fasste Dutzende placebokontrollierte klinische Studien zusammen und kam zu dem Schluss, dass es substanzielle Evidenz dafür gibt, dass Cannabinoide chronische Schmerzen bei Erwachsenen lindern. Die meisten dieser Studien untersuchten neuropathische Schmerzen (Schmerzen, die von den Nerven ausgehen) und verwendeten ein Mundspray mit THC und CBD (Nabiximols). Die Besserung ist real, aber nur mäßig ausgeprägt.",
+      "unknown": "Viele Studien dauerten nur wenige Wochen, deshalb ist über eine Anwendung über Jahre weniger bekannt. Unklar ist auch, welches Produkt, welches Verhältnis von THC zu CBD und welche Dosis bei welcher Schmerzart am besten wirken. Patientenregister, etwa das britische, liefern inzwischen Daten mit längerer Nachbeobachtung.",
+      "practical": "Es ist eine der am besten untersuchten medizinischen Anwendungen von Cannabis. Sinnvoll ist, sie mit einer Fachperson aus dem Gesundheitswesen zu besprechen, mit niedrigen Dosen zu beginnen und den Verlauf zu überprüfen: Produkt, Dosis und ärztliche Begleitung machen den Unterschied."
+    },
+    "nausea": {
+      "slug": "cannabis-uebelkeit-chemotherapie",
+      "question": "Lindert Cannabis die Übelkeit bei einer Chemotherapie?",
+      "description": "Note A: Es gibt schlüssige Evidenz, dass oral eingenommene Cannabinoide Übelkeit und Erbrechen durch Chemotherapie verringern. Was bekannt ist.",
+      "studied": "Das ist die medizinische Anwendung mit der stärksten Evidenz. Seit den 1980er-Jahren haben viele klinische Studien gezeigt, dass oral eingenommene Cannabinoide wie Dronabinol und Nabilon die durch eine Chemotherapie verursachte Übelkeit und das Erbrechen verringern. Deshalb sind Cannabinoid-Arzneimittel in mehreren Ländern für diese Anwendung zugelassen.",
+      "unknown": "Mittel gegen Übelkeit haben sich seither stark verbessert, und nur wenige Studien vergleichen Cannabinoide direkt mit den neuesten Arzneimitteln. Ebenfalls noch unklar ist, welche Patientinnen und Patienten am meisten davon profitieren, wenn sie sie zusätzlich zu ihrer Behandlung erhalten.",
+      "practical": "Sie werden meist eingesetzt, wenn die üblichen Mittel gegen Übelkeit nicht ausreichen. Wenn Sie eine Chemotherapie erhalten und Ihre Übelkeit nicht unter Kontrolle ist, sprechen Sie mit Ihrem Onkologie-Team: Dort kann beurteilt werden, ob ein Cannabinoid in Ihrem Fall infrage kommt."
+    },
+    "ms": {
+      "slug": "cannabis-multiple-sklerose-spastik",
+      "question": "Hilft Cannabis bei der Spastik bei multipler Sklerose?",
+      "description": "Note B: Es gibt substanzielle Evidenz, dass Cannabinoide die von Menschen mit multipler Sklerose berichtete Spastik verbessern. Was bekannt ist und was nicht.",
+      "studied": "Spastik bezeichnet die Muskelsteifigkeit und die Krämpfe, mit denen viele Menschen mit multipler Sklerose leben. Klinische Studien zeigen substanzielle Evidenz dafür, dass oral eingenommene Cannabinoide über mehrere Wochen die Spastik verbessern, wie die Betroffenen selbst sie angeben. Ein Mundspray mit THC und CBD (Nabiximols) ist in mehreren europäischen Ländern für diese Anwendung zugelassen.",
+      "unknown": "Die Besserung ist deutlicher, wenn die Patientinnen und Patienten sie selbst bewerten, als wenn Ärztinnen und Ärzte sie mit klinischen Skalen messen; dort ist die Evidenz begrenzt. Zur Anwendung über Jahre und zu anderen Symptomen der Krankheit gibt es weniger Daten.",
+      "practical": "Es ist eine anerkannte Option, wenn die üblichen Behandlungen der Spastik nicht ausreichen. Die Entscheidung wird gemeinsam mit der Neurologin oder dem Neurologen getroffen, die oder der beurteilen kann, ob ein Cannabinoid-Arzneimittel geeignet ist."
+    },
+    "epilepsy": {
+      "slug": "cbd-epilepsie-kinder",
+      "question": "Hilft CBD bei Epilepsie im Kindesalter?",
+      "description": "Note A: 2019 hat die Europäische Arzneimittel-Agentur ein CBD-Arzneimittel für das Dravet- und das Lennox-Gastaut-Syndrom zugelassen. Was die Studien zeigen.",
+      "studied": "Mehrere randomisierte, placebokontrollierte klinische Studien zeigten, dass ein gereinigtes CBD-Arzneimittel die Anfälle beim Dravet- und beim Lennox-Gastaut-Syndrom verringert, zwei schweren Epilepsieformen des Kindesalters, die auf andere Behandlungen schlecht ansprechen. Auf Grundlage dieser Daten hat die Europäische Arzneimittel-Agentur es 2019 zugelassen und die Anwendung später auf den Tuberöse-Sklerose-Komplex ausgeweitet.",
+      "unknown": "Die Forschung untersucht weiter, ob CBD bei anderen Epilepsieformen hilft und welche Rolle es langfristig spielt. Die Studienergebnisse gelten für ein Arzneimittel in pharmazeutischer Qualität bei kontrollierten Dosen, nicht für die im Handel erhältlichen CBD-Produkte.",
+      "practical": "Es ist der deutlichste Beleg dafür, dass ein Cannabinoid zu einem wirksamen Arzneimittel werden kann. Es wird unter Aufsicht einer Neurologin oder eines Neurologen angewendet, zusammen mit anderen Antiepileptika und mit regelmäßigen Blutuntersuchungen, weil es mit ihnen wechselwirken kann."
+    },
+    "sleep": {
+      "slug": "cannabis-schlaf",
+      "question": "Verbessert Cannabis den Schlaf?",
+      "description": "Note C: Es gibt moderate Evidenz, dass Cannabinoide den Schlaf kurzfristig verbessern, wenn Schmerzen, Fibromyalgie, MS oder Schlafapnoe ihn stören.",
+      "studied": "Studien zeigen moderate Evidenz dafür, dass Cannabinoide den Schlaf kurzfristig bei Menschen verbessern, deren Erholung durch eine andere Erkrankung gestört ist: chronische Schmerzen, Fibromyalgie, multiple Sklerose oder Schlafapnoe. In vielen Fällen wurde der Schlaf in Schmerzstudien als sekundäres Ergebnis erfasst.",
+      "unknown": "Für Schlaflosigkeit ohne andere Ursache oder für eine fortlaufende Anwendung über Monate oder Jahre gibt es keine gute Evidenz. Patientenregister berichten von anhaltenden Besserungen, doch ohne Vergleichsgruppe lässt sich nicht sagen, wie viel davon auf die Behandlung zurückgeht.",
+      "practical": "Es kann sinnvoll sein, wenn schlechter Schlaf mit Schmerzen oder einer anderen Erkrankung einhergeht, die bereits mit Cannabinoiden behandelt wird. Bei Schlaflosigkeit ohne andere Ursache sprechen Sie zuerst mit einer Fachperson über die Optionen mit besserer Evidenz."
+    },
+    "anxiety": {
+      "slug": "cbd-angst",
+      "question": "Hilft CBD bei Angst?",
+      "description": "Note D: Eine kleine Studie fand, dass CBD bei sozialer Angst die Angst vor öffentlichem Sprechen verringerte. Warum das noch nicht für eine Empfehlung reicht.",
+      "studied": "Der Bericht der National Academies fand begrenzte Evidenz: In einer kleinen Studie mit Menschen mit sozialer Angst verringerte eine Dosis CBD die Angst bei einem Test zum öffentlichen Sprechen. Laborstudien dazu, wie CBD im Gehirn wirkt, etwa zum Serotoninsystem, deuten in dieselbe Richtung.",
+      "unknown": "Große, lang angelegte Studien mit Menschen mit Angststörungen sind noch nötig, um die Wirkung, die richtige Dosis und die Wirkdauer zu bestätigen. CBD und THC wirken nicht gleich: Hohe THC-Dosen können die Angst verstärken.",
+      "practical": "Es ist ein vielversprechender Forschungsansatz, aber noch nicht genug, um es als Behandlung zu empfehlen. Wenn Sie unter Angst leiden, sprechen Sie zuerst mit einer Fachperson: Es gibt Behandlungen mit starker Evidenz."
+    },
+    "cancer": {
+      "slug": "cannabis-krebs",
+      "question": "Kann Cannabis Krebs behandeln?",
+      "description": "Note E: Es gibt nicht genug Evidenz, dass Cannabinoide Krebs beim Menschen behandeln. Was die Laborforschung sagt und was noch unbekannt ist.",
+      "studied": "Im Labor bremsen mehrere Cannabinoide das Wachstum von Tumorzellen, und einige verstärken die Wirkung von Krebstherapien. Das ist ein aktives Forschungsfeld. Doch Studien am Menschen, die zeigen, dass Cannabinoide Krebs behandeln, auch Gliome, gibt es nicht in ausreichender Zahl: Die Evidenz ist unzureichend.",
+      "unknown": "Es braucht noch klinische Studien, um zu prüfen, ob das, was in Zellen und bei Tieren wirkt, auch bei Patientinnen und Patienten wirkt, mit welchen Substanzen und bei welchen Krebsarten. Unterdessen gibt es Evidenz, dass Cannabinoide bei Symptomen wie der Übelkeit durch Chemotherapie helfen.",
+      "practical": "Für die Behauptung, Cannabis heile Krebs, gibt es keine Daten. Brechen Sie deshalb nie eine Behandlung ab und schieben Sie sie nicht auf. Wenn Sie sich für Cannabinoide gegen Symptome interessieren, sprechen Sie mit Ihrem Onkologie-Team."
+    },
+    "psychosis": {
+      "slug": "cannabis-psychose-schizophrenie",
+      "question": "Erhöht Cannabis das Risiko für eine Psychose?",
+      "description": "Note B: Es gibt substanzielle Evidenz, dass Cannabiskonsum mit einem höheren Risiko für Schizophrenie und andere Psychosen zusammenhängt, v. a. bei häufigem.",
+      "studied": "Studien, die große Gruppen von Menschen über Jahre begleiten, zeigen substanzielle Evidenz für einen Zusammenhang zwischen Cannabiskonsum und dem Risiko, an Schizophrenie oder anderen Psychosen zu erkranken. Je häufiger der Konsum, desto höher das Risiko, das sich auf täglichen Konsum und Produkte mit hohem THC-Gehalt konzentriert.",
+      "unknown": "Ein Zusammenhang allein beweist nicht, dass Cannabis Psychosen verursacht: Genetik, das Alter bei Konsumbeginn und andere Faktoren spielen mit. Die Forschung untersucht, warum manche Menschen anfälliger sind als andere, und welche Rolle CBD spielt, das diese Wirkung nicht hat.",
+      "practical": "Um das Risiko zu senken: täglichen Konsum vermeiden, den Beginn hinauszögern, Produkte mit weniger THC wählen und bei Psychosen in der Familie nicht konsumieren. Wenn Symptome wie extremes Misstrauen oder seltsame Gedanken auftreten, suchen Sie professionelle Hilfe."
+    },
+    "driving": {
+      "slug": "cannabis-autofahren",
+      "question": "Ist Autofahren nach Cannabiskonsum gefährlich?",
+      "description": "Note B: Es gibt substanzielle Evidenz, dass Cannabiskonsum mit mehr Verkehrsunfällen verbunden ist. Warum das Fahren leidet und wie Sie das Risiko meiden.",
+      "studied": "Studien zeigen substanzielle Evidenz dafür, dass Autofahren nach Cannabiskonsum mit einem höheren Risiko für Verkehrsunfälle verbunden ist. THC beeinträchtigt Aufmerksamkeit, Koordination und Reaktionszeit, besonders in den ersten Stunden.",
+      "unknown": "Der THC-Spiegel im Blut sagt wenig über die Beeinträchtigung aus, deshalb gibt es noch keine einfache Methode, um zu messen, ab wann jemand wieder sicher fahren kann. Die Wirkung hängt von der Dosis, der Konsumform und den Gewohnheiten der einzelnen Person ab.",
+      "practical": "Fahren Sie nach dem Konsum von Cannabis nicht Auto. Wenn Sie konsumiert haben, warten Sie mehrere Stunden oder nutzen Sie eine andere Möglichkeit, sich fortzubewegen, und kombinieren Sie es nie mit Alkohol, der das Risiko vervielfacht. In vielen Ländern ist es zudem eine schwere Straftat."
+    },
+    "pregnancy": {
+      "slug": "cannabis-schwangerschaft",
+      "question": "Ist Cannabis in der Schwangerschaft sicher?",
+      "description": "Note B: Es gibt substanzielle Evidenz, dass Cannabisrauchen in der Schwangerschaft mit geringerem Geburtsgewicht verbunden ist. Was Behörden raten.",
+      "studied": "Studien zeigen substanzielle Evidenz dafür, dass das Rauchen von Cannabis in der Schwangerschaft mit einem geringeren Geburtsgewicht verbunden ist. THC passiert die Plazenta und geht auch in die Muttermilch über.",
+      "unknown": "Für andere mögliche Auswirkungen auf die Entwicklung des Kindes ist die Evidenz begrenzt. Die Wirkung von Cannabis lässt sich schwer von der anderer Faktoren wie Tabak trennen, und es braucht weitere Studien mit langer Nachbeobachtung.",
+      "practical": "Gesundheitsbehörden raten in Schwangerschaft und Stillzeit von Cannabis ab, auch von CBD. Wenn Sie es gegen Übelkeit oder ein anderes Symptom verwenden, sprechen Sie mit Ihrer Hebamme oder Ihrem Arzt: Es gibt sichere Alternativen."
+    }
+  }
+}

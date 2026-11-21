@@ -1,0 +1,107 @@
+{
+  "base": "bewijs",
+  "ui": {
+    "hubTitle": "Wat het bewijs zegt over cannabis, onderwerp voor onderwerp",
+    "hubLead": "Tien veelgestelde vragen over cannabis en cannabinoïden, elk met een cijfer van A tot E, wat er bekend is, wat nog onbekend is en de bron er direct bij.",
+    "hubDescription": "Bewijscijfers van A tot E over medische toepassingen en risico's van cannabis: pijn, misselijkheid, epilepsie, slaap, angst, kanker en meer, elk met bron.",
+    "crumbHome": "Home",
+    "crumbHub": "Bewijs",
+    "kindUse": "Medische toepassing",
+    "kindRisk": "Risico",
+    "verdictLabel": "Bewijscijfer",
+    "studied": "Wat er onderzocht is",
+    "unknown": "Wat we nog niet weten",
+    "practical": "In de praktijk",
+    "scaleTitle": "Zo leest u het cijfer",
+    "scaleLead": "We gebruiken de vijf niveaus uit het rapport van 2017 van de Amerikaanse National Academies of Sciences: A is het meest zeker en E betekent dat er nog te weinig gegevens zijn.",
+    "relatedNews": "Gerelateerd nieuws",
+    "otherTopics": "Andere onderwerpen",
+    "reviewed": "Beoordeeld",
+    "seePage": "Bekijk de volledige pagina",
+    "hubLink": "Alle onderwerpen",
+    "ctaTitle": "Werkt u in de gezondheidszorg of het onderzoek?",
+    "ctaText": "Sluit u aan bij het netwerk van de High Doctor Foundation en help ons het bewijs te beoordelen."
+  },
+  "topics": {
+    "pain": {
+      "slug": "cannabis-chronische-pijn",
+      "question": "Helpt cannabis bij chronische pijn?",
+      "description": "Cijfer B: er is substantieel bewijs dat cannabis en cannabinoïden chronische pijn bij volwassenen verminderen. Wat er onderzocht is en wat ontbreekt.",
+      "studied": "Het rapport van de Amerikaanse National Academies bundelde tientallen placebogecontroleerde klinische studies en concludeerde dat er substantieel bewijs is dat cannabinoïden chronische pijn bij volwassenen verminderen. De meeste van die studies onderzochten neuropathische pijn (pijn die van de zenuwen komt) en gebruikten een mondspray met THC en CBD (nabiximols). De verbetering is reëel, maar bescheiden van omvang.",
+      "unknown": "Veel studies duurden maar enkele weken, dus er is minder bekend over gebruik gedurende jaren. Ook is onduidelijk welk product, welke verhouding tussen THC en CBD en welke dosis het best werken bij elk type pijn. Patiëntenregisters, zoals het Britse, leveren nu gegevens met een langere follow-up.",
+      "practical": "Het is een van de best onderzochte medische toepassingen van cannabis. Verstandig is om het met een zorgprofessional te bespreken, met lage doses te beginnen en te evalueren hoe het gaat: het product, de dosis en de medische begeleiding maken het verschil."
+    },
+    "nausea": {
+      "slug": "cannabis-misselijkheid-chemotherapie",
+      "question": "Helpt cannabis tegen misselijkheid door chemotherapie?",
+      "description": "Cijfer A: er is overtuigend bewijs dat oraal ingenomen cannabinoïden misselijkheid en braken door chemotherapie verminderen. Wat er bekend is.",
+      "studied": "Dit is de medische toepassing met het sterkste bewijs. Sinds de jaren tachtig hebben veel klinische studies aangetoond dat via de mond ingenomen cannabinoïden, zoals dronabinol en nabilon, de misselijkheid en het braken door chemotherapie verminderen. Daarom zijn cannabinoïdegeneesmiddelen in verschillende landen voor dit gebruik goedgekeurd.",
+      "unknown": "Middelen tegen misselijkheid zijn sindsdien sterk verbeterd, en weinig studies vergelijken cannabinoïden rechtstreeks met de nieuwste geneesmiddelen. Ook is nog niet duidelijk welke patiënten het meest baat hebben bij toevoeging aan hun behandeling.",
+      "practical": "Ze worden meestal gebruikt wanneer de gebruikelijke middelen tegen misselijkheid niet volstaan. Als u chemotherapie krijgt en uw misselijkheid niet onder controle is, vertel het dan aan uw oncologieteam: zij kunnen beoordelen of een cannabinoïde in uw geval past."
+    },
+    "ms": {
+      "slug": "cannabis-multiple-sclerose-spasticiteit",
+      "question": "Helpt cannabis bij spasticiteit door multiple sclerose?",
+      "description": "Cijfer B: er is substantieel bewijs dat cannabinoïden de spasticiteit verbeteren die mensen met multiple sclerose zelf rapporteren. Wat bekend is en wat niet.",
+      "studied": "Spasticiteit is de spierstijfheid en zijn de krampen waarmee veel mensen met multiple sclerose leven. Klinische studies tonen substantieel bewijs dat oraal ingenomen cannabinoïden gedurende enkele weken de spasticiteit verbeteren zoals de patiënten zelf die ervaren. Een mondspray met THC en CBD (nabiximols) is in verschillende Europese landen voor dit gebruik goedgekeurd.",
+      "unknown": "De verbetering is duidelijker wanneer patiënten haar zelf beoordelen dan wanneer artsen haar meten met klinische schalen; daar is het bewijs beperkt. Er zijn minder gegevens over gebruik gedurende jaren en over andere symptomen van de ziekte.",
+      "practical": "Het is een erkende optie wanneer de gebruikelijke behandelingen voor spasticiteit niet volstaan. De beslissing wordt samen met de neuroloog genomen, die kan beoordelen of een cannabinoïdegeneesmiddel geschikt is."
+    },
+    "epilepsy": {
+      "slug": "cbd-epilepsie-kinderen",
+      "question": "Werkt CBD bij epilepsie bij kinderen?",
+      "description": "Cijfer A: in 2019 keurde het Europees Geneesmiddelenbureau een CBD-geneesmiddel goed voor het syndroom van Dravet en Lennox-Gastaut. Wat de studies laten zien.",
+      "studied": "Meerdere gerandomiseerde, placebogecontroleerde klinische studies toonden aan dat een gezuiverd CBD-geneesmiddel de aanvallen vermindert bij het syndroom van Dravet en het syndroom van Lennox-Gastaut, twee ernstige vormen van epilepsie bij kinderen die slecht reageren op andere behandelingen. Op grond van die gegevens keurde het Europees Geneesmiddelenbureau het in 2019 goed en breidde het gebruik later uit naar tubereuze sclerose complex.",
+      "unknown": "Onderzoekers bestuderen nog of CBD helpt bij andere vormen van epilepsie en welke rol het op lange termijn speelt. De studieresultaten gelden voor een geneesmiddel van farmaceutische kwaliteit bij gecontroleerde doses, niet voor de CBD-producten die in winkels worden verkocht.",
+      "practical": "Het is het duidelijkste bewijs dat een cannabinoïde een werkzaam geneesmiddel kan worden. Het wordt gebruikt onder toezicht van een neuroloog, samen met andere middelen tegen epileptische aanvallen en met regelmatige bloedonderzoeken, omdat het hiermee kan interageren."
+    },
+    "sleep": {
+      "slug": "cannabis-slaap",
+      "question": "Verbetert cannabis de slaap?",
+      "description": "Cijfer C: er is matig bewijs dat cannabinoïden de slaap op korte termijn verbeteren wanneer pijn, fibromyalgie, MS of slaapapneu die verstoort.",
+      "studied": "Studies tonen matig bewijs dat cannabinoïden de slaap op korte termijn verbeteren bij mensen wier rust verstoord is door een andere aandoening: chronische pijn, fibromyalgie, multiple sclerose of slaapapneu. In veel gevallen werd de slaap in pijnstudies als secundaire uitkomst gemeten.",
+      "unknown": "Er is geen goed bewijs voor slapeloosheid zonder andere oorzaak, of voor doorlopend gebruik gedurende maanden of jaren. Patiëntenregisters melden blijvende verbeteringen, maar zonder vergelijkingsgroep is niet vast te stellen hoeveel daarvan aan de behandeling te danken is.",
+      "practical": "Het kan zinvol zijn wanneer slecht slapen samengaat met pijn of een andere aandoening die al met cannabinoïden wordt behandeld. Bij slapeloosheid zonder andere oorzaak kunt u eerst met een professional praten over de opties met meer bewijs."
+    },
+    "anxiety": {
+      "slug": "cbd-angst",
+      "question": "Helpt CBD bij angst?",
+      "description": "Cijfer D: een kleine studie vond dat CBD bij mensen met sociale angst de spreekangst verminderde. Waarom dat nog niet genoeg is om het aan te bevelen.",
+      "studied": "Het rapport van de National Academies vond beperkt bewijs: in een kleine studie bij mensen met sociale angst verminderde een dosis CBD de angst tijdens een test met spreken in het openbaar. Laboratoriumstudies naar hoe CBD in de hersenen werkt, zoals die over het serotoninesysteem, wijzen in dezelfde richting.",
+      "unknown": "Grote, langdurige studies bij mensen met angststoornissen zijn nog nodig om het effect, de juiste dosis en de duur ervan te bevestigen. CBD en THC werken niet hetzelfde: hoge doses THC kunnen de angst verergeren.",
+      "practical": "Het is een veelbelovende onderzoekslijn, maar nog niet genoeg om het als behandeling aan te bevelen. Als u last heeft van angst, begin dan met een gesprek met een professional: er zijn behandelingen met sterk bewijs."
+    },
+    "cancer": {
+      "slug": "cannabis-kanker",
+      "question": "Kan cannabis kanker behandelen?",
+      "description": "Cijfer E: er is onvoldoende bewijs dat cannabinoïden kanker bij mensen behandelen. Wat het laboratoriumonderzoek zegt en wat nog onbekend is.",
+      "studied": "In het laboratorium remmen verschillende cannabinoïden de groei van tumorcellen en versterken sommige het effect van kankerbehandelingen. Het is een actieve onderzoekslijn. Maar studies bij mensen die aantonen dat cannabinoïden kanker behandelen, gliomen inbegrepen, zijn er onvoldoende: het bewijs is onvoldoende.",
+      "unknown": "Er zijn nog klinische studies nodig om te toetsen of wat werkt in cellen en bij dieren ook werkt bij patiënten, met welke stoffen en bij welke soorten kanker. Ondertussen is er bewijs dat cannabinoïden helpen bij symptomen zoals misselijkheid door chemotherapie.",
+      "practical": "Beweringen dat cannabis kanker geneest, hebben geen gegevens achter zich. Stop of stel een behandeling nooit uit vanwege zo'n bewering. Als u cannabinoïden voor symptomen overweegt, praat dan met uw oncologieteam."
+    },
+    "psychosis": {
+      "slug": "cannabis-psychose-schizofrenie",
+      "question": "Verhoogt cannabis het risico op een psychose?",
+      "description": "Cijfer B: er is substantieel bewijs dat cannabisgebruik samenhangt met een hoger risico op schizofrenie en andere psychosen, vooral bij frequent gebruik.",
+      "studied": "Studies die grote groepen mensen jarenlang volgen, tonen substantieel bewijs voor een verband tussen cannabisgebruik en het risico op schizofrenie of andere psychosen. Hoe frequenter het gebruik, hoe hoger het risico, dat zich concentreert bij dagelijks gebruik en producten met veel THC.",
+      "unknown": "Een verband alleen bewijst niet dat cannabis psychose veroorzaakt: genetica, de leeftijd waarop het gebruik begint en andere factoren spelen mee. Onderzoekers bestuderen waarom sommige mensen kwetsbaarder zijn dan anderen en welke rol CBD speelt, dat dit effect niet heeft.",
+      "practical": "Om het risico te verkleinen: vermijd dagelijks gebruik, stel de leeftijd van eerste gebruik uit, kies producten met minder THC en gebruik niet als er psychose in de familie voorkomt. Als er symptomen optreden zoals extreem wantrouwen of vreemde ideeën, zoek dan professionele hulp."
+    },
+    "driving": {
+      "slug": "cannabis-autorijden",
+      "question": "Is autorijden na cannabisgebruik gevaarlijk?",
+      "description": "Cijfer B: er is substantieel bewijs dat cannabisgebruik samenhangt met meer verkeersongevallen. Waarom het rijden beïnvloedt en hoe u het risico vermijdt.",
+      "studied": "Studies tonen substantieel bewijs dat autorijden na cannabisgebruik samenhangt met een hoger risico op verkeersongevallen. THC beïnvloedt aandacht, coördinatie en reactietijd, vooral in de eerste uren.",
+      "unknown": "Het THC-gehalte in het bloed zegt weinig over de mate van beperking, dus er is nog geen eenvoudige manier om te meten wanneer iemand weer veilig kan rijden. Het effect hangt af van de dosis, de manier van gebruik en de gewoonten van iedere persoon.",
+      "practical": "Rijd niet na het gebruik van cannabis. Als u het gebruikt heeft, wacht dan meerdere uren of zoek een ander vervoermiddel, en combineer het nooit met alcohol, dat het risico vermenigvuldigt. In veel landen is het bovendien een zwaar vergrijp."
+    },
+    "pregnancy": {
+      "slug": "cannabis-zwangerschap",
+      "question": "Is cannabis veilig tijdens de zwangerschap?",
+      "description": "Cijfer B: er is substantieel bewijs dat roken van cannabis in de zwangerschap samenhangt met een lager geboortegewicht. Wat autoriteiten adviseren.",
+      "studied": "Studies tonen substantieel bewijs dat het roken van cannabis tijdens de zwangerschap samenhangt met een lager geboortegewicht. THC passeert de placenta en komt ook in de moedermelk terecht.",
+      "unknown": "Voor andere mogelijke effecten op de ontwikkeling van het kind is het bewijs beperkt. Het is moeilijk het effect van cannabis te scheiden van dat van andere factoren, zoals tabak, en er zijn meer studies met lange follow-up nodig.",
+      "practical": "Gezondheidsautoriteiten raden cannabis af tijdens de zwangerschap en borstvoeding, ook CBD. Als u het gebruikt tegen misselijkheid of een ander symptoom, praat dan met uw verloskundige of arts: er zijn veilige alternatieven."
+    }
+  }
+}

@@ -1,5 +1,7 @@
 import { z } from 'astro/zod';
 
+import { evidenceTopicIds } from '../../data/evidence';
+
 /**
  * Esquema de la colección `news`.
  *
@@ -113,6 +115,8 @@ export function createNewsSchema<Cover extends z.ZodType = z.ZodString>(
       instagramId: z.string().min(1).optional(),
       instagramHook: z.string().min(1).max(INSTAGRAM_HOOK_MAX).optional(),
       grafico: figureSchema.optional(),
+      /** Temas de evidencia que trata la noticia: enlaza con su ficha y la ficha con la noticia. */
+      evidencia: z.array(z.enum(evidenceTopicIds)).optional(),
     })
     .superRefine(botNeedsSource);
 }

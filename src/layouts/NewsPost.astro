@@ -24,7 +24,9 @@ import {
   socialCardPath,
   type NewsEntry,
 } from '../lib/news';
-import type { Lang } from '../i18n';
+import { t, type Lang, type TranslationKey } from '../i18n';
+import { evidenceSources, gradeOf } from '../data/evidence';
+import { evidenceContent, evidenceTopicPath, topicById } from '../lib/evidence';
 
 interface Props {
   entry: NewsEntry;
@@ -62,6 +64,20 @@ const words = (entry.body ?? '').trim().split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.round(words / 200));
 
 const isHealth = entry.data.category === 'salud';
+
+// Temas de evidencia de la noticia: caja con la nota y enlace a la ficha.
+const evidenceBoxes = (entry.data.evidencia ?? []).map((id) => {
+  const topic = topicById(id);
+  return {
+    id,
+    grade: gradeOf(topic.level),
+    title: t(lang, `evd_${id}_t` as TranslationKey),
+    level: t(lang, `evd_lvl_${topic.level}` as TranslationKey),
+    question: evidenceContent[lang].topics[id].question,
+    href: evidenceTopicPath(lang, id),
+    source: evidenceSources[topic.source].short,
+  };
+});
 
 // Ficha NewsArticle (schema.org) para que los buscadores entiendan la noticia.
 const article: Record<string, unknown> = {
@@ -223,6 +239,28 @@ const langHrefs = {
       <div class="post-body">
         <Content />
       </div>
+
+      {
+        evidenceBoxes.map((box) => (
+          <aside class="post-evidence" aria-label={evidenceContent[lang].ui.verdictLabel}>
+            <span class={`post-evidence__grade post-evidence__grade--${box.grade.toLowerCase()}`} aria-hidden="true">
+              {box.grade}
+            </span>
+            <div>
+              <p class="post-evidence__label">
+                {evidenceContent[lang].ui.verdictLabel} · {box.title}
+              </p>
+              <p class="post-evidence__q">
+                <span class="visually-hidden">{box.grade}, </span>
+                {box.level} · {box.source}
+              </p>
+              <a class="post-evidence__link" href={box.href}>
+                {box.question} →
+              </a>
+            </div>
+          </aside>
+        ))
+      }
 
       <div class="post-aside">
         {

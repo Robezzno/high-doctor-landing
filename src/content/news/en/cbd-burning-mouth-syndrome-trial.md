@@ -19,6 +19,8 @@ coverCredit:
   autor: 'Aidar Turlanov'
   licencia: 'CC BY 4.0'
   url: 'https://commons.wikimedia.org/wiki/File:Precision_pipetting_in_biology_research.jpg'
+evidencia:
+  - pain
 author: equipo
 instagram: 'off'
 instagramHook: 'CBD for burning mouth pain: what a placebo-controlled trial found'

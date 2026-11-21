@@ -128,6 +128,14 @@ for (const viewport of viewports) {
       });
     }
 
+    test(`fichas de evidencia (${suffix}px)`, async ({ page }) => {
+      for (const path of ['/evidence/', '/de/evidenz/cannabis-chronische-schmerzen/', '/fr/preuves/cbd-anxiete/']) {
+        await openPage(page, path);
+        await expect(page.locator('h1')).toHaveCount(1);
+        await expect(page.locator('h1')).toBeVisible();
+      }
+    });
+
     test(`404 (${suffix}px)`, async ({ page }) => {
       await openPage(page, '/esta-pagina-no-existe/', { allowNav404: true });
       await expect(page).toHaveTitle(/404/i);

@@ -1,0 +1,107 @@
+{
+  "base": "evidencia",
+  "ui": {
+    "hubTitle": "O que diz a evidência sobre o canábis, tema a tema",
+    "hubLead": "Dez perguntas frequentes sobre o canábis e os canabinoides, cada uma com a sua nota de A a E, o que se sabe, o que ainda se desconhece e a fonte à vista.",
+    "hubDescription": "Notas de evidência de A a E sobre os usos médicos e os riscos do canábis: dor, náuseas, epilepsia, sono, ansiedade, cancro e mais, cada um com a sua fonte.",
+    "crumbHome": "Início",
+    "crumbHub": "Evidência",
+    "kindUse": "Uso médico",
+    "kindRisk": "Risco",
+    "verdictLabel": "Nota de evidência",
+    "studied": "O que foi estudado",
+    "unknown": "O que ainda não sabemos",
+    "practical": "Na prática",
+    "scaleTitle": "Como ler a nota",
+    "scaleLead": "Usamos os cinco níveis da revisão de 2017 das Academias Nacionais de Ciências dos EUA: A é o mais certo e E significa que ainda não há dados suficientes.",
+    "relatedNews": "Notícias relacionadas",
+    "otherTopics": "Outros temas",
+    "reviewed": "Revisto",
+    "seePage": "Ver a página completa",
+    "hubLink": "Todos os temas",
+    "ctaTitle": "Trabalha na área da saúde ou da investigação?",
+    "ctaText": "Junte-se à rede da High Doctor Foundation e ajude-nos a rever a evidência."
+  },
+  "topics": {
+    "pain": {
+      "slug": "canabis-dor-cronica",
+      "question": "O canábis ajuda na dor crónica?",
+      "description": "Nota B: há evidência substancial de que o canábis e os canabinoides reduzem a dor crónica em adultos. O que foi estudado, o que falta e o que significa.",
+      "studied": "A revisão das Academias Nacionais de Ciências dos EUA reuniu dezenas de ensaios clínicos controlados por placebo e concluiu que há evidência substancial de que os canabinoides reduzem a dor crónica em adultos. A maioria desses ensaios estudou a dor neuropática (a que vem dos nervos) e usou um spray bucal com THC e CBD (nabiximols). A melhoria é real, embora de dimensão modesta.",
+      "unknown": "Muitos ensaios duraram apenas algumas semanas, pelo que se sabe menos sobre anos de utilização. Também não é claro qual o produto, a proporção de THC e CBD e a dose que funcionam melhor para cada tipo de dor. Os registos de doentes, como o do Reino Unido, estão agora a fornecer dados de seguimento mais longos.",
+      "practical": "É um dos usos médicos do canábis mais bem estudados. O sensato é falar com um profissional de saúde, começar com doses baixas e avaliar os resultados: o produto, a dose e o acompanhamento médico fazem a diferença."
+    },
+    "nausea": {
+      "slug": "canabis-nauseas-quimioterapia",
+      "question": "O canábis alivia as náuseas da quimioterapia?",
+      "description": "Nota A: há evidência conclusiva de que os canabinoides orais reduzem as náuseas e os vómitos causados pela quimioterapia. O que se sabe e como se usam.",
+      "studied": "É o uso médico com a evidência mais sólida. Desde a década de 1980, muitos ensaios clínicos mostraram que os canabinoides tomados por via oral, como o dronabinol e a nabilona, reduzem as náuseas e os vómitos provocados pela quimioterapia. É por isso que os medicamentos canabinoides estão aprovados para este uso em vários países.",
+      "unknown": "Os fármacos antináuseas melhoraram muito desde então, e poucos ensaios comparam diretamente os canabinoides com os medicamentos mais recentes. Também ainda não é claro que doentes beneficiam mais ao acrescentá-los ao tratamento.",
+      "practical": "Costumam usar-se quando os fármacos antináuseas habituais não chegam. Se está a fazer quimioterapia e as náuseas não estão controladas, diga-o à equipa de oncologia: ela poderá avaliar se um canabinoide se adequa ao seu caso."
+    },
+    "ms": {
+      "slug": "canabis-esclerose-multipla-espasticidade",
+      "question": "O canábis ajuda na espasticidade da esclerose múltipla?",
+      "description": "Nota B: há evidência substancial de que os canabinoides melhoram a espasticidade referida por pessoas com esclerose múltipla. O que se sabe e o que não se sabe.",
+      "studied": "A espasticidade é a rigidez e os espasmos musculares com que convivem muitas pessoas com esclerose múltipla. Os ensaios clínicos mostram evidência substancial de que os canabinoides orais, tomados durante várias semanas, melhoram a espasticidade referida pelos próprios doentes. Um spray bucal com THC e CBD (nabiximols) está aprovado para este uso em vários países europeus.",
+      "unknown": "A melhoria é mais clara quando os doentes a avaliam do que quando os médicos a medem com escalas clínicas, onde a evidência é limitada. Há menos dados sobre o uso ao longo de anos e sobre outros sintomas da doença.",
+      "practical": "É uma opção reconhecida quando os tratamentos habituais da espasticidade não chegam. A decisão toma-se com o neurologista, que poderá dizer se um medicamento canabinoide é adequado."
+    },
+    "epilepsy": {
+      "slug": "cbd-epilepsia-infantil",
+      "question": "O CBD funciona na epilepsia infantil?",
+      "description": "Nota A: em 2019, a Agência Europeia de Medicamentos aprovou um medicamento de CBD para as síndromes de Dravet e de Lennox-Gastaut. O que mostram os ensaios.",
+      "studied": "Vários ensaios clínicos aleatorizados e controlados por placebo mostraram que um medicamento de CBD purificado reduz as crises nas síndromes de Dravet e de Lennox-Gastaut, duas epilepsias infantis graves que respondem mal a outros tratamentos. Com base nesses dados, a Agência Europeia de Medicamentos aprovou-o em 2019 e alargou depois o seu uso ao complexo da esclerose tuberosa.",
+      "unknown": "Os investigadores continuam a estudar se o CBD ajuda noutros tipos de epilepsia e qual o seu papel a longo prazo. Os resultados dos ensaios aplicam-se a um medicamento de qualidade farmacêutica em doses controladas, não aos produtos de CBD vendidos em lojas.",
+      "practical": "É a prova mais clara de que um canabinoide pode tornar-se um medicamento eficaz. Usa-se sob supervisão de um neurologista, juntamente com outros antiepiléticos e com análises ao sangue regulares, porque pode interagir com eles."
+    },
+    "sleep": {
+      "slug": "canabis-sono",
+      "question": "O canábis melhora o sono?",
+      "description": "Nota C: há evidência moderada de que os canabinoides melhoram o sono a curto prazo se for perturbado por dor, fibromialgia, esclerose múltipla ou apneia.",
+      "studied": "Os estudos mostram evidência moderada de que os canabinoides melhoram o sono a curto prazo em pessoas cujo descanso é perturbado por outra doença: dor crónica, fibromialgia, esclerose múltipla ou apneia do sono. Em muitos casos, o sono foi medido como resultado secundário em ensaios sobre dor.",
+      "unknown": "Não há boa evidência para a insónia sem outra causa, nem para o uso contínuo durante meses ou anos. Os registos de doentes relatam melhorias duradouras, mas, sem grupo de comparação, é impossível saber quanto se deve ao tratamento.",
+      "practical": "Pode fazer sentido quando o mau sono vem acompanhado de dor ou de outra doença já tratada com canabinoides. Para a insónia sem outra causa, fale primeiro com um profissional sobre as opções com mais evidência."
+    },
+    "anxiety": {
+      "slug": "cbd-ansiedade",
+      "question": "O CBD ajuda na ansiedade?",
+      "description": "Nota D: um pequeno estudo mostrou que o CBD reduziu a ansiedade de falar em público em pessoas com ansiedade social. Porque ainda não chega para o recomendar.",
+      "studied": "A revisão das Academias Nacionais encontrou evidência limitada: um pequeno estudo em pessoas com ansiedade social verificou que uma dose de CBD reduziu a ansiedade durante um teste de falar em público. Estudos laboratoriais sobre a forma como o CBD atua no cérebro, como os do sistema da serotonina, apontam no mesmo sentido.",
+      "unknown": "Continuam a ser necessários ensaios grandes e prolongados em pessoas com perturbações de ansiedade para confirmar o efeito, a dose adequada e a sua duração. O CBD e o THC não atuam da mesma forma: doses altas de THC podem aumentar a ansiedade.",
+      "practical": "É uma linha de investigação promissora, mas ainda insuficiente para o recomendar como tratamento. Se tem ansiedade, comece por falar com um profissional: existem tratamentos com evidência sólida."
+    },
+    "cancer": {
+      "slug": "canabis-cancro",
+      "question": "O canábis pode tratar o cancro?",
+      "description": "Nota E: não há evidência suficiente de que os canabinoides tratem o cancro em pessoas. O que diz a investigação laboratorial e o que ainda se desconhece.",
+      "studied": "No laboratório, vários canabinoides atrasam o crescimento das células tumorais e alguns reforçam o efeito dos tratamentos oncológicos. É uma linha de investigação ativa. Mas, quanto a ensaios em pessoas que mostrem que os canabinoides tratam o cancro, incluindo os gliomas, a evidência é insuficiente.",
+      "unknown": "Ainda são necessários ensaios clínicos para comprovar se o que funciona em células e animais também funciona em doentes, com que compostos e em que tipos de cancro. Entretanto, há evidência de que os canabinoides ajudam em sintomas como as náuseas da quimioterapia.",
+      "practical": "As afirmações de que o canábis cura o cancro não têm dados que as sustentem. Nunca abandone nem adie um tratamento por causa delas. Se tem interesse nos canabinoides para os sintomas, fale com a sua equipa de oncologia."
+    },
+    "psychosis": {
+      "slug": "canabis-psicose-esquizofrenia",
+      "question": "O canábis aumenta o risco de psicose?",
+      "description": "Nota B: há evidência substancial de que o consumo de canábis se associa a maior risco de esquizofrenia e outras psicoses, sobretudo com uso frequente.",
+      "studied": "Os estudos que acompanham grandes grupos de pessoas durante anos mostram evidência substancial de uma associação entre o consumo de canábis e o risco de desenvolver esquizofrenia ou outras psicoses. Quanto mais frequente o consumo, maior o risco, que se concentra no consumo diário e nos produtos com muito THC.",
+      "unknown": "Uma associação, por si só, não demonstra que o canábis cause psicose: a genética, a idade de início do consumo e outros fatores têm um papel. Os investigadores estudam porque é que algumas pessoas são mais vulneráveis do que outras e o papel do CBD, que não tem este efeito.",
+      "practical": "Para reduzir o risco: evitar o consumo diário, adiar a idade do primeiro consumo, escolher produtos com menos THC e não consumir se houver antecedentes familiares de psicose. Se surgirem sintomas como desconfiança extrema ou ideias estranhas, procure ajuda profissional."
+    },
+    "driving": {
+      "slug": "canabis-conducao",
+      "question": "É perigoso conduzir depois de consumir canábis?",
+      "description": "Nota B: há evidência substancial de que o consumo de canábis se associa a mais acidentes de viação. Porque afeta a condução e como evitar o risco.",
+      "studied": "Os estudos mostram evidência substancial de que conduzir depois de consumir canábis se associa a um maior risco de acidentes de viação. O THC afeta a atenção, a coordenação e o tempo de reação, sobretudo nas primeiras horas.",
+      "unknown": "Os níveis de THC no sangue são um mau indicador da incapacidade, pelo que ainda não existe uma forma simples de medir quando alguém pode voltar a conduzir em segurança. O efeito varia com a dose, a via de consumo e os hábitos de cada pessoa.",
+      "practical": "Não conduza depois de consumir canábis. Se o consumiu, espere várias horas ou use outra forma de se deslocar, e nunca o combine com álcool, que multiplica o risco. Em muitos países é também uma infração grave."
+    },
+    "pregnancy": {
+      "slug": "canabis-gravidez",
+      "question": "O canábis é seguro durante a gravidez?",
+      "description": "Nota B: há evidência substancial de que fumar canábis na gravidez se associa a menor peso à nascença. O que se sabe e o que aconselham as autoridades de saúde.",
+      "studied": "Os estudos mostram evidência substancial de que fumar canábis durante a gravidez se associa a menor peso à nascença. O THC atravessa a placenta e passa também para o leite materno.",
+      "unknown": "Quanto a outros possíveis efeitos no desenvolvimento do bebé, a evidência é limitada. É difícil separar o efeito do canábis do de outros fatores, como o tabaco, e são necessários mais estudos com seguimento prolongado.",
+      "practical": "As autoridades de saúde desaconselham o canábis durante a gravidez e a amamentação, incluindo o CBD. Se o usa para náuseas ou outro sintoma, fale com a sua enfermeira obstetra ou com o seu médico: existem alternativas seguras."
+    }
+  }
+}

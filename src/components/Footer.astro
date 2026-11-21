@@ -3,6 +3,7 @@ import { contactEmail, showSection, socialLinks } from '../config/site';
 import { credits } from '../data/credits';
 import { legalPath } from '../data/legal';
 import { languages, langPath, t, type Lang } from '../i18n';
+import { evidenceHubPath } from '../lib/evidence';
 
 interface Props {
   lang: Lang;
@@ -31,7 +32,7 @@ const langNames: Record<Lang, string> = {
 };
 
 const navItems = [
-  { href: section('evidence'), label: t(lang, 'nav_evidence') },
+  { href: evidenceHubPath(lang), label: t(lang, 'nav_evidence') },
   { href: section('method'), label: t(lang, 'v2_scale_title') },
   { href: newsHref, label: t(lang, 'nav_news') },
   { href: section('about'), label: t(lang, 'v2_menu_about') },

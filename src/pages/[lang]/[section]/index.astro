@@ -1,0 +1,16 @@
+---
+/** Índice de fichas de evidencia en los siete idiomas con prefijo (`/es/evidencia/`…). */
+import EvidenceHub from '../../../components/evidence/EvidenceHub.astro';
+import { defaultLang, languages, type Lang } from '../../../i18n';
+import { evidenceContent } from '../../../lib/evidence';
+
+export function getStaticPaths() {
+  return languages
+    .filter((lang) => lang !== defaultLang)
+    .map((lang) => ({ params: { lang, section: evidenceContent[lang].base } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<EvidenceHub lang={lang} />

@@ -1,0 +1,107 @@
+{
+  "base": "evidenze",
+  "ui": {
+    "hubTitle": "Cosa dicono le evidenze sulla cannabis, tema per tema",
+    "hubLead": "Dieci domande frequenti su cannabis e cannabinoidi, ciascuna con il suo voto da A a E, ciò che si sa, ciò che ancora non si sa e la fonte ben visibile.",
+    "hubDescription": "Voti di evidenza da A a E sugli usi medici e i rischi della cannabis: dolore, nausea, epilessia, sonno, ansia, cancro e altro, ciascuno con la sua fonte.",
+    "crumbHome": "Home",
+    "crumbHub": "Evidenze",
+    "kindUse": "Uso medico",
+    "kindRisk": "Rischio",
+    "verdictLabel": "Voto di evidenza",
+    "studied": "Cosa è stato studiato",
+    "unknown": "Cosa ancora non sappiamo",
+    "practical": "In pratica",
+    "scaleTitle": "Come leggere il voto",
+    "scaleLead": "Usiamo i cinque livelli della revisione del 2017 delle Accademie nazionali delle scienze degli Stati Uniti: A è il più certo ed E significa che non ci sono ancora dati sufficienti.",
+    "relatedNews": "Notizie correlate",
+    "otherTopics": "Altri temi",
+    "reviewed": "Revisionato",
+    "seePage": "Vedi la pagina completa",
+    "hubLink": "Tutti i temi",
+    "ctaTitle": "Lavori nella sanità o nella ricerca?",
+    "ctaText": "Unisciti alla rete della Fondazione High Doctor e aiutaci a rivedere le evidenze."
+  },
+  "topics": {
+    "pain": {
+      "slug": "cannabis-dolore-cronico",
+      "question": "La cannabis aiuta contro il dolore cronico?",
+      "description": "Voto B: ci sono evidenze sostanziali che cannabis e cannabinoidi riducano il dolore cronico negli adulti. Cosa è stato studiato e cosa manca.",
+      "studied": "La revisione delle Accademie nazionali delle scienze degli Stati Uniti ha riunito decine di studi clinici controllati con placebo e ha concluso che ci sono evidenze sostanziali che i cannabinoidi riducano il dolore cronico negli adulti. La maggior parte di questi studi riguardava il dolore neuropatico (quello che origina dai nervi) e usava uno spray orale con THC e CBD (nabiximols). Il miglioramento è reale, anche se di entità modesta.",
+      "unknown": "Molti studi sono durati solo poche settimane, quindi si sa meno sull'uso protratto per anni. Non è inoltre chiaro quale prodotto, quale rapporto THC/CBD e quale dose funzionino meglio per ciascun tipo di dolore. I registri di pazienti, come quello del Regno Unito, stanno ora fornendo dati di follow-up più lunghi.",
+      "practical": "È uno degli usi medici della cannabis meglio studiati. L'approccio sensato è parlarne con un professionista sanitario, iniziare con dosi basse e valutare come va: il prodotto, la dose e il controllo medico fanno la differenza."
+    },
+    "nausea": {
+      "slug": "cannabis-nausea-chemioterapia",
+      "question": "La cannabis allevia la nausea da chemioterapia?",
+      "description": "Voto A: ci sono evidenze conclusive che i cannabinoidi orali riducano nausea e vomito indotti dalla chemioterapia. Cosa si sa e come si usano.",
+      "studied": "È l'uso medico con le evidenze più solide. Dagli anni Ottanta molti studi clinici hanno mostrato che i cannabinoidi assunti per bocca, come dronabinol e nabilone, riducono la nausea e il vomito provocati dalla chemioterapia. Per questo i farmaci a base di cannabinoidi sono approvati per questo uso in vari paesi.",
+      "unknown": "I farmaci contro la nausea sono migliorati molto da allora e pochi studi confrontano direttamente i cannabinoidi con i medicinali più recenti. Non è ancora chiaro neppure quali pazienti traggano più beneficio dall'aggiungerli alla terapia.",
+      "practical": "Di solito si usano quando i farmaci antinausea standard non bastano. Se stai facendo la chemioterapia e la nausea non è sotto controllo, parlane con il tuo team oncologico: potrà valutare se un cannabinoide è adatto al tuo caso."
+    },
+    "ms": {
+      "slug": "cannabis-sclerosi-multipla-spasticita",
+      "question": "La cannabis aiuta contro la spasticità della sclerosi multipla?",
+      "description": "Voto B: ci sono evidenze sostanziali che i cannabinoidi migliorino la spasticità riferita dalle persone con sclerosi multipla. Cosa si sa e cosa no.",
+      "studied": "La spasticità è la rigidità e gli spasmi muscolari con cui convivono molte persone con sclerosi multipla. Gli studi clinici mostrano evidenze sostanziali che i cannabinoidi orali assunti per diverse settimane migliorino la spasticità riferita dai pazienti stessi. Uno spray orale con THC e CBD (nabiximols) è approvato per questo uso in vari paesi europei.",
+      "unknown": "Il miglioramento è più evidente quando a valutarlo sono i pazienti che quando lo misurano i medici con scale cliniche, dove le evidenze sono limitate. Ci sono meno dati sull'uso per anni e sugli altri sintomi della malattia.",
+      "practical": "È un'opzione riconosciuta quando le terapie standard per la spasticità non bastano. La decisione si prende con il neurologo, che può dire se un farmaco a base di cannabinoidi è adatto."
+    },
+    "epilepsy": {
+      "slug": "cbd-epilessia-infantile",
+      "question": "Il CBD funziona contro l'epilessia infantile?",
+      "description": "Voto A: nel 2019 l'Agenzia europea per i medicinali ha approvato un farmaco a base di CBD per le sindromi di Dravet e Lennox-Gastaut. Cosa mostrano gli studi.",
+      "studied": "Diversi studi clinici randomizzati e controllati con placebo hanno mostrato che un farmaco a base di CBD purificato riduce le crisi nelle sindromi di Dravet e di Lennox-Gastaut, due epilessie infantili gravi che rispondono poco ad altri trattamenti. Sulla base di questi dati l'Agenzia europea per i medicinali lo ha approvato nel 2019 e in seguito ne ha esteso l'uso al complesso della sclerosi tuberosa.",
+      "unknown": "I ricercatori stanno ancora studiando se il CBD sia utile in altri tipi di epilessia e quale sia il suo ruolo a lungo termine. I risultati degli studi valgono per un farmaco di grado farmaceutico a dosi controllate, non per i prodotti al CBD venduti nei negozi.",
+      "practical": "È la prova più chiara che un cannabinoide può diventare un farmaco efficace. Si usa sotto la supervisione di un neurologo, insieme ad altri farmaci antiepilettici e con analisi del sangue periodiche, perché può interagire con essi."
+    },
+    "sleep": {
+      "slug": "cannabis-sonno",
+      "question": "La cannabis migliora il sonno?",
+      "description": "Voto C: ci sono evidenze moderate che i cannabinoidi migliorino il sonno a breve termine quando è disturbato da dolore, fibromialgia, sclerosi multipla o apnee.",
+      "studied": "Gli studi mostrano evidenze moderate che i cannabinoidi migliorino il sonno a breve termine nelle persone il cui riposo è disturbato da un'altra condizione: dolore cronico, fibromialgia, sclerosi multipla o apnea notturna. In molti casi il sonno era misurato come esito secondario negli studi sul dolore.",
+      "unknown": "Non ci sono buone evidenze per l'insonnia senza un'altra causa, né per l'uso continuativo per mesi o anni. I registri di pazienti riferiscono miglioramenti duraturi, ma senza un gruppo di confronto è impossibile sapere quanto sia dovuto al trattamento.",
+      "practical": "Può avere senso quando il sonno scarso si accompagna a dolore o a un'altra condizione già trattata con cannabinoidi. Per l'insonnia senza altra causa, parla prima con un professionista delle opzioni con più evidenze."
+    },
+    "anxiety": {
+      "slug": "cbd-ansia",
+      "question": "Il CBD aiuta contro l'ansia?",
+      "description": "Voto D: un piccolo studio ha rilevato che il CBD riduceva l'ansia da parlare in pubblico in persone con ansia sociale. Perché non basta ancora per consigliarlo.",
+      "studied": "La revisione delle Accademie nazionali delle scienze ha trovato evidenze limitate: un piccolo studio su persone con ansia sociale ha rilevato che una dose di CBD riduceva l'ansia durante una prova di parlare in pubblico. Studi di laboratorio su come il CBD agisce nel cervello, come quelli sul sistema della serotonina, vanno nella stessa direzione.",
+      "unknown": "Servono ancora studi ampi e di lunga durata su persone con disturbi d'ansia per confermare l'effetto, la dose giusta e quanto dura. CBD e THC non agiscono allo stesso modo: dosi elevate di THC possono aumentare l'ansia.",
+      "practical": "È una linea di ricerca promettente, ma non ancora sufficiente per consigliarlo come trattamento. Se soffri d'ansia, inizia parlandone con un professionista: esistono trattamenti con evidenze solide."
+    },
+    "cancer": {
+      "slug": "cannabis-cancro",
+      "question": "La cannabis può curare il cancro?",
+      "description": "Voto E: non ci sono evidenze sufficienti che i cannabinoidi curino il cancro nelle persone. Cosa dice la ricerca di laboratorio e cosa ancora non si sa.",
+      "studied": "In laboratorio diversi cannabinoidi rallentano la crescita delle cellule tumorali e alcuni potenziano l'effetto delle terapie oncologiche. È una linea di ricerca attiva. Ma quanto a studi sulle persone che mostrino che i cannabinoidi curano il cancro, gliomi compresi, le evidenze sono insufficienti.",
+      "unknown": "Servono ancora studi clinici per verificare se ciò che funziona su cellule e animali funzioni anche nei pazienti, con quali composti e in quali tumori. Intanto ci sono evidenze che i cannabinoidi aiutino contro sintomi come la nausea da chemioterapia.",
+      "practical": "Le affermazioni secondo cui la cannabis cura il cancro non hanno dati a supporto. Non abbandonare né ritardare mai una terapia per questo motivo. Se i cannabinoidi ti interessano per i sintomi, parlane con il tuo team oncologico."
+    },
+    "psychosis": {
+      "slug": "cannabis-psicosi-schizofrenia",
+      "question": "La cannabis aumenta il rischio di psicosi?",
+      "description": "Voto B: ci sono evidenze sostanziali che l'uso di cannabis sia associato a un rischio maggiore di schizofrenia e altre psicosi, soprattutto con l'uso frequente.",
+      "studied": "Gli studi che seguono per anni grandi gruppi di persone mostrano evidenze sostanziali di un'associazione tra uso di cannabis e rischio di sviluppare schizofrenia o altre psicosi. Più l'uso è frequente, più il rischio è alto: si concentra nell'uso quotidiano e nei prodotti ad alto contenuto di THC.",
+      "unknown": "Un'associazione da sola non dimostra che la cannabis causi la psicosi: la genetica, l'età di inizio dell'uso e altri fattori hanno un ruolo. I ricercatori stanno studiando perché alcune persone siano più vulnerabili di altre e il ruolo del CBD, che non ha questo effetto.",
+      "practical": "Per ridurre il rischio: evita l'uso quotidiano, ritarda l'età del primo uso, scegli prodotti con meno THC e non usarla se in famiglia ci sono casi di psicosi. Se compaiono sintomi come sospettosità estrema o idee strane, cerca aiuto professionale."
+    },
+    "driving": {
+      "slug": "cannabis-guida",
+      "question": "È pericoloso guidare dopo aver usato cannabis?",
+      "description": "Voto B: ci sono evidenze sostanziali che l'uso di cannabis sia associato a più incidenti stradali. Perché altera la guida e come evitare il rischio.",
+      "studied": "Gli studi mostrano evidenze sostanziali che guidare dopo aver usato cannabis sia associato a un rischio maggiore di incidenti stradali. Il THC altera l'attenzione, la coordinazione e i tempi di reazione, soprattutto nelle prime ore.",
+      "unknown": "I livelli di THC nel sangue sono un cattivo indicatore dell'alterazione, quindi non esiste ancora un modo semplice per misurare quando una persona può tornare a guidare in sicurezza. L'effetto varia con la dose, la via di assunzione e le abitudini di ciascuno.",
+      "practical": "Non guidare dopo aver usato cannabis. Se l'hai assunta, aspetta diverse ore o usa un altro modo per spostarti, e non associarla mai all'alcol, che moltiplica il rischio. In molti paesi è anche un reato grave."
+    },
+    "pregnancy": {
+      "slug": "cannabis-gravidanza",
+      "question": "La cannabis è sicura in gravidanza?",
+      "description": "Voto B: ci sono evidenze sostanziali che fumare cannabis in gravidanza sia associato a un peso alla nascita inferiore. Cosa consigliano le autorità.",
+      "studied": "Gli studi mostrano evidenze sostanziali che fumare cannabis in gravidanza sia associato a un peso alla nascita inferiore. Il THC attraversa la placenta e passa anche nel latte materno.",
+      "unknown": "Per altri possibili effetti sullo sviluppo del bambino le evidenze sono limitate. È difficile separare l'effetto della cannabis da quello di altri fattori, come il tabacco, e servono più studi con un lungo follow-up.",
+      "practical": "Le autorità sanitarie sconsigliano la cannabis in gravidanza e durante l'allattamento, CBD compreso. Se la usi per la nausea o un altro sintomo, parlane con la tua ostetrica o il tuo medico: esistono alternative sicure."
+    }
+  }
+}

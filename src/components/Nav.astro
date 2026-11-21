@@ -2,6 +2,7 @@
 import logoText from '../assets/brand/logo-text.svg';
 import { showSection, socialLinks } from '../config/site';
 import { languages, langPath, t, type Lang } from '../i18n';
+import { evidenceHubPath } from '../lib/evidence';
 
 interface Props {
   lang: Lang;
@@ -13,7 +14,7 @@ interface Props {
   /** Enlaces del selector de idioma a medida (para enlazar el mismo post traducido). */
   langHrefs?: Partial<Record<Lang, string>>;
   /** Sección activa, para `aria-current`. */
-  current?: 'home' | 'news';
+  current?: 'home' | 'news' | 'evidence';
   /** Compatibilidad: antes fijaba la sombra; la barra ya no lleva sombra. */
   solid?: boolean;
 }
@@ -40,8 +41,13 @@ const newsHref = lang === 'es' ? '/noticias/' : '/en/news/';
 const section = (id: string) => `${sectionBase}#${id}`;
 
 const navItems = [
-  { href: section('evidence'), label: t(lang, 'nav_evidence') },
-  { href: section('about'), label: t(lang, 'v2_menu_about') },
+  // En la portada, «Evidencia» baja a las notas; fuera de ella va al índice de fichas.
+  {
+    href: sectionBase ? evidenceHubPath(lang) : section('evidence'),
+    label: t(lang, 'nav_evidence'),
+    current: current === 'evidence',
+  },
+  { href: section('about'), label: t(lang, 'v2_menu_about'), current: false },
 ];
 ---
 
@@ -75,7 +81,7 @@ const navItems = [
         {
           navItems.map((item) => (
             <li>
-              <a class="nav__link" href={item.href}>
+              <a class="nav__link" href={item.href} aria-current={item.current ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>

@@ -19,6 +19,8 @@ coverCredit:
   autor: 'Cannabis Tours'
   licencia: 'CC BY-SA 4.0'
   url: 'https://commons.wikimedia.org/wiki/File:Commercial_Cannabis_Greenhouse_Facility.jpg'
+evidencia:
+  - pain
 author: equipo
 instagram: 'off'
 instagramHook: 'Dolor crónico y cannabis medicinal: qué pasa a los dos años'

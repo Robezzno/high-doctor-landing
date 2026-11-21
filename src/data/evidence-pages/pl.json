@@ -1,0 +1,107 @@
+{
+  "base": "dowody",
+  "ui": {
+    "hubTitle": "Co mówią dowody naukowe o konopiach, temat po temacie",
+    "hubLead": "Dziesięć częstych pytań o konopie i kannabinoidy, każde z oceną od A do E, tym, co wiadomo, tym, czego jeszcze nie wiadomo, i źródłem podanym wprost.",
+    "hubDescription": "Oceny dowodów od A do E dotyczące medycznego zastosowania i ryzyka konopi: ból, nudności, padaczka, sen, lęk, rak i inne, każda ze źródłem.",
+    "crumbHome": "Strona główna",
+    "crumbHub": "Dowody",
+    "kindUse": "Zastosowanie medyczne",
+    "kindRisk": "Ryzyko",
+    "verdictLabel": "Ocena dowodów",
+    "studied": "Co zbadano",
+    "unknown": "Czego jeszcze nie wiemy",
+    "practical": "W praktyce",
+    "scaleTitle": "Jak czytać ocenę",
+    "scaleLead": "Stosujemy pięć poziomów z przeglądu Narodowych Akademii Nauk USA z 2017 roku: A oznacza największą pewność, a E oznacza, że danych jest jeszcze za mało.",
+    "relatedNews": "Powiązane wiadomości",
+    "otherTopics": "Inne tematy",
+    "reviewed": "Zweryfikowano",
+    "seePage": "Zobacz całą stronę",
+    "hubLink": "Wszystkie tematy",
+    "ctaTitle": "Pracujesz w ochronie zdrowia lub w badaniach naukowych?",
+    "ctaText": "Dołącz do sieci High Doctor Foundation i pomóż nam weryfikować dowody."
+  },
+  "topics": {
+    "pain": {
+      "slug": "konopie-bol-przewlekly",
+      "question": "Czy konopie pomagają na przewlekły ból?",
+      "description": "Ocena B: istnieją istotne dowody, że konopie i kannabinoidy zmniejszają przewlekły ból u dorosłych. Co zbadano, czego brakuje i co to oznacza.",
+      "studied": "W przeglądzie Narodowych Akademii Nauk USA zebrano dziesiątki badań klinicznych kontrolowanych placebo i stwierdzono, że istnieją istotne dowody na to, iż kannabinoidy zmniejszają przewlekły ból u dorosłych. Większość tych badań dotyczyła bólu neuropatycznego (pochodzącego z nerwów) i stosowano w nich aerozol do jamy ustnej zawierający THC i CBD (nabiksymole). Poprawa jest realna, choć niewielka.",
+      "unknown": "Wiele badań trwało tylko kilka tygodni, dlatego mniej wiadomo o stosowaniu przez lata. Nie jest też jasne, jaki produkt, jaki stosunek THC do CBD i jaka dawka działają najlepiej w przypadku poszczególnych rodzajów bólu. Rejestry pacjentów, takie jak brytyjski, dostarczają obecnie danych z dłuższej obserwacji.",
+      "practical": "To jedno z najlepiej zbadanych medycznych zastosowań konopi. Rozsądnie jest porozmawiać z pracownikiem ochrony zdrowia, zacząć od małych dawek i oceniać efekty: znaczenie mają produkt, dawka i opieka lekarska."
+    },
+    "nausea": {
+      "slug": "konopie-nudnosci-chemioterapia",
+      "question": "Czy konopie łagodzą nudności po chemioterapii?",
+      "description": "Ocena A: istnieją rozstrzygające dowody, że doustne kannabinoidy zmniejszają nudności i wymioty wywołane chemioterapią. Co wiadomo i jak się je stosuje.",
+      "studied": "To zastosowanie medyczne o najsilniejszych dowodach. Od lat 80. XX wieku wiele badań klinicznych wykazało, że kannabinoidy przyjmowane doustnie, takie jak dronabinol i nabilon, zmniejszają nudności i wymioty wywołane chemioterapią. Dlatego leki z kannabinoidami są w kilku krajach dopuszczone do tego zastosowania.",
+      "unknown": "Leki przeciwwymiotne bardzo się od tamtej pory udoskonaliły i niewiele badań porównuje kannabinoidy bezpośrednio z najnowszymi lekami. Nie jest też jeszcze jasne, którzy pacjenci najbardziej zyskują na dodaniu ich do leczenia.",
+      "practical": "Zwykle stosuje się je, gdy standardowe leki przeciwwymiotne nie wystarczają. Jeśli przechodzisz chemioterapię, a nudności nie są pod kontrolą, powiedz o tym zespołowi onkologicznemu: może on ocenić, czy kannabinoid będzie odpowiedni w Twoim przypadku."
+    },
+    "ms": {
+      "slug": "konopie-stwardnienie-rozsiane-spastycznosc",
+      "question": "Czy konopie pomagają na spastyczność w stwardnieniu rozsianym?",
+      "description": "Ocena B: istnieją istotne dowody, że kannabinoidy łagodzą spastyczność zgłaszaną przez osoby ze stwardnieniem rozsianym. Co wiadomo, a czego nie.",
+      "studied": "Spastyczność to sztywność i skurcze mięśni, z którymi żyje wiele osób ze stwardnieniem rozsianym. Badania kliniczne dostarczają istotnych dowodów, że doustne kannabinoidy przyjmowane przez kilka tygodni łagodzą spastyczność zgłaszaną przez samych pacjentów. Aerozol do jamy ustnej zawierający THC i CBD (nabiksymole) jest dopuszczony do tego zastosowania w kilku krajach europejskich.",
+      "unknown": "Poprawa jest wyraźniejsza, gdy oceniają ją pacjenci, niż gdy lekarze mierzą ją skalami klinicznymi, w których dowody są ograniczone. Mniej jest danych o stosowaniu przez lata i o innych objawach choroby.",
+      "practical": "To uznana opcja, gdy standardowe leczenie spastyczności nie wystarcza. Decyzję podejmuje się razem z neurologiem, który może powiedzieć, czy lek z kannabinoidami jest odpowiedni."
+    },
+    "epilepsy": {
+      "slug": "cbd-padaczka-dzieci",
+      "question": "Czy CBD działa na padaczkę u dzieci?",
+      "description": "Ocena A: w 2019 roku Europejska Agencja Leków dopuściła lek z CBD w zespołach Dravet i Lennoxa-Gastauta. Co pokazują badania kliniczne.",
+      "studied": "Kilka randomizowanych badań klinicznych kontrolowanych placebo wykazało, że oczyszczony lek z CBD zmniejsza liczbę napadów w zespołach Dravet i Lennoxa-Gastauta, dwóch ciężkich padaczkach wieku dziecięcego, które słabo odpowiadają na inne leczenie. Na podstawie tych danych Europejska Agencja Leków dopuściła go w 2019 roku, a później rozszerzyła jego zastosowanie na stwardnienie guzowate.",
+      "unknown": "Naukowcy nadal badają, czy CBD pomaga w innych rodzajach padaczki i jaka jest jego długoterminowa rola. Wyniki badań dotyczą leku o jakości farmaceutycznej w kontrolowanych dawkach, a nie produktów z CBD sprzedawanych w sklepach.",
+      "practical": "To najwyraźniejszy dowód, że kannabinoid może stać się skutecznym lekiem. Stosuje się go pod nadzorem neurologa, razem z innymi lekami przeciwpadaczkowymi i z regularnymi badaniami krwi, ponieważ może wchodzić z nimi w interakcje."
+    },
+    "sleep": {
+      "slug": "konopie-sen",
+      "question": "Czy konopie poprawiają sen?",
+      "description": "Ocena C: istnieją umiarkowane dowody, że kannabinoidy poprawiają sen w krótkim okresie, gdy zakłócają go ból, fibromialgia, SM lub bezdech senny.",
+      "studied": "Badania wskazują na umiarkowane dowody, że kannabinoidy poprawiają sen w krótkim okresie u osób, których odpoczynek zakłóca inna choroba: przewlekły ból, fibromialgia, stwardnienie rozsiane lub bezdech senny. W wielu przypadkach sen mierzono jako drugorzędowy wynik w badaniach nad bólem.",
+      "unknown": "Brak dobrych dowodów dla bezsenności bez innej przyczyny ani dla stałego stosowania przez miesiące lub lata. Rejestry pacjentów podają trwałą poprawę, ale bez grupy porównawczej nie da się ustalić, jaka jej część wynika z leczenia.",
+      "practical": "Może to mieć sens, gdy zły sen idzie w parze z bólem lub inną chorobą, którą już leczy się kannabinoidami. W przypadku bezsenności bez innej przyczyny najpierw porozmawiaj ze specjalistą o opcjach o lepiej udokumentowanej skuteczności."
+    },
+    "anxiety": {
+      "slug": "cbd-lek",
+      "question": "Czy CBD pomaga na lęk?",
+      "description": "Ocena D: małe badanie wykazało, że CBD zmniejszyło lęk przed wystąpieniami publicznymi u osób z lękiem społecznym. Dlaczego to jeszcze za mało, by je zalecać.",
+      "studied": "Przegląd Narodowych Akademii wykazał ograniczone dowody: małe badanie u osób z lękiem społecznym wykazało, że dawka CBD zmniejszyła lęk podczas testu wystąpienia publicznego. W tym samym kierunku wskazują badania laboratoryjne nad tym, jak CBD działa w mózgu, na przykład nad układem serotoninowym.",
+      "unknown": "Nadal potrzebne są duże, długie badania u osób z zaburzeniami lękowymi, aby potwierdzić efekt, właściwą dawkę i czas jego utrzymywania się. CBD i THC nie działają tak samo: duże dawki THC mogą nasilać lęk.",
+      "practical": "To obiecujący kierunek badań, ale jeszcze niewystarczający, by zalecać CBD jako leczenie. Jeśli masz lęk, zacznij od rozmowy ze specjalistą: istnieją metody leczenia o mocnych dowodach."
+    },
+    "cancer": {
+      "slug": "konopie-rak",
+      "question": "Czy konopie mogą leczyć raka?",
+      "description": "Ocena E: nie ma wystarczających dowodów, że kannabinoidy leczą raka u ludzi. Co mówią badania laboratoryjne i czego jeszcze nie wiadomo.",
+      "studied": "W laboratorium kilka kannabinoidów spowalnia wzrost komórek nowotworowych, a niektóre wzmacniają działanie leczenia przeciwnowotworowego. To aktywny kierunek badań. Jednak jeśli chodzi o badania u ludzi wykazujące, że kannabinoidy leczą raka, w tym glejaki, dowody są niewystarczające.",
+      "unknown": "Nadal potrzebne są badania kliniczne, które sprawdzą, czy to, co działa na komórki i zwierzęta, działa też u pacjentów, jakie związki i w jakich nowotworach. Tymczasem istnieją dowody, że kannabinoidy pomagają w objawach takich jak nudności po chemioterapii.",
+      "practical": "Twierdzenia, że konopie leczą raka, nie mają oparcia w danych. Nigdy nie rezygnuj z leczenia ani go nie odkładaj z ich powodu. Jeśli interesują Cię kannabinoidy na objawy, porozmawiaj z zespołem onkologicznym."
+    },
+    "psychosis": {
+      "slug": "konopie-psychoza-schizofrenia",
+      "question": "Czy konopie zwiększają ryzyko psychozy?",
+      "description": "Ocena B: istnieją istotne dowody, że używanie konopi wiąże się z większym ryzykiem schizofrenii i innych psychoz, zwłaszcza przy częstym używaniu.",
+      "studied": "Badania, w których przez lata obserwuje się duże grupy osób, dostarczają istotnych dowodów na związek między używaniem konopi a ryzykiem rozwoju schizofrenii lub innych psychoz. Im częstsze używanie, tym większe ryzyko, które skupia się przy codziennym używaniu i produktach o wysokiej zawartości THC.",
+      "unknown": "Sam związek nie dowodzi, że konopie powodują psychozę: rolę odgrywają genetyka, wiek rozpoczęcia używania i inne czynniki. Naukowcy badają, dlaczego niektóre osoby są bardziej podatne, oraz rolę CBD, które nie ma takiego działania.",
+      "practical": "Aby zmniejszyć ryzyko: unikaj codziennego używania, opóźnij wiek pierwszego użycia, wybieraj produkty z mniejszą zawartością THC i nie używaj, jeśli w rodzinie występowały psychozy. Jeśli pojawią się objawy, takie jak skrajna podejrzliwość lub dziwne myśli, szukaj pomocy specjalisty."
+    },
+    "driving": {
+      "slug": "konopie-prowadzenie-pojazdow",
+      "question": "Czy prowadzenie auta po użyciu konopi jest niebezpieczne?",
+      "description": "Ocena B: istnieją istotne dowody, że używanie konopi wiąże się z większą liczbą wypadków drogowych. Dlaczego wpływa na prowadzenie i jak uniknąć ryzyka.",
+      "studied": "Badania wskazują na istotne dowody, że prowadzenie pojazdu po użyciu konopi wiąże się z większym ryzykiem wypadków drogowych. THC wpływa na uwagę, koordynację i czas reakcji, zwłaszcza w pierwszych godzinach.",
+      "unknown": "Poziom THC we krwi jest słabym wskaźnikiem upośledzenia, dlatego nadal nie ma prostego sposobu na ustalenie, kiedy można znów bezpiecznie prowadzić. Efekt zależy od dawki, drogi przyjmowania i nawyków każdej osoby.",
+      "practical": "Nie prowadź po użyciu konopi. Jeśli je przyjęto, odczekaj kilka godzin lub skorzystaj z innego sposobu transportu i nigdy nie łącz ich z alkoholem, który wielokrotnie zwiększa ryzyko. W wielu krajach jest to również poważne wykroczenie."
+    },
+    "pregnancy": {
+      "slug": "konopie-ciaza",
+      "question": "Czy konopie są bezpieczne w ciąży?",
+      "description": "Ocena B: istnieją istotne dowody, że palenie konopi w ciąży wiąże się z niższą masą urodzeniową. Co wiadomo i co zalecają władze zdrowotne.",
+      "studied": "Badania wskazują na istotne dowody, że palenie konopi w ciąży wiąże się z niższą masą urodzeniową. THC przenika przez łożysko i przechodzi także do mleka matki.",
+      "unknown": "Co do innych możliwych skutków dla rozwoju dziecka, dowody są ograniczone. Trudno oddzielić wpływ konopi od wpływu innych czynników, takich jak tytoń, i potrzeba więcej badań z długą obserwacją.",
+      "practical": "Władze zdrowotne odradzają konopie w ciąży i podczas karmienia piersią, w tym CBD. Jeśli używasz ich na nudności lub inny objaw, porozmawiaj z położną lub lekarzem: istnieją bezpieczne alternatywy."
+    }
+  }
+}

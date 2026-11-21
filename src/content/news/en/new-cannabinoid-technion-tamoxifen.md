@@ -19,6 +19,8 @@ coverCredit:
   autor: 'Korinna'
   licencia: 'CC BY 4.0'
   url: 'https://commons.wikimedia.org/wiki/File:Fluorescence_microscopy_of_the_oral_cancer_cells.jpg'
+evidencia:
+  - cancer
 author: equipo
 instagram: 'off'
 instagramHook: 'A newly discovered cannabinoid that boosts tamoxifen'

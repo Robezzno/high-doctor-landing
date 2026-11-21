@@ -1,0 +1,93 @@
+---
+/** Escala A–E con la nota del tema marcada (de A, concluyente, a E, insuficiente). */
+import { gradeOf, type EvidenceLevel } from '../../data/evidence';
+import { t, type Lang, type TranslationKey } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  level: EvidenceLevel;
+}
+
+const { lang, level } = Astro.props;
+const levels: EvidenceLevel[] = [5, 4, 3, 2, 1];
+---
+
+<ol class="evs">
+  {
+    levels.map((item) => (
+      <li class:list={['evs__step', `evs__step--${gradeOf(item).toLowerCase()}`, { 'is-current': item === level }]}>
+        <span class="evs__grade">{gradeOf(item)}</span>
+        <span class="evs__name">{t(lang, `evd_lvl_${item}` as TranslationKey)}</span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .evs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .evs__step {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.625rem 0.5rem;
+    border-radius: var(--r-1);
+    background-color: var(--c-paper-2);
+    color: var(--c-ink-soft);
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+
+  .evs__grade {
+    font-size: 1.25rem;
+    font-weight: var(--fw-grade);
+  }
+
+  .evs__name {
+    overflow-wrap: anywhere;
+  }
+
+  .evs__step.is-current {
+    color: var(--evs-ink);
+    background-color: var(--evs-bg);
+  }
+
+  /* En móvil sólo la nota del tema lleva su nombre; el resto, la letra. */
+  @media (max-width: 40rem) {
+    .evs {
+      display: flex;
+    }
+
+    .evs__step {
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .evs__step.is-current {
+      flex: 3 1 0;
+      text-align: start;
+    }
+
+    .evs__step:not(.is-current) .evs__name {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
+  .evs__step--a { --evs-bg: var(--grade-a); --evs-ink: var(--grade-a-ink); }
+  .evs__step--b { --evs-bg: var(--grade-b); --evs-ink: var(--grade-b-ink); }
+  .evs__step--c { --evs-bg: var(--grade-c); --evs-ink: var(--grade-c-ink); }
+  .evs__step--d { --evs-bg: var(--grade-d); --evs-ink: var(--grade-d-ink); }
+  .evs__step--e { --evs-bg: var(--grade-e); --evs-ink: var(--grade-e-ink); }
+</style>

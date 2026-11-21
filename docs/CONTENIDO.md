@@ -43,6 +43,7 @@ src/content/news/en/high-doctor-foundation-launches.md →  /en/news/high-doctor
 | `instagram` | enum | no (`pending`) | `off` no publica, `pending` entra en la cola del prompt 08, `published` ya está publicado |
 | `instagramId` | texto | no | Id del post en Instagram (lo escribe el prompt 08) |
 | `instagramHook` | texto | no | ≤ 80 caracteres. Frase gancho de la tarjeta; si falta se usa `title` |
+| `evidencia` | lista | no | Temas de evidencia que trata la noticia (`pain`, `nausea`, `ms`, `epilepsy`, `sleep`, `anxiety`, `cancer`, `psychosis`, `driving`, `pregnancy`). Pinta al final la caja con la nota y el enlace a la ficha, y la ficha lista la noticia en «Noticias relacionadas» |
 | `grafico` | objeto | no (pero **ponlo siempre**) | Gráfico de la tarjeta: `cifra` (≤ 12, el dato clave en grande), `etiqueta` (≤ 70) y `datos`: 1–3 filas `{ texto ≤ 64, porcentaje? 0–100 }`; con porcentaje se dibuja una barra. Sin `grafico` sale la molécula genérica |
 
 ### Reglas que el esquema impone y no se pueden saltar
