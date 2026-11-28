@@ -35,6 +35,22 @@ export const INSTAGRAM_STATUSES = ['off', 'pending', 'published'] as const;
 
 export type InstagramStatus = (typeof INSTAGRAM_STATUSES)[number];
 
+/**
+ * Ángulo de la noticia: qué tipo de pieza es. Con `tema` sirve para no repetir
+ * siempre lo mismo (lo comprueba `npm run noticias -- comprobar`).
+ */
+export const NEWS_ANGLES = [
+  'ensayo-clinico',
+  'ciencia-basica',
+  'datos-reales',
+  'revision',
+  'regulacion',
+  'guia',
+  'fundacion',
+] as const;
+
+export type NewsAngle = (typeof NEWS_ANGLES)[number];
+
 /** Límites de longitud del contrato. */
 export const TITLE_MAX = 90;
 export const SUMMARY_MAX = 200;
@@ -92,6 +108,14 @@ export function createNewsSchema<Cover extends z.ZodType = z.ZodString>(
       lang: z.enum(NEWS_LANGS),
       translationKey: z.string().min(1),
       category: z.enum(NEWS_CATEGORIES),
+      /** Tema en una o dos palabras (`sueno`, `dolor-cronico`): variedad de temas. */
+      tema: z
+        .string()
+        .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'tema: minúsculas, sin acentos y con guiones')
+        .optional(),
+      angulo: z.enum(NEWS_ANGLES).optional(),
+      /** Qué aporta de nuevo si se repite un tema reciente. */
+      perspectiva: z.string().min(1).optional(),
       tags: z.array(z.string().min(1)).default([]),
       cover: cover.optional(),
       coverAlt: z.string().min(1).optional(),

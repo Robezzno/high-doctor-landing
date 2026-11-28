@@ -255,7 +255,8 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
+  /* Cuadrada, igual que la miniatura del gráfico: todas las filas miden lo mismo. */
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: var(--r-1);
 }
@@ -569,6 +570,55 @@
   margin-top: 8px;
   font-size: 0.88rem;
   color: var(--blog-muted);
+}
+
+/* Llamada final: cada noticia acerca al lector a la fundación. */
+.post-cta {
+  max-width: var(--blog-measure);
+  margin: 40px 0 0;
+  padding: 22px 24px;
+  border-radius: 14px;
+  background-color: var(--blog-accent);
+  color: var(--c-paper);
+}
+
+.post-cta__title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  line-height: 1.25;
+  margin: 0 0 6px;
+  color: inherit;
+}
+
+.post-cta__text {
+  margin: 0 0 16px;
+  font-size: 0.98rem;
+  opacity: 0.86;
+}
+
+.post-cta__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin: 0;
+}
+
+.post-cta__btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background-color: var(--blog-spark);
+  color: var(--blog-accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.post-cta__link {
+  color: inherit;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .post-aside {
@@ -945,4 +995,9 @@
   margin-top: 0.35rem;
   font-weight: var(--fw-head);
   color: var(--c-green-ink);
+}
+
+/* Aire entre el aviso de salud y el primer párrafo. */
+.callout--health + .post-body {
+  margin-top: 28px;
 }

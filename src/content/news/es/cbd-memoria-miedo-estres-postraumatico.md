@@ -5,6 +5,8 @@ date: 2026-11-16
 lang: es
 translationKey: cbd-fear-extinction-ptsd-rats
 category: investigacion
+tema: estres-postraumatico
+angulo: ciencia-basica
 tags:
   - investigación
   - CBD

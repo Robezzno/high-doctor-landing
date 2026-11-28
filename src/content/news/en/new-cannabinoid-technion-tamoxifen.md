@@ -5,6 +5,8 @@ date: 2026-11-21
 lang: en
 translationKey: new-cannabinoid-technion-tamoxifen
 category: investigacion
+tema: cancer-mama
+angulo: ciencia-basica
 tags:
   - research
   - discoveries

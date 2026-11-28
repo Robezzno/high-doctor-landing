@@ -5,6 +5,8 @@ date: 2026-10-18
 lang: en
 translationKey: reading-cannabis-health-news
 category: salud
+tema: leer-noticias
+angulo: guia
 tags:
   - health
   - outreach

@@ -5,9 +5,11 @@ date: 2026-10-12
 lang: en
 translationKey: cannabinoid-research-context
 category: investigacion
+tema: metodo-cientifico
+angulo: guia
 source:
   name: 'WHO — Cannabis fact sheet'
-  url: 'https://www.who.int/news-room/fact-sheets/detail/cannabis'
+  url: 'https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis'
 tags:
   - research
   - evidence

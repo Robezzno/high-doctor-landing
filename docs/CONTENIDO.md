@@ -1,5 +1,10 @@
 # Contrato de contenido del blog
 
+> **¿Vas a publicar una noticia?** La norma, paso a paso, está en
+> [`docs/METODOLOGIA-NOTICIAS.md`](METODOLOGIA-NOTICIAS.md): qué es noticia, fuentes,
+> cifras, foto, variedad de temas, procedimiento por PR y checklist. Este documento
+> es sólo el contrato técnico (esquema, rutas y lo que genera el build).
+
 Todo lo que se publica en `/noticias/` (ES) y `/en/news/` (EN) es un fichero Markdown
 en `src/content/news/<lang>/<slug>.md`. Da igual quién lo escriba —tú a mano, Pages
 CMS (prompt 06), el bot (prompt 07)—: **este es el formato y el mismo flujo**.
@@ -33,8 +38,11 @@ src/content/news/en/high-doctor-foundation-launches.md →  /en/news/high-doctor
 | `lang` | `es` \| `en` | sí | Tiene que coincidir con la carpeta |
 | `translationKey` | texto | sí | Mismo valor en la versión ES y EN del mismo post |
 | `category` | enum | sí | `investigacion`, `salud`, `legislacion`, `cultura`, `fundacion`, `eventos` |
+| `tema` | texto | no en el esquema; **sí en toda noticia nueva** | Tema en minúsculas con guiones (`sueno`). Sirve para no repetir temas (metodología, §2) |
+| `angulo` | enum | igual que `tema` | `ensayo-clinico`, `ciencia-basica`, `datos-reales`, `revision`, `regulacion`, `guia`, `fundacion` |
+| `perspectiva` | texto | no | Qué aporta de nuevo cuando se repite un tema reciente |
 | `tags` | lista de textos | no (por defecto `[]`) | Etiquetas libres para el RSS |
-| `cover` | imagen | no | Si falta, la portada es la tarjeta generada en el build |
+| `cover` | imagen | no en el esquema; **sí en toda noticia nueva** | Foto libre de Wikimedia Commons (metodología, §10). Si falta, la portada es la tarjeta generada en el build |
 | `coverAlt` | texto | no | Texto alternativo de la portada |
 | `coverCredit` | objeto | sí si hay `cover` con licencia CC BY | `autor`, `licencia` (p. ej. `CC BY 4.0`) y `url` de la página de la foto; sale bajo la portada del post. Fotos libres de Wikimedia Commons, guardadas en `src/assets/news/<translationKey>.jpg` (1600 px), con `cover: '../../../assets/news/<translationKey>.jpg'` |
 | `source` | `{ name, url }` | **sí si `author: bot`** | Enlace a la fuente original; el build falla si falta |
@@ -167,12 +175,16 @@ artículo.
 
 ## Añadir una noticia (a mano)
 
+**Sigue `docs/METODOLOGIA-NOTICIAS.md`** (rama → comprobar → PR → CI verde → fusionar;
+nunca push directo a `main`). `npm run noticias -- comprobar` valida la noticia
+antes del PR y el CI lo repite. Lo de abajo es el resumen antiguo:
+
 1. Copia un post existente del idioma que toque.
 2. Cambia `title`, `summary`, `date`, `translationKey` y el slug del fichero.
 3. Escribe el cuerpo en Markdown.
 4. `npm run build` en local: si el contrato no se cumple, el build falla y dice qué
    campo.
-5. Commit y push: el workflow publica la web, la tarjeta social y la imagen OG.
+5. Commit en una rama, PR y fusión con el CI en verde: el workflow publica la web, la tarjeta social y la imagen OG.
 6. Si quieres que se publique en Instagram cuando el prompt 08 esté activo, deja
    `instagram: 'pending'`. Si no, `instagram: 'off'`.
 

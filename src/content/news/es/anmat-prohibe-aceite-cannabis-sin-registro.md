@@ -5,6 +5,8 @@ date: 2026-11-14
 lang: es
 translationKey: anmat-unregistered-cannabis-oil
 category: salud
+tema: productos-sin-registro
+angulo: regulacion
 tags:
   - salud
   - aceite de CBD

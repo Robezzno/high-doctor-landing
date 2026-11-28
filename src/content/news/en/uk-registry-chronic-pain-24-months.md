@@ -5,6 +5,8 @@ date: 2026-11-16
 lang: en
 translationKey: uk-registry-chronic-pain-24-months
 category: investigacion
+tema: dolor-cronico
+angulo: datos-reales
 tags:
   - research
   - chronic pain

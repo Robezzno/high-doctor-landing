@@ -1,44 +1,63 @@
 ---
-title: "Los cannabinoides y el sueño: qué dice la evidencia y qué no"
-summary: Una revisión de la evidencia sobre el uso de cannabinoides para problemas del sueño, con sus límites y la fuente original.
+title: 'Cannabinoides y sueño: en qué casos ayudan a dormir, según la evidencia'
+summary: 'La gran revisión de las Academias Nacionales de EE. UU. ve evidencia moderada de mejor sueño a corto plazo cuando el descanso lo alteran el dolor, la fibromialgia, la esclerosis múltiple o la apnea.'
 date: 2026-11-27
 lang: es
-translationKey: cannabinoides-sueno-evidencia
+translationKey: cannabinoids-sleep-evidence
 category: salud
-tags: ["sueño", "cannabinoides", "evidencia", "salud"]
+tema: sueno
+angulo: revision
+tags:
+  - sueño
+  - cannabinoides
+  - evidencia
+  - revisiones
 source:
-  name: US National Academies of Sciences, Engineering, and Medicine
-  url: https://nap.nationalacademies.org/catalog/24625/the-health-effects-of-cannabis-and-cannabinoids-the-current-state
+  name: 'Academias Nacionales de Ciencias, Ingeniería y Medicina de EE. UU. (2017)'
+  url: 'https://doi.org/10.17226/24625'
+cover: '../../../assets/news/cannabinoids-sleep-evidence.jpg'
+coverAlt: 'Dormitorio de noche con la cama hecha y las lámparas de las mesillas encendidas'
+coverCredit:
+  autor: 'Kurt Kaiser'
+  licencia: 'CC0'
+  url: 'https://commons.wikimedia.org/wiki/File:Bed_in_hotel_room_2.jpg'
+evidencia:
+  - sleep
 author: bot
 draft: false
-instagram: off
-instagramHook: "Cannabinoides y sueño: qué dice la evidencia y qué no"
+instagram: 'off'
+instagramHook: 'Cannabinoides y sueño: en qué casos ayudan a dormir'
+grafico:
+  cifra: '4'
+  etiqueta: 'situaciones en las que la revisión ve mejor sueño a corto plazo'
+  datos:
+    - texto: 'Dolor crónico y fibromialgia'
+    - texto: 'Esclerosis múltiple y apnea del sueño'
+    - texto: 'Evidencia moderada: nota C en nuestra escala'
 ---
 
-## Qué ha pasado
+Dormir mal es uno de los motivos por los que más gente se interesa por los cannabinoides. ¿Qué dice la ciencia cuando se juntan todos los estudios? La respuesta más completa sigue siendo el informe de las **Academias Nacionales de Ciencias, Ingeniería y Medicina de EE. UU.** (2017), y en este punto trae una buena noticia con letra pequeña.
 
-Los cannabinoides se usan cada vez más para dormir, pero la ciencia no lo tiene todo claro. Una revisión de referencia de las Academias Nacionales de Ciencias de EE. UU. (2017) concluye que los cannabinoides mejoran el sueño a corto plazo en personas cuyo descanso está alterado por el dolor, la fibromialgia, la esclerosis múltiple o la apnea del sueño.
+## Qué se hizo
 
-No hay, sin embargo, buena evidencia para el insomnio sin otra causa de fondo, ni para el uso prolongado a largo plazo. La fundación no vende productos, no da pautas de consumo y no recomienda probar nada: solo traslada lo que dicen los estudios, con la fuente para que lo compruebes.
+- **Tipo de estudio:** una **revisión de la evidencia** hecha por un comité independiente de expertos. No es un experimento nuevo: es el repaso ordenado de lo publicado hasta entonces.
+- **Qué se revisó:** más de 10.000 resúmenes científicos sobre los efectos del cannabis y los cannabinoides en la salud, publicados desde 1999.
+- **Cómo se puntuó:** cada conclusión lleva una etiqueta según la solidez de las pruebas, de «concluyente» a «insuficiente».
 
-## Por qué importa
+## Qué descubrió
 
-Dormir mal afecta a la salud física y mental, y mucha gente busca alternativas cuando los tratamientos habituales no funcionan o generan efectos secundarios. Saber en qué casos la evidencia es sólida y en cuáles no ayuda a evitar expectativas falsas y decisiones basadas en titulares sensacionalistas.
+- Hay **evidencia moderada** de que los cannabinoides, sobre todo el nabiximols (un medicamento con THC y CBD), **mejoran el sueño a corto plazo** en personas cuyo descanso está alterado por otra dolencia.
+- Las cuatro situaciones que cita el informe son la **apnea obstructiva del sueño**, la **fibromialgia**, el **dolor crónico** y la **esclerosis múltiple**.
+- En casi todos esos estudios el sueño era un resultado secundario: se investigaba el dolor o la espasticidad, y dormir mejor llegaba de la mano.
 
-Para pacientes, familias y profesionales sanitarios, la diferencia entre «puede ayudar en algunos casos concretos» y «es una solución probada para el insomnio» no es un detalle: condiciona expectativas y, en última instancia, decisiones de salud.
+## Cómo leerlo
 
-## Contexto
+«Moderada» es el tercer escalón de cinco: hay ensayos que apuntan en la misma dirección, pero no bastan para estar seguros. En nuestra escala equivale a una **C**. El informe habla de corto plazo y de medicamentos de composición conocida, no de cualquier producto. Y deja fuera el insomnio sin otra causa, que casi no se había estudiado: ahí la revisión no dice que no funcione, dice que faltan ensayos.
 
-La escala de evidencia de las Academias Nacionales va de A (ciencia lo tiene claro) a E (no hay pruebas suficientes). En el caso de los cannabinoides para el sueño, la evaluación sitúa la evidencia en un nivel intermedio: hay datos, pero no bastan para estar seguros en todas las situaciones.
+> Cuando el dolor no deja dormir, aliviar el dolor y dormir mejor suelen llegar juntos.
 
-También importa el producto: no es lo mismo un cannabinoide aislado en un ensayo clínico que un aceite de compra libre. La dosis, el tipo de producto y el seguimiento médico influyen en el resultado, y ninguno de esos factores está resuelto por la evidencia actual.
+## Por qué nos parece relevante
 
-## Qué no sabemos todavía
+Porque pone orden en una pregunta que suele responderse con anécdotas. Saber en qué casos hay pruebas, y de qué calidad, permite hablar del tema con el médico con datos en la mano. Y marca el camino de lo que queda por investigar: ensayos pensados para medir el sueño, con seguimiento más largo.
 
-No se sabe si el beneficio se mantiene con el uso prolongado, ni cuáles son los efectos a largo plazo. Tampoco está claro qué cannabinoides, en qué dosis y para qué perfiles de persona funcionan mejor.
-
-Esta información es divulgativa y educativa, no sustituye al consejo médico. Si tienes problemas para dormir, habla con un profesional sanitario antes de empezar o dejar cualquier tratamiento.
-
-Fuente: [National Academies of Sciences, Engineering, and Medicine (2017). The Health Effects of Cannabis and Cannabinoids: The Current State of Evidence and Recommendations for Research](https://nap.nationalacademies.org/catalog/24625/the-health-effects-of-cannabis-and-cannabinoids-the-current-state)
-
-Siempre enlazamos el origen de la información para que puedas comprobarlo tú mismo.
+Esta noticia es divulgación, no consejo médico. Fuente: National Academies of Sciences, Engineering, and Medicine, *The Health Effects of Cannabis and Cannabinoids: The Current State of Evidence and Recommendations for Research*, 2017, capítulo 4 ([doi:10.17226/24625](https://doi.org/10.17226/24625)).

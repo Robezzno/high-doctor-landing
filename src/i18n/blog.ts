@@ -41,6 +41,11 @@ export interface BlogStrings {
   paginationNext: string;
   /** Migas y navegación. */
   backToBlog: string;
+  /** Llamada final de cada noticia. */
+  ctaTitle: string;
+  ctaText: string;
+  ctaJoin: string;
+  ctaEvidence: string;
   rssLabel: string;
   /** Nombre de cada categoría. */
   categories: Record<NewsCategory, string>;
@@ -68,6 +73,10 @@ const es: BlogStrings = {
   paginationPrev: 'Anterior',
   paginationNext: 'Siguiente',
   backToBlog: 'Todas las noticias',
+  ctaTitle: 'Cannabis explicado con ciencia, sin humo',
+  ctaText: 'Somos una fundación independiente: no vendemos nada. Únete a la red y sigue la evidencia con nosotros.',
+  ctaJoin: 'Únete a la red',
+  ctaEvidence: 'Ver qué dice la evidencia, tema a tema',
   rssLabel: 'RSS',
   categories: {
     investigacion: 'Investigación',
@@ -101,6 +110,10 @@ const en: BlogStrings = {
   paginationPrev: 'Previous',
   paginationNext: 'Next',
   backToBlog: 'All news',
+  ctaTitle: 'Cannabis explained with science, no smoke',
+  ctaText: 'We are an independent foundation: we sell nothing. Join the network and follow the evidence with us.',
+  ctaJoin: 'Join the network',
+  ctaEvidence: 'See what the evidence says, topic by topic',
   rssLabel: 'RSS',
   categories: {
     investigacion: 'Research',

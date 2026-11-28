@@ -1,10 +1,12 @@
 ---
 title: "CBD y elevación de enzimas hepáticas: un ensayo clínico en JAMA"
 summary: "Un ensayo clínico aleatorizado en JAMA Internal Medicine (2025) documenta elevaciones de transaminasas en adultos sanos que usaron CBD a dosis de consumo habitual."
-date: 2026-11-29
+date: 2026-11-28
 lang: es
 translationKey: cbd-elevacion-enzimas-hepaticas-jama
 category: salud
+tema: higado
+angulo: ensayo-clinico
 tags:
   - CBD
   - seguridad
@@ -15,8 +17,9 @@ source:
   name: "JAMA Internal Medicine"
   url: "https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2836267"
 author: bot
-draft: false
-instagram: off
+draft: true
+# RETIRADA (borrador): resultado «en negativo», fuera de la línea editorial (docs/METODOLOGIA-NOTICIAS.md, §1).
+instagram: 'off'
 instagramHook: "CBD y enzimas hepáticas: qué encontró un ensayo en JAMA"
 ---
 
@@ -34,7 +37,7 @@ No se observaron diferencias en hormonas endocrinas (testosterona, inhibina B, T
 
 El uso de productos de CBD no regulados se ha disparado; muchos consumidores toman **200–400 mg/día** (o más) de forma crónica. Hasta ahora la mayor evidencia de hepatotoxicidad venía de dosis altas del fármaco de prescripción (hasta 25 mg/kg/día en epilepsia). Este ensayo cierra el hueco: **a dosis de consumo real, el CBD también eleva transaminasas en una proporción no despreciable de personas sanas**.
 
-La elevación apareció tardíamente (semanas 3–4), lo que sugiere que **controles hepáticos periódicos** tendrían sentido en uso prolongado. La fundación no vende productos ni da pautas de consumo: solo traslada lo que dice el estudio, con la fuente para que lo compruebes.
+La elevación apareció tardíamente (semanas 3–4) y sin síntomas. La fundación no vende productos ni da pautas de consumo: solo traslada lo que dice el estudio, con la fuente para que lo compruebes.
 
 ## Contexto
 
@@ -45,12 +48,12 @@ La elevación apareció tardíamente (semanas 3–4), lo que sugiere que **contr
 
 ## Qué no sabemos todavía
 
-- Si el efecto es **reversible** tras suspender el CBD (el estudio tuvo seguimiento a día 35, pero no datos a largo plazo).
+- Qué ocurre con un uso de **meses o años**: en el ensayo los valores volvieron a la normalidad una o dos semanas después de dejar el CBD, pero sólo duró 28 días.
 - Qué pasa con **dosis más bajas** (ej. 50–150 mg/día), más frecuentes en automedicación.
 - Seguridad en **poblaciones vulnerables** (enfermedad hepática, embarazo, interacciones farmacológicas).
 - Efecto de **productos de espectro completo** (con THC, terpenos, otros cannabinoides) vs. CBD aislado.
 
-Esta información es divulgativa y educativa, no sustituye al consejo médico. Si usas CBD, coméntalo con tu profesional sanitario para valorar controles hepáticos.
+Esta información es divulgativa y educativa, no sustituye al consejo médico.
 
 Fuente: [Florian J, Salcedo P, Burkhart K, et al. Cannabidiol and Liver Enzyme Level Elevations in Healthy Adults: A Randomized Clinical Trial. JAMA Intern Med. 2025;185(9):1070–1078. doi:10.1001/jamainternmed.2025.2366](https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2836267)
 

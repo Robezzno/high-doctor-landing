@@ -5,9 +5,11 @@ date: 2026-10-12
 lang: es
 translationKey: cannabinoid-research-context
 category: investigacion
+tema: metodo-cientifico
+angulo: guia
 source:
   name: 'OMS — ficha informativa sobre el cannabis'
-  url: 'https://www.who.int/news-room/fact-sheets/detail/cannabis'
+  url: 'https://www.who.int/teams/mental-health-and-substance-use/alcohol-drugs-and-addictive-behaviours/drugs-psychoactive/cannabis'
 tags:
   - investigación
   - evidencia

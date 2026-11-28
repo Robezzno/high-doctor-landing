@@ -5,6 +5,8 @@ date: 2026-11-14
 lang: en
 translationKey: ucla-sex-differences-smoked-cannabis
 category: investigacion
+tema: diferencias-sexo
+angulo: ensayo-clinico
 tags:
   - research
   - THC
