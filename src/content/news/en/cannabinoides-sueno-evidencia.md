@@ -1,5 +1,5 @@
 ---
-title: Cannabinoids and sleep: what the evidence says and what it doesn't
+title: "Cannabinoids and sleep: what the evidence says and what it doesn't"
 summary: A review of the evidence on using cannabinoids for sleep problems, with its limits and the original source.
 date: 2026-11-27
 lang: en
@@ -12,7 +12,7 @@ source:
 author: bot
 draft: false
 instagram: off
-instagramHook: Cannabinoids and sleep: what the evidence says and what it doesn't
+instagramHook: "Cannabinoids and sleep: what the evidence says and what it doesn't"
 ---
 
 ## What happened
