@@ -1,5 +1,5 @@
 ---
-title: Los cannabinoides y el sueño: qué dice la evidencia y qué no
+title: "Los cannabinoides y el sueño: qué dice la evidencia y qué no"
 summary: Una revisión de la evidencia sobre el uso de cannabinoides para problemas del sueño, con sus límites y la fuente original.
 date: 2026-11-27
 lang: es
@@ -12,7 +12,7 @@ source:
 author: bot
 draft: false
 instagram: off
-instagramHook: Cannabinoides y sueño: qué dice la evidencia y qué no
+instagramHook: "Cannabinoides y sueño: qué dice la evidencia y qué no"
 ---
 
 ## Qué ha pasado
