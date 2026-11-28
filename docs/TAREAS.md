@@ -5,6 +5,16 @@
 ## CLAUDE.md del proyecto
 - 2026-11-21: `CLAUDE.md` en la raíz (69 líneas): qué es, ramas (`main` = producción; `rediseno-v3` ya mergeada, mismo commit), comandos, publicación, bot, Instagram y token, mapa y qué no tocar. Comandos comprobados: `npm test` 139/139, `npm run check` 0 errores, `npm run build` 65 páginas, `qa:links` OK, `test:e2e` 41/41, `i18n:check` OK, bot `npm test` 97/97 y `typecheck` OK. Sin probar a propósito: deploy (publica), workflows de Instagram y `bot npm run dry-run` (necesita token de LLM).
 
+## Metodología de noticias para agentes (2026-11-28, PUBLICADO por PR)
+Encargo de Saf tras romperse el despliegue dos veces (push directo a `main`, YAML sin comillas y `cover` inexistente).
+- **Norma única:** `docs/METODOLOGIA-NOTICIAS.md` (qué es noticia, a favor del proyecto, sin afiliados ni publicidad, variedad de temas, fuentes con DOI, cifras, cautelas, estructura fija, tono, titulares/SEO, frontmatter y YAML, foto, versión EN, procedimiento por PR, checklist y cuándo no publicar).
+- **Herramienta:** `npm run noticias -- lista` (qué hay y qué toca), `-- comprobar` (valida; estricta con las noticias nuevas; comprueba que el DOI existe), `-- foto buscar/guardar` (Wikimedia Commons, licencia y crédito automáticos). Reglas en `scripts/noticias-lib.mjs`, 17 tests. El CI de PR ejecuta `comprobar --sin-red`.
+- **Esquema:** campos nuevos `tema`, `angulo` y `perspectiva`; rellenados en todas las noticias.
+- **Noticias del 27/28-nov:** la del sueño, reescrita con la estructura fija, foto, gráfico, ficha de evidencia y nombre en inglés (`/en/news/cannabinoids-sleep-evidence/`, con redirección desde el antiguo). Las dos de JAMA (conducta en niños e hígado) pasan a `draft: true`: resultado negativo y tema de riesgo, fuera de la línea editorial; de paso se corrigió en ellas una URL de fuente inventada, la fecha futura y varios datos que no estaban en el estudio. Para recuperarlas: `draft: false` en sus ficheros.
+- **Aspecto:** miniaturas del listado todas cuadradas, y llamada final «Únete a la red» + fichas de evidencia en cada noticia.
+- Enlace roto de la OMS corregido en `investigacion-cannabinoides-contexto` (ES y EN).
+- Cómo retomarlo: nada pendiente. Para publicar: seguir la metodología de arriba abajo.
+
 ## Noticias de la web (manuales mientras no hay publicador)
 - 2026-11-14: dos noticias nuevas en ES y EN (rama `rediseno`, salen al publicar el rediseño), contrastadas en ≥2 fuentes cada una:
   - `hombres-mujeres-efectos-cannabis-ucla` (investigación): estudio de UCLA en *Neuropsychopharmacology* (nota oficial de UCLA + News-Medical; DOI en el texto).
@@ -14,7 +24,7 @@
   - `cannabis-dolor-cronico-registro-britanico` (investigación): registro británico, 3.744 pacientes con dolor crónico a 24 meses (*J Clin Pharmacol*, doi:10.1002/jcph.70313, resumen en Europe PMC + NORML). Sustituye a la del ictus (AHA), retirada por petición de Saf: línea editorial en `docs/CONTENIDO.md`.
 - 2026-11-17: **gráfico propio en cada noticia** (campo `grafico` del contrato): cifra clave, etiqueta y hasta 3 datos con barra. Sale en la tarjeta social, la imagen OG, la portada del post y como miniatura en el listado. Publicado en `main`.
 - 2026-11-21: dos más en ES y EN, publicadas en `main`: ensayo con placebo de aceite de CBD en el síndrome de boca ardiente (UFPR, doi:10.1016/j.oooo.2026.07.010) y nuevo cannabinoide 373.15b del Technion que potencia el tamoxifeno (doi:10.1016/j.biopha.2026.119942). Contrastadas con el abstract de PubMed y cobertura secundaria. Descartadas por la línea editorial: meta-análisis de EClinicalMedicine (la prensa lo cuenta como «no sirve en salud mental») y ensayo de JAMA Pediatrics (resultado negativo).
-- Cómo añadir más a mano: contrato en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
+- Cómo añadir más: **`docs/METODOLOGIA-NOTICIAS.md`**. Contrato técnico en `docs/CONTENIDO.md`; un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`, `author: equipo`, `source` con la fuente original e `instagram: 'off'`. `npm run build` valida el esquema.
 
 ## Fichas por tema de evidencia (2026-11-21, PUBLICADO)
 Encargo de Saf: «haz lo de la página propia, intégralo con cuidado».

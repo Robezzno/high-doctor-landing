@@ -26,7 +26,7 @@ import {
 } from '../lib/news';
 import { t, type Lang, type TranslationKey } from '../i18n';
 import { evidenceSources, gradeOf } from '../data/evidence';
-import { evidenceContent, evidenceTopicPath, topicById } from '../lib/evidence';
+import { evidenceContent, evidenceHubPath, evidenceTopicPath, topicById } from '../lib/evidence';
 
 interface Props {
   entry: NewsEntry;
@@ -261,6 +261,15 @@ const langHrefs = {
           </aside>
         ))
       }
+
+      <aside class="post-cta" aria-label={strings.ctaJoin}>
+        <p class="post-cta__title">{strings.ctaTitle}</p>
+        <p class="post-cta__text">{strings.ctaText}</p>
+        <p class="post-cta__links">
+          <a class="post-cta__btn" href={`${lang === 'es' ? '/es/' : '/'}#join`}>{strings.ctaJoin}</a>
+          <a class="post-cta__link" href={evidenceHubPath(lang)}>{strings.ctaEvidence} →</a>
+        </p>
+      </aside>
 
       <div class="post-aside">
         {

@@ -5,6 +5,8 @@ date: 2026-11-28
 lang: es
 translationKey: cbd-behavior-intellectual-disability-trial
 category: salud
+tema: conducta-infantil
+angulo: ensayo-clinico
 tags:
   - CBD
   - niños
@@ -12,8 +14,10 @@ tags:
   - ensayos clínicos
 source:
   name: 'JAMA Pediatrics'
-  url: 'https://jamanetwork.com/journals/jamapediatrics/fullarticle/20261122'
+  url: 'https://doi.org/10.1001/jamapediatrics.2026.5152'
 author: equipo
+# RETIRADA (borrador): resultado «en negativo», fuera de la línea editorial (docs/METODOLOGIA-NOTICIAS.md, §1).
+draft: true
 instagram: 'off'
 instagramHook: 'CBD y conducta grave en niños: lo que dice un ensayo clínico'
 grafico:
@@ -32,13 +36,13 @@ El **cannabidiol (CBD)** se promociona a menudo para reducir la ansiedad, la irr
 - **Tipo de estudio:** ensayo clínico **aleatorizado, doble ciego y controlado con placebo**, de diseño paralelo.
 - **Quién participó:** 131 niños de 6 a 18 años con discapacidad intelectual y problemas de comportamiento graves (ansiedad, trastorno del sueño, irritabilidad, agresividad, autolesión o huida), reportados por los padres mediante una lista de verificación estandarizada.
 - **Qué se midió:** cambio en los problemas de comportamiento tras ocho semanas de tratamiento con CBD a 10 mg/kg al día frente a placebo.
-- **Duración:** el ensayo se conductó entre 2021 y 2025, cuatro años de seguimiento.
+- **Duración:** ocho semanas de tratamiento y cuatro de seguimiento por participante; el ensayo se hizo entre 2021 y 2025 en tres hospitales infantiles de Australia.
 
 ## Qué descubrió
 
 - El grupo de CBD **no mostró mejora significativa** en los problemas de comportamiento graves frente al grupo de placebo.
-- No se observaron diferencias en ansiedad, trastorno del sueño, irritabilidad, agresividad, autolesión ni huida.
-- El CBD fue bien tolerado, sin efectos adversos graves inesperados.
+- La medida principal fue la subescala de irritabilidad de la Aberrant Behavior Checklist: 21,7 puntos con CBD y 19,2 con placebo al acabar (diferencia de 2,4; IC 95 %: −1,5 a 6,3).
+- Tuvo algún efecto adverso una proporción parecida en los dos grupos: 63,1 % con CBD y 60,6 % con placebo.
 
 ## Cómo leerlo
 
@@ -52,4 +56,4 @@ Es un ensayo de calidad metodológica alta: aleatorización, doble ciego, grupo 
 - Si subgrupos concretos de niños podrían responder diferente.
 - Si el CBD tiene algún beneficio en otros síntomas no medidos en este ensayo.
 
-Esta noticia es divulgación, no consejo médico. Fuente: ensayo publicado en *JAMA Pediatrics*, noviembre de 2026.
+Esta noticia es divulgación, no consejo médico. Fuente: Efron D. y cols., *JAMA Pediatrics*, 2026 ([doi:10.1001/jamapediatrics.2026.5152](https://doi.org/10.1001/jamapediatrics.2026.5152)).

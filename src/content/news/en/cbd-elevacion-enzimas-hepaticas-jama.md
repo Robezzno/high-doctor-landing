@@ -1,10 +1,12 @@
 ---
 title: "CBD and liver enzyme elevations: a randomized clinical trial in JAMA"
 summary: "A randomized clinical trial in JAMA Internal Medicine (2025) documents transaminase elevations in healthy adults using CBD at consumer-relevant doses."
-date: 2026-11-29
+date: 2026-11-28
 lang: en
 translationKey: cbd-elevacion-enzimas-hepaticas-jama
 category: salud
+tema: higado
+angulo: ensayo-clinico
 tags:
   - CBD
   - safety
@@ -15,8 +17,9 @@ source:
   name: "JAMA Internal Medicine"
   url: "https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2836267"
 author: bot
-draft: false
-instagram: off
+draft: true
+# RETIRADA (borrador): resultado «en negativo», fuera de la línea editorial (docs/METODOLOGIA-NOTICIAS.md, §1).
+instagram: 'off'
 instagramHook: "CBD and liver enzymes: what a JAMA trial found"
 ---
 
@@ -34,7 +37,7 @@ No differences were observed between CBD and placebo groups for endocrine hormon
 
 Consumer use of unregulated CBD products has surged; many users take **200–400 mg/day** (or more) chronically. Until now, most hepatotoxicity evidence came from high-dose prescription CBD (up to 25 mg/kg/day in epilepsy). This trial fills the gap: **at real-world consumer doses, CBD also raises transaminases in a non-trivial proportion of healthy people**.
 
-The elevation appeared late (weeks 3–4), suggesting that **periodic liver monitoring** would be sensible with prolonged use. The foundation sells no products, gives no usage instructions, and recommends nothing: it only relays what the study says, with the source so you can check it yourself.
+The elevation appeared late (weeks 3–4) and without symptoms. The foundation sells no products, gives no usage instructions, and recommends nothing: it only relays what the study says, with the source so you can check it yourself.
 
 ## Context
 
@@ -45,12 +48,12 @@ The elevation appeared late (weeks 3–4), suggesting that **periodic liver moni
 
 ## What we still don't know
 
-- Whether the effect is **reversible** after stopping CBD (the study had day-35 follow-up but no long-term data).
+- What happens with use over **months or years**: in the trial, values returned to normal one to two weeks after stopping CBD, but it lasted only 28 days.
 - What happens at **lower doses** (e.g., 50–150 mg/day), more common in self-medication.
 - Safety in **vulnerable populations** (liver disease, pregnancy, drug interactions).
 - Effect of **full-spectrum products** (with THC, terpenes, other cannabinoids) vs. isolated CBD.
 
-This information is educational and informative; it does not replace medical advice. If you use CBD, discuss it with your healthcare professional to assess whether liver monitoring is appropriate.
+This information is educational and informative; it does not replace medical advice.
 
 Source: [Florian J, Salcedo P, Burkhart K, et al. Cannabidiol and Liver Enzyme Level Elevations in Healthy Adults: A Randomized Clinical Trial. JAMA Intern Med. 2025;185(9):1070–1078. doi:10.1001/jamainternmed.2025.2366](https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2836267)
 

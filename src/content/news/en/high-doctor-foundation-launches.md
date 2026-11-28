@@ -5,6 +5,8 @@ date: 2026-10-01
 lang: en
 translationKey: foundation-launch
 category: fundacion
+tema: fundacion
+angulo: fundacion
 tags:
   - foundation
   - launch

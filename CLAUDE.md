@@ -33,7 +33,11 @@ cd bot && npm ci && npm test && npm run typecheck   # bot: 97 tests
 - Noticias: un `.md` por idioma en `src/content/news/{es,en}/` con el mismo `translationKey`; contrato en
   `docs/CONTENIDO.md` (lo valida `src/lib/news/schema.ts`; si falla, el build falla). Pages CMS (`.pages.yml`,
   guía `docs/COMO-PUBLICAR.md`) escribe directo en el repo. `content-check.yml` valida esos cambios.
-- Línea editorial: sólo avances prometedores contrastados en ≥2 fuentes; nada que deje mal al cannabis.
+- **Norma para publicar noticias: `docs/METODOLOGIA-NOTICIAS.md`** (única; pensada para agentes). Siempre rama → PR →
+  CI verde → fusionar. `npm run noticias -- lista | comprobar | foto buscar/guardar` (reglas en `scripts/noticias-lib.mjs`,
+  el CI ejecuta `comprobar --sin-red`). Toda noticia nueva lleva foto de Wikimedia Commons, `tema` y `angulo`.
+- Línea editorial: sólo avances prometedores contrastados en ≥2 fuentes; nada que deje mal al cannabis. Sin publicidad
+  ni enlaces de afiliado (decisión de Saf, 2026-11-28).
 
 ## Bot de noticias (`bot/`)
 - Paquete aparte (su `package.json`): RSS/PubMed → filtro → LLM → post ES+EN. Doc en `bot/README.md`.

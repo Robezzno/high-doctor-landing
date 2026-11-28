@@ -5,6 +5,8 @@ date: 2026-11-21
 lang: es
 translationKey: cbd-burning-mouth-syndrome-trial
 category: salud
+tema: boca-ardiente
+angulo: ensayo-clinico
 tags:
   - salud
   - CBD

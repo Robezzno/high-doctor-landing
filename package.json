@@ -13,6 +13,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test --config e2e/playwright.config.ts",
     "qa:links": "node tests/crawl-links.mjs",
+    "noticias": "node scripts/noticias.mjs",
     "qa": "npm run build && npm run test:e2e && npm run qa:links",
     "i18n:extract": "node scripts/extract-i18n.mjs",
     "i18n:check": "node scripts/check-i18n.mjs"
