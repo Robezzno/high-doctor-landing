@@ -13,12 +13,6 @@ tags:
 source:
   name: 'JAMA Pediatrics'
   url: 'https://jamanetwork.com/journals/jamapediatrics/fullarticle/20261122'
-cover: '../../../assets/news/cbd-behavior-intellectual-disability-trial.jpg'
-coverAlt: 'Niño en una consulta médica con un profesional de salud'
-coverCredit:
-  autor: 'CDC'
-  licencia: 'CC0 1.0'
-  url: 'https://commons.wikimedia.org/wiki/File:Pediatrician_examining_child.jpg'
 author: equipo
 instagram: 'off'
 instagramHook: 'CBD y conducta grave en niños: lo que dice un ensayo clínico'
