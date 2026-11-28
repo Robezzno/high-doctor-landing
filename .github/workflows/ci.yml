@@ -25,9 +25,15 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            bot/package-lock.json
 
       - name: Instalar dependencias
         run: npm ci
+
+      - name: Instalar dependencias del bot (astro check y vitest compilan bot/)
+        run: npm ci --prefix bot --no-audit --no-fund
 
       - name: Astro check (tipos)
         run: npm run check
